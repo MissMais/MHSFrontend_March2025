@@ -26,7 +26,7 @@ export default function Login() {
       localStorage.setItem('AccessToken', saveLogin.data.access);
       localStorage.setItem('RefreshToken', saveLogin.data.refresh);
 
-      // navigate('/IMS') // Uncomment and use navigate if you need redirection
+      // navigate('/IMS') 
     } catch (error) {
       // toast.error("Login Failed. Please try again.");
       console.error(error);
@@ -40,24 +40,24 @@ export default function Login() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="formName" className="form-label">Username</label>
-            <input 
-              {...register("username", { required: "Username is required" })} 
-              type="text" 
-              className="form-control" 
-              id="formName" 
-              placeholder="Enter your username" 
+            <input
+              {...register("username", { required: "Username is required" })}
+              type="text"
+              className="form-control"
+              id="formName"
+              placeholder="Enter your username"
             />
             {errors.username && <small className="text-danger">{errors.username.message}</small>}
           </div>
 
           <div className="mb-3">
             <label htmlFor="formpass" className="form-label">Password</label>
-            <input 
-              {...register("password", { required: "Password is required" })} 
-              type="password" 
-              className="form-control" 
-              id="formpass" 
-              placeholder="Enter your password" 
+            <input
+              {...register("password", { required: "Password is required" })}
+              type="password"
+              className="form-control"
+              id="formpass"
+              placeholder="Enter your password"
             />
             {errors.password && <small className="text-danger">{errors.password.message}</small>}
           </div>
