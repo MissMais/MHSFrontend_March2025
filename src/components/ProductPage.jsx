@@ -65,7 +65,7 @@ const products = [
   },
 ];
 
-const url = 'https://modestgallery.pythonanywhere.com/';
+const url = 'https://3rn4qfbv-8000.inc1.devtunnels.ms/';
 
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -81,10 +81,9 @@ const ProductPage = () => {
       console.log("Fetched token:", token);
       if (!token) throw new Error("No token found");
   
-      const response = await axios.get('https://modestgallery.pythonanywhere.com/category/', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const response = await axios.get('https://3rn4qfbv-8000.inc1.devtunnels.ms/images/', {
+              headers: {
+          Authorization: `Bearer ${token}`,},
       });
   
       setCategories(response.data);
@@ -98,7 +97,7 @@ const ProductPage = () => {
     try {
       localStorage.setItem('AccessToken', response.data.access);
       if (!token) throw new Error("No token found");
-      const response = await axios.get(`${url}productimages/`, {
+      const response = await axios.get(`${url}images/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

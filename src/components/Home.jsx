@@ -1,6 +1,6 @@
 import React from 'react'
 import Footer from '../Utils/Footer'
-import Navbar from '../Utils/Navbar'
+// import Navbar from '../Utils/Navbar.'
 import ProductPage from './ProductPage'
 import { Link } from 'react-router-dom';
 
