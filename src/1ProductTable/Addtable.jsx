@@ -33,7 +33,7 @@ export default function Addtable() {
             reset();
             Navigate('/alltable')
         } catch (error) {
-            console.error('Error saving data:', error);
+            console.error('Error saving Data:', error);
         }
     };
     return (
