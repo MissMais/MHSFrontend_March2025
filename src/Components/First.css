@@ -1,9 +1,0 @@
-.photo img {
-    z-index: -1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 600px;
-    width: 800px;
-    background-size: cover;
-}
