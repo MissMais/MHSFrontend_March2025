@@ -1,0 +1,34 @@
+{
+  "variations": [
+    {
+      "id": "a9e3",
+      "variation_name": "safi"
+    },
+    {
+      "variation_name": "abcd",
+      "id": "1028"
+    },
+    {
+      "id": "cb38",
+      "variation_name": "sasa"
+    },
+    {
+      "variation_name": "ab",
+      "id": "a0db"
+    }
+  ],
+  "product-variations": [
+    {
+      "Product_Variation_id": "abc",
+      "Product_id": "123",
+      "option_id": "1234",
+      "id": "0849"
+    },
+    {
+      "id": "eef6",
+      "Product_Variation_id": "a",
+      "Product_id": "1",
+      "option_id": "1"
+    }
+  ]
+}
