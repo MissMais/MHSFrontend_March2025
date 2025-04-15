@@ -1,76 +1,223 @@
-import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-// import { ToastContainer, toast } from 'react-toastify';
-// import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router";
+
+const url = 'https://modestgallery.pythonanywhere.com/';
 
 export default function Login() {
-  const {
-    handleSubmit,
-    reset,
-    register,
-    formState: { errors },
-  } = useForm();
 
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+
+ const navigate = useNavigate();
+
+  const { handleSubmit, register, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      // toast.success("Logged in Successfully");
-      // Make your login API request
-      const saveLogin = await axios.post(`${url}loginuser/`, data);
-      localStorage.setItem('AccessToken', saveLogin.data.access);
-      localStorage.setItem('RefreshToken', saveLogin.data.refresh);
+      const response = await axios.post(`${url}login/`, data);
 
-      // navigate('/IMS') 
+      // Save the tokens and user info to localStorage
+      localStorage.setItem('AccessToken', response.data.access);
+      localStorage.setItem('RefreshToken', response.data.refresh);
+      localStorage.setItem('user', JSON.stringify({ username: data.username }));
+
+
+      alert('Logged In Successfully');
+      navigate('/home');
     } catch (error) {
-      // toast.error("Login Failed. Please try again.");
+
       console.error(error);
+      alert('Login failed! Please check your username and password.');
+
     }
   };
+  // return (
+  //   <div className="container d-flex justify-content-center align-items-center min-vh-100">
+  //     <div className="card shadow-lg p-4" style={{ maxWidth: "400px", width: "100%" }}>
+  //       <h2 className="text-center mb-4">Login</h2>
+  //       <form onSubmit={handleSubmit(onSubmit)}>
+  //         <div className="mb-3">
+  //           <label htmlFor="formName" className="form-label">Username</label>
+  //           <input
+  //             {...register("username", { required: "Username is required" })}
+  //             type="text"
+  //             className="form-control"
+  //             id="formName"
+  //             placeholder="Enter your username"
+  //           />
+  //           {errors.username && <small className="text-danger">{errors.username.message}</small>}
+  //         </div>
 
+  //         <div className="mb-3">
+  //           <label htmlFor="formpass" className="form-label">Password</label>
+  //           <input
+  //             {...register("password", { required: "Password is required" })}
+  //             type="password"
+  //             className="form-control"
+  //             id="formpass"
+  //             placeholder="Enter your password"
+  //           />
+  //           {errors.password && <small className="text-danger">{errors.password.message}</small>}
+  //         </div>
+
+  //         <button type="submit" className="btn btn-primary w-100 mt-3">
+  //           Login
+  //         </button>
+  //       </form>
+  //       <div className="text-center mt-3">
+  //         <small>Don't have an account? <a href="/register">Sign Up</a></small>
+  //       </div>
+  //     </div>
+  //     {/* <ToastContainer /> */}
+  //   </div>
+  // );
+  
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card shadow-lg p-4" style={{ maxWidth: "400px", width: "100%" }}>
-        <h2 className="text-center mb-4">Login</h2>
+    <div className="flex justify-center items-center min-h-screen px-4">
+      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
+        <h2 className="text-center text-2xl font-semibold mb-6">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
-            <label htmlFor="formName" className="form-label">Username</label>
+          <div className="mb-4">
+            <label htmlFor="formName" className="block text-sm font-medium mb-1">
+              Username
+            </label>
             <input
               {...register("username", { required: "Username is required" })}
               type="text"
-              className="form-control"
               id="formName"
               placeholder="Enter your username"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.username && <small className="text-danger">{errors.username.message}</small>}
+            {errors.username && (
+              <small className="text-red-600">{errors.username.message}</small>
+            )}
           </div>
-
-          <div className="mb-3">
-            <label htmlFor="formpass" className="form-label">Password</label>
+  
+          <div className="mb-4">
+            <label htmlFor="formpass" className="block text-sm font-medium mb-1">
+              Password
+            </label>
             <input
               {...register("password", { required: "Password is required" })}
               type="password"
-              className="form-control"
               id="formpass"
               placeholder="Enter your password"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.password && <small className="text-danger">{errors.password.message}</small>}
+            {errors.password && (
+              <small className="text-red-600">{errors.password.message}</small>
+            )}
           </div>
-
-          <button type="submit" className="btn btn-primary w-100 mt-3">
+  
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors mt-2"
+          >
             Login
           </button>
         </form>
-        <div className="text-center mt-3">
-          <small>Don't have an account? <a href="/register">Sign Up</a></small>
+        <div className="text-center mt-4">
+          <small>
+            Don't have an account?{" "}
+            <a href="/register" className="text-blue-600 hover:underline">
+              Sign Up
+            </a>
+          </small>
         </div>
       </div>
       {/* <ToastContainer /> */}
     </div>
   );
 }
+// }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState } from "react";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import { useForm } from "react-hook-form";
+// import axios from "axios";
+// // import { ToastContainer, toast } from 'react-toastify';
+// // import "react-toastify/dist/ReactToastify.css";
+// import { useNavigate } from "react-router";
+
+// const url = 'https://modestgallery.pythonanywhere.com/';
+
+// export default function Login() {
+//   const navigate = useNavigate();
+  
+//   const { handleSubmit, register, formState: { errors } } = useForm();
+
+//   const onSubmit = async (data) => {
+//     try {
+//       const response = await axios.post(`${url}login/`, data);
+
+
+
+//       const expiry_time = Date.now() + 1*60*1000;
+
+//       // Save the tokens and user info to localStorage
+//       localStorage.setItem('AccessToken', response.data.access);
+//       localStorage.setItem('RefreshToken', response.data.refresh);
+//       localStorage.setItem('user', JSON.stringify({ username: data.username }));
+//       localStorage.setItem('tokenExpiry',expiry_time)
+
+      
+//       alert('Logged In Successfully');
+//       navigate('/home');
+//     } catch (error) {
+      
+//       console.error(error);
+//       alert('Login failed! Please check your username and password.');
+    
+//     }
+//   };
+
+ 

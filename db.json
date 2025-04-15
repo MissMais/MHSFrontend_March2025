@@ -1,0 +1,67 @@
+{
+  "users": [
+    {
+      "id": "821e",
+      "category_id": "C01",
+      "category_name": "Abaya"
+    },
+    {
+      "id": "25e2",
+      "category_id": "C02",
+      "category_name": "Stoles"
+    },
+    {
+      "id": "354b",
+      "category_id": "C03",
+      "category_name": "Accessories"
+    }
+  ],
+  "SubCat": [
+    {
+      "id": "9845",
+      "sub_category_id": "SC001",
+      "sub_category_name": "Knee-Length",
+      "category": "C01"
+    },
+    {
+      "id": "fa0f",
+      "sub_category_id": "SC002",
+      "sub_category_name": "Full-length",
+      "category": "C02"
+    }
+  ],
+  "ProductTable": [
+    {
+      "id": "ec03",
+      "Product_Description": "abaya",
+      "sub_category_id": "SC001",
+      "Availability": "12/04/2025",
+      "Stock": "2",
+      "Prize": "10000"
+    },
+    {
+      "id": "235b",
+      "Product_Description": "Stoles",
+      "sub_category_id": "SC002",
+      "Availability": "12/04/2025",
+      "Stock": "2",
+      "Prize": "1000"
+    }
+  ],
+  "VariationOption": [
+    {
+      "id": "c4bf",
+      "option_id": "1234",
+      "variation_id": "2345",
+      "value": "blue",
+      "color_code": "#0000FF"
+    },
+    {
+      "id": "ec10",
+      "option_id": "12345",
+      "variation_id": "1234567",
+      "value": "pink",
+      "color_code": "#0000FF"
+    }
+  ]
+}
