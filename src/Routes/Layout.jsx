@@ -1,9 +1,7 @@
 import React from 'react'
-// import Header from './Navbar'
-import Footer from './Footer'
 import { Outlet } from 'react-router'
 import Navbar from './Navbar'
-
+import Footer from './Footer'
 
 export default function Layout() {
 
@@ -12,7 +10,7 @@ export default function Layout() {
       {/* <Navbar /> */}
     {/* <Header /> */}
     <Outlet />
-  
+  {/* <Footer /> */}
     
     </div>
   )

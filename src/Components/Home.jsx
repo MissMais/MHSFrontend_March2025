@@ -56,7 +56,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-center">
               {/* Text Content */}
               <div className="md:w-1/2 md:pr-8">
-                <h1 className="text-4xl font-serif text-[#FB6D6C] mb-2">Welcome to Modest Gallery</h1>
+                <h1 className="text-4xl font-serif text-[#FB6D6C] mb-2"><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
                 <p className="text-lg text-[#FB6D6C] font-sans underline mb-4">Where Modesty Meets Elegance</p>
 
                 <p className="text-gray-700 font-sans leading-relaxed text-sm">
