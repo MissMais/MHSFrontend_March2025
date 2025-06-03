@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const url = 'https://modestgallery.pythonanywhere.com/';
-
+// const url = 'https://3rn4qfbv-8000.inc1.devtunnels.ms/';
 export default function Login() {
 
 
@@ -20,7 +20,7 @@ export default function Login() {
       localStorage.setItem('AccessToken', response.data.access);
       localStorage.setItem('RefreshToken', response.data.refresh);
       localStorage.setItem('user', JSON.stringify({ username: data.username }));
-
+console.log(response)
 
       alert('Logged In Successfully');
       navigate('/home');

@@ -20,7 +20,7 @@ export default function AddSC() {
                 Category_id: data.Category_id
             };
 
-            const response = await axios.post('https://3rn4qfbv-8000.inc1.devtunnels.ms/subcat/', payload, {
+            const response = await axios.post('https://3rn4qfbv-8000.inc1.devtunnels.ms/sub_category/', payload, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

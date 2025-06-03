@@ -24,7 +24,7 @@ useEffect(()=>{
 
     const getSubCat = async(id)=>{
         try {
-            const data = await axios.get(`https://3rn4qfbv-8000.inc1.devtunnels.ms/subcat/`+id)
+            const data = await axios.get(`https://3rn4qfbv-8000.inc1.devtunnels.ms/sub_category/`+id)
             // console.log(data)
 
             reset({
@@ -44,7 +44,7 @@ useEffect(()=>{
 
 const saveData = async(data)=>{
             try {
-                const addSubCat = await axios.put('https://3rn4qfbv-8000.inc1.devtunnels.ms/subcat/'+params.id+'/',data)
+                const addSubCat = await axios.put('https://3rn4qfbv-8000.inc1.devtunnels.ms/sub_category/'+params.id+'/',data)
                 reset()
                 navigate("/allSC")
              

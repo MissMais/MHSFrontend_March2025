@@ -18,6 +18,9 @@ import VariationOptionCRUD from './1VariationOption/AllVO';
 import Signup from './Components/Signup';
 import Home from './Components/Home';
 import ProductPage from './Components/ProductPage';
+import ProductDetail from './Components/ProductDetail';
+import OrderPage from './Components/OrderPage';
+import Cart from './Components/Cart';
 // import AllVO from './1VariationOption/AllVO';
 // import EditVO from './1VariationOption/EditVO';
 // import AddVO from './1VariationOption/AddVO';
@@ -27,12 +30,16 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />}></Route>
+          
           <Route path="/" element={<Layout />}>
+          <Route index element={<Home />}></Route>
             <Route path="/home" index element={<Home />}/>
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/ProductPage" element={<ProductPage />}/>
+            <Route path="/OrderPage" element={<OrderPage/>}/>
+            <Route path="/ProductDetail/:id" element={<ProductDetail />}/>
+            <Route path="/Cart" element={<Cart/>}/>
             <Route path="/addC" element={<PrivateRoute element={<AddC />} />} />
             <Route path="/allC" element={<PrivateRoute element={<AllC />} />}/>
             <Route path='/editC/:id' index element={<EditC />}></Route>

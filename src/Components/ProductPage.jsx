@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FaFilter, FaTag, FaPalette, FaCubes, FaRupeeSign } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const url = "https://3rn4qfbv-8000.inc1.devtunnels.ms/";
 
 const ProductPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("All");
-    const [maxPrice, setMaxPrice] = useState(10000000);
+    const [maxPrice, setMaxPrice] = useState(10000);
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [productImages, setProductImages] = useState([]);
@@ -49,7 +50,7 @@ const ProductPage = () => {
 
     const getProductImage = (id) => {
         const img = productImages.find((img) => img.id === id);
-        console.log(img)
+        // console.log(img)
         return img ? `data:image/jpeg;base64,${img.img_path}` : "/fallback.jpg"; // Ensure fallback works
     };
 
@@ -61,6 +62,12 @@ const ProductPage = () => {
             (selectedMaterial === "All" || product.Material?.toLowerCase() === selectedMaterial.toLowerCase()) &&
             product.Price <= maxPrice
     );
+
+let navigate = useNavigate()
+const productDetail =(id)=>{
+    console.log(id)
+    navigate(`/ProductDetail/${id}`);
+}
 
     return (
         <div className="max-w-7xl mx-auto p-6 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
@@ -113,7 +120,7 @@ const ProductPage = () => {
                 <input
                     type="range"
                     min="0"
-                    max="30000000"
+                    max="10000"
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(Number(e.target.value))}
                     className="w-full"
@@ -155,7 +162,7 @@ const ProductPage = () => {
                                     <FaRupeeSign className="inline mr-1" />
                                     {product.Price.toLocaleString()}
                                 </span>
-                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all">
+                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all" onClick={() => productDetail(product.id)}>
                                     View
                                 </button>
                             </div>

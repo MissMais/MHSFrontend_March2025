@@ -46,8 +46,9 @@ export default function Home() {
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://3rn4qfbv-8000.inc1.devtunnels.ms/images/')
+            const response2 = await axios.get('https://qr723wq6-8000.inc1.devtunnels.ms/cust_img')
             setimg(response2.data)
+            console.log(response2.data)
 
         } catch (error) {
             console.log(error)
@@ -57,7 +58,7 @@ export default function Home() {
 
     useEffect(() => {
         fetchimage()
-    })
+    }, [])
 
 
 
@@ -72,7 +73,7 @@ export default function Home() {
 
             {/* Home */}
             <section id="home" className="py-10">
-                <div  className="max-w-7xl mx-auto px-4">
+                <div className="max-w-7xl mx-auto px-4">
                     <div className="bg-white rounded-lg shadow-md p-6">
                         <div className="flex flex-col md:flex-row items-center">
                             {/* Text Content */}
@@ -128,30 +129,30 @@ export default function Home() {
 
                         {/* First Row of Images */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6 place-items-center">
+                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)] ">
+                                <img
+                                    src="./../../public/Event1.jpg"
+                                    alt="Shaam-e-Roshan"
+                                    className="w-full h-full object-cover  "
+                                />
+                            </div>
                             <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                 <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="./../../public/Event2.jpg"
                                     alt="Shaam-e-Roshan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
                             <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                 <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="./../../public/Event3.jpg"
                                     alt="Shaam-e-Roshan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
                             <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                 <img
-                                    src="./../../public/Imghome.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="./../../public/Event4.jpg"
                                     alt="Shaam-e-Roshan"
                                     className="w-full h-full object-cover"
                                 />
@@ -162,28 +163,28 @@ export default function Home() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 place-items-center">
                             <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                 <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="./../../public/Event5.jpg"
                                     alt="Shaam-e-Roshan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
                             <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                 <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="./../../public/Event6.jpg"
                                     alt="Shaam-e-Roshan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
                             <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                 <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="./../../public/Event7.jpg"
                                     alt="Shaam-e-Roshan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
                             <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                 <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="./../../public/Event8.jpg"
                                     alt="Shaam-e-Roshan"
                                     className="w-full h-full object-cover"
                                 />
@@ -215,22 +216,26 @@ export default function Home() {
                         {/* Image Grid */}
                         <Link to="/ProductPage">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                {img.map((image, index) => (
-                                    image && (
+                                {img
+                                    .filter((i) => i.Category_id === 1 && i.Sub_Category_Name=="Full Length")
+                                    .map((i) => (
                                         <div
-                                            key={index}
+                                            key={i.id}
                                             className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
-                                            transition-transform duration-300 ease-in-out transform hover:scale-110"
+                transition-transform duration-300 ease-in-out transform hover:scale-110"
                                         >
-                                            <img
-                                                src={`data:image/jpeg;base64,${image.img_path}`}
-                                                alt="Image"
-                                                className="object-cover w-full h-full"
-                                            />
+                                            {i.images?.map((base64String, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={`data:image/jpeg;base64,${base64String}`}
+                                                    alt="Image"
+                                                    className='w-full h-full object-cover'
+                                                />
+                                            ))}
                                         </div>
-                                    )
-                                ))}
+                                    ))}
                             </div>
+
 
 
 
@@ -267,21 +272,24 @@ export default function Home() {
                         {/* Image Grid */}
                         <Link to="/ProductPage">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                {img.map((image, index) => (
-                                    image && (
+                                {img
+                                    .filter((i) => i.Category_id === 3)
+                                    .map((i) => (
                                         <div
-                                            key={index}
+                                            key={i.id}
                                             className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
-                                            transition-transform duration-300 ease-in-out transform hover:scale-110"
+                transition-transform duration-300 ease-in-out transform hover:scale-110"
                                         >
-                                            <img
-                                                src={`data:image/jpeg;base64,${image.img_path}`}
-                                                alt="Image"
-                                                className="object-cover w-full h-full"
-                                            />
+                                            {i.images?.map((base64String, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={`data:image/jpeg;base64,${base64String}`}
+                                                    alt="Image"
+                                                    className='w-full h-full object-cover'
+                                                />
+                                            ))}
                                         </div>
-                                    )
-                                ))}
+                                    ))}
                             </div>
                         </Link>
 
@@ -320,21 +328,24 @@ export default function Home() {
                         {/* Image Grid */}
                         <Link to="/ProductPage">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                {img.map((image, index) => (
-                                    image && (
+                                {img
+                                    .filter((i) => i.Category_id === 2)
+                                    .map((i) => (
                                         <div
-                                            key={index}
+                                            key={i.id}
                                             className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
-                                            transition-transform duration-300 ease-in-out transform hover:scale-110"
+                transition-transform duration-300 ease-in-out transform hover:scale-110"
                                         >
-                                            <img
-                                                src={`data:image/jpeg;base64,${image.img_path}`}
-                                                alt="Image"
-                                                className="object-cover w-full h-full"
-                                            />
+                                            {i.images?.map((base64String, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={`data:image/jpeg;base64,${base64String}`}
+                                                    alt="Image"
+                                                    className='w-full h-full object-cover'
+                                                />
+                                            ))}
                                         </div>
-                                    )
-                                ))}
+                                    ))}
                             </div>
                         </Link>
 

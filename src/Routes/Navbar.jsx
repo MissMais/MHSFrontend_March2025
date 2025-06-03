@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
@@ -6,20 +6,23 @@ import { CgProfile } from "react-icons/cg";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
   const navigate = useNavigate();
-  const dropdownRef = useRef(null);
 
   const handleLogout = () => {
-    localStorage.removeItem('AccessToken');
-    localStorage.removeItem('RefreshToken');
-    localStorage.removeItem('user');
+    localStorage.removeItem("AccessToken");
+    localStorage.removeItem("RefreshToken");
+    localStorage.removeItem("user");
+    setLoggedIn(false);
+    alert("Logged Out Successfully");
     navigate("/login");
   };
 
-  const isLoggedIn = localStorage.getItem("AccessToken");
-
   useEffect(() => {
-    let timer = setTimeout(handleLogout, 600000);
+    if (!loggedIn) return;
+
+    let timer = setTimeout(handleLogout, 600000); // 10 minutes
+
     const resetTimer = () => {
       clearTimeout(timer);
       timer = setTimeout(handleLogout, 600000);
@@ -33,7 +36,7 @@ export default function Navbar() {
       window.removeEventListener("mousemove", resetTimer);
       window.removeEventListener("keydown", resetTimer);
     };
-  }, [navigate, isLoggedIn]);
+  }, [loggedIn]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,7 +51,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (!event.target.closest(".dropdown-container")) {
         setIsDropdownOpen(false);
       }
     };
@@ -60,10 +63,7 @@ export default function Navbar() {
     ? "flex flex-col absolute top-16 left-0 w-full bg-white shadow p-4 z-50 md:static md:flex md:flex-row md:items-center md:space-x-6 md:p-0"
     : "hidden md:flex md:flex-row md:items-center md:space-x-6 md:static md:w-auto md:bg-transparent md:shadow-none md:p-0";
 
-
-
   const linkClasses = "block py-2 px-2 text-gray-700 hover:text-[#FB6D6C]";
-
 
   return (
     <nav className="bg-white fixed top-0 left-0 right-0 shadow z-[9999]">
@@ -101,48 +101,45 @@ export default function Navbar() {
           <div className={menuClasses}>
             <ul className="flex flex-col md:flex-row gap-4 md:gap-6 text-gray-700 font-medium w-full md:w-auto">
               <li>
-                <ScrollLink to="home" smooth={true} duration={200}>
+                <Link to="/home">
                   <span className={linkClasses}>Home</span>
-                </ScrollLink>
+                </Link>
               </li>
               <li>
-                <ScrollLink to="shaam-e-roshan" smooth={true} duration={200} >
+                <ScrollLink to="shaam-e-roshan" smooth={true} duration={200}>
                   <span className={linkClasses}>Event</span>
                 </ScrollLink>
               </li>
               <li>
-                <ScrollLink to="store" smooth={true} duration={200} >
+                <ScrollLink to="store" smooth={true} duration={200}>
                   <span className={linkClasses}>Store</span>
                 </ScrollLink>
               </li>
               <li>
-                <Link to="/about" >
-                  <span className={linkClasses}>About</span></Link>
+                <Link to="/about">
+                  <span className={linkClasses}>About</span>
+                </Link>
               </li>
               <li>
-                <ScrollLink to="contact" smooth={true} duration={200} >
+                <ScrollLink to="contact" smooth={true} duration={200}>
                   <span className={linkClasses}>Contact</span>
                 </ScrollLink>
               </li>
 
               {/* Dropdown */}
-              <li className="relative" ref={dropdownRef}>
+              <li className="relative dropdown-container">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="flex items-center text-gray-700 hover:text-blue-600 focus:outline-none"
                 >
-                  <CgProfile className="text-2xl ml-1" />
+                  <CgProfile className="text-2xl mt-2" />
                 </button>
                 {isDropdownOpen && (
                   <ul className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
-                    {isLoggedIn ? (
+                    {loggedIn ? (
                       <li>
-                        <button
-                          onClick={handleLogout}
-
-                        >
+                        <button onClick={handleLogout}>
                           <span className={linkClasses}>Logout</span>
-
                         </button>
                       </li>
                     ) : (
@@ -169,4 +166,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

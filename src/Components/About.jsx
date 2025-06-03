@@ -1,117 +1,74 @@
-import React, { useState } from 'react';
-import Navbar from '../Routes/Navbar';
 import Footer from '../Routes/Footer';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
+import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import Navbar from '../Routes/Navbar';
 
 export default function About() {
-   const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('AccessToken');
+    localStorage.removeItem('RefreshToken');
+    localStorage.removeItem('user');
+    // navigate("/login");
+    alert('Logged Out Successfully');
+  };
+
+  const isLoggedIn = localStorage.getItem("AccessToken");
+
+  useEffect(() => {
+    let timer = setTimeout(handleLogout, 600000);
+    const resetTimer = () => {
+      clearTimeout(timer);
+      timer = setTimeout(handleLogout, 600000);
+    };
+
+    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("keydown", resetTimer);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousemove", resetTimer);
+      window.removeEventListener("keydown", resetTimer);
+    };
+  }, [navigate, isLoggedIn]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+        setIsDropdownOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.dropdown-container')) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // const menuClasses = isMenuOpen
+  //   ? "flex flex-col absolute top-16 left-0 w-full bg-white shadow p-4 z-50 md:static md:flex md:flex-row md:items-center md:space-x-6 md:p-0"
+  //   : "hidden md:flex md:flex-row md:items-center md:space-x-6 md:static md:w-auto md:bg-transparent md:shadow-none md:p-0";
+
+  // const linkClasses = "block py-2 px-2 text-gray-700 hover:text-[#FB6D6C]";
+
   return (
     <div>
-      {/* <Navbar /> */}
-      <nav className="bg-white fixed top-0 left-0 right-0 shadow z-[9999]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0 h-16 w-16">
-            <Link to="/" className="no-underline">
-              <img src="./../../assets/logo.jpeg" alt="Logo" />
-            </Link>
-          </div>
-
-          {/* Toggle Button for Mobile */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-800 focus:outline-none"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-
-          {/* Menu Items */}
-          <div className={`${isMenuOpen ? 'block' : 'hidden'} md:flex md:items-center md:space-x-6`}>
-            <ul className="flex flex-col md:flex-row gap-4 md:gap-6 text-gray-700 font-medium">
-              <li>
-                <Link to="/home" className="cursor-pointer hover:text-blue-600 text-decoration-none" smooth={true} duration={200}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/home#shaam-e-roshan" className="cursor-pointer hover:text-blue-600 text-decoration-none" smooth={true} duration={200}>
-                  Event
-                </Link>
-              </li>
-              <li>
-                <Link to="/home#store" className="cursor-pointer hover:text-blue-600 text-decoration-none" smooth={true} duration={200}>
-                  Store
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-blue-600 text-decoration-none">
-                  About
-                </Link>
-              </li>
-              <li>
-                <ScrollLink to="contact" className="cursor-pointer hover:text-blue-600 text-decoration-none" smooth={true} duration={200}>
-                  Contact
-                </ScrollLink>
-              </li>
-
-              {/* Dropdown */}
-              <li className="relative">
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center text-gray-700 hover:text-blue-600 text-decoration-none"
-                >
-                  <CgProfile className="text-2xl ml-1" />
-                </button>
-                {isDropdownOpen && (
-                  <ul className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
-                    {isLoggedIn ? (
-                      <li>
-                        <button
-                          onClick={handleLogout}
-                          className="w-full text-left px-4 py-2 hover:bg-gray-100 text-decoration-none"
-                        >
-                          Logout
-                        </button>
-                      </li>
-                    ) : (
-                      <>
-                        <li>
-                          <Link to="/login" className="block px-4 py-2 hover:bg-gray-100 text-decoration-none">
-                            Login
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/Signup" className="block px-4 py-2 hover:bg-gray-100 text-decoration-none">
-                            SignUp
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                )}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+      <Navbar />
+      
+    
       <div className='mt-20'></div>
 
       <section className="py-12">
@@ -129,7 +86,7 @@ export default function About() {
 
             <div className='md:w-1/2 flex justify-center'>
               <img
-                src="./../../assets/Imghome.jpg"
+                src="./../../public/img01.jpg"
                 alt="Our Story"
                 className='rounded-2xl shadow-lg w-[50%] object-cover md:ml-20'
               />
@@ -146,7 +103,7 @@ export default function About() {
           <div className='flex flex-col md:flex-row items-center gap-10'>
             <div className='md:w-1/2 flex justify-center'>
               <img
-                src="./../../assets/Imghome.jpg"
+                 src="./../../public/img02.jpg"
                 alt="Our Story"
                 className='rounded-2xl shadow-lg w-[90%] object-cover md:ml-20'
               />
@@ -181,28 +138,28 @@ export default function About() {
           <h1 className='text-center text-4xl font-bold mb-10'>Shaam e Roshan </h1>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
-            
+
             <div className='md:w-1/2 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg '>
               <p className='text-lg leading-relaxed text-white'>
-                Modest Gallery is not just about fashion; it's about creating experiences that celebrate culture, 
-                creativity, and community. This is where Shaam e Roshan comes in. Shaam e Roshan is our signature series of lifestyle, 
-                food, and craft exhibitions that bring people together in a vibrant, festive atmosphere. These events are a celebration of 
-                the rich cultural heritage that inspires our brand, offering a platform for artisans, chefs, and entrepreneurs to showcase their 
+                Modest Gallery is not just about fashion; it's about creating experiences that celebrate culture,
+                creativity, and community. This is where Shaam e Roshan comes in. Shaam e Roshan is our signature series of lifestyle,
+                food, and craft exhibitions that bring people together in a vibrant, festive atmosphere. These events are a celebration of
+                the rich cultural heritage that inspires our brand, offering a platform for artisans, chefs, and entrepreneurs to showcase their
                 talents and connect with a wider audience.
 
-                At Shaam e Roshan, you'll find an array of beautifully crafted items, from traditional handicrafts to contemporary art, 
+                At Shaam e Roshan, you'll find an array of beautifully crafted items, from traditional handicrafts to contemporary art,
                 all reflecting the creativity and craftsmanship of the artisans. Our food stalls offer a diverse selection of culinary delights,
-                 giving visitors the opportunity to taste and savor flavors from different cultures. The lifestyle section of the exhibition features 
-                 unique products that add a touch of elegance and style to everyday living.
+                giving visitors the opportunity to taste and savor flavors from different cultures. The lifestyle section of the exhibition features
+                unique products that add a touch of elegance and style to everyday living.
 
-                Each Shaam e Roshan event is carefully curated to provide a memorable experience for our visitors, whether you're shopping for unique gifts, 
-                enjoying delicious food, or simply soaking in the vibrant atmosphere. It's more than just an exhibition; it's a celebration of the values and traditions 
+                Each Shaam e Roshan event is carefully curated to provide a memorable experience for our visitors, whether you're shopping for unique gifts,
+                enjoying delicious food, or simply soaking in the vibrant atmosphere. It's more than just an exhibition; it's a celebration of the values and traditions
                 that we hold dear at Modest Gallery.
               </p>
             </div>
             <div className='md:w-1/2 flex justify-center'>
               <img
-                src="./../../assets/Imghome.jpg"
+                 src="./../../public/img03.jpg"
                 alt="Our Story"
                 className='rounded-2xl shadow-lg w-[90%] object-cover md:ml-20'
               />
@@ -214,13 +171,13 @@ export default function About() {
 
 
       <div className='text-center m-7'>
-        <h4>Thank you for choosing Modest Gallery as your trusted source for modest fashion and cultural experiences. We look forward 
+        <h4>Thank you for choosing Modest Gallery as your trusted source for modest fashion and cultural experiences. We look forward
           to serving you and being a part of your journey.</h4>
       </div>
-      
-        <section id='contact' >
-           <Footer />
-          </section>
-    </div> 
+
+      <section id='contact' >
+        <Footer />
+      </section>
+    </div>
   );
 }

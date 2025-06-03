@@ -125,14 +125,12 @@ export default function AllSC() {
   // Function to fetch subcategory data
   const fetchSC = async () => {
     try {
-      const response = await axios.get('https://3rn4qfbv-8000.inc1.devtunnels.ms/subcat');
+      const response = await axios.get('https://3rn4qfbv-8000.inc1.devtunnels.ms/sub_category');
       setSC(response.data); // Store the fetched data in state
 
-      const response2 = await axios.get('https://3rn4qfbv-8000.inc1.devtunnels.ms/images/')
+      const response2 = await axios.get('https://qr723wq6-8000.inc1.devtunnels.ms/img/')
       setimg(response2.data)
-      console.log(response2
-        
-      )
+      console.log(response2.data)
 
 
     } catch (error) {
@@ -158,7 +156,7 @@ export default function AllSC() {
   // Delete a subcategory
   const buttonDelete = async (id) => {
     try {
-      await axios.delete(`https://3rn4qfbv-8000.inc1.devtunnels.ms/subcat/${id}`);
+      await axios.delete(`https://3rn4qfbv-8000.inc1.devtunnels.ms/sub_category/${id}`);
       setSC(SC.filter((sc) => sc.id !== id)); // Remove deleted subcategory from state
     } catch (error) {
       console.error("Error deleting subcategory:", error);
@@ -169,22 +167,24 @@ export default function AllSC() {
   const editSC = (id) => {
     navigate(`/editSC/${id}`);
   };
+
+
+
+
+
   return (
     <div className="container mt-4">
-
 <div>
-  {img.map((i) => (
-    <img 
-      key={i.id} 
-      src={`data:image/jpeg;base64,${i.img_path}`} 
-      alt="Image" 
-    />
-  ))}
+  {img
+    .filter((i) => i.product_variation.Products.Sub_Category.Category.id === 20) 
+    .map((i) => (
+      <img
+        key={i.product_variation.Products.Sub_Category.Category.id}
+        src={`data:image/jpeg;base64,${i.img_path}`}
+        alt="Image"
+      />
+    ))}
 </div>
-  
-
-
-
 
       <div className="text-center font-bold text-xl mb-4">SUBCATEGORIES</div>
 
