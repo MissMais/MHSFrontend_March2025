@@ -18,25 +18,25 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  useEffect(() => {
-    if (!loggedIn) return;
+  // useEffect(() => {
+  //   if (!loggedIn) return;
 
-    let timer = setTimeout(handleLogout, 600000); // 10 minutes
+  //   let timer = setTimeout(handleLogout, 600000); // 10 minutes
 
-    const resetTimer = () => {
-      clearTimeout(timer);
-      timer = setTimeout(handleLogout, 600000);
-    };
+  //   const resetTimer = () => {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(handleLogout, 600000);
+  //   };
 
-    window.addEventListener("mousemove", resetTimer);
-    window.addEventListener("keydown", resetTimer);
+  //   window.addEventListener("mousemove", resetTimer);
+  //   window.addEventListener("keydown", resetTimer);
 
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("mousemove", resetTimer);
-      window.removeEventListener("keydown", resetTimer);
-    };
-  }, [loggedIn]);
+  //   return () => {
+  //     clearTimeout(timer);
+  //     window.removeEventListener("mousemove", resetTimer);
+  //     window.removeEventListener("keydown", resetTimer);
+  //   };
+  // }, [loggedIn]);
 
   useEffect(() => {
     const handleResize = () => {

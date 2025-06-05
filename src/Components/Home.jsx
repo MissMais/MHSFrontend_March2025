@@ -15,38 +15,11 @@ export default function Home() {
         navigate("/login");
     };
 
-    useEffect(() => {
-        const token = localStorage.getItem("AccessToken");
-        // if (!token) {
-        //     navigate("/login");
-        //     return;
-        // }
-
-        // Timer for 5 minutes
-        const timer = setTimeout(handleLogout, 300000);
-
-        // Reset the timer if the user moves the mouse or types
-        const resetTimer = () => {
-            clearTimeout(timer);
-            setTimeout(handleLogout, 300000);
-        };
-
-        window.addEventListener("mousemove", resetTimer);
-        window.addEventListener("keydown", resetTimer);
-
-        // Cleanup on unmount
-        //     return () => {
-        //         clearTimeout(timer);
-        //         window.removeEventListener("mousemove", resetTimer);
-        //         window.removeEventListener("keydown", resetTimer);
-        //     };
-        // }, [navigate]);
-    })
 
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://qr723wq6-8000.inc1.devtunnels.ms/cust_img')
+            const response2 = await axios.get('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
 
@@ -196,6 +169,63 @@ export default function Home() {
 
 
 
+            {/* Stoles  */}
+            <section id="stoles" className="py-10 bg-white">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="bg-white rounded-2xl shadow-xl p-6">
+
+                        {/* Text Content */}
+                        <div className="mb-8">
+                            <h1
+                                className="text-3xl font-bold"
+                                style={{ fontFamily: 'Arial, sans-serif', color: '#FB6D6C' }}
+                            >
+                                Stoles
+                            </h1>
+                            <br />
+                            <p
+                                className="text-lg"
+                                style={{ fontFamily: 'Arial, sans-serif' }}
+                            >
+                                Our hijabs are crafted from premium fabrics, ensuring that they are comfortable,
+                                breathable, and easy to style. From classic neutrals to vibrant prints, our hijabs
+                                are designed to complement your wardrobe and make you feel confident and elegant.
+                                We understand that every woman has her own unique style, which is why our collection
+                                includes a variety of textures, lengths, and colors to suit your preferences.
+                            </p>
+                        </div>
+
+                        {/* Image Grid */}
+                    
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                {img
+                                    .filter((i) => i.product_id === "PR002" && i.images?.[0])
+                                    .map((i) => (
+                                        <div
+                                            key={i.product_variation_id}
+                                            className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
+                transition-transform duration-300 ease-in-out transform hover:scale-110"
+                onClick={() => navigate('/ProductPage?category=Stoles')}
+                                        >
+                                            {i.images?.map((index,) => (
+                                                <img
+                                                    key={index}
+                                                    src={i.images[0]}
+                                                    alt="Image"
+                                                    className='w-full h-full object-cover'
+                                                />
+                                            ))}
+                                        </div>
+                                    ))}
+                            </div>
+                        
+
+                    </div>
+                </div>
+            </section>
+
+
+
             {/* Store */}
             {/* Abayas  */}
             <section id="store" className="py-10 bg-white">
@@ -214,20 +244,21 @@ export default function Home() {
                         </div>
 
                         {/* Image Grid */}
-                        <Link to="/ProductPage">
+                        
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                                 {img
-                                    .filter((i) => i.Category_id === 1 && i.Sub_Category_Name=="Full Length")
+                                    .filter((i) =>i.product_id == "PR010" && i.category_name == "Abayas" && i.images?.[0])
                                     .map((i) => (
                                         <div
-                                            key={i.id}
+                                            key={i.product_variation_id}
                                             className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
                 transition-transform duration-300 ease-in-out transform hover:scale-110"
+                onClick={() => navigate('/ProductPage?category=Abayas')}
                                         >
-                                            {i.images?.map((base64String, index) => (
+                                            {i.images?.map((index,) => (
                                                 <img
                                                     key={index}
-                                                    src={`data:image/jpeg;base64,${base64String}`}
+                                                    src={i.images[0]}
                                                     alt="Image"
                                                     className='w-full h-full object-cover'
                                                 />
@@ -236,10 +267,6 @@ export default function Home() {
                                     ))}
                             </div>
 
-
-
-
-                        </Link>
                     </div>
                 </div>
             </section>
@@ -270,20 +297,21 @@ export default function Home() {
                         </div>
 
                         {/* Image Grid */}
-                        <Link to="/ProductPage">
+                        
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                                 {img
-                                    .filter((i) => i.Category_id === 3)
+                                    .filter((i) => i.category_name === "Accessories" && i.images?.[0])
                                     .map((i) => (
                                         <div
-                                            key={i.id}
+                                            key={i.product_variation_id}
                                             className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
                 transition-transform duration-300 ease-in-out transform hover:scale-110"
+                onClick={() => navigate('/ProductPage?category=Accessories')}
                                         >
-                                            {i.images?.map((base64String, index) => (
+                                            {i.images?.map((index,) => (
                                                 <img
                                                     key={index}
-                                                    src={`data:image/jpeg;base64,${base64String}`}
+                                                    src={i.images[0]}
                                                     alt="Image"
                                                     className='w-full h-full object-cover'
                                                 />
@@ -291,7 +319,7 @@ export default function Home() {
                                         </div>
                                     ))}
                             </div>
-                        </Link>
+                        
 
                     </div>
                 </div>
@@ -299,47 +327,43 @@ export default function Home() {
 
 
 
-            {/* Stoles  */}
-            <section id="stoles" className="py-10 bg-white">
+            {/* Hijabs */}
+            <section id="accessories" className="py-10 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="bg-white rounded-2xl shadow-xl p-6">
 
-                        {/* Text Content */}
+                        {/* Heading + Text */}
                         <div className="mb-8">
                             <h1
                                 className="text-3xl font-bold"
                                 style={{ fontFamily: 'Arial, sans-serif', color: '#FB6D6C' }}
                             >
-                                Stoles
+                                Hijabs
                             </h1>
                             <br />
                             <p
-                                className="text-lg"
+                                className="text-lg text-gray-700"
                                 style={{ fontFamily: 'Arial, sans-serif' }}
                             >
-                                Our hijabs are crafted from premium fabrics, ensuring that they are comfortable,
-                                breathable, and easy to style. From classic neutrals to vibrant prints, our hijabs
-                                are designed to complement your wardrobe and make you feel confident and elegant.
-                                We understand that every woman has her own unique style, which is why our collection
-                                includes a variety of textures, lengths, and colors to suit your preferences.
-                            </p>
+                                At <span  className="text-[#FB6D6C] font-semibold">Modest Gallery</span>, our hijab collection is crafted to empower modern women with elegance, comfort, and versatility. Whether you're dressing for a casual day out, a professional setting, or a special event, we offer hijabs in a wide variety of fabrics, colors, and styles to suit every mood and moment. From breathable cotton and soft jersey to luxurious chiffon and silk, each piece is thoughtfully selected to ensure a perfect blend of modesty and fashion. </p>
                         </div>
 
                         {/* Image Grid */}
-                        <Link to="/ProductPage">
+                    
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                                 {img
-                                    .filter((i) => i.Category_id === 2)
+                                    .filter((i) => i.category_name === "Hijabs" && i.images?.[0])
                                     .map((i) => (
                                         <div
-                                            key={i.id}
+                                            key={i.product_variation_id}
                                             className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
                 transition-transform duration-300 ease-in-out transform hover:scale-110"
+                onClick={() => navigate('/ProductPage?category=Hijabs')}
                                         >
-                                            {i.images?.map((base64String, index) => (
+                                            {i.images?.map((index,) => (
                                                 <img
                                                     key={index}
-                                                    src={`data:image/jpeg;base64,${base64String}`}
+                                                    src={i.images[0]}
                                                     alt="Image"
                                                     className='w-full h-full object-cover'
                                                 />
@@ -347,11 +371,13 @@ export default function Home() {
                                         </div>
                                     ))}
                             </div>
-                        </Link>
+                    
 
                     </div>
                 </div>
             </section>
+
+
 
 
 
@@ -363,3 +389,38 @@ export default function Home() {
 
     );
 }
+
+
+
+
+
+
+
+
+    // useEffect(() => {
+    //     const token = localStorage.getItem("AccessToken");
+    //     // if (!token) {
+    //     //     navigate("/login");
+    //     //     return;
+    //     // }
+
+    //     // Timer for 5 minutes
+    //     const timer = setTimeout(handleLogout, 300000);
+
+    //     // Reset the timer if the user moves the mouse or types
+    //     const resetTimer = () => {
+    //         clearTimeout(timer);
+    //         setTimeout(handleLogout, 300000);
+    //     };
+
+    //     window.addEventListener("mousemove", resetTimer);
+    //     window.addEventListener("keydown", resetTimer);
+
+    //     // Cleanup on unmount
+    //     //     return () => {
+    //     //         clearTimeout(timer);
+    //     //         window.removeEventListener("mousemove", resetTimer);
+    //     //         window.removeEventListener("keydown", resetTimer);
+    //     //     };
+    //     // }, [navigate]);
+    // })

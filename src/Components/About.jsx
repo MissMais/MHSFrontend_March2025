@@ -20,22 +20,22 @@ export default function About() {
 
   const isLoggedIn = localStorage.getItem("AccessToken");
 
-  useEffect(() => {
-    let timer = setTimeout(handleLogout, 600000);
-    const resetTimer = () => {
-      clearTimeout(timer);
-      timer = setTimeout(handleLogout, 600000);
-    };
+  // useEffect(() => {
+  //   let timer = setTimeout(handleLogout, 600000);
+  //   const resetTimer = () => {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(handleLogout, 600000);
+  //   };
 
-    window.addEventListener("mousemove", resetTimer);
-    window.addEventListener("keydown", resetTimer);
+  //   window.addEventListener("mousemove", resetTimer);
+  //   window.addEventListener("keydown", resetTimer);
 
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("mousemove", resetTimer);
-      window.removeEventListener("keydown", resetTimer);
-    };
-  }, [navigate, isLoggedIn]);
+  //   return () => {
+  //     clearTimeout(timer);
+  //     window.removeEventListener("mousemove", resetTimer);
+  //     window.removeEventListener("keydown", resetTimer);
+  //   };
+  // }, [navigate, isLoggedIn]);
 
   useEffect(() => {
     const handleResize = () => {

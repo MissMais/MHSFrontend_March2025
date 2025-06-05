@@ -56,7 +56,7 @@ navigate('/OrderPage')
                   </div>
                 </div>
                 <div className="w-24 text-right font-bold text-yellow-700">
-                  ₺{(item.price * item.quantity).toFixed(2)}
+                  ₹{(item.price * item.quantity).toFixed(2)}
                 </div>
               </div>
             ))

@@ -1,103 +1,143 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { IoCartSharp } from "react-icons/io5"
+import React, { useEffect, useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-export default function ProductDetail() {
-    let navigate = useNavigate()
-    const { id } = useParams()
-    const [product, setProduct] = useState(null)
+const Cart = () => {
+  const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const res = await axios.get(`https://3rn4qfbv-8000.inc1.devtunnels.ms/product/${id}`)
-                setProduct(res.data)
-            } catch (error) {
-                console.error("Error fetching product:", error)
-            }
-        }
-
-        fetchProduct()
-    }, [id])
-
-
-
-    const addToCart = () => {
-
-
-        const token = localStorage.getItem("AccessToken");
-
-        if (!token) {
-            alert("Please login to add items to your cart.");
-            navigate("/login");
-            return;
-        }
-        // Save to localStorage
-        const cart = JSON.parse(localStorage.getItem("cart"))
-        cart.push(product); // add current product
-        localStorage.setItem("cart", JSON.stringify(cart));
-
-        // Go to cart page
-        navigate("/Cart");
-    };
-
-    const OrderPage = () => {
-        const token = localStorage.getItem("AccessToken");
-    
-        if (!token) {
-            alert("Please login to continue with your order.");
-            navigate("/login");
-            return;
-        }
-    
-        navigate("/OrderPage", { state: { product } });
+  // Load cart items from user-specific localStorage
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const username = user?.username;
+    if (!username) {
+      alert("Please login to view your cart.");
+      navigate("/login");
+      return;
     }
-    
 
+    const cartKey = `cart_${username}`;
+    const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+    // Add default quantity = 1 if not present
+    const itemsWithQuantity = storedItems.map(item => ({
+      ...item,
+      quantity: item.quantity || 1
+    }));
+    setCartItems(itemsWithQuantity);
+  }, []);
 
-    return (
-        <div className="min-h-screen bg-gray-100 py-10 px-4">
-            <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
-                <div className="grid md:grid-cols-2 gap-8 p-8">
-                    {/* Product Image */}
-                    <div className="flex flex-col items-center">
-                        <img src="/path/to/image.jpg" alt="image" className="rounded-lg shadow-md w-full h-auto" />
-                        <div className="flex gap-2 mt-4">
-                            <img src="/path/to/thumb1.jpg" alt="thumb1" className="w-20 h-14 object-cover rounded" />
-                            <img src="/path/to/thumb2.jpg" alt="thumb2" className="w-20 h-14 object-cover rounded" />
-                        </div>
-                    </div>
+  // Update localStorage and state
+  const updateCart = (updatedItems) => {
+    const username = JSON.parse(localStorage.getItem("user"))?.username;
+    const cartKey = `cart_${username}`;
+    localStorage.setItem(cartKey, JSON.stringify(updatedItems));
+    setCartItems(updatedItems);
+  };
 
-                    {/* Product Info */}
-                    <div>
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                            {product?.Product_Description || "Product Name"}
-                        </h1>
+  const removeItem = (id) => {
+    const updated = cartItems.filter(item => item.product_variation_id !== id);
+    updateCart(updated);
+  };
 
-                        <p className="text-shadow-black text-lg font-bold text-3xl">
-                            <span>₹</span> {product?.Price || "N/A"}
-                        </p>
+  const updateQuantity = (id, newQty) => {
+    if (newQty < 1) return;
+    const updated = cartItems.map(item =>
+      item.product_variation_id === id ? { ...item, quantity: newQty } : item
+    );
+    updateCart(updated);
+  };
 
-                        <p className="text-gray-600 text-lg">
-                            <span className="font-medium">Stock:</span> {product?.Stock || "N/A"}
-                        </p>
-                        <div className="mb-4 text-sm text-gray-600">
-                            <p>Free Shipping | 24hr Dispatch | Easy Returns</p>
-                        </div>
+  const subtotal = cartItems.reduce((sum, item) => sum + item.Reduced_price * item.quantity, 0);
 
-                        <div className="mt-4 flex gap-4">
-                            <button className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition" onClick={addToCart}>
-                                <IoCartSharp className="text-xl" />
-                                Add to Cart
-                            </button>
-                            <button className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition" onClick={OrderPage}>
-                                Buy Now
-                            </button>
-                        </div>
-                    </div>
+  const toorder = () => {
+    if (cartItems.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+    navigate("/OrderPage", { state: { cart: cartItems } });
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <h1 className="text-3xl font-light text-center text-gray-500 mb-8">MY BASKET</h1>
+
+      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:flex gap-6">
+        {/* Cart Items */}
+        <div className="flex-1 border-r border-gray-200 pr-6">
+          <h2 className="uppercase text-sm font-semibold text-gray-600 mb-4">Product</h2>
+
+          {cartItems.length === 0 ? (
+            <p className="text-gray-400">Your cart is empty.</p>
+          ) : (
+            cartItems.map((item) => (
+              <div key={item.product_variation_id} className="flex gap-4 items-center border-b py-4">
+                <button onClick={() => removeItem(item.product_variation_id)} className="text-gray-400 hover:text-red-500">
+                  <FaTrashAlt />
+                </button>
+                <img src={item.images?.[0]} alt={item.product_description} className="w-20 h-20 object-cover rounded-lg" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-700">{item.product_description}</h3>
+                  <p className="text-sm text-gray-500 mt-1">Stock: {item.stock}</p>
                 </div>
-            </div>
+                <div className="text-right">
+                  <p className="font-medium text-gray-700">₹{item.Reduced_price}</p>
+                  <div className="flex items-center mt-2 border rounded overflow-hidden">
+                    <button
+                      onClick={() => updateQuantity(item.product_variation_id, item.quantity - 1)}
+                      className="px-2 py-1 bg-gray-100 text-gray-600"
+                    >
+                      −
+                    </button>
+                    <span className="px-4 py-1">{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.product_variation_id, item.quantity + 1)}
+                      className="px-2 py-1 bg-gray-100 text-gray-600"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div className="w-24 text-right font-bold text-yellow-700">
+                  ₹{(item.Reduced_price * item.quantity).toFixed(2)}
+                </div>
+              </div>
+            ))
+          )}
         </div>
-    )
-}
+
+        {/* Cart Totals */}
+        <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
+          <h2 className="uppercase text-sm font-semibold text-gray-600 mb-4">Basket Totals</h2>
+          <div className="flex justify-between py-2 border-b">
+            <span className="text-gray-600">Subtotal</span>
+            <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between py-2 border-b">
+            <span className="text-gray-600">Shipping</span>
+            <span className="text-green-600 font-medium">Free</span>
+          </div>
+          <div className="flex justify-between py-4 text-lg font-bold text-yellow-600">
+            <span>Total</span>
+            <span>₹{subtotal.toFixed(2)}</span>
+          </div>
+
+          <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg text-lg font-semibold" onClick={toorder}>
+            GO TO PAYMENT PAGE
+          </button>
+          <div className="flex justify-between mt-4 text-xs text-gray-400">
+            <div className="text-center">
+              <p>🔒 3D Secure</p>
+              <p>Secure Payment</p>
+            </div>
+            <div className="text-center">
+              <p>↩️ Easy Returns</p>
+              <p>Fast & Easy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Cart;
