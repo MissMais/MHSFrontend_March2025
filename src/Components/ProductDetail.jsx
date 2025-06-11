@@ -41,20 +41,39 @@ export default function ProductDetail() {
   setSelectedProduct({ ...selectedProduct });
 };
 
+const addToCart = (product) => {
+  const token = localStorage.getItem("AccessToken");
+  if (!token) {
+    alert("Please login to add items to your cart.");
+    navigate("/login");
+    return;
+  }
+if(selectedProduct.stock > 0){
+  const user = JSON.parse(localStorage.getItem("user"));
+  const username = user?.username;
+  const cartKey = `cart_${username}`;
 
-  const addToCart = () => {
-    const token = localStorage.getItem('AccessToken');
-    if (!token) {
-      alert('Please login to add items to your cart.');
-      navigate('/login');
-      return;
-    }
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(selectedProduct);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    navigate('/Cart');
-  };
+   let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const existingItem = cart.find(
+    item => item.product_variation_id === product.product_variation_id
+  );
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+
+  navigate("/Cart");
+}else{
+  alert("Out Of Stock")
+}
+};
+
 
   const goToOrderPage = () => {
     const token = localStorage.getItem('AccessToken');
@@ -168,7 +187,8 @@ export default function ProductDetail() {
             <div className="mt-4 flex gap-4">
               <button
                 className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-                onClick={addToCart}
+                onClick={() => addToCart(selectedProduct)}
+
               >
                 <IoCartSharp className="text-xl" /> Add to Cart
               </button>

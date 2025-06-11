@@ -2,19 +2,68 @@ import React, { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const LOCAL_STORAGE_KEY = "cartItems";
-
-const Cart = () => {
+export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
+
+  const toorder = () => {
+    navigate('/OrderPage');
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const username = user?.username;
+    if (!username) {
+      alert("Please login to view your cart.");
+      navigate("/login");
+      return;
+    }
+    const cartKey = `cart_${username}`;
+    const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+    setCartItems(storedItems);
+  }, [navigate]);
+
+  const removeItem = (id) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const username = user?.username;
+    const cartKey = `cart_${username}`;
+
+    const currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+    const updatedCart = currentCart.filter(item => item.product_variation_id !== id);
+
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+    setCartItems(updatedCart);
+  };
+
+  const updateQuantity = (id, newQty) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const username = user?.username;
+    const cartKey = `cart_${username}`;
+
+    let currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+    currentCart = currentCart.map(item => {
+      if (item.product_variation_id === id) {
+  
+        if (newQty < 1) newQty = 1;
+        if (item.stock !== undefined && newQty > item.stock) newQty = item.stock;
+
+        return { ...item, quantity: newQty };
+      }
+      return item;
+    });
+
+    localStorage.setItem(cartKey, JSON.stringify(currentCart));
+    setCartItems(currentCart);
+  };
 
   
+  let subtotal = 0;
+  cartItems.forEach(item => {
+    subtotal += item.price * (item.quantity || 1);
+  });
 
-
-const navigate = useNavigate()
-
-  const toorder=()=>{
-navigate('/OrderPage')
-  }
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-3xl font-light text-center text-gray-500 mb-8">MY BASKET</h1>
@@ -27,36 +76,48 @@ navigate('/OrderPage')
           {cartItems.length === 0 ? (
             <p className="text-gray-400">Your cart is empty.</p>
           ) : (
-            cartItems.map((item) => (
-              <div key={item.id} className="flex gap-4 items-center border-b py-4">
-                <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500">
+            cartItems.map((item, index) => (
+              <div key={item.id || index} className="flex gap-4 items-center border-b py-4">
+                <button
+                  onClick={() => removeItem(item.product_variation_id)}
+                  className="text-gray-400 hover:text-red-500"
+                >
                   <FaTrashAlt />
                 </button>
-                <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
+                <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-700">{item.name}</h3>
-                  <p className="text-sm text-gray-500 mt-1">Canvas Size (cm): {item.size}</p>
+                  <h3 className="font-semibold text-gray-700">{item.product_description}</h3>
+                  <p className="text-sm text-gray-500 mt-1">Color: {item.variation_name}</p>
+                  
+
+                  {item.quantity >= item.stock && (
+                    <p className="text-xs text-red-500 mt-1">Max stock reached</p>
+                  )}
                 </div>
+
                 <div className="text-right">
-                  <p className="font-medium text-gray-700">₹{item.price.toFixed(2)}</p>
+                  <p className="font-medium text-gray-700">₹{item.price}</p>
                   <div className="flex items-center mt-2 border rounded overflow-hidden">
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.product_variation_id, (item.quantity || 1) - 1)}
                       className="px-2 py-1 bg-gray-100 text-gray-600"
+                      disabled={(item.quantity || 1) <= 1}
                     >
                       −
                     </button>
-                    <span className="px-4 py-1">{item.quantity}</span>
+                    <span className="px-4 py-1">{item.quantity || 1}</span>
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.product_variation_id, (item.quantity || 1) + 1)}
                       className="px-2 py-1 bg-gray-100 text-gray-600"
+                      disabled={item.stock === 0 || (item.quantity || 1) >= item.stock}
                     >
                       +
                     </button>
                   </div>
                 </div>
+
                 <div className="w-24 text-right font-bold text-yellow-700">
-                  ₹{(item.price * item.quantity).toFixed(2)}
+                  ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
                 </div>
               </div>
             ))
@@ -68,8 +129,7 @@ navigate('/OrderPage')
           <h2 className="uppercase text-sm font-semibold text-gray-600 mb-4">Basket Totals</h2>
           <div className="flex justify-between py-2 border-b">
             <span className="text-gray-600">Subtotal</span>
-            <span className="font-semibold">₹</span>
-            {/* {subtotal.toFixed(2)} */}
+            <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between py-2 border-b">
             <span className="text-gray-600">Transfer</span>
@@ -77,11 +137,12 @@ navigate('/OrderPage')
           </div>
           <div className="flex justify-between py-4 text-lg font-bold text-yellow-600">
             <span>Total</span>
-            <span>₹</span>
-            {/* {total} */}
+            <span>₹{subtotal.toFixed(2)}</span>
           </div>
-          {/* <p className="text-xs text-gray-400 mb-4">(₹{vat} VAT included)</p> */}
-          <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg text-lg font-semibold" onClick={toorder}>
+          <button
+            className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg text-lg font-semibold"
+            onClick={toorder}
+          >
             GO TO PAYMENT PAGE
           </button>
           <div className="flex justify-between mt-4 text-xs text-gray-400">
@@ -98,6 +159,4 @@ navigate('/OrderPage')
       </div>
     </div>
   );
-};
-
-export default Cart;
+}
