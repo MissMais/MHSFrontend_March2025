@@ -1,143 +1,187 @@
-import React, { useEffect, useState } from "react";
-import { FaTrashAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { IoCartSharp } from 'react-icons/io5';
 
-const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+export default function ProductDetail() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [allVariations, setAllVariations] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Load cart items from user-specific localStorage
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const username = user?.username;
-    if (!username) {
-      alert("Please login to view your cart.");
-      navigate("/login");
+    fetchProduct();
+  }, [id]);
+
+  useEffect(() => {
+    if (allVariations.length > 0) {
+      setSelectedProduct(allVariations[0]);
+    }
+  }, [allVariations]);
+
+  const fetchProduct = async () => {
+    try {
+      const response = await axios.get('https://modestgallery.pythonanywhere.com/custom/');
+      const filtered = response.data.filter(item => item.product_id === id);
+      setAllVariations(filtered);
+    } catch (error) {
+      console.error('Failed to fetch product variations:', error);
+    }
+  };
+
+  const swapWithMain = (index) => {
+  if (!selectedProduct || index === 0) return;
+
+  const images = [...selectedProduct.images];
+  const temp = images[0];
+  images[0] = images[index];
+  images[index] = temp;
+
+  selectedProduct.images = images; 
+  setSelectedProduct({ ...selectedProduct });
+};
+
+
+  const addToCart = () => {
+    const token = localStorage.getItem('AccessToken');
+    if (!token) {
+      alert('Please login to add items to your cart.');
+      navigate('/login');
       return;
     }
 
-    const cartKey = `cart_${username}`;
-    const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
-    // Add default quantity = 1 if not present
-    const itemsWithQuantity = storedItems.map(item => ({
-      ...item,
-      quantity: item.quantity || 1
-    }));
-    setCartItems(itemsWithQuantity);
-  }, []);
-
-  // Update localStorage and state
-  const updateCart = (updatedItems) => {
-    const username = JSON.parse(localStorage.getItem("user"))?.username;
-    const cartKey = `cart_${username}`;
-    localStorage.setItem(cartKey, JSON.stringify(updatedItems));
-    setCartItems(updatedItems);
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(selectedProduct);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    navigate('/Cart');
   };
 
-  const removeItem = (id) => {
-    const updated = cartItems.filter(item => item.product_variation_id !== id);
-    updateCart(updated);
-  };
-
-  const updateQuantity = (id, newQty) => {
-    if (newQty < 1) return;
-    const updated = cartItems.map(item =>
-      item.product_variation_id === id ? { ...item, quantity: newQty } : item
-    );
-    updateCart(updated);
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.Reduced_price * item.quantity, 0);
-
-  const toorder = () => {
-    if (cartItems.length === 0) {
-      alert("Your cart is empty!");
+  const goToOrderPage = () => {
+    const token = localStorage.getItem('AccessToken');
+    if (!token) {
+      alert('Please login to continue with your order.');
+      navigate('/login');
       return;
     }
-    navigate("/OrderPage", { state: { cart: cartItems } });
+    navigate('/OrderPage', { state: { product: selectedProduct } });
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-3xl font-light text-center text-gray-500 mb-8">MY BASKET</h1>
+    <div className="min-h-screen bg-gray-100 py-10 px-4">
+      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+        <div className="grid md:grid-cols-2 gap-8 p-8">
+          {/* Image Section */}
+          <div className="flex flex-col items-center">
+            <img
+              src={selectedProduct?.images?.[0]}
+              className="rounded-lg shadow-md w-full h-auto"
+              onClick={() => swapWithMain(0)}
+              alt="Product"
+            />
+            <div className="flex gap-2 mt-4">
+              {selectedProduct?.images?.slice(0, 3).map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  className="w-20 h-14 object-cover rounded cursor-pointer"
+                  onClick={() => swapWithMain(index)}
+                  alt={`Thumbnail ${index}`}
+                />
+              ))}
+            </div>
+          </div>
 
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:flex gap-6">
-        {/* Cart Items */}
-        <div className="flex-1 border-r border-gray-200 pr-6">
-          <h2 className="uppercase text-sm font-semibold text-gray-600 mb-4">Product</h2>
+          {/* Info Section */}
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              {selectedProduct?.product_description || 'Product Name'}
+            </h1>
 
-          {cartItems.length === 0 ? (
-            <p className="text-gray-400">Your cart is empty.</p>
-          ) : (
-            cartItems.map((item) => (
-              <div key={item.product_variation_id} className="flex gap-4 items-center border-b py-4">
-                <button onClick={() => removeItem(item.product_variation_id)} className="text-gray-400 hover:text-red-500">
-                  <FaTrashAlt />
-                </button>
-                <img src={item.images?.[0]} alt={item.product_description} className="w-20 h-20 object-cover rounded-lg" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-700">{item.product_description}</h3>
-                  <p className="text-sm text-gray-500 mt-1">Stock: {item.stock}</p>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium text-gray-700">₹{item.Reduced_price}</p>
-                  <div className="flex items-center mt-2 border rounded overflow-hidden">
-                    <button
-                      onClick={() => updateQuantity(item.product_variation_id, item.quantity - 1)}
-                      className="px-2 py-1 bg-gray-100 text-gray-600"
-                    >
-                      −
-                    </button>
-                    <span className="px-4 py-1">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.product_variation_id, item.quantity + 1)}
-                      className="px-2 py-1 bg-gray-100 text-gray-600"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div className="w-24 text-right font-bold text-yellow-700">
-                  ₹{(item.Reduced_price * item.quantity).toFixed(2)}
+            <p className="text-shadow-black text-lg font-bold text-3xl">
+              ₹ {selectedProduct?.Reduced_price || 'N/A'}
+            </p>
+
+            <p className="text-gray-600 text-lg">
+              <span className="font-medium">Stock:</span> {selectedProduct?.stock ?? 'N/A'}
+            </p>
+
+            <div className="mb-4 text-sm text-gray-600">
+              <p>Free Shipping | 24hr Dispatch | Easy Returns</p>
+            </div>
+
+            {/* COLOR SELECTOR */}
+            {allVariations.some(v => v.variation_type === 'Color') && (
+              <div className="mt-4">
+                <h2 className="font-semibold text-gray-700 mb-1">Choose Color:</h2>
+                <div className="flex gap-2 flex-wrap">
+                  {allVariations
+                    .filter(v => v.variation_type === 'Color' && v.ColorCode)
+                    .map((variation, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedProduct(variation)}
+                        className={`w-8 h-8 rounded-full border-2 ${
+                          selectedProduct?.product_variation_id === variation.product_variation_id
+                            ? 'border-black'
+                            : 'border-gray-300'
+                        }`}
+                        style={{ backgroundColor: variation.ColorCode }}
+                      
+                      ></button>
+                    ))}
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            )}
 
-        {/* Cart Totals */}
-        <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
-          <h2 className="uppercase text-sm font-semibold text-gray-600 mb-4">Basket Totals</h2>
-          <div className="flex justify-between py-2 border-b">
-            <span className="text-gray-600">Subtotal</span>
-            <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between py-2 border-b">
-            <span className="text-gray-600">Shipping</span>
-            <span className="text-green-600 font-medium">Free</span>
-          </div>
-          <div className="flex justify-between py-4 text-lg font-bold text-yellow-600">
-            <span>Total</span>
-            <span>₹{subtotal.toFixed(2)}</span>
-          </div>
+            {/* SIZE SELECTOR */}
+            {allVariations.some(v => v.variation_type === 'Size') && (
+              <div className="mt-6">
+                <h2 className="font-semibold text-gray-700 mb-1">Choose Size:</h2>
+                <div className="flex gap-2 flex-wrap">
+                  {allVariations
+                    .filter(v => v.variation_type === 'Size')
+                    .map((variation, index) => {
+                      const isSelected =
+                        selectedProduct?.product_variation_id === variation.product_variation_id;
+                      const isAvailable = variation.stock;
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => isAvailable && setSelectedProduct(variation)}
+                          disabled={!isAvailable}
+                          className={`px-4 py-1 border rounded
+                            ${isSelected ? 'bg-black text-white' : ''}
+                            ${!isAvailable
+                              ? 'bg-gray-300 text-gray-600 opacity-50 cursor-not-allowed'
+                              : 'bg-white text-gray-700 border-gray-300'}
+                          `}
+                        >
+                          {variation.variation_name}
+                        </button>
+                      );
+                    })}
+                </div>
+              </div>
+            )}
 
-          <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg text-lg font-semibold" onClick={toorder}>
-            GO TO PAYMENT PAGE
-          </button>
-          <div className="flex justify-between mt-4 text-xs text-gray-400">
-            <div className="text-center">
-              <p>🔒 3D Secure</p>
-              <p>Secure Payment</p>
-            </div>
-            <div className="text-center">
-              <p>↩️ Easy Returns</p>
-              <p>Fast & Easy</p>
+            {/* ACTION BUTTONS */}
+            <div className="mt-4 flex gap-4">
+              <button
+                className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                onClick={addToCart}
+              >
+                <IoCartSharp className="text-xl" /> Add to Cart
+              </button>
+              <button
+                className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition"
+                onClick={goToOrderPage}
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default Cart;
+}
