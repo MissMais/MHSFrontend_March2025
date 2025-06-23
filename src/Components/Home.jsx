@@ -3,18 +3,28 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from '../Routes/Footer';
 import Navbar from '../Routes/Navbar';
 import axios from 'axios';
-
+import { scroller } from "react-scroll";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Home() {
     const navigate = useNavigate();
     const [img, setimg] = useState([])
-    const handleLogout = () => {
-        localStorage.removeItem('AccessToken');
-        localStorage.removeItem('RefreshToken');
-        localStorage.removeItem('user');
-        navigate("/login");
-    };
 
+useEffect(() => {
+    AOS.init({ duration: 900, once: true });
+  }, []);
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      scroller.scrollTo(id, {
+        duration: 500,
+        smooth: true,
+        offset: -80,
+      });
+    }
+  }, [location]);
 
 
     const fetchimage = async () => {
@@ -37,7 +47,7 @@ export default function Home() {
 
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
             <br />
             <br />
             <br />
@@ -45,16 +55,16 @@ export default function Home() {
 
 
             {/* Home */}
-            <section id="home" className="py-10">
+            <section id="home" className="py-10" >
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="bg-white rounded-lg shadow-md p-6">
                         <div className="flex flex-col md:flex-row items-center">
                             {/* Text Content */}
                             <div className="md:w-1/2 md:pr-8">
-                                <h1 className="text-4xl font-serif text-[#FB6D6C] mb-2"><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
-                                <p className="text-lg text-[#FB6D6C] font-sans underline mb-4">Where Modesty Meets Elegance</p>
+                                <h1 className="text-4xl font-bold font-serif text-[#FB6D6C] mb-2 ml-5" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
+                                <p className="text-[21px] font-bold text-[#FB6D6C] underline mb-4 ml-20" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Where Modesty Meets Elegance</p>
 
-                                <p className="text-gray-700 font-sans leading-relaxed text-sm">
+                                <p className="text-gray-700 font-sans leading-relaxed text-lg" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                                     At Modest Gallery, we offer a diverse collection of modest hijabs, abayas, and accessories that blend elegance with comfort,
                                     allowing you to express your unique style with confidence. In addition to our fashion offerings, we proudly present Shaam e Roshan,
                                     our lifestyle, food, and craft exhibitions that celebrate creativity and tradition. Each event showcases exquisite crafts,
@@ -78,13 +88,15 @@ export default function Home() {
                             <div className="md:w-1/2 mt-6 md:mt-0">
 
                                 <img
-                                    src="./../../public/Imghome.jpg"
+                                    src="/Imghome.jpg"
                                     alt="Modest Gallery"
                                     className="w-full h-full object-cover rounded-md shadow-lg"
                                 />
 
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </section>
@@ -92,77 +104,136 @@ export default function Home() {
 
 
             {/* Event */}
-            <section id="shaam-e-roshan" className="py-10 bg-[#FB6D6C]">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-white rounded-2xl shadow-xl p-6">
-                        {/* Header */}
-                        <div className="mb-8 text-center">
-                            <h1 className="text-3xl font-bold text-[#FB6D6C]">Shaam-E-Roshan</h1>
+          <section id="shaam-e-roshan" className="py-10 bg-[#FB6D6C] mt-16" data-aos="fade-right">
+  <div className="max-w-7xl mx-auto px-4">
+     <div className="border-[5px] border-white rounded-[30px] p-2 shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+    
+    <div className=" p-6 mt-5 ">
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <h1
+          className="text-3xl font-bold text-white drop-shadow"
+          style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+        >
+          Shaam-E-Roshan
+        </h1>
+      </div>
+
+      {/* First Row of Images */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6 place-items-center" data-aos="fade-left">
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event1.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event2.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event3.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event4.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Second Row of Images */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 place-items-center" data-aos="fade-left">
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event5.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event6.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event7.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
+          <img
+            src="./../../public/Event8.jpg"
+            alt="Shaam-e-Roshan"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+            {/* Store */}
+            {/* Abayas  */}
+            <section id="store" className="py-10 bg-white">
+                <div className="max-w-7xl  px-4">
+                    <div className="p-6 mt-20">
+
+                        {/* Text Content */}
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                                Abayas
+                            </h1>
+                            <br />
+                            <p className="text-[21px] leading-relaxed" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                                When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
+                            </p>
                         </div>
 
-                        {/* First Row of Images */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6 place-items-center">
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)] ">
-                                <img
-                                    src="./../../public/Event1.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover  "
-                                />
-                            </div>
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Event2.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Event3.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Event4.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
+                        {/* Image Grid */}
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                            {[...img]
+                            .sort(() => Math.random() - 0.5)
+                                .filter((i) => i.category_name == "Abayas" && i.images?.[0])
+                                .slice(0, 6)
+                                .map((i) => (
+                                    <div
+                                        key={i.product_variation_id}
+                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                        onClick={() => navigate('/ProductPage?category=Abayas')}
+                                    >
+                                        {i.images?.map((index,) => (
+                                            <img
+                                                key={index}
+                                                src={i.images[0]}
+                                                alt="Image"
+                                                className='w-full h-full object-cover'
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
                         </div>
 
-                        {/* Second Row of Images */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 place-items-center">
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Event5.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Event6.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Event7.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="w-[200px] h-[200px] rounded-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                <img
-                                    src="./../../public/Event8.jpg"
-                                    alt="Shaam-e-Roshan"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -172,20 +243,20 @@ export default function Home() {
             {/* Stoles  */}
             <section id="stoles" className="py-10 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-white rounded-2xl shadow-xl p-6">
+                    <div className=" p-6 mt-16">
 
                         {/* Text Content */}
                         <div className="mb-8">
                             <h1
                                 className="text-3xl font-bold"
-                                style={{ fontFamily: 'Arial, sans-serif', color: '#FB6D6C' }}
+                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
                             >
                                 Stoles
                             </h1>
                             <br />
                             <p
-                                className="text-lg"
-                                style={{ fontFamily: 'Arial, sans-serif' }}
+                                className="text-[21px]"
+                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 Our hijabs are crafted from premium fabrics, ensuring that they are comfortable,
                                 breathable, and easy to style. From classic neutrals to vibrant prints, our hijabs
@@ -196,100 +267,55 @@ export default function Home() {
                         </div>
 
                         {/* Image Grid */}
-                    
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                {img
-                                    .filter((i) => i.product_id === "PR002" && i.images?.[0])
-                                    .map((i) => (
-                                        <div
-                                            key={i.product_variation_id}
-                                            className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
-                transition-transform duration-300 ease-in-out transform hover:scale-110"
-                onClick={() => navigate('/ProductPage?category=Stoles')}
-                                        >
-                                            {i.images?.map((index,) => (
-                                                <img
-                                                    key={index}
-                                                    src={i.images[0]}
-                                                    alt="Image"
-                                                    className='w-full h-full object-cover'
-                                                />
-                                            ))}
-                                        </div>
-                                    ))}
-                            </div>
-                        
 
-                    </div>
-                </div>
-            </section>
-
-
-
-            {/* Store */}
-            {/* Abayas  */}
-            <section id="store" className="py-10 bg-white">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-white rounded-2xl shadow-xl p-6">
-
-                        {/* Text Content */}
-                        <div className="mb-8">
-                            <h1 className="text-3xl font-bold" style={{ fontFamily: 'Arial, sans-serif', color: '#FB6D6C' }}>
-                                Abayas
-                            </h1>
-                            <br />
-                            <p className="text-lg leading-relaxed" style={{ fontFamily: 'Arial, sans-serif' }}>
-                                When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
-                            </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                            {[...img]
+                             .sort(() => Math.random() - 0.5)
+                                .filter((i) => i.category_name === "Stoles" && i.images?.[0])
+                                .slice(0,6)
+                                .map((i) => (
+                                    <div
+                                        key={i.product_variation_id}
+                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                        onClick={() => navigate('/ProductPage?category=Stoles')}
+                                    >
+                                        {i.images?.map((index,) => (
+                                            <img
+                                                key={index}
+                                                src={i.images[0]}
+                                                alt="Image"
+                                                className='w-full h-full object-cover'
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
                         </div>
 
-                        {/* Image Grid */}
-                        
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                {img
-                                    .filter((i) =>i.product_id == "PR010" && i.category_name == "Abayas" && i.images?.[0])
-                                    .map((i) => (
-                                        <div
-                                            key={i.product_variation_id}
-                                            className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
-                transition-transform duration-300 ease-in-out transform hover:scale-110"
-                onClick={() => navigate('/ProductPage?category=Abayas')}
-                                        >
-                                            {i.images?.map((index,) => (
-                                                <img
-                                                    key={index}
-                                                    src={i.images[0]}
-                                                    alt="Image"
-                                                    className='w-full h-full object-cover'
-                                                />
-                                            ))}
-                                        </div>
-                                    ))}
-                            </div>
 
                     </div>
                 </div>
             </section>
+
 
 
 
             {/* Accessories */}
             <section id="accessories" className="py-10 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-white rounded-2xl shadow-xl p-6">
+                    <div className="p-6 mt-16">
 
                         {/* Heading + Text */}
                         <div className="mb-8">
                             <h1
                                 className="text-3xl font-bold"
-                                style={{ fontFamily: 'Arial, sans-serif', color: '#FB6D6C' }}
+                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
                             >
                                 Accessories
                             </h1>
                             <br />
                             <p
-                                className="text-lg text-gray-700"
-                                style={{ fontFamily: 'Arial, sans-serif' }}
+                                className="text-[21px] text-gray-700"
+                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 No outfit is complete without the perfect accessories, and at
                                 <span className="text-[#FB6D6C] font-semibold"> Modest Hijab Store</span>, we offer a wide range of hijab accessories that add a touch of elegance and personality to your look. From pins and brooches to underscarves and headbands, our accessories are designed to enhance your hijab-wearing experience and make styling effortless. We understand the importance of quality and durability, which is why our accessories are made from the finest materials to ensure they last.
@@ -297,81 +323,87 @@ export default function Home() {
                         </div>
 
                         {/* Image Grid */}
-                        
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                {img
-                                    .filter((i) => i.category_name === "Accessories" && i.images?.[0])
-                                    .map((i) => (
-                                        <div
-                                            key={i.product_variation_id}
-                                            className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
-                transition-transform duration-300 ease-in-out transform hover:scale-110"
-                onClick={() => navigate('/ProductPage?category=Accessories')}
-                                        >
-                                            {i.images?.map((index,) => (
-                                                <img
-                                                    key={index}
-                                                    src={i.images[0]}
-                                                    alt="Image"
-                                                    className='w-full h-full object-cover'
-                                                />
-                                            ))}
-                                        </div>
-                                    ))}
-                            </div>
-                        
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                            {[...img]
+                             .sort(() => Math.random() - 0.5)
+                                .filter((i) => i.category_name === "Accessories" && i.images?.[0])
+                                .slice(0,6)
+                                .map((i) => (
+                                    <div
+                                        key={i.product_variation_id}
+                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out 
+                                        hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                        onClick={() => navigate('/ProductPage?category=Accessories')}
+                                    >
+                                        {i.images?.map((index,) => (
+                                            <img
+                                                key={index}
+                                                src={i.images[0]}
+                                                alt="Image"
+                                                className='w-full h-full object-cover'
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
+                        </div>
+
 
                     </div>
                 </div>
             </section>
+
 
 
 
             {/* Hijabs */}
             <section id="accessories" className="py-10 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-white rounded-2xl shadow-xl p-6">
+                    <div className="p-6 mt-16">
 
                         {/* Heading + Text */}
                         <div className="mb-8">
                             <h1
                                 className="text-3xl font-bold"
-                                style={{ fontFamily: 'Arial, sans-serif', color: '#FB6D6C' }}
+                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
                             >
                                 Hijabs
                             </h1>
                             <br />
                             <p
-                                className="text-lg text-gray-700"
-                                style={{ fontFamily: 'Arial, sans-serif' }}
+                                className="text-[21px] text-gray-700"
+                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
-                                At <span  className="text-[#FB6D6C] font-semibold">Modest Gallery</span>, our hijab collection is crafted to empower modern women with elegance, comfort, and versatility. Whether you're dressing for a casual day out, a professional setting, or a special event, we offer hijabs in a wide variety of fabrics, colors, and styles to suit every mood and moment. From breathable cotton and soft jersey to luxurious chiffon and silk, each piece is thoughtfully selected to ensure a perfect blend of modesty and fashion. </p>
+                                At <span className="text-[#FB6D6C] font-semibold">Modest Gallery</span>, our hijab collection is crafted to empower modern women with elegance, comfort, and versatility. Whether you're dressing for a casual day out, a professional setting, or a special event, we offer hijabs in a wide variety of fabrics, colors, and styles to suit every mood and moment. From breathable cotton and soft jersey to luxurious chiffon and silk, each piece is thoughtfully selected to ensure a perfect blend of modesty and fashion. </p>
                         </div>
 
                         {/* Image Grid */}
-                    
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                {img
-                                    .filter((i) => i.category_name === "Hijabs" && i.images?.[0])
-                                    .map((i) => (
-                                        <div
-                                            key={i.product_variation_id}
-                                            className="h-88 w-77 aspect-w-1 aspect-h-1 shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-lg overflow-hidden 
-                transition-transform duration-300 ease-in-out transform hover:scale-110"
-                onClick={() => navigate('/ProductPage?category=Hijabs')}
-                                        >
-                                            {i.images?.map((index,) => (
-                                                <img
-                                                    key={index}
-                                                    src={i.images[0]}
-                                                    alt="Image"
-                                                    className='w-full h-full object-cover'
-                                                />
-                                            ))}
-                                        </div>
-                                    ))}
-                            </div>
-                    
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                            {[...img]
+                             .sort(() => Math.random() - 0.5)
+                                .filter((i) => i.category_name === "Hijabs" && i.images?.[0])
+                                .slice(0,6)
+                                .map((i) => (
+                                    <div
+                                        key={i.product_variation_id}
+
+                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+
+                                        onClick={() => navigate('/ProductPage?category=Hijabs')}
+                                    >
+                                        {i.images?.map((index,) => (
+                                            <img
+                                                key={index}
+                                                src={i.images[0]}
+                                                alt="Image"
+                                                className='w-full h-full object-cover'
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
+                        </div>
+
 
                     </div>
                 </div>
@@ -380,8 +412,7 @@ export default function Home() {
 
 
 
-
-            <section id='contact' >
+            <section id='contact'  >
                 <Footer />
             </section>
 
@@ -397,30 +428,30 @@ export default function Home() {
 
 
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem("AccessToken");
-    //     // if (!token) {
-    //     //     navigate("/login");
-    //     //     return;
-    //     // }
+// useEffect(() => {
+//     const token = localStorage.getItem("AccessToken");
+//     // if (!token) {
+//     //     navigate("/login");
+//     //     return;
+//     // }
 
-    //     // Timer for 5 minutes
-    //     const timer = setTimeout(handleLogout, 300000);
+//     // Timer for 5 minutes
+//     const timer = setTimeout(handleLogout, 300000);
 
-    //     // Reset the timer if the user moves the mouse or types
-    //     const resetTimer = () => {
-    //         clearTimeout(timer);
-    //         setTimeout(handleLogout, 300000);
-    //     };
+//     // Reset the timer if the user moves the mouse or types
+//     const resetTimer = () => {
+//         clearTimeout(timer);
+//         setTimeout(handleLogout, 300000);
+//     };
 
-    //     window.addEventListener("mousemove", resetTimer);
-    //     window.addEventListener("keydown", resetTimer);
+//     window.addEventListener("mousemove", resetTimer);
+//     window.addEventListener("keydown", resetTimer);
 
-    //     // Cleanup on unmount
-    //     //     return () => {
-    //     //         clearTimeout(timer);
-    //     //         window.removeEventListener("mousemove", resetTimer);
-    //     //         window.removeEventListener("keydown", resetTimer);
-    //     //     };
-    //     // }, [navigate]);
-    // })
+//     // Cleanup on unmount
+//     //     return () => {
+//     //         clearTimeout(timer);
+//     //         window.removeEventListener("mousemove", resetTimer);
+//     //         window.removeEventListener("keydown", resetTimer);
+//     //     };
+//     // }, [navigate]);
+// })

@@ -1,168 +1,181 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { IoClose } from "react-icons/io5";
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem("AccessToken"))
+  })
+
 
   const handleLogout = () => {
     localStorage.removeItem("AccessToken");
     localStorage.removeItem("RefreshToken");
     localStorage.removeItem("user");
     setLoggedIn(false);
+    setSidebarOpen(false);
     alert("Logged Out Successfully");
     navigate("/login");
   };
 
-  // useEffect(() => {
-  //   if (!loggedIn) return;
-
-  //   let timer = setTimeout(handleLogout, 600000); // 10 minutes
-
-  //   const resetTimer = () => {
-  //     clearTimeout(timer);
-  //     timer = setTimeout(handleLogout, 600000);
-  //   };
-
-  //   window.addEventListener("mousemove", resetTimer);
-  //   window.addEventListener("keydown", resetTimer);
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //     window.removeEventListener("mousemove", resetTimer);
-  //     window.removeEventListener("keydown", resetTimer);
-  //   };
-  // }, [loggedIn]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMenuOpen(false);
-        setIsDropdownOpen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest(".dropdown-container")) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const menuClasses = isMenuOpen
-    ? "flex flex-col absolute top-16 left-0 w-full bg-white shadow p-4 z-50 md:static md:flex md:flex-row md:items-center md:space-x-6 md:p-0"
-    : "hidden md:flex md:flex-row md:items-center md:space-x-6 md:static md:w-auto md:bg-transparent md:shadow-none md:p-0";
-
-  const linkClasses = "block py-2 px-2 text-gray-700 hover:text-[#FB6D6C]";
+  const linkClasses =
+    "block py-1 px-2 text-xs sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold";
 
   return (
-    <nav className="bg-white fixed top-0 left-0 right-0 shadow z-[9999]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0 h-16 w-16">
-            <Link to="/" className="no-underline">
-              <img src="./../../public/logo.jpeg" alt="Logo" />
-            </Link>
-          </div>
+    <>
+      {/* Navbar */}
+      <nav className="bg-white fixed top-0 left-0 right-0 shadow z-[9999]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex-shrink-0 h-12 w-12 sm:h-16 sm:w-16">
+              <Link to="/" className="no-underline">
+                <img src="/logo.jpeg" alt="Logo" className="object-cover h-full w-full" />
+              </Link>
+            </div>
 
-          {/* Mobile Toggle Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-800 focus:outline-none p-2 rounded hover:bg-gray-200"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-
-          {/* Menu Items */}
-          <div className={menuClasses}>
-            <ul className="flex flex-col md:flex-row gap-4 md:gap-6 text-gray-700 font-medium w-full md:w-auto">
+            {/* Menu Items */}
+            <ul className="flex flex-row gap-1 sm:gap-6 items-center text-gray-700 font-medium">
               <li>
                 <Link to="/home">
-                  <span className={linkClasses}>Home</span>
+                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                    Home
+                  </span>
                 </Link>
               </li>
-              <li>
-                <ScrollLink to="shaam-e-roshan" smooth={true} duration={200}>
-                  <span className={linkClasses}>Event</span>
-                </ScrollLink>
+              <li style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                {location.pathname === "/home" ? (
+                  <ScrollLink to="shaam-e-roshan" smooth={true} duration={200}>
+                    <span className={linkClasses}>Event</span>
+                  </ScrollLink>
+                ) : (
+                  <Link to="/home#shaam-e-roshan" >
+                    <span className={linkClasses} >Event</span>
+                  </Link>
+                )}
               </li>
-              <li>
-                <ScrollLink to="store" smooth={true} duration={200}>
-                  <span className={linkClasses}>Store</span>
-                </ScrollLink>
+
+              <li style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                {location.pathname === "/home" ? (
+                  <ScrollLink to="store" smooth={true} duration={200}>
+                    <span className={linkClasses}>Store</span>
+                  </ScrollLink>
+                ) : (
+                  <Link to="/home#store" >
+                    <span className={linkClasses} >Store</span>
+                  </Link>
+                )}
               </li>
               <li>
                 <Link to="/about">
-                  <span className={linkClasses}>About</span>
+                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                    About
+                  </span>
                 </Link>
               </li>
               <li>
                 <ScrollLink to="contact" smooth={true} duration={200}>
-                  <span className={linkClasses}>Contact</span>
+                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                    Contact
+                  </span>
                 </ScrollLink>
               </li>
 
-              {/* Dropdown */}
-              <li className="relative dropdown-container">
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center text-gray-700 hover:text-blue-600 focus:outline-none"
-                >
-                  <CgProfile className="text-2xl mt-2" />
+              {/* Profile Icon */}
+              <li>
+                <button onClick={() => setSidebarOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
+                  <CgProfile className="text-2xl" />
                 </button>
-                {isDropdownOpen && (
-                  <ul className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
-                    {loggedIn ? (
-                      <li>
-                        <button onClick={handleLogout}>
-                          <span className={linkClasses}>Logout</span>
-                        </button>
-                      </li>
-                    ) : (
-                      <>
-                        <li>
-                          <Link to="/login" className={linkClasses}>
-                            <span className={linkClasses}>Login</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/Signup" className={linkClasses}>
-                            <span className={linkClasses}>SignUp</span>
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                )}
               </li>
             </ul>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Profile Sidebar */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-[9998]">
+          {/* Overlay */}
+          <div
+            className="absolute inset-0 bg-transparent"
+            onClick={() => setSidebarOpen(false)}
+          ></div>
+
+          {/* Sidebar */}
+          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Profile</h2>
+              <button onClick={() => setSidebarOpen(false)}>
+                <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              {loggedIn ? (
+                <>
+                  <Link
+                    to="/acc"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    Account
+                  </Link>
+                  <Link
+                    to="/history"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    Order History
+                  </Link>
+                  <Link
+                    to="/Cart"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    My Cart
+                  </Link>
+                  <hr />
+                  <button
+                    onClick={handleLogout}
+                    className={linkClasses + " text-left w-full"}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/Signup"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                  >
+                    SignUp
+                  </Link>
+                </>
+              )}
+            </div>
+
+          </div>
+        </div>
+      )}
+    </>
   );
 }

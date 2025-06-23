@@ -71,7 +71,7 @@ export default function Cart() {
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:flex gap-6">
         {/* Cart Items */}
         <div className="flex-1 border-r border-gray-200 pr-6">
-          <h2 className="uppercase text-sm font-semibold text-gray-600 mb-4">Product</h2>
+          <h2 className="text-sm font-bold text-gray-600 mb-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>PRODUCTS</h2>
 
           {cartItems.length === 0 ? (
             <p className="text-gray-400">Your cart is empty.</p>
@@ -81,22 +81,23 @@ export default function Cart() {
                 <button
                   onClick={() => removeItem(item.product_variation_id)}
                   className="text-gray-400 hover:text-red-500"
+                  
                 >
                   <FaTrashAlt />
                 </button>
                 <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-700">{item.product_description}</h3>
-                  <p className="text-sm text-gray-500 mt-1">Color: {item.variation_name}</p>
+                  <h3 className="font-semibold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
+                  <p className="text-sm text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Color: {item.variation_name}</p>
                   
 
                   {item.quantity >= item.stock && (
-                    <p className="text-xs text-red-500 mt-1">Max stock reached</p>
+                    <p className="text-xs text-red-500 mt-1" >Max stock reached</p>
                   )}
                 </div>
 
                 <div className="text-right">
-                  <p className="font-medium text-gray-700">₹{item.price}</p>
+                  <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
                   <div className="flex items-center mt-2 border rounded overflow-hidden">
                     <button
                       onClick={() => updateQuantity(item.product_variation_id, (item.quantity || 1) - 1)}
@@ -116,7 +117,7 @@ export default function Cart() {
                   </div>
                 </div>
 
-                <div className="w-24 text-right font-bold text-yellow-700">
+                <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
                   ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
                 </div>
               </div>
@@ -126,21 +127,21 @@ export default function Cart() {
 
         {/* Cart Totals */}
         <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
-          <h2 className="uppercase text-sm font-semibold text-gray-600 mb-4">Basket Totals</h2>
+          <h2 className=" text-sm font-bold text-gray-600 mb-4"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>BASKET TOTALS</h2>
           <div className="flex justify-between py-2 border-b">
-            <span className="text-gray-600">Subtotal</span>
-            <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
+            <span className=" font-bold"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Subtotal</span>
+            <span className="font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between py-2 border-b">
-            <span className="text-gray-600">Transfer</span>
-            <span className="text-green-600 font-medium">Free Shipping</span>
+            <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Transfer</span>
+            <span className="text-green-600 font-bold"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Free Shipping</span>
           </div>
-          <div className="flex justify-between py-4 text-lg font-bold text-yellow-600">
+          <div className="flex justify-between py-4 text-lg font-bold text-yellow-600"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
             <span>Total</span>
             <span>₹{subtotal.toFixed(2)}</span>
           </div>
           <button
-            className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg text-lg font-semibold"
+            className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-lg font-semibold"
             onClick={toorder}
           >
             GO TO PAYMENT PAGE

@@ -48,7 +48,7 @@ const ProductPage = () => {
     const getUniqueMaterial = () => {
         const unique = new Set(
             products
-                .filter(p =>p.category_name === selectedCategory && p.variation_type === "Fabric")
+                .filter(p => p.category_name === selectedCategory && p.variation_type === "Fabric")
                 .map(p => p.variation_name)
         );
         return Array.from(unique);
@@ -71,7 +71,7 @@ const ProductPage = () => {
     const getProductImage = (product) => {
         return product.images && product.images.length > 0
             ? product.images[0]
-            : "https://via.placeholder.com/300x300?text=No+Image";
+            : "no image found";
     };
 
 
@@ -109,34 +109,34 @@ const ProductPage = () => {
 
 
     return (
-        <div className="max-w-7xl mx-auto p-6 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
+        <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
             {/* Sidebar */}
-            <div className="w-full md:w-1/4 p-6 border-r border-gray-200 bg-gray-50 rounded-xl mb-6 md:mb-0">
-                <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-gray-700">
+            <div className="w-full md:w-1/3 p-6 mr-5 border-gray-200 bg-gray-100  mb-6 md:mb-0">
+                <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
                     <FaFilter /> Filters
                 </h2>
 
-                <label className="block font-semibold text-gray-600 mb-2">Category</label>
+                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Category</label>
                 <select
                     className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
                     value={selectedCategory}
                     onChange={(e) => handleCategoryChange(e.target.value)}
                 >
-                    <option value="All">All</option>
+                    <option value="All" className="text-[#666F80]">All</option>
                     {getUniqueCategories().map((cat) => (
-                        <option key={cat} value={cat}>{cat}</option>
+                        <option key={cat} value={cat} style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{cat}</option>
                     ))}
                 </select>
 
 
-                <label className="block font-semibold text-gray-600 mb-2">Colour</label>
+                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Colour</label>
                 <select
                     className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
                     onChange={(e) => setSelectedColour(e.target.value)}
                 >
-                    <option value="All">All</option>
+                    <option value="All" className="text-[#666F80]">All</option>
                     {getUniqueColours().map((colour) => (
-                        <option key={colour} value={colour}>
+                        <option key={colour} value={colour} style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
                             {colour}
                         </option>
                     ))}
@@ -144,21 +144,21 @@ const ProductPage = () => {
 
 
 
-                <label className="block font-semibold text-gray-600 mb-2">Material</label>
+                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Material</label>
                 <select
                     className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
                     onChange={(e) => setSelectedMaterial(e.target.value)}
                 >
-                    <option value="All">All</option>
+                    <option value="All" style={{ color: '#666F80' }} className="text-[#666F80]">All</option>
                     {getUniqueMaterial().map((mat) => (
-                        <option key={mat} value={mat}>
+                        <option key={mat} value={mat} style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
                             {mat}
                         </option>
                     ))}
                 </select>
 
 
-                <label className="block font-semibold text-gray-600 mb-2">
+                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
                     Max Price: ₹{maxPrice.toLocaleString()}
                 </label>
                 <input
@@ -167,57 +167,64 @@ const ProductPage = () => {
                     max="10000"
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(Number(e.target.value))}
-                    className="w-full"
+                    className="w-50% accent-[#FB6D6C]"
+
                 />
             </div>
 
             {/* Products */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full md:w-3/4 px-4">
-                {filteredProductsWithImages.map((product) => (
-                    <div
-                        key={product.product_variation_id}
-                        className="flex flex-col bg-white border rounded-xl shadow-md hover:shadow-xl transition-all overflow-hidden"
-                    >
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 w-full md:w-2/1 px-4 mt-10">
+                {[...filteredProductsWithImages]
+                    .sort(() => Math.random() - 0.5)
+                    .map((product) => (
 
-                        <div className="h-64 w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)] rounded-t-xl overflow-hidden">
-                            <img
-                                src={getProductImage(product)}
-                                alt="Product"
-                                className="object-cover w-full h-full"
-                            />
-                        </div>
+                        <div
+                            key={product.product_variation_id}
+                            className="flex flex-col bg-white shadow-md hover:shadow-xl transition-all overflow-hidden"
+                        >
+
+                            <div className="h-64 w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)]  overflow-hidden">
+                                <img
+                                    src={getProductImage(product)}
+                                    alt="Product"
+                                    className="object-cover w-full h-full"
+                                />
+                            </div>
 
 
-                        <div className="p-4 flex flex-col flex-grow">
-                            <h3 className="text-lg font-bold mb-1">{product.product_description}</h3>
-                            <p className="text-sm text-gray-500 mb-1">
-                                <FaTag className="inline mr-1" />
-                                {product.category_name}
-                            </p>
-                            <p className="text-sm text-gray-500 mb-1">
-                                <FaCubes className="inline mr-1" />
-                                {product.sub_category_name}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                                <FaPalette className="inline mr-1" />
-                                {product.variation_name ?? "N/A"} | {product.Material ?? "N/A"}
-                            </p>
-                            <p className="text-sm mt-2 text-green-700">Stock: {product.stock}</p>
-                            <div className="mt-auto flex justify-between items-center pt-3">
-                                <span className="text-xl font-semibold text-blue-700">
-                                    <FaRupeeSign className="inline mr-1" />
-                                    {parseFloat(product.Reduced_price).toLocaleString()}
-                                </span>
-                                <button
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
-                                    onClick={() => handleProductClick(product.product_id)}
-                                >
-                                    View
-                                </button>
+                            <div className="p-4 flex flex-col flex-grow" >
+                                <h3 className="text-lg font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{product.product_description}</h3>
+                                <div className="" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+                                    <p className="text-sm text-gray-500 mb-1">
+
+                                        {product.category_name}
+                                    </p>
+                                    <p className="text-sm text-gray-500 mb-1">
+
+                                        {product.sub_category_name}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+
+                                        {product.variation_name ?? "N/A"}
+                                    </p>
+                                    <p className="text-sm mt-2 text-green-700">Stock: {product.stock}</p>
+                                </div>
+
+                                <div className="mt-auto flex justify-between font-bold items-center pt-3" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                                    <span className="text-xl font-semibold">
+                                        <FaRupeeSign className="inline mr-1" />
+                                        {parseFloat(product.Reduced_price).toLocaleString()}
+                                    </span>
+                                    <button
+                                        className="bg-[#FB6D6C] text-white px-4 py-2 rounded-lg hover:bg-[#e95a59] transition-all"
+                                        onClick={() => handleProductClick(product.product_id)}
+                                    >
+                                        View
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
             </div>
         </div>
     );

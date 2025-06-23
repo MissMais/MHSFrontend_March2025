@@ -4,11 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const url = 'https://modestgallery.pythonanywhere.com/';
-// const url = 'https://3rn4qfbv-8000.inc1.devtunnels.ms/';
 export default function Login() {
 
 
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
@@ -16,22 +15,24 @@ export default function Login() {
     try {
       const response = await axios.post(`${url}login/`, data);
 
-      // Save the tokens and user info to localStorage
+    
       localStorage.setItem('AccessToken', response.data.access);
       localStorage.setItem('RefreshToken', response.data.refresh);
       localStorage.setItem('user', JSON.stringify({ username: data.username }));
-console.log(response)
+      console.log(response)
+
+
 
       alert('Logged In Successfully');
       navigate('/home');
     } catch (error) {
 
       console.error(error);
-      alert('Login failed! Please check your username and password.');
-
+      alert('Login failed! ');
+      console.log(data)
     }
   };
- 
+
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
       <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
@@ -52,7 +53,7 @@ console.log(response)
               <small className="text-red-600">{errors.username.message}</small>
             )}
           </div>
-  
+
           <div className="mb-4">
             <label htmlFor="formpass" className="block text-sm font-medium mb-1">
               Password
@@ -68,7 +69,7 @@ console.log(response)
               <small className="text-red-600">{errors.password.message}</small>
             )}
           </div>
-  
+
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors mt-2"

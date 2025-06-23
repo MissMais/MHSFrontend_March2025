@@ -2,12 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IoCartSharp } from 'react-icons/io5';
+import { FaRupeeSign } from "react-icons/fa";
 
 export default function ProductDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [allVariations, setAllVariations] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [relatedproduct, setrelatedproduct] = useState([])
 
   useEffect(() => {
     fetchProduct();
@@ -22,58 +24,61 @@ export default function ProductDetail() {
   const fetchProduct = async () => {
     try {
       const response = await axios.get('https://modestgallery.pythonanywhere.com/custom/');
+      const response2 = await axios.get('https://modestgallery.pythonanywhere.com/custom/');
       const filtered = response.data.filter(item => item.product_id === id);
       setAllVariations(filtered);
+      setrelatedproduct(response2.data)
     } catch (error) {
       console.error('Failed to fetch product variations:', error);
     }
   };
 
   const swapWithMain = (index) => {
-  if (!selectedProduct || index === 0) return;
+    if (!selectedProduct || index === 0) return;
 
-  const images = [...selectedProduct.images];
-  const temp = images[0];
-  images[0] = images[index];
-  images[index] = temp;
+    const images = [...selectedProduct.images];
+    const temp = images[0];
+    images[0] = images[index];
+    images[index] = temp;
 
-  selectedProduct.images = images; 
-  setSelectedProduct({ ...selectedProduct });
-};
+    selectedProduct.images = images;
+    setSelectedProduct({ ...selectedProduct });
+  };
 
-const addToCart = (product) => {
-  const token = localStorage.getItem("AccessToken");
-  if (!token) {
-    alert("Please login to add items to your cart.");
-    navigate("/login");
-    return;
-  }
-if(selectedProduct.stock > 0){
-  const user = JSON.parse(localStorage.getItem("user"));
-  const username = user?.username;
-  const cartKey = `cart_${username}`;
+  const addToCart = async (product) => {
+    const token = localStorage.getItem("AccessToken");
+    if (!token) {
+      alert("Please login to add items to your cart.");
+      navigate("/login");
+      return;
+    }
 
+    if (product.stock > 0) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const username = user?.username;
+      const cartKey = `cart_${username}`;
+      let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-   let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+      const existingItem = cart.find(item => item.product_variation_id === product.product_variation_id);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem(cartKey, JSON.stringify(cart));
 
-  const existingItem = cart.find(
-    item => item.product_variation_id === product.product_variation_id
-  );
+      try {
+        await axios.post('https://modestgallery.pythonanywhere.com/cartitem/', product);
+        console.log("Added to server-side cart");
+      } catch (error) {
+        console.error("Error adding to backend cart:", error);
+      }
 
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
-
-  localStorage.setItem(cartKey, JSON.stringify(cart));
-
-  navigate("/Cart");
-}else{
-  alert("Out Of Stock")
-}
-};
-
+      navigate("/Cart");
+    } else {
+      alert("Out Of Stock");
+    }
+  };
 
   const goToOrderPage = () => {
     const token = localStorage.getItem('AccessToken');
@@ -85,9 +90,24 @@ if(selectedProduct.stock > 0){
     navigate('/OrderPage', { state: { product: selectedProduct } });
   };
 
+  const getProductImage = (product) => {
+    return product.images?.[0] || "no image found";
+  };
+
+  const filteredProductsWithImages = allVariations.filter(
+    product =>
+      product.images &&
+      product.images.length > 0 &&
+      product.product_id === id
+  );
+
+  const handleProductClick = (productId) => {
+    navigate(`/ProductDetail/${productId}`);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+    <div className="bg-gray-100 px-0 mt-15">
+      <div className="max-w-7xl bg-white shadow-lg rounded-xl overflow-hidden">
         <div className="grid md:grid-cols-2 gap-8 p-8">
           {/* Image Section */}
           <div className="flex flex-col items-center">
@@ -112,26 +132,23 @@ if(selectedProduct.stock > 0){
 
           {/* Info Section */}
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
-
-            <p className="text-shadow-black text-lg font-bold text-3xl">
+            <p className="text-3xl font-bold" style={{ color: '#FB6D6C' }}>
               ₹ {selectedProduct?.Reduced_price || 'N/A'}
             </p>
-
-            <p className="text-gray-600 text-lg">
+            <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.stock ?? 'N/A'}
             </p>
-
-            <div className="mb-4 text-sm text-gray-600">
-              <p>Free Shipping | 24hr Dispatch | Easy Returns</p>
+            <div className="mb-4 text-sm font-medium" style={{ color: '#C3C8D3' }}>
+              Free Shipping | 24hr Dispatch 
             </div>
 
-            {/* COLOR SELECTOR */}
+            {/* Color Selector */}
             {allVariations.some(v => v.variation_type === 'Color') && (
-              <div className="mt-4">
-                <h2 className="font-semibold text-gray-700 mb-1">Choose Color:</h2>
+              <div className="mt-7">
+                <h2 className="font-semibold mb-1" style={{ color: '#666F80' }}>Choose Color:</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Color' && v.ColorCode)
@@ -139,41 +156,30 @@ if(selectedProduct.stock > 0){
                       <button
                         key={index}
                         onClick={() => setSelectedProduct(variation)}
-                        className={`w-8 h-8 rounded-full border-2 ${
-                          selectedProduct?.product_variation_id === variation.product_variation_id
-                            ? 'border-black'
-                            : 'border-gray-300'
-                        }`}
+                        className={`w-6 h-6 rounded-full border-2 ${selectedProduct?.product_variation_id === variation.product_variation_id ? 'border-black' : 'border-gray-300'}`}
                         style={{ backgroundColor: variation.ColorCode }}
-                      
-                      ></button>
+                      />
                     ))}
                 </div>
               </div>
             )}
 
-            {/* SIZE SELECTOR */}
+            {/* Size Selector */}
             {allVariations.some(v => v.variation_type === 'Size') && (
-              <div className="mt-6">
-                <h2 className="font-semibold text-gray-700 mb-1">Choose Size:</h2>
+              <div className="mt-7">
+                <h2 className="font-semibold mb-1" style={{ color: '#666F80' }}>Size:</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Size')
                     .map((variation, index) => {
-                      const isSelected =
-                        selectedProduct?.product_variation_id === variation.product_variation_id;
+                      const isSelected = selectedProduct?.product_variation_id === variation.product_variation_id;
                       const isAvailable = variation.stock;
                       return (
                         <button
                           key={index}
                           onClick={() => isAvailable && setSelectedProduct(variation)}
                           disabled={!isAvailable}
-                          className={`px-4 py-1 border rounded
-                            ${isSelected ? 'bg-black text-white' : ''}
-                            ${!isAvailable
-                              ? 'bg-gray-300 text-gray-600 opacity-50 cursor-not-allowed'
-                              : 'bg-white text-gray-700 border-gray-300'}
-                          `}
+                          className={`px-4 py-1 border rounded ${isSelected ? 'bg-black text-white' : ''} ${!isAvailable ? 'bg-gray-300 text-gray-600 opacity-50 cursor-not-allowed' : 'bg-white text-gray-700 border-gray-300'}`}
                         >
                           {variation.variation_name}
                         </button>
@@ -183,17 +189,20 @@ if(selectedProduct.stock > 0){
               </div>
             )}
 
-            {/* ACTION BUTTONS */}
-            <div className="mt-4 flex gap-4">
+            {/* Buttons */}
+            <div className="mt-10 flex gap-4">
               <button
-                className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                className="border border-[#FB6D6C] bg-white text-[#FB6D6C] px-6 py-2 rounded-full hover:bg-[#e95a59] hover:text-white transition w-full flex items-center justify-center gap-2"
                 onClick={() => addToCart(selectedProduct)}
-
               >
-                <IoCartSharp className="text-xl" /> Add to Cart
+                <IoCartSharp className="text-xl" />
+                <span>Add to Cart</span>
               </button>
+            </div>
+
+            <div className='mt-2'>
               <button
-                className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition"
+                className="bg-[#FB6D6C] text-white px-6 py-2 rounded-full hover:bg-[#e95a59] transition w-full"
                 onClick={goToOrderPage}
               >
                 Buy Now
@@ -202,6 +211,54 @@ if(selectedProduct.stock > 0){
           </div>
         </div>
       </div>
+
+      {/* Similar Products Section */}
+      {selectedProduct && (
+        <div className="px-4 mt-12">
+          <h2 className="text-2xl font-semibold mb-6" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Related Products</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {relatedproduct
+              .filter(p =>
+                p.category_name === selectedProduct.category_name &&
+                p.product_id !== selectedProduct.product_id &&
+                p.images && p.images.length > 0
+              )
+              .sort(() => Math.random() - 0.5)
+              .slice(0, 6)
+              .map(product => (
+               <div key={product.product_variation_id} className="flex flex-col bg-white shadow-md hover:shadow-xl transition-all overflow-hidden">
+              <div className="h-64 w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)] overflow-hidden">
+                <img
+                  src={getProductImage(product)}
+                  alt="Product"
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="text-lg font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{product.product_description}</h3>
+                <p className="text-sm text-gray-500 mb-1"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>{product.category_name}</p>
+                <p className="text-sm text-gray-500 mb-1"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>{product.sub_category_name}</p>
+                <p className="text-sm text-gray-500"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>{product.variation_name ?? "N/A"}</p>
+                <p className="text-sm mt-2 text-green-700"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Stock: {product.stock}</p>
+                <div className="mt-auto flex justify-between items-center pt-3 font-bold"style={{ fontFamily: 'Copperplate, Papyrus, fantasy',color: '#FB6D6C' }}>
+                  <span className="text-xl font-semibold">
+                    <FaRupeeSign className="inline mr-1" />
+                    {parseFloat(product.Reduced_price).toLocaleString()}
+                  </span>
+                  <button
+                    className="bg-[#FB6D6C] text-white px-4 py-2 rounded-lg hover:bg-[#e95a59] transition-all"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                    onClick={() => handleProductClick(product.product_id)}
+                  >
+                    View
+                  </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

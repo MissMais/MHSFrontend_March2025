@@ -21,6 +21,9 @@ import ProductPage from './Components/ProductPage';
 import ProductDetail from './Components/ProductDetail';
 import OrderPage from './Components/OrderPage';
 import Cart from './Components/Cart';
+import Account from './Components/Account';
+import OrderHistory from './Components/History';
+
 // import AllVO from './1VariationOption/AllVO';
 // import EditVO from './1VariationOption/EditVO';
 // import AddVO from './1VariationOption/AddVO';
@@ -36,6 +39,8 @@ export default function App() {
             <Route path="/home" index element={<Home />}/>
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
+            <Route path='/acc' element={<Account/>} />
+            <Route path='/history' element={<OrderHistory/>} />
             <Route path="/ProductPage" element={<ProductPage />}/>
             <Route path="/OrderPage" element={<OrderPage/>}/>
             <Route path="/ProductDetail/:id" element={<ProductDetail />}/>

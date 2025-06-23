@@ -7,19 +7,21 @@ export default function Signup() {
     first_name: "",
     last_name: "",
     username: "",
-    email: "",
+    Email: "",
     password: "",
     is_customer: true,
     is_employee: false,
-    contact: "",
-    house_no: "",
-    area_colony: "",
-    landmark: "",
-    city: "",
-    state: "",
-    country: "",
-    pincode: "",
+    Contact: 0,
+    // House_No: "",
+    // Area_Colony: "",
+    // Landmark: "",
+    // City: "",
+    // State: "",
+    // Country: "",
+    // Pincode: "",
   });
+
+  
 
   const [message, setMessage] = useState("");
 
@@ -27,12 +29,17 @@ export default function Signup() {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
     setFormData({ ...formData, [name]: newValue });
+    
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://qr723wq6-8000.inc1.devtunnels.ms/user/", formData);
+      const response = await axios.post("https://modestgallery.pythonanywhere.com/customer/", formData);
+      setFormData(formData)
+
+     
+
       const token = response.data.token;
       localStorage.setItem("jwt", token);
       setMessage("Signup successful!");
@@ -52,23 +59,23 @@ export default function Signup() {
             <Input label="First Name" name="first_name" value={formData.first_name} onChange={handleChange} />
             <Input label="Last Name" name="last_name" value={formData.last_name} onChange={handleChange} />
             <Input label="Username" name="username" value={formData.username} onChange={handleChange} />
-            <Input label="Email" name="email" type="email" value={formData.email} onChange={handleChange} />
+            <Input label="Email" name="Email" type="email" value={formData.Email} onChange={handleChange} />
           </div>
 
           {/* Full width */}
           <Input label="Password" name="password" type="password" value={formData.password} onChange={handleChange} />
 
 
-          {/* Contact + House No */}
+      
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input label="Contact" name="contact" value={formData.contact} onChange={handleChange} />
-            <Input label="House No" name="house_no" value={formData.house_no} onChange={handleChange} />
-            <Input label="Area/Colony" name="area_colony" value={formData.area_colony} onChange={handleChange} />
-            <Input label="Landmark" name="landmark" value={formData.landmark} onChange={handleChange} />
-            <Input label="City" name="city" value={formData.city} onChange={handleChange} />
-            <Input label="State" name="state" value={formData.state} onChange={handleChange} />
-            <Input label="Country" name="country" value={formData.country} onChange={handleChange} />
-            <Input label="Pincode" name="pincode" value={formData.pincode} onChange={handleChange} />
+            <Input label="Contact" name="Contact" value={formData.Contact} onChange={handleChange} />
+            {/* <Input label="House No" name="House_No" value={formData.House_No} onChange={handleChange} />
+            <Input label="Area/Colony" name="Area_Colony" value={formData.Area_Colony} onChange={handleChange} />
+            <Input label="Landmark" name="Landmark" value={formData.Landmark} onChange={handleChange} />
+            <Input label="City" name="City" value={formData.City} onChange={handleChange} />
+            <Input label="State" name="State" value={formData.State} onChange={handleChange} />
+            <Input label="Country" name="Country" value={formData.Country} onChange={handleChange} />
+            <Input label="Pincode" name="Pincode" value={formData.Pincode} onChange={handleChange} /> */}
           </div>
 
           <button
