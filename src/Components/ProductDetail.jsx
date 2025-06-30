@@ -55,8 +55,8 @@ export default function ProductDetail() {
 
     if (product.stock > 0) {
       const user = JSON.parse(localStorage.getItem("user"));
-      const username = user?.username;
-      const cartKey = `cart_${username}`;
+      const email = user?.email;
+      const cartKey = `cart_${email}`;
       let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
       const existingItem = cart.find(item => item.product_variation_id === product.product_variation_id);
@@ -132,10 +132,10 @@ export default function ProductDetail() {
 
           {/* Info Section */}
           <div>
-            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+            <h1 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
-            <p className="text-3xl font-bold" style={{ color: '#FB6D6C' }}>
+            <p className="text-2xl font-bold" style={{fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
               ₹ {selectedProduct?.Reduced_price || 'N/A'}
             </p>
             <p style={{ color: '#666F80' }}>
@@ -148,7 +148,7 @@ export default function ProductDetail() {
             {/* Color Selector */}
             {allVariations.some(v => v.variation_type === 'Color') && (
               <div className="mt-7">
-                <h2 className="font-semibold mb-1" style={{ color: '#666F80' }}>Choose Color:</h2>
+                <h2 className="font-semibold mb-1" style={{fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Choose Color:</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Color' && v.ColorCode)
@@ -166,8 +166,9 @@ export default function ProductDetail() {
 
             {/* Size Selector */}
             {allVariations.some(v => v.variation_type === 'Size') && (
+              
               <div className="mt-7">
-                <h2 className="font-semibold mb-1" style={{ color: '#666F80' }}>Size:</h2>
+                <h2 className="font-semibold mb-1" style={{fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{allVariations[0]?.category_name ==='Abayas' ? 'Choose Size:' : 'Size:'}</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Size')

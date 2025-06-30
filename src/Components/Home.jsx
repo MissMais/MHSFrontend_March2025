@@ -10,10 +10,14 @@ import 'aos/dist/aos.css';
 export default function Home() {
     const navigate = useNavigate();
     const [img, setimg] = useState([])
+const [data,setdata] = useState([])
+
 
 useEffect(() => {
     AOS.init({ duration: 900, once: true });
   }, []);
+
+
 
   useEffect(() => {
     if (location.hash) {
@@ -31,8 +35,9 @@ useEffect(() => {
         try {
             const response2 = await axios.get('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
-            console.log(response2.data)
-
+            // console.log(response2.data)
+            const response3  = await axios.get('https://3j7gm770-8000.inc1.devtunnels.ms/custome/')
+setdata(response3.data)
         } catch (error) {
             console.log(error)
         }
@@ -51,7 +56,32 @@ useEffect(() => {
             <br />
             <br />
             <br />
-
+<div>
+    {data
+                            // .sort(() => Math.random() - 0.5)
+                                .filter((i) => i.category_name == "Hijabs" && i.images?.[0])
+                                
+                                .map((i) => (
+                                    
+                                    <div
+                                        key={i.product_variation.product_variation_id}
+                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                        onClick={() => navigate('/ProductPage?category=Abayas')}
+                                    >
+                                        <h1>{i.product_variation.product_variation_id}</h1>
+                                        {i.images?.map((index,) => (
+                                            <img
+                                                key={index}
+                                                src={i.images[0]}
+                                                alt="Image"
+                                                className='w-full h-full object-cover'
+                                            />
+                                        ))}
+                                        
+                                    </div>
+                                    
+                                ))}
+</div>
 
 
             {/* Home */}
@@ -212,8 +242,8 @@ useEffect(() => {
                         {/* Image Grid */}
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
-                            {[...img]
-                            .sort(() => Math.random() - 0.5)
+                            {img
+                            // .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name == "Abayas" && i.images?.[0])
                                 .slice(0, 6)
                                 .map((i) => (

@@ -30,6 +30,7 @@ export default function EditC() {
 
             reset({
                 // id: data.data.id,
+                
                 Category_name: data.data.Category_name
             })
 

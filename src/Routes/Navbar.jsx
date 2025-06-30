@@ -3,26 +3,40 @@ import { Link as ScrollLink } from "react-scroll";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
+const url = "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem("AccessToken"))
   })
 
 
-  const handleLogout = () => {
-    localStorage.removeItem("AccessToken");
-    localStorage.removeItem("RefreshToken");
-    localStorage.removeItem("user");
-    setLoggedIn(false);
-    setSidebarOpen(false);
-    alert("Logged Out Successfully");
-    navigate("/login");
+  const handleLogout = async() => {
+const refreshToken = localStorage.getItem("RefreshToken")
+
+const logout = await axios.post(url,
+  {},
+  {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`, 
+        },
+      }
+    )
+      if (logout.status === 200) {
+      localStorage.removeItem("AccessToken");
+      localStorage.removeItem("RefreshToken");
+      localStorage.removeItem("user");
+      alert("Logged Out Successfully");
+      navigate("/login");
+    } else {
+      alert("Failed to log out");
+    }
   };
 
   const linkClasses =

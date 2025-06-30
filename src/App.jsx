@@ -1,5 +1,4 @@
 import React from 'react';
-// import Home from './Components/Home';
 import Login from './Components/Login';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './Routes/Layout';
@@ -23,6 +22,9 @@ import OrderPage from './Components/OrderPage';
 import Cart from './Components/Cart';
 import Account from './Components/Account';
 import OrderHistory from './Components/History';
+import Address from './Components/Address';
+import AddressEdit from './Components/AddressEdit';
+import ResetPassword from './Components/Resetpass';
 
 // import AllVO from './1VariationOption/AllVO';
 // import EditVO from './1VariationOption/EditVO';
@@ -33,33 +35,38 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          
+
           <Route path="/" element={<Layout />}>
-          <Route index element={<Home />}></Route>
-            <Route path="/home" index element={<Home />}/>
+            <Route index element={<Home />}></Route>
+            <Route path="/home" index element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
-            <Route path='/acc' element={<Account/>} />
-            <Route path='/history' element={<OrderHistory/>} />
-            <Route path="/ProductPage" element={<ProductPage />}/>
-            <Route path="/OrderPage" element={<OrderPage/>}/>
-            <Route path="/ProductDetail/:id" element={<ProductDetail />}/>
-            <Route path="/Cart" element={<Cart/>}/>
+            <Route path='/acc' element={<PrivateRoute element={<Account />} />} />
+            <Route path='/Address' element={<PrivateRoute element={<Address />} />} />
+            <Route path='editadd/:id' element={<PrivateRoute element={<AddressEdit />} />} />
+            <Route path='/history' element={<PrivateRoute element={<OrderHistory />} />} />
+            <Route path="/ProductPage" element={<ProductPage />} />
+            <Route path="/OrderPage" element={<OrderPage />} />
+            <Route path="/ProductDetail/:id" element={<ProductDetail />} />
+            <Route path="/Cart" element={<PrivateRoute element={<Cart />} />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/reset" element={<PrivateRoute element={<ResetPassword />} />} />
+
             <Route path="/addC" element={<PrivateRoute element={<AddC />} />} />
-            <Route path="/allC" element={<PrivateRoute element={<AllC />} />}/>
+            <Route path="/allC" element={<PrivateRoute element={<AllC />} />} />
             <Route path='/editC/:id' index element={<EditC />}></Route>
-            <Route path="/addSC" element={<PrivateRoute element={<AddSC />} />}/>
+            <Route path="/addSC" element={<PrivateRoute element={<AddSC />} />} />
             <Route path="/allSC" element={<PrivateRoute element={<AllSC />} />} />
             <Route path='/editSC/:id' index element={<EditSC />}></Route>
-            <Route path="/addtable" element={<PrivateRoute element={<Addtable />} />}/>
-            <Route path="/alltable" element={<PrivateRoute element={<Alltable />} />}/>
+            <Route path="/addtable" element={<PrivateRoute element={<Addtable />} />} />
+            <Route path="/alltable" element={<PrivateRoute element={<Alltable />} />} />
             <Route path='/edittable/:id' index element={<Edittable />}></Route>
-            <Route path="/allvo" element={<PrivateRoute element={<VariationOptionCRUD />} />}/>
-            <Route path="/signup" element={<Signup />} />
-          
+            <Route path="/allvo" element={<PrivateRoute element={<VariationOptionCRUD />} />} />
+
+
           </Route>
-        
-          
+
+
         </Routes>
       </BrowserRouter>
     </div>

@@ -12,21 +12,21 @@ export default function Cart() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const username = user?.username;
-    if (!username) {
+    const email = user?.email;
+    if (!email) {
       alert("Please login to view your cart.");
       navigate("/login");
       return;
     }
-    const cartKey = `cart_${username}`;
+    const cartKey = `cart_${email}`;
     const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
     setCartItems(storedItems);
   }, [navigate]);
 
   const removeItem = (id) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const username = user?.username;
-    const cartKey = `cart_${username}`;
+    const email = user?.email;
+    const cartKey = `cart_${email}`;
 
     const currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
@@ -38,8 +38,8 @@ export default function Cart() {
 
   const updateQuantity = (id, newQty) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const username = user?.username;
-    const cartKey = `cart_${username}`;
+    const email = user?.email;
+    const cartKey = `cart_${email}`;
 
     let currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
@@ -141,8 +141,8 @@ export default function Cart() {
             <span>₹{subtotal.toFixed(2)}</span>
           </div>
           <button
-            className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-lg font-semibold"
-            onClick={toorder}
+            className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-sm font-semibold"
+            onClick={toorder}  style={{ fontFamily: "Copperplate, Papyrus, fantasy"}}
           >
             GO TO PAYMENT PAGE
           </button>

@@ -1,13 +1,18 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-const url = 'https://modestgallery.pythonanywhere.com/';
+const url = "https://3j7gm770-8000.inc1.devtunnels.ms/"
+//  'https://modestgallery.pythonanywhere.com/';
+
 export default function Login() {
 
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from;
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
@@ -15,16 +20,21 @@ export default function Login() {
     try {
       const response = await axios.post(`${url}login/`, data);
 
-    
+    console.log(response.data.access)
       localStorage.setItem('AccessToken', response.data.access);
       localStorage.setItem('RefreshToken', response.data.refresh);
-      localStorage.setItem('user', JSON.stringify({ username: data.username }));
-      console.log(response)
+      localStorage.setItem('user', JSON.stringify( {email: response.data.email} ));
+      console.log(response.data.first_name)
+console.log(localStorage.getItem("AccessToken"));
 
 
 
       alert('Logged In Successfully');
-      navigate('/home');
+        if (from && from !== '/signup') {
+      navigate(from, { replace: true }); // 🔥 Go back to where you came from
+    } else {
+      navigate('/', { replace: true });   // 🔥 Go to Home
+    }
     } catch (error) {
 
       console.error(error);
@@ -36,26 +46,26 @@ export default function Login() {
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
       <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
-        <h2 className="text-center text-2xl font-semibold mb-6">Login</h2>
+        <h2 className="text-center text-2xl font-bold mb-6"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label htmlFor="formName" className="block text-sm font-medium mb-1">
-              Username
+            <label htmlFor="formName" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+              Email
             </label>
             <input
-              {...register("username", { required: "Username is required" })}
+              {...register("email", { required: "email is required" })}
               type="text"
               id="formName"
               placeholder="Enter your username"
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.username && (
-              <small className="text-red-600">{errors.username.message}</small>
+            {errors.email && (
+              <small className="text-red-600">{errors.email.message}</small>
             )}
           </div>
 
           <div className="mb-4">
-            <label htmlFor="formpass" className="block text-sm font-medium mb-1">
+            <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
               Password
             </label>
             <input
@@ -72,7 +82,8 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors mt-2"
+            className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
+            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
           >
             Login
           </button>
@@ -80,7 +91,7 @@ export default function Login() {
         <div className="text-center mt-4">
           <small>
             Don't have an account?{" "}
-            <a href="/signup" className="text-blue-600 hover:underline">
+            <a href="/signup" className="text-[#FB6D6C] hover:underline">
               Sign Up
             </a>
           </small>
