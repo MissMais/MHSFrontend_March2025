@@ -4,13 +4,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
+// import jwtDecode from "jwt-decode";
 
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
-const url = "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
+const url = 
+"https://wkvkk9t8-8000.inc1.devtunnels.ms/logout/"
+// "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem("AccessToken"))
@@ -19,28 +22,76 @@ const url = "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   const handleLogout = async() => {
 const refreshToken = localStorage.getItem("RefreshToken")
+// localStorage.removeItem("AccessToken");
+//       localStorage.removeItem("RefreshToken");
+//       localStorage.removeItem("user");
+  console.log(refreshToken)
+  if (!refreshToken) {
+    alert("No refresh token found. Logging out...");
+    localStorage.clear();
+    navigate("/login");
+    return;
+  }
 
-const logout = await axios.post(url,
-  {},
-  {
+  // try {
+    const response = await axios.post(
+      url, 
+      {},
+      {
         headers: {
-          Authorization: `Bearer ${refreshToken}`, 
+          Authorization: `Bearer ${refreshToken}`,
         },
       }
-    )
-      if (logout.status === 200) {
+    );
+
+    if (response.status === 200) {
       localStorage.removeItem("AccessToken");
       localStorage.removeItem("RefreshToken");
       localStorage.removeItem("user");
-      alert("Logged Out Successfully");
+      console.log(response)
+      alert(response.data)
       navigate("/login");
     } else {
       alert("Failed to log out");
     }
+  // } catch (error) {
+  //   if (error.response.status === 404) {
+  //     localStorage.removeItem("AccessToken");
+  //     localStorage.removeItem("RefreshToken");
+  //     localStorage.removeItem("user");
+  //     alert("Session expired. Logged out.");
+  //     navigate("/login");
+  //   } else {
+  //     alert("Logout failed due to network or server error");
+  //     console.error(error);
+  //   }
+  // }
+
+
+  
+    
+
+    
+  
+
+    // ⏱️ Auto logout when access token expires
+    // const decoded = jwtDecode(accessToken);
+    // const expiryTime = decoded.exp * 1000; // exp is in seconds
+    // const timeUntilExpiry = expiryTime - Date.now();
+
+
+    //  setTimeout(() => {
+    //   localStorage.removeItem("AccessToken");
+    //   localStorage.removeItem("RefreshToken");
+    //   localStorage.removeItem("user");
+    //   alert("Session expired. Logged out.");
+    //   navigate("/login");
+    // }, timeUntilExpiry);
+    
   };
 
   const linkClasses =
-    "block py-1 px-2 text-xs sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold";
+    "block py-1 px-2 text-xs sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
 
   return (
     <>
@@ -64,28 +115,20 @@ const logout = await axios.post(url,
                   </span>
                 </Link>
               </li>
-              <li style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-                {location.pathname === "/home" ? (
-                  <ScrollLink to="shaam-e-roshan" smooth={true} duration={200}>
-                    <span className={linkClasses}>Event</span>
-                  </ScrollLink>
-                ) : (
-                  <Link to="/home#shaam-e-roshan" >
-                    <span className={linkClasses} >Event</span>
-                  </Link>
-                )}
-              </li>
+              <li>
+                <Link to="/events">
+                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                    Event
+                  </span>
+                </Link>
+              </li >
 
-              <li style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-                {location.pathname === "/home" ? (
-                  <ScrollLink to="store" smooth={true} duration={200}>
-                    <span className={linkClasses}>Store</span>
-                  </ScrollLink>
-                ) : (
-                  <Link to="/home#store" >
-                    <span className={linkClasses} >Store</span>
-                  </Link>
-                )}
+              <li>
+                <Link to="/ProductPage">
+                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                    Store
+                  </span>
+                </Link>
               </li>
               <li>
                 <Link to="/about">

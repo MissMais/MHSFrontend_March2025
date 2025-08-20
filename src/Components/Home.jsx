@@ -10,34 +10,36 @@ import 'aos/dist/aos.css';
 export default function Home() {
     const navigate = useNavigate();
     const [img, setimg] = useState([])
-const [data,setdata] = useState([])
+    const [data, setdata] = useState([])
 
 
-useEffect(() => {
-    AOS.init({ duration: 900, once: true });
-  }, []);
+    useEffect(() => {
+        AOS.init({ duration: 900, once: true });
+    }, []);
 
 
 
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace("#", "");
-      scroller.scrollTo(id, {
-        duration: 500,
-        smooth: true,
-        offset: -80,
-      });
-    }
-  }, [location]);
+    useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.replace("#", "");
+            scroller.scrollTo(id, {
+                duration: 500,
+                smooth: true,
+                offset: -80,
+            });
+        }
+    }, [location]);
 
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://modestgallery.pythonanywhere.com/custom/')
+            const response2 = await axios.get('https://3j7gm770-8000.inc1.devtunnels.ms/category/')
+            // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
-            // console.log(response2.data)
-            const response3  = await axios.get('https://3j7gm770-8000.inc1.devtunnels.ms/custome/')
-setdata(response3.data)
+            console.log(response2.data)
+            const response3 = await axios.get('https://3j7gm770-8000.inc1.devtunnels.ms/category/')
+            setdata(response3.data)
+            console.log(response3.data)
         } catch (error) {
             console.log(error)
         }
@@ -56,32 +58,33 @@ setdata(response3.data)
             <br />
             <br />
             <br />
-<div>
-    {data
-                            // .sort(() => Math.random() - 0.5)
-                                .filter((i) => i.category_name == "Hijabs" && i.images?.[0])
-                                
-                                .map((i) => (
-                                    
-                                    <div
-                                        key={i.product_variation.product_variation_id}
-                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
-                                        onClick={() => navigate('/ProductPage?category=Abayas')}
-                                    >
-                                        <h1>{i.product_variation.product_variation_id}</h1>
-                                        {i.images?.map((index,) => (
-                                            <img
-                                                key={index}
-                                                src={i.images[0]}
-                                                alt="Image"
-                                                className='w-full h-full object-cover'
-                                            />
-                                        ))}
-                                        
-                                    </div>
-                                    
-                                ))}
-</div>
+            <div>
+                {data
+
+
+                    .map((i) => (
+
+                        <div
+                            key={i.category_id}
+                            className="h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                            onClick={() => navigate('/ProductPage?category=Abayas')}
+                        >
+                        
+
+                            <img
+                                src={
+                                    i.category_image
+                                        ? i.category_image.replace("http://localhost:8000/", "http://192.168.29.87:8000/")
+                                        : "no image"
+                                }
+                                alt={i.category_name}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+
+
+                    ))}
+            </div>
 
 
             {/* Home */}
@@ -133,89 +136,7 @@ setdata(response3.data)
 
 
 
-            {/* Event */}
-          <section id="shaam-e-roshan" className="py-10 bg-[#FB6D6C] mt-16" data-aos="fade-right">
-  <div className="max-w-7xl mx-auto px-4">
-     <div className="border-[5px] border-white rounded-[30px] p-2 shadow-[0_0_40px_rgba(255,255,255,0.3)]">
-    
-    <div className=" p-6 mt-5 ">
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <h1
-          className="text-3xl font-bold text-white drop-shadow"
-          style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
-        >
-          Shaam-E-Roshan
-        </h1>
-      </div>
-
-      {/* First Row of Images */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6 place-items-center" data-aos="fade-left">
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event1.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event2.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event3.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event4.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-
-      {/* Second Row of Images */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 place-items-center" data-aos="fade-left">
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event5.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event6.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event7.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-2 border-white shadow-md hover:shadow-xl transition duration-300">
-          <img
-            src="./../../public/Event8.jpg"
-            alt="Shaam-e-Roshan"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-</section>
+            
 
 
 
@@ -243,23 +164,27 @@ setdata(response3.data)
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {img
-                            // .sort(() => Math.random() - 0.5)
-                                .filter((i) => i.category_name == "Abayas" && i.images?.[0])
+                                // .sort(() => Math.random() - 0.5)
+                                .filter((i) => i.category_name == "Abaya" )
                                 .slice(0, 6)
                                 .map((i) => (
                                     <div
-                                        key={i.product_variation_id}
+                                        // key={i.category_id||index}
                                         className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                         onClick={() => navigate('/ProductPage?category=Abayas')}
                                     >
-                                        {i.images?.map((index,) => (
+                                        {/* {i.images?.map((index,) => ( */}
                                             <img
-                                                key={index}
-                                                src={i.images[0]}
+                                                // key={index}
+                                               src={
+                                    i.category_image
+                                        ? i.category_image.replace("http://localhost:8000/", "http://192.168.29.87:8000/")
+                                        : "no image"
+                                }
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
                                             />
-                                        ))}
+                                        {/* ))} */}
                                     </div>
                                 ))}
                         </div>
@@ -300,9 +225,9 @@ setdata(response3.data)
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {[...img]
-                             .sort(() => Math.random() - 0.5)
+                                .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Stoles" && i.images?.[0])
-                                .slice(0,6)
+                                .slice(0, 6)
                                 .map((i) => (
                                     <div
                                         key={i.product_variation_id}
@@ -356,9 +281,9 @@ setdata(response3.data)
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {[...img]
-                             .sort(() => Math.random() - 0.5)
+                                .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Accessories" && i.images?.[0])
-                                .slice(0,6)
+                                .slice(0, 6)
                                 .map((i) => (
                                     <div
                                         key={i.product_variation_id}
@@ -411,9 +336,9 @@ setdata(response3.data)
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {[...img]
-                             .sort(() => Math.random() - 0.5)
+                                .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Hijabs" && i.images?.[0])
-                                .slice(0,6)
+                                .slice(0, 6)
                                 .map((i) => (
                                     <div
                                         key={i.product_variation_id}
@@ -457,31 +382,3 @@ setdata(response3.data)
 
 
 
-
-// useEffect(() => {
-//     const token = localStorage.getItem("AccessToken");
-//     // if (!token) {
-//     //     navigate("/login");
-//     //     return;
-//     // }
-
-//     // Timer for 5 minutes
-//     const timer = setTimeout(handleLogout, 300000);
-
-//     // Reset the timer if the user moves the mouse or types
-//     const resetTimer = () => {
-//         clearTimeout(timer);
-//         setTimeout(handleLogout, 300000);
-//     };
-
-//     window.addEventListener("mousemove", resetTimer);
-//     window.addEventListener("keydown", resetTimer);
-
-//     // Cleanup on unmount
-//     //     return () => {
-//     //         clearTimeout(timer);
-//     //         window.removeEventListener("mousemove", resetTimer);
-//     //         window.removeEventListener("keydown", resetTimer);
-//     //     };
-//     // }, [navigate]);
-// })

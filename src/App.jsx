@@ -25,6 +25,9 @@ import OrderHistory from './Components/History';
 import Address from './Components/Address';
 import AddressEdit from './Components/AddressEdit';
 import ResetPassword from './Components/Resetpass';
+import AddAddress from './Components/AddAddress';
+import Events from './Components/Events';
+import Emptycart from './Components/Emptycart';
 
 // import AllVO from './1VariationOption/AllVO';
 // import EditVO from './1VariationOption/EditVO';
@@ -39,10 +42,12 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />}></Route>
             <Route path="/home" index element={<Home />} />
+             <Route path="/events" index element={<Events />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path='/acc' element={<PrivateRoute element={<Account />} />} />
             <Route path='/Address' element={<PrivateRoute element={<Address />} />} />
+            <Route path="/addaddress" element={<PrivateRoute element={<AddAddress />} />} />
             <Route path='editadd/:id' element={<PrivateRoute element={<AddressEdit />} />} />
             <Route path='/history' element={<PrivateRoute element={<OrderHistory />} />} />
             <Route path="/ProductPage" element={<ProductPage />} />
@@ -51,6 +56,7 @@ export default function App() {
             <Route path="/Cart" element={<PrivateRoute element={<Cart />} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/reset" element={<PrivateRoute element={<ResetPassword />} />} />
+            <Route path="/emptycart" element={<Emptycart />} />
 
             <Route path="/addC" element={<PrivateRoute element={<AddC />} />} />
             <Route path="/allC" element={<PrivateRoute element={<AllC />} />} />

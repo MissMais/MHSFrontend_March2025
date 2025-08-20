@@ -9,7 +9,7 @@ export default function Footer() {
 
 
   return (
-    <footer style={{ backgroundColor: hexColor }} className="  text-white py-8 mt-16 rounded-tl-4xl rounded-tr-4xl">
+    <footer style={{ backgroundColor: hexColor }} className=" text-white py-8 mt-16 rounded-tl-4xl rounded-tr-4xl">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
@@ -28,7 +28,7 @@ export default function Footer() {
             </div>
             <div className="mb-3 flex items-center gap-2">
               <FaWhatsapp />
-              <a href="https://chat.whatsapp.com/KRHfwgUq6iz33YU3XqUa7N" className=" text-white hover:underline">
+              <a href="https://chat.whatsapp.com/KRHfwgUq6iz33YU3XqUa7N" target="_blank" className=" text-white hover:underline">
                 Modest Hijab Store
               </a>
             </div>
@@ -42,8 +42,8 @@ export default function Footer() {
 
             <div className="mb-3 flex items-center gap-2">
               <FaInstagram />
-              <a href="https://www.instagram.com/_modest_hijab_store_?igsh=MTBkZWN3eHBnaXFjcA==" className=" text-white hover:underline" >
-                modestgallery
+              <a href="https://www.instagram.com/_modest_hijab_store_?igsh=MTBkZWN3eHBnaXFjcA==" target="_blank" className=" text-white hover:underline" >
+                _modest_hijab_store_
               </a>
             </div>
 

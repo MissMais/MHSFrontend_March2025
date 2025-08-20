@@ -30,16 +30,16 @@ export default function AddressEdit() {
             console.log(Data)
 
             reset({
-                name:Data['data'][0]['Name'],
-                contact:Data['data'][0]['Contact'],
-                address_type:Data['data'][0]['Address_type'],
-                house_no:Data['data'][0]['House_No'],
-                area_colony:Data['data'][0]['Area_Colony'],
-                landmark:Data['data'][0]['Landmark'],
-                city:Data['data'][0]['City'],
-                state:Data['data'][0]['State'],
-                country:Data['data'][0]['Country'],
-                pincode:Data['data'][0]['Pincode'],
+                Name:Data['data'][0]['Name'],
+                Contact:Data['data'][0]['Contact'],
+                Address_type:Data['data'][0]['Address_type'],
+                House_No:Data['data'][0]['House_No'],
+                Area_Colony:Data['data'][0]['Area_Colony'],
+                Landmark:Data['data'][0]['Landmark'],
+                City:Data['data'][0]['City'],
+                State:Data['data'][0]['State'],
+                Country:Data['data'][0]['Country'],
+                Pincode:Data['data'][0]['Pincode'],
 
 
                 
@@ -53,7 +53,13 @@ export default function AddressEdit() {
 
     const saveData = async(data)=>{
         try {
-            const Adddata = await axios.put('https://3j7gm770-8000.inc1.devtunnels.ms/filter/'+params.id +'/', data)
+            const Adddata = await axios.put('https://3j7gm770-8000.inc1.devtunnels.ms/filter/'+params.id +'/', data,
+                {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+            )
             console.log(params.id,data)
             reset()
             navigate('/Address')
@@ -73,7 +79,7 @@ export default function AddressEdit() {
                 <div className="mb-4">
                     <label htmlFor="Name" className="block font-bold  text-sm text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Name</label>
                     <input
-                        {...register('name', { required: true })}
+                        {...register('Name', { required: true })}
                         type="text"
                         id="Name"
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -82,7 +88,7 @@ export default function AddressEdit() {
                 <div className='mb-4'>
               <label className="block font-bold  text-sm  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Contact</label>
               <input
-                {...register("contact", { required: true })}
+                {...register("Contact", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -91,7 +97,7 @@ export default function AddressEdit() {
                <div className='mb-4'>
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
               <input
-                {...register("address_type", { required: true })}
+                {...register("Address_type", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -101,7 +107,7 @@ export default function AddressEdit() {
             <div className='mb-4'>
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
               <input
-                {...register("house_no", { required: true })}
+                {...register("House_No", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -110,7 +116,7 @@ export default function AddressEdit() {
             <div className='mb-4'>
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
               <input
-                {...register("area_colony", { required: true })}
+                {...register("Area_Colony", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -119,7 +125,7 @@ export default function AddressEdit() {
             <div className='mb-4'>
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
               <input
-                {...register("landmark", { required: true })}
+                {...register("Landmark", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -128,7 +134,7 @@ export default function AddressEdit() {
             <div className='mb-4'>
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
               <input
-                {...register("city", { required: true })}
+                {...register("City", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -137,7 +143,7 @@ export default function AddressEdit() {
             <div className='mb-4'>
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
               <input
-                {...register("state", { required: true })}
+                {...register("State", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -146,7 +152,7 @@ export default function AddressEdit() {
             <div className='mb-4' >
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
               <input
-                {...register("country", { required: true })}
+                {...register("Country", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
@@ -155,7 +161,7 @@ export default function AddressEdit() {
             <div className='mb-4'>
               <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
               <input
-                {...register("pincode", { required: true })}
+                {...register("Pincode", { required: true })}
                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required

@@ -28,13 +28,13 @@ export default function Account() {
         >
           Account Settings
         </h2>
-        <ul className="space-y-4 text-sm">
+        <ul className="space-y-4 text-sm" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
           <li>
             <Link
               to="/acc"
               className="block text-[#FB6D6C] hover:text-[#e95a59] font-semibold transition-colors"
             >
-              Profile Settings
+              Profile settings
             </Link>
           </li>
           <li>
@@ -64,7 +64,7 @@ export default function Account() {
               className="text-3xl font-bold mb-6"
               style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
             >
-              Profile Settings
+              Profile 
             </h1>
 
             {/* Profile Image */}

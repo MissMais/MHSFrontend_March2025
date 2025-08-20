@@ -6,7 +6,7 @@ export default function Signup() {
   const { register, handleSubmit, reset } = useForm();
   const [message, setMessage] = useState("");
 
-  const url = "https://wkvkk9t8-8000.inc1.devtunnels.ms/signup/"
+  const url = "https://3j7gm770-8000.inc1.devtunnels.ms/signup/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/register/"
 
   const onSubmit = async (data) => {

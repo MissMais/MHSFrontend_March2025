@@ -1,34 +1,44 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Orders = [
-  {
-    id: "ORD123456",
-    date: "2025-06-01",
-    status: "Delivered",
-    total: 1799,
-    items: [
-      { name: "Black Abaya", qty: 1, price: 1199 },
-      { name: "Cotton Hijab", qty: 2, price: 300 },
-    ],
-  },
-  {
-    id: "ORD789101",
-    date: "2025-05-21",
-    status: "Processing",
-    total: 999,
-    items: [
-      { name: "Printed Stole", qty: 1, price: 499 },
-      { name: "Underscarf", qty: 1, price: 500 },
-    ],
-  },
-];
+// const Orders = [
+//   {
+//     id: "ORD123456",
+//     date: "2025-06-01",
+//     status: "Delivered",
+//     total: 1799,
+//     items: [
+//       { name: "Black Abaya", qty: 1, price: 1199 },
+//       { name: "Cotton Hijab", qty: 2, price: 300 },
+//     ],
+//   },
+//   {
+//     id: "ORD789101",
+//     date: "2025-05-21",
+//     status: "Processing",
+//     total: 999,
+//     items: [
+//       { name: "Printed Stole", qty: 1, price: 499 },
+//       { name: "Underscarf", qty: 1, price: 500 },
+//     ],
+//   },
+// ];
 
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    setOrders(Orders);
+ 
+
+  const Orders = async()=>{
+  const response = await axios.get('https://wkvkk9t8-8000.inc1.devtunnels.ms/orderhistory/')
+  console.log(response.data)
+  setOrders(response.data)
+}
+
+useEffect(() => {
+    Orders();
   }, []);
+
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10 mt-20">
@@ -39,17 +49,10 @@ export default function OrderHistory() {
         Orders
       </h1>
 
-      {orders.length === 0 ? (
-        <p
-          className="text-center"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
-        >
-          No orders found.
-        </p>
-      ) : (
-        orders.map((order) => (
+      {
+        orders.map((order,idx) => (
           <div
-            key={order.id}
+            key={idx}
             className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-200"
           >
             <div className="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -58,7 +61,7 @@ export default function OrderHistory() {
                   className="text-lg font-semibold"
                   style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
                 >
-                  Order #{order.id}
+                  Order #{order.order_id}
                 </p>
                 <p
                   className="text-sm"
@@ -83,7 +86,7 @@ export default function OrderHistory() {
               </div>
             </div>
 
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <p
                 className="font-semibold mb-2"
                 style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
@@ -104,10 +107,10 @@ export default function OrderHistory() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </div>
         ))
-      )}
+      }
     </div>
   );
 }

@@ -1,9 +1,12 @@
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
 
-const url = "https://3j7gm770-8000.inc1.devtunnels.ms/"
+const url = 
+// "https://3j7gm770-8000.inc1.devtunnels.ms/"
+"https://wkvkk9t8-8000.inc1.devtunnels.ms/"
 //  'https://modestgallery.pythonanywhere.com/';
 
 export default function Login() {
@@ -20,21 +23,20 @@ export default function Login() {
     try {
       const response = await axios.post(`${url}login/`, data);
 
-    console.log(response.data.access)
+      console.log(response.data.access)
+      console.log(response.data.refresh)
       localStorage.setItem('AccessToken', response.data.access);
       localStorage.setItem('RefreshToken', response.data.refresh);
-      localStorage.setItem('user', JSON.stringify( {email: response.data.email} ));
+      localStorage.setItem('user', JSON.stringify({ email: response.data.email }));
       console.log(response.data.first_name)
-console.log(localStorage.getItem("AccessToken"));
+      alert(response.data.message);
 
 
-
-      alert('Logged In Successfully');
-        if (from && from !== '/signup') {
-      navigate(from, { replace: true }); // 🔥 Go back to where you came from
-    } else {
-      navigate('/', { replace: true });   // 🔥 Go to Home
-    }
+      if (from && from !== '/signup') {
+        navigate(from, { replace: true }); //  Go back to where you came from
+      } else {
+        navigate('/', { replace: true });   //  Go to Home
+      }
     } catch (error) {
 
       console.error(error);
@@ -46,7 +48,7 @@ console.log(localStorage.getItem("AccessToken"));
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
       <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
-        <h2 className="text-center text-2xl font-bold mb-6"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Login</h2>
+        <h2 className="text-center text-2xl font-bold mb-6" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label htmlFor="formName" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
@@ -101,3 +103,34 @@ console.log(localStorage.getItem("AccessToken"));
     </div>
   );
 }
+
+
+
+
+// useEffect(() => {
+//     const token = localStorage.getItem("AccessToken");
+//     // if (!token) {
+//     //     navigate("/login");
+//     //     return;
+//     // }
+
+//     // Timer for 5 minutes
+//     const timer = setTimeout(handleLogout, 300000);
+
+//     // Reset the timer if the user moves the mouse or types
+//     const resetTimer = () => {
+//         clearTimeout(timer);
+//         setTimeout(handleLogout, 300000);
+//     };
+
+//     window.addEventListener("mousemove", resetTimer);
+//     window.addEventListener("keydown", resetTimer);
+
+//     // Cleanup on unmount
+//     //     return () => {
+//     //         clearTimeout(timer);
+//     //         window.removeEventListener("mousemove", resetTimer);
+//     //         window.removeEventListener("keydown", resetTimer);
+//     //     };
+//     // }, [navigate]);
+// })
