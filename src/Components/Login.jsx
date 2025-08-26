@@ -90,11 +90,19 @@ export default function Login() {
             Login
           </button>
         </form>
-        <div className="text-center mt-4">
-          <small>
+        <div className="text-center mt-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+          <small >
             Don't have an account?{" "}
-            <a href="/signup" className="text-[#FB6D6C] hover:underline">
+            <a  href="/signup" className="text-[#FB6D6C] hover:underline" >
               Sign Up
+            </a>
+          </small>
+        </div>
+        <div className="text-center mt-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+          <small>
+           
+            <a href="/forgot" className="text-[#FB6D6C] hover:underline">
+               Forgot Password?
             </a>
           </small>
         </div>

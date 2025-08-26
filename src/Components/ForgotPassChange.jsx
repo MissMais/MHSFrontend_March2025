@@ -5,26 +5,20 @@ import { useNavigate } from "react-router-dom";
 
 const url = "https://3j7gm770-8000.inc1.devtunnels.ms/";
 
-export default function ResetPassword() {
+export default function ForgotPassChange() {
   const navigate = useNavigate();
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
   
   const onSubmit = async (data) => {
-    const accesstoken = localStorage.getItem("AccessToken")
+   
     try {
       console.log(data)
-      const response = await axios.post(`${url}change/`, data,
-        {
-          headers: {
-            Authorization: `Bearer ${accesstoken}`,
-          },
-        }
-      );
-      console.log(response.data);
+      const response = await axios.post(`${url}forget/`, data,);
+    //   console.log(response.data);
       alert('Password Changed Successfully');
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error(error);
       alert("Failed to Reset");
@@ -41,26 +35,6 @@ export default function ResetPassword() {
           Reset Password
         </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <label
-              htmlFor="Current Password"
-              className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
-            >
-              Current Password
-            </label>
-            <input
-              {...register("old_password", { required: "Old Password is required" })}
-              type="password"
-              id="old_password"
-              placeholder="Enter your Old Password"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.old_password && (
-              <small className="text-red-600">{errors.old_password.message}</small>
-            )}
-          </div>
-
           <div className="mb-4">
             <label
               htmlFor="New Password"
@@ -87,19 +61,21 @@ export default function ResetPassword() {
               className="block text-sm font-bold mb-1"
               style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
             >
-              Confirm New Password
+              New Password
             </label>
             <input
-              {...register("confirm_password", { required: "Confirm New Password is required" })}
+              {...register("confirm_password", { required: "New Password is required" })}
               type="password"
               id="confirm_password"
-              placeholder="Confirm your New Password"
+              placeholder="Enter your New Password"
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.confirm_password && (
               <small className="text-red-600">{errors.confirm_password.message}</small>
             )}
           </div>
+
+          
 
           <button
             type="submit"
@@ -109,14 +85,7 @@ export default function ResetPassword() {
             Change
           </button>
         </form>
-        <div className="text-center mt-4">
-          <small style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-            Remember your password?{" "}
-            <a href="/login" className="text-[#FB6D6C] hover:underline">
-              Login
-            </a>
-          </small>
-        </div>
+        
       </div>
     </div>
   );

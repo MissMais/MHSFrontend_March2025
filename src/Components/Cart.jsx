@@ -1,4 +1,6 @@
-// ########SA
+
+// // ############## SH
+// import axios from "axios";
 // import React, { useEffect, useState } from "react";
 // import { FaTrashAlt } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
@@ -28,141 +30,191 @@
 //     setCartItems(storedItems);
 //   }, [navigate]);
 
-//   const removeItem = (id) => {
+
+
+//   const removeItem = async (id) => {
 //     const user = JSON.parse(localStorage.getItem("user"));
 //     const email = user?.email;
 //     const cartKey = `cart_${email}`;
 
 //     const currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-//     const updatedCart = currentCart.filter(item => item.product_variation_id !== id);
+//     const updatedCart = currentCart.filter(item => item.product_variation.product_variation_id !== id);
 
 //     localStorage.setItem(cartKey, JSON.stringify(updatedCart));
 //     setCartItems(updatedCart);
+
+
+//   //  const accesstoken = localStorage.getItem("AccessToken");
+//   // if (accesstoken) {
+//   //   try {
+//   //     await axios.delete(
+//   //       'https://wkvkk9t8-8000.inc1.devtunnels.ms/addtocart/',
+//   //       { product_variation_id: id, Quantity: newQty },
+//   //       { headers: { 
+          
+//   //         Authorization: `Bearer ${accesstoken}` 
+        
+//   //       } }
+//   //     );
+//   //     console.log("Backend quantity updated");
+//   //   } catch (error) {
+//   //     console.error("Error updating backend cart:", error);
+//   //   }
+//   // }
+
 //   };
 
-//   const updateQuantity = (id, newQty) => {
-//     const user = JSON.parse(localStorage.getItem("user"));
-//     const email = user?.email;
-//     const cartKey = `cart_${email}`;
 
-//     let currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+// const updateQuantity = async(id, newQty) => {
+//   const user = JSON.parse(localStorage.getItem("user"));
+//   const email = user?.email;
+//   const cartKey = `cart_${email}`;
+// // console.log(id)
+//   let currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-//     currentCart = currentCart.map(item => {
-//       if (item.product_variation_id === id) {
-  
-//         if (newQty < 1) newQty = 1;
-//         if (item.stock !== undefined && newQty > item.stock) newQty = item.stock;
+//   currentCart = currentCart.map(item => {
+//     if (item.product_variation.product_variation_id === id) {
+//       if (newQty < 1) newQty = 1;
+//       if (item.product_variation.stock !== undefined && newQty > item.product_variation.stock) 
+//         newQty = item.product_variation.stock;
 
-//         return { ...item, quantity: newQty };
-//       }
-//       return item;
-//     });
-
-//     localStorage.setItem(cartKey, JSON.stringify(currentCart));
-//     setCartItems(currentCart);
-//   };
-
-  
-//   let subtotal = 0;
-//   cartItems.forEach(item => {
-//     subtotal += item.price * (item.quantity || 1);
+//       return { ...item, quantity: newQty };
+//     }
+//     return item;
 //   });
 
-//   return (
-    
-//     <div className="min-h-screen bg-gray-50 p-6">
-//       <h1 className="text-3xl font-light text-center text-gray-500 mb-8">My Basket</h1>
+//   localStorage.setItem(cartKey, JSON.stringify(currentCart));
+//   setCartItems(currentCart);
 
-//       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:flex gap-6">
-//         {/* Cart Items */}
-//         <div className="flex-1 border-r border-gray-200 pr-6">
-//           <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Products</h2>
+//   // Update backend
+//   const accesstoken = localStorage.getItem("AccessToken");
+//   if (accesstoken) {
+//     try {
+//       const response = await axios.post(
+//         'https://3j7gm770-8000.inc1.devtunnels.ms/cartitem/',
+//         { product_variation_id: id, quantity: newQty },
+//         { headers: { 
 
-//           {cartItems.length === 0 ? (
-//             <p className="text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Your cart is empty</p>
-//           ) : (
-//             cartItems.map((item, index) => (
-//               <div key={item.id || index} className="flex gap-4 items-center border-b py-4">
-//                 <button
-//                   onClick={() => removeItem(item.product_variation_id)}
-//                   className="text-gray-400 hover:text-red-500"
-                  
-//                 >
-//                   <FaTrashAlt />
-//                 </button>
-//                 <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
-//                 <div className="flex-1">
-//                   <h3 className="font-semibold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
-//                   <p className="text-sm text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Color: {item.variation_name}</p>
-                  
+//           Authorization: `Bearer ${accesstoken}` 
+        
+//         } }
+//       );
+//         // console.log(response.data.cart_item_id)
+// // const id = response.data.cart_item_id;
+//       console.log("Backend quantity updated");
+//     } catch (error) {
+//       console.error("Error updating backend cart:", error);
+//     }
+//   }
+// };
 
-//                   {item.quantity >= item.stock && (
-//                     <p className="text-xs text-red-500 mt-1" >Max stock reached</p>
-//                   )}
-//                 </div>
 
-//                 <div className="text-right">
-//                   <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
-//                   <div className="flex items-center mt-2 border rounded overflow-hidden">
-//                     <button
-//                       onClick={() => updateQuantity(item.product_variation_id, (item.quantity || 1) - 1)}
-//                       className="px-2 py-1 bg-gray-100 text-gray-600"
-//                       disabled={(item.quantity || 1) <= 1}
-//                     >
-//                       −
-//                     </button>
-//                     <span className="px-4 py-1">{item.quantity || 1}</span>
-//                     <button
-//                       onClick={() => updateQuantity(item.product_variation_id, (item.quantity || 1) + 1)}
-//                       className="px-2 py-1 bg-gray-100 text-gray-600"
-//                       disabled={item.stock === 0 || (item.quantity || 1) >= item.stock}
-//                     >
-//                       +
-//                     </button>
+
+
+
+
+//     let subtotal = 0;
+//     cartItems.forEach(item => {
+//       subtotal += item.price * (item.quantity || 1);
+//     });
+
+//     return (
+
+//       <div className="min-h-screen bg-gray-50 p-6">
+//         <h1 className="text-3xl font-light text-center text-gray-500 mb-8">My Basket</h1>
+
+//         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:flex gap-6">
+//           {/* Cart Items */}
+//           <div className="flex-1 border-r border-gray-200 pr-6">
+//             <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Products</h2>
+
+//             {cartItems.length === 0 ? (
+//               <p className="text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Your cart is empty</p>
+//             ) : (
+//               cartItems.map((item, index) => (
+//                 <div key={item.id || index} className="flex gap-4 items-center border-b py-4">
+//                   <button
+//                     onClick={() => removeItem(item.product_variation.product_variation_id)}
+//                     className="text-gray-400 hover:text-red-500"
+
+//                   >
+//                     <FaTrashAlt />
+//                   </button>
+//                   <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
+//                   <div className="flex-1">
+//                     <h3 className="font-semibold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
+//                     <p className="text-sm text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Color: {item.variation_name}</p>
+
+
+//                     {item.quantity >= item.product_variation_stock && (
+//                       <p className="text-xs text-red-500 mt-1" >Max stock reached</p>
+//                     )}
+//                   </div>
+
+//                   <div className="text-right">
+//                     <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
+//                     <div className="flex items-center mt-2 border rounded overflow-hidden">
+//                       <button
+//                         onClick={() => updateQuantity(item.product_variation.product_variation_id, (item.quantity || 1) - 1)}
+//                         className="px-2 py-1 bg-gray-100 text-gray-600"
+//                         disabled={(item.quantity || 1) <= 1}
+//                       >
+//                         −
+//                       </button>
+//                       <span className="px-4 py-1">{item.quantity || 1}</span>
+//                       <button
+//                         onClick={() => updateQuantity(item.product_variation.product_variation_id, (item.quantity || 1) + 1)}
+//                         className="px-2 py-1 bg-gray-100 text-gray-600"
+//                         disabled={item.product_variation_stock === 0 || (item.quantity || 1) >= item.product_variation_stock}
+//                       >
+//                         +
+//                       </button>
+//                     </div>
+//                   </div>
+
+//                   <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+//                     ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
 //                   </div>
 //                 </div>
+//               ))
+//             )}
+//           </div>
 
-//                 <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-//                   ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
-//                 </div>
+//           {/* Cart Totals */}
+//           <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
+//             <h2 className=" text-lg font-bold text-gray-600 mb-4 text-center" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Basket Total</h2>
+//             <div className="flex justify-between py-2 border-b">
+//               <span className=" font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Subtotal</span>
+//               <span className="font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
+//             </div>
+//             <div className="flex justify-between py-2 border-b">
+//               <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Transfer</span>
+//               <span className="text-green-600 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Free Shipping</span>
+//             </div>
+//             <div className="flex justify-between py-4 text-lg font-bold text-yellow-600" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+//               <span>Total</span>
+//               <span>₹{subtotal.toFixed(2)}</span>
+//             </div>
+//             <button
+//               className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-lg font-semibold"
+//               onClick={toorder} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+//             >
+//               Place Order
+//             </button>
+//             <div className="flex justify-between mt-4 text-xs text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+//               <div>
+//                 <p className="p-2">🔒 Secure Payment</p>
+//                 <p className="p-2">↩️ Easy Returns</p>
 //               </div>
-//             ))
-//           )}
-//         </div>
-
-//         {/* Cart Totals */}
-//         <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
-//           <h2 className=" text-lg font-bold text-gray-600 mb-4 text-center"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Basket Total</h2>
-//           <div className="flex justify-between py-2 border-b">
-//             <span className=" font-bold"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Subtotal</span>
-//             <span className="font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
-//           </div>
-//           <div className="flex justify-between py-2 border-b">
-//             <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Transfer</span>
-//             <span className="text-green-600 font-bold"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Free Shipping</span>
-//           </div>
-//           <div className="flex justify-between py-4 text-lg font-bold text-yellow-600"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-//             <span>Total</span>
-//             <span>₹{subtotal.toFixed(2)}</span>
-//           </div>
-//           <button
-//             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-lg font-semibold"
-//             onClick={toorder}  style={{ fontFamily: "Copperplate, Papyrus, fantasy"}}
-//           >
-//            Place Order
-//           </button>
-//           <div className="flex justify-between mt-4 text-xs text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
-//             <div>
-//               <p className="p-2">🔒 Secure Payment</p>
-//               <p className="p-2">↩️ Easy Returns</p>
 //             </div>
 //           </div>
 //         </div>
 //       </div>
-//     </div>
-//   );
-// }
+//     );
+//   }
+
+
 
 
 
@@ -219,7 +271,7 @@ export default function Cart() {
 
 
 
-  const removeItem = async(id) => {
+  const removeItem = async (id) => {
     const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
     const cartKey = `cart_${email}`;
@@ -228,135 +280,176 @@ export default function Cart() {
 
     const updatedCart = currentCart.filter(item => item.product_variation.product_variation_id !== id);
 
-
-
-
     localStorage.setItem(cartKey, JSON.stringify(updatedCart));
     setCartItems(updatedCart);
+
+
+  //  const accesstoken = localStorage.getItem("AccessToken");
+  // if (accesstoken) {
+  //   try {
+  //     await axios.delete(
+  //       'https://wkvkk9t8-8000.inc1.devtunnels.ms/addtocart/',
+  //       { product_variation_id: id, Quantity: newQty },
+  //       { headers: { 
+          
+  //         Authorization: `Bearer ${accesstoken}` 
+        
+  //       } }
+  //     );
+  //     console.log("Backend quantity updated");
+  //   } catch (error) {
+  //     console.error("Error updating backend cart:", error);
+  //   }
+  // }
+
   };
 
-  const updateQuantity = (id, newQty) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const email = user?.email;
-    const cartKey = `cart_${email}`;
+ const updateQuantity = async(id, newQty) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const email = user?.email;
+  const cartKey = `cart_${email}`;
+// console.log(id)
+  let currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-    let currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+  currentCart = currentCart.map(item => {
+    if (item.product_variation.product_variation_id === id) {
+      if (newQty < 1) newQty = 1;
+      if (item.product_variation.stock !== undefined && newQty > item.product_variation.stock) 
+        newQty = item.product_variation.stock;
 
-    currentCart = currentCart.map(item => {
-      if (item.product_variation.product_variation_id === id) {
-  
-        if (newQty < 1) newQty = 1;
-        if (item.product_variation.stock !== undefined && newQty > item.product_variation.stock) newQty = item.product_variation.stock;
-
-        return { ...item, quantity: newQty };
-      }
-      return item;
-    });
-
-    localStorage.setItem(cartKey, JSON.stringify(currentCart));
-    setCartItems(currentCart);
-  };
-
-  
-  let subtotal = 0;
-  cartItems.forEach(item => {
-    subtotal += item.price * (item.quantity || 1);
+      return { ...item, quantity: newQty };
+    }
+    return item;
   });
 
-  return (
-    
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-3xl font-light text-center text-gray-500 mb-8">My Basket</h1>
+  localStorage.setItem(cartKey, JSON.stringify(currentCart));
+  setCartItems(currentCart);
 
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:flex gap-6">
-        {/* Cart Items */}
-        <div className="flex-1 border-r border-gray-200 pr-6">
-          <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Products</h2>
+  // Update backend
+  const accesstoken = localStorage.getItem("AccessToken");
+  if (accesstoken) {
+    try {
+      const response = await axios.post(
+        'https://wkvkk9t8-8000.inc1.devtunnels.ms/addtocart/',
+        { product_variation_id: id, quantity: newQty },
+        { headers: { 
 
-          {cartItems.length === 0 ? (
-            <p className="text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Your cart is empty</p>
-          ) : (
-            cartItems.map((item, index) => (
-              <div key={item.id || index} className="flex gap-4 items-center border-b py-4">
-                <button
-                  onClick={() => removeItem(item.product_variation.product_variation_id)}
-                  className="text-gray-400 hover:text-red-500"
-                  
-                >
-                  <FaTrashAlt />
-                </button>
-                <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
-                  <p className="text-sm text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Color: {item.variation_name}</p>
-                  
+          Authorization: `Bearer ${accesstoken}` 
+        
+        } }
+      );
+        // console.log(response.data.cart_item_id)
+// const id = response.data.cart_item_id;
+      console.log("Backend quantity updated");
+    } catch (error) {
+      console.error("Error updating backend cart:", error);
+    }
+  }
+};
 
-                  {item.quantity >= item.product_variation_stock && (
-                    <p className="text-xs text-red-500 mt-1" >Max stock reached</p>
-                  )}
-                </div>
 
-                <div className="text-right">
-                  <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
-                  <div className="flex items-center mt-2 border rounded overflow-hidden">
-                    <button
-                      onClick={() => updateQuantity(item.product_variation.product_variation_id, (item.quantity || 1) - 1)}
-                      className="px-2 py-1 bg-gray-100 text-gray-600"
-                      disabled={(item.quantity || 1) <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="px-4 py-1">{item.quantity || 1}</span>
-                    <button
-                      onClick={() => updateQuantity(item.product_variation.product_variation_id, (item.quantity || 1) + 1)}
-                      className="px-2 py-1 bg-gray-100 text-gray-600"
-                      disabled={item.product_variation_stock === 0 || (item.quantity || 1) >= item.product_variation_stock}
-                    >
-                      +
-                    </button>
+
+
+
+    let subtotal = 0;
+    cartItems.forEach(item => {
+      subtotal += item.price * (item.quantity || 1);
+    });
+
+    return (
+
+      <div className="min-h-screen bg-gray-50 p-6">
+        <h1 className="text-3xl font-light text-center text-gray-500 mb-8">My Basket</h1>
+
+        <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:flex gap-6">
+          {/* Cart Items */}
+          <div className="flex-1 border-r border-gray-200 pr-6">
+            <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Products</h2>
+
+            {cartItems.length === 0 ? (
+              <p className="text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Your cart is empty</p>
+            ) : (
+              cartItems.map((item, index) => (
+                <div key={item.id || index} className="flex gap-4 items-center border-b py-4">
+                  <button
+                    onClick={() => removeItem(item.product_variation.product_variation_id)}
+                    className="text-gray-400 hover:text-red-500"
+
+                  >
+                    <FaTrashAlt />
+                  </button>
+                  <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
+                    <p className="text-sm text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Color: {item.variation_name}</p>
+
+
+                    {item.quantity >= item.product_variation_stock && (
+                      <p className="text-xs text-red-500 mt-1" >Max stock reached</p>
+                    )}
+                  </div>
+
+                  <div className="text-right">
+                    <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
+                    <div className="flex items-center mt-2 border rounded overflow-hidden">
+                      <button
+                        onClick={() => updateQuantity(item.product_variation.product_variation_id, (item.quantity || 1) - 1)}
+                        className="px-2 py-1 bg-gray-100 text-gray-600"
+                        disabled={(item.quantity || 1) <= 1}
+                      >
+                        −
+                      </button>
+                      <span className="px-4 py-1">{item.quantity || 1}</span>
+                      <button
+                        onClick={() => updateQuantity(item.product_variation.product_variation_id, (item.quantity || 1) + 1)}
+                        className="px-2 py-1 bg-gray-100 text-gray-600"
+                        disabled={item.product_variation_stock === 0 || (item.quantity || 1) >= item.product_variation_stock}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                    ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
                   </div>
                 </div>
+              ))
+            )}
+          </div>
 
-                <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-                  ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
-                </div>
+          {/* Cart Totals */}
+          <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
+            <h2 className=" text-lg font-bold text-gray-600 mb-4 text-center" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Basket Total</h2>
+            <div className="flex justify-between py-2 border-b">
+              <span className=" font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Subtotal</span>
+              <span className="font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between py-2 border-b">
+              <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Transfer</span>
+              <span className="text-green-600 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Free Shipping</span>
+            </div>
+            <div className="flex justify-between py-4 text-lg font-bold text-yellow-600" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+              <span>Total</span>
+              <span>₹{subtotal.toFixed(2)}</span>
+            </div>
+            <button
+              className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-lg font-semibold"
+              onClick={toorder} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            >
+              Place Order
+            </button>
+            <div className="flex justify-between mt-4 text-xs text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+              <div>
+                <p className="p-2">🔒 Secure Payment</p>
+                <p className="p-2">↩️ Easy Returns</p>
               </div>
-            ))
-          )}
-        </div>
-
-        {/* Cart Totals */}
-        <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
-          <h2 className=" text-lg font-bold text-gray-600 mb-4 text-center"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Basket Total</h2>
-          <div className="flex justify-between py-2 border-b">
-            <span className=" font-bold"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Subtotal</span>
-            <span className="font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between py-2 border-b">
-            <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Transfer</span>
-            <span className="text-green-600 font-bold"style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Free Shipping</span>
-          </div>
-          <div className="flex justify-between py-4 text-lg font-bold text-yellow-600"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-            <span>Total</span>
-            <span>₹{subtotal.toFixed(2)}</span>
-          </div>
-          <button
-            className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-lg font-semibold"
-            onClick={toorder}  style={{ fontFamily: "Copperplate, Papyrus, fantasy"}}
-          >
-           Place Order
-          </button>
-          <div className="flex justify-between mt-4 text-xs text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
-            <div>
-              <p className="p-2">🔒 Secure Payment</p>
-              <p className="p-2">↩️ Easy Returns</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
 
 

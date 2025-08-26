@@ -22,9 +22,9 @@ const url =
 
   const handleLogout = async() => {
 const refreshToken = localStorage.getItem("RefreshToken")
-// localStorage.removeItem("AccessToken");
-//       localStorage.removeItem("RefreshToken");
-//       localStorage.removeItem("user");
+localStorage.removeItem("AccessToken");
+      localStorage.removeItem("RefreshToken");
+      localStorage.removeItem("user");
   console.log(refreshToken)
   if (!refreshToken) {
     alert("No refresh token found. Logging out...");

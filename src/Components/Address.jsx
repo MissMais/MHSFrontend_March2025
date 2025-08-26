@@ -143,9 +143,11 @@ import { MdHome } from "react-icons/md";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 
-const url = 'https://wkvkk9t8-8000.inc1.devtunnels.ms/address/'
+const url = "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
+// 'https://wkvkk9t8-8000.inc1.devtunnels.ms/address/'
 // https://modestgallery.pythonanywhere.com/address/
-const url2 = 'https://wkvkk9t8-8000.inc1.devtunnels.ms/address/'
+const url2 = "https://3j7gm770-8000.inc1.devtunnels.ms/address"
+// 'https://wkvkk9t8-8000.inc1.devtunnels.ms/address/'
 
 
 

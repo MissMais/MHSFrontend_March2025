@@ -28,6 +28,9 @@ import ResetPassword from './Components/Resetpass';
 import AddAddress from './Components/AddAddress';
 import Events from './Components/Events';
 import Emptycart from './Components/Emptycart';
+import ForgotPassword from './Components/Forgotpass';
+import ForgotPassOtp from './Components/ForgotPassOtp';
+import ForgotPassChange from './Components/ForgotPassChange';
 
 // import AllVO from './1VariationOption/AllVO';
 // import EditVO from './1VariationOption/EditVO';
@@ -56,8 +59,13 @@ export default function App() {
             <Route path="/Cart" element={<PrivateRoute element={<Cart />} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/reset" element={<PrivateRoute element={<ResetPassword />} />} />
-            <Route path="/emptycart" element={<Emptycart />} />
+            <Route path="/forgot"element={<ForgotPassword />} />
+            <Route path="/otp"element={<ForgotPassOtp />} />
+            <Route path="/changepass"element={<ForgotPassChange />} />
+            
 
+
+            <Route path="/emptycart" element={<Emptycart />} />
             <Route path="/addC" element={<PrivateRoute element={<AddC />} />} />
             <Route path="/allC" element={<PrivateRoute element={<AllC />} />} />
             <Route path='/editC/:id' index element={<EditC />}></Route>
