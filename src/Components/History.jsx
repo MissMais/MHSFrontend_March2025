@@ -36,7 +36,10 @@ export default function OrderHistory() {
 
       {
         headers: {
-          Authorization: `Bearer ${accesstoken}`
+          Authorization: `Bearer ${accesstoken}`,
+           "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+
         }
       }
     )
