@@ -27,15 +27,24 @@ import React, { useEffect, useState } from "react";
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
 
- 
 
-  const Orders = async()=>{
-  const response = await axios.get('https://wkvkk9t8-8000.inc1.devtunnels.ms/orderhistory/')
-  console.log(response.data)
-  setOrders(response.data)
-}
+  const accesstoken = localStorage.getItem('AccessToken')
+  const id = localStorage.getItem("user_id")
 
-useEffect(() => {
+  const Orders = async () => {
+    const response = await axios.get(`https://de20af8d3746.ngrok-free.app/orderhistory/${id}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${accesstoken}`
+        }
+      }
+    )
+    console.log(response.data)
+    setOrders(response.data)
+  }
+
+  useEffect(() => {
     Orders();
   }, []);
 
@@ -50,7 +59,7 @@ useEffect(() => {
       </h1>
 
       {
-        orders.map((order,idx) => (
+        orders.map((order, idx) => (
           <div
             key={idx}
             className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-200"

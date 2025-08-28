@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
 
-const url = 
+const url = 'https://de20af8d3746.ngrok-free.app/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/"
-"https://wkvkk9t8-8000.inc1.devtunnels.ms/"
+// "https://wkvkk9t8-8000.inc1.devtunnels.ms/"
 //  'https://modestgallery.pythonanywhere.com/';
 
 export default function Login() {
@@ -27,6 +27,7 @@ export default function Login() {
       console.log(response.data.refresh)
       localStorage.setItem('AccessToken', response.data.access);
       localStorage.setItem('RefreshToken', response.data.refresh);
+      localStorage.setItem('user_id', response.data.user_id);
       localStorage.setItem('user', JSON.stringify({ email: response.data.email }));
       console.log(response.data.first_name)
       alert(response.data.message);

@@ -290,9 +290,9 @@ import React, { useState, useEffect } from "react";
 import { FaFilter, FaTag, FaPalette, FaCubes, FaRupeeSign } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const url = 
+const url = 'https://de20af8d3746.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
-"https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
+// "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 
 const ProductPage = () => {
     const [searchParams] = useSearchParams();
@@ -324,11 +324,14 @@ const accessToken = localStorage.getItem("AccessToken")
             const res = await axios.get(url,
                 {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+        //   Authorization: `Bearer ${accessToken}`,
+           'ngrok-skip-browser-warning':'69420',
+                'Content-Type':'application/json'
         },
       }
             );
             setProducts(res.data);
+            console.log(res.data)
             // console.log(res.data)
             // console.log(res.data[0].images[0].replace("http://localhost:8000/", "http://192.168.29.87:8000/"))
         } catch (err) {

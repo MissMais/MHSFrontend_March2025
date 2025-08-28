@@ -89,7 +89,7 @@ export default function OrderPage() {
       // };
 
       const response = await axios.post(
-        'https://wkvkk9t8-8000.inc1.devtunnels.ms/placeorder/',
+        'https://de20af8d3746.ngrok-free.app/placeorder/',
         // "https://3j7gm770-8000.inc1.devtunnels.ms/order/",
 
         payload,
