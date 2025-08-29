@@ -32,7 +32,7 @@ export default function OrderHistory() {
   const id = localStorage.getItem("user_id")
 
   const Orders = async () => {
-    const response = await axios.get(`https://de20af8d3746.ngrok-free.app/orderhistory/${id}`,
+    const response = await axios.get(`https://2ed72d8bed8e.ngrok-free.app/orderhistory/${id}`,
 
       {
         headers: {

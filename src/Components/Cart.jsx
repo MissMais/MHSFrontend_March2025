@@ -537,6 +537,10 @@ export default function Cart() {
   const navigate = useNavigate();
   const accesstoken = localStorage.getItem("AccessToken");
 
+
+  const url = "https://d96e3fa91f6a.ngrok-free.app/"
+
+
   const toOrder = () => {
     navigate('/OrderPage');
   };
@@ -552,16 +556,21 @@ export default function Cart() {
       return;
     }
 
+
+
     const cartKey = `cart_${email}`;
     const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
     setCartItems(storedItems);
+    console.log(cartItems)
+
+
 
     // Fetch backend cart to get cart_item_id
     const fetchCart = async () => {
       if (!accesstoken) return;
       try {
         const response = await axios.get(
-          "https://de20af8d3746.ngrok-free.app/addtocart/",
+          `${url}addtocart/`,
           {
             headers: {
               Authorization: `Bearer ${accesstoken}`,
@@ -572,7 +581,19 @@ export default function Cart() {
         );
 
         const backendCart = response.data;
+        console.log(response.data)
 
+        //     response data--:
+        //    [0{ cart_item_id: 121, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300 }
+        //     1{ cart_item_id: 122, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300 }
+        //     2{cart_item_id: 123, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300}]
+        //     length:2
+        //     [[Prototype]]: Array(0)
+
+        console.log(storedItems)
+        console.log(backendCart)
+        console.log(cartItems)
+        // console.log((storedItems) + (backendCart))
         // Merge backend cart_item_id with localStorage cart items
         const mergedCart = storedItems.map(localItem => {
           const backendItem = backendCart.find(b => b.product_variation_id === localItem.product_variation.product_variation_id);
@@ -587,14 +608,31 @@ export default function Cart() {
         console.log(mergedCart)
         localStorage.setItem(cartKey, JSON.stringify(mergedCart));
 
+        if (mergedCart.length === 0) {
+          navigate("/emptycart");
+
+        }
+
       } catch (error) {
         console.error("Error fetching cart:", error);
       }
     };
 
+
+
+
     fetchCart();
 
+
   }, [navigate, accesstoken]);
+
+
+
+  // useEffect(() => {
+  //   if (cartItems.length === 0) {
+  //     navigate("/emptycart");
+  //   }
+  // }, [cartItems, navigate]);
 
 
 
@@ -617,11 +655,13 @@ export default function Cart() {
     setCartItems(updatedCart);
     localStorage.setItem(cartKey, JSON.stringify(updatedCart));
 
+
+
     // Update backend
     if (accesstoken) {
       try {
         await axios.patch(
-          'https://de20af8d3746.ngrok-free.app/addtocart/',
+          `${url}addtocart/`,
           { cart_item_id, quantity: newQty },
           {
             headers: {
@@ -630,7 +670,7 @@ export default function Cart() {
               'Content-Type': 'application/json'
             }
           }
-          
+
         );
         console.log('Backend cart Updated')
       } catch (error) {
@@ -639,37 +679,37 @@ export default function Cart() {
     }
   };
 
-  
+
   const removeItem = async (productVariationId, cart_item_id) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const email = user?.email;
-  const cartKey = `cart_${email}`;
-
-  
-  const currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
-  const updatedCart = currentCart.filter(
-    (item) => item.product_variation.product_variation_id !== productVariationId
-  );
-  localStorage.setItem(cartKey, JSON.stringify(updatedCart));
-  setCartItems(updatedCart);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const email = user?.email;
+    const cartKey = `cart_${email}`;
 
 
-  if (accesstoken && cart_item_id) {
-    try {
-      await axios.delete("https://de20af8d3746.ngrok-free.app/addtocart/", {
-        headers: {
-          Authorization: `Bearer ${accesstoken}`,
-          "ngrok-skip-browser-warning": "69420",
-          "Content-Type": "application/json",
-        },
-        data: { cart_item_id }, 
-      });
-      console.log("Item removed from backend");
-    } catch (error) {
-      console.error("Error removing item from backend:", error);
+    const currentCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    const updatedCart = currentCart.filter(
+      (item) => item.product_variation.product_variation_id !== productVariationId
+    );
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+    setCartItems(updatedCart);
+
+
+    if (accesstoken && cart_item_id) {
+      try {
+        await axios.delete(`${url}addtocart/`, {
+          headers: {
+            Authorization: `Bearer ${accesstoken}`,
+            "ngrok-skip-browser-warning": "69420",
+            "Content-Type": "application/json",
+          },
+          data: { cart_item_id },
+        });
+        console.log("Item removed from backend");
+      } catch (error) {
+        console.error("Error removing item from backend:", error);
+      }
     }
-  }
-};
+  };
 
 
   // Calculate subtotal
@@ -686,18 +726,22 @@ export default function Cart() {
           <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Products</h2>
 
           {cartItems.length === 0 ? (
-            <p className="text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Your cart is empty</p>
+
+            <>
+              {navigate("/emptycart")}
+
+            </>
           ) : (
             cartItems.map((item, index) => (
               <div key={item.id || index} className="flex gap-4 items-center border-b py-4">
                 <button
-                  onClick={() => removeItem(item.product_variation.product_variation_id,item.cart_item_id)}
+                  onClick={() => removeItem(item.product_variation.product_variation_id, item.cart_item_id)}
                   className="text-gray-400 hover:text-red-500"
 
                 >
                   <FaTrashAlt />
                 </button>
-                <p>{index}</p>
+                <p>{item.product_variation.product_variation_id}</p>
                 <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>

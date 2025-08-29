@@ -290,7 +290,7 @@ import React, { useState, useEffect } from "react";
 import { FaFilter, FaTag, FaPalette, FaCubes, FaRupeeSign } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const url = 'https://de20af8d3746.ngrok-free.app/custom/'
+const url = 'https://d96e3fa91f6a.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 

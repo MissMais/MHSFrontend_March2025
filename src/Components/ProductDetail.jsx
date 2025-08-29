@@ -363,7 +363,8 @@ export default function ProductDetail() {
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
 const url = 
-'https://de20af8d3746.ngrok-free.app/custom/'
+'https://d96e3fa91f6a.ngrok-free.app/'
+
 
 const headers = {
   //   Authorization: `Bearer ${accessToken}`,
@@ -373,8 +374,8 @@ const headers = {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(url,{headers});
-      const response2 = await axios.get(url,{headers});
+      const response = await axios.get(url+'custom/',{headers});
+      const response2 = await axios.get(url+'custom/',{headers});
       console.log(response)
       const filtered = response.data.filter(item => item.Product_id === id);
       console.log(response.data.category_name)
@@ -436,7 +437,7 @@ const addToCart = async (product) => {
       };
 
       await axios.post(
-        "https://de20af8d3746.ngrok-free.app/addtocart/",
+        `${url}addtocart/`,
         payload,
         {
           headers: {

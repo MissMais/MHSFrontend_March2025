@@ -145,11 +145,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const url = 
 // "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
-'https://wkvkk9t8-8000.inc1.devtunnels.ms/address/'
+'https://d96e3fa91f6a.ngrok-free.app/address/'
 // https://modestgallery.pythonanywhere.com/address/
 const url2 = 
 // "https://3j7gm770-8000.inc1.devtunnels.ms/address"
-'https://wkvkk9t8-8000.inc1.devtunnels.ms/address/'
+'https://d96e3fa91f6a.ngrok-free.app/address/'
 
 
 
@@ -187,6 +187,8 @@ const handleSelect = (add) => {
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
+           'ngrok-skip-browser-warning':'69420',
+                'Content-Type':'application/json'
         },
       }
     )

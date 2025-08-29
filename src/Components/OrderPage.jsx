@@ -12,6 +12,9 @@ export default function OrderPage() {
   const [paymentMethod, setPaymentMethod] = useState("card");
 
 
+
+  const url = "https://d96e3fa91f6a.ngrok-free.app/"
+
   const {
     register,
     handleSubmit,
@@ -67,7 +70,15 @@ export default function OrderPage() {
 
 
   const onSubmit = async (data) => {
+     const user = JSON.parse(localStorage.getItem("user"));
+    const email = user?.email;
+  
+    const cartKey = `cart_${email}`;
+
+    // const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+    // setCartItems(storedItems);
     const accesstoken = localStorage.getItem("AccessToken")
+
     try {
       // // // Sh
       const payload = {
@@ -89,7 +100,7 @@ export default function OrderPage() {
       // };
 
       const response = await axios.post(
-        'https://de20af8d3746.ngrok-free.app/placeorder/',
+        `${url}placeorder/`,
         // "https://3j7gm770-8000.inc1.devtunnels.ms/order/",
 
         payload,
@@ -100,6 +111,8 @@ export default function OrderPage() {
         }
       );
       console.log(response.data.order_id)
+      localStorage.removeItem(cartKey);
+    setCartItems([]); 
 
     } catch (error) {
       console.error("Error:", error);
