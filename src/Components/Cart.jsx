@@ -538,7 +538,7 @@ export default function Cart() {
   const accesstoken = localStorage.getItem("AccessToken");
 
 
-  const url = "https://d96e3fa91f6a.ngrok-free.app/"
+  const url = "https://abafbb3865a8.ngrok-free.app/"
 
 
   const toOrder = () => {
@@ -579,10 +579,19 @@ export default function Cart() {
             },
           }
         );
+         // console.log(response.data)
 
-        const backendCart = response.data;
-        console.log(response.data)
 
+
+        const user_id = JSON.parse(localStorage.getItem("user_id"));
+        const backendCart = response.data
+       
+        const filtererddata = backendCart.filter(item => item.Cart_id == user_id)
+        const sliceindex = storedItems.length
+        const sliceddata = filtererddata.slice(-sliceindex)
+        console.log(sliceddata)
+
+        
         //     response data--:
         //    [0{ cart_item_id: 121, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300 }
         //     1{ cart_item_id: 122, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300 }
@@ -593,10 +602,11 @@ export default function Cart() {
         console.log(storedItems)
         console.log(backendCart)
         console.log(cartItems)
+
         // console.log((storedItems) + (backendCart))
         // Merge backend cart_item_id with localStorage cart items
         const mergedCart = storedItems.map(localItem => {
-          const backendItem = backendCart.find(b => b.product_variation_id === localItem.product_variation.product_variation_id);
+          const backendItem = sliceddata.find(b => b.product_variation_id === localItem.product_variation.product_variation_id);
           return {
             ...localItem,
             quantity: backendItem ? backendItem.Quantity : (localItem.quantity || 1),
@@ -606,6 +616,7 @@ export default function Cart() {
 
         setCartItems(mergedCart);
         console.log(mergedCart)
+        console.log(mergedCart.length)
         localStorage.setItem(cartKey, JSON.stringify(mergedCart));
 
         if (mergedCart.length === 0) {
@@ -652,6 +663,8 @@ export default function Cart() {
       return item;
     });
     console.log(cart_item_id)
+
+    // console.log(mergedCart.length)
     setCartItems(updatedCart);
     localStorage.setItem(cartKey, JSON.stringify(updatedCart));
 
@@ -711,6 +724,13 @@ export default function Cart() {
     }
   };
 
+
+
+
+
+  // const arr = [1,2] //-- count-1
+  // arr = [] //-- count -1
+  // arr =[1,2] //-- count
 
   // Calculate subtotal
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);

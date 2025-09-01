@@ -290,7 +290,7 @@ import React, { useState, useEffect } from "react";
 import { FaFilter, FaTag, FaPalette, FaCubes, FaRupeeSign } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const url = 'https://d96e3fa91f6a.ngrok-free.app/custom/'
+const url = 'https://abafbb3865a8.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 
@@ -494,7 +494,8 @@ const accessToken = localStorage.getItem("AccessToken")
                             <div className="h-64 w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)]  overflow-hidden">
                                 <img
                                     src={
-                                        product.images[0]?.replace("http://localhost:8000/", "http://192.168.18.136:8000/")
+                                        product.images[0]
+                                        // ?.replace("http://localhost:8000/", "http://192.168.18.136:8000/")
                 
                                     }
                                     alt="Product"

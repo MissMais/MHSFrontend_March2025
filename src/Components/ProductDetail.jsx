@@ -363,7 +363,7 @@ export default function ProductDetail() {
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
 const url = 
-'https://d96e3fa91f6a.ngrok-free.app/'
+'https://abafbb3865a8.ngrok-free.app/'
 
 
 const headers = {
@@ -469,7 +469,8 @@ const addToCart = async (product) => {
   };
 
   const getProductImage = (product) => {
-    return product.images?.[0].replace("http://localhost:8000/", "http://192.168.29.87:8000/") 
+    return product.images?.[0]
+    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/") 
   };
 
   // const filteredProductsWithImages = allVariations.filter(
@@ -490,7 +491,8 @@ const addToCart = async (product) => {
           {/* Image Section */}
           <div className="flex flex-col items-center">
             <img
-              // src={selectedProduct?.images?.[0].replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
+              src={selectedProduct?.images?.[0]}
+              // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
               className="rounded-lg shadow-md w-full h-auto"
               onClick={() => swapWithMain(0)}
               alt="Product"
@@ -499,7 +501,8 @@ const addToCart = async (product) => {
               {selectedProduct?.images?.slice(0, 3).map((img, index) => (
                 <img
                   key={index}
-                  // src={img.replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
+                  src={img}
+                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
                   className="w-20 h-14 object-cover rounded cursor-pointer"
                   onClick={() => swapWithMain(index)}
                   alt={`Thumbnail ${index}`}

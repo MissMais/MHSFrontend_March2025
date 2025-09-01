@@ -11,31 +11,32 @@ export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
-const url = 
-"https://wkvkk9t8-8000.inc1.devtunnels.ms/logout/"
-// "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
+  const url =
+    "https://wkvkk9t8-8000.inc1.devtunnels.ms/logout/"
+  // "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem("AccessToken"))
   })
 
 
-  const handleLogout = async() => {
-const refreshToken = localStorage.getItem("RefreshToken")
-localStorage.removeItem("AccessToken");
-      localStorage.removeItem("RefreshToken");
-      localStorage.removeItem("user");
-  console.log(refreshToken)
-  if (!refreshToken) {
-    alert("No refresh token found. Logging out...");
-    localStorage.clear();
-    navigate("/login");
-    return;
-  }
+  const handleLogout = async () => {
+    const refreshToken = localStorage.getItem("RefreshToken")
+    localStorage.removeItem("AccessToken");
+    localStorage.removeItem("RefreshToken");
+    localStorage.removeItem("user");
+    //  localStorage.removeItem("cart_mohdadan@gmail.com")
+    console.log(refreshToken)
+    if (!refreshToken) {
+      alert("No refresh token found. Logging out...");
+      localStorage.clear();
+      navigate("/login");
+      return;
+    }
 
-  // try {
+    // try {
     const response = await axios.post(
-      url, 
+      url,
       {},
       {
         headers: {
@@ -54,25 +55,25 @@ localStorage.removeItem("AccessToken");
     } else {
       alert("Failed to log out");
     }
-  // } catch (error) {
-  //   if (error.response.status === 404) {
-  //     localStorage.removeItem("AccessToken");
-  //     localStorage.removeItem("RefreshToken");
-  //     localStorage.removeItem("user");
-  //     alert("Session expired. Logged out.");
-  //     navigate("/login");
-  //   } else {
-  //     alert("Logout failed due to network or server error");
-  //     console.error(error);
-  //   }
-  // }
+    // } catch (error) {
+    //   if (error.response.status === 404) {
+    //     localStorage.removeItem("AccessToken");
+    //     localStorage.removeItem("RefreshToken");
+    //     localStorage.removeItem("user");
+    //     alert("Session expired. Logged out.");
+    //     navigate("/login");
+    //   } else {
+    //     alert("Logout failed due to network or server error");
+    //     console.error(error);
+    //   }
+    // }
 
 
-  
-    
 
-    
-  
+
+
+
+
 
     // ⏱️ Auto logout when access token expires
     // const decoded = jwtDecode(accessToken);
@@ -87,7 +88,7 @@ localStorage.removeItem("AccessToken");
     //   alert("Session expired. Logged out.");
     //   navigate("/login");
     // }, timeUntilExpiry);
-    
+
   };
 
   const linkClasses =

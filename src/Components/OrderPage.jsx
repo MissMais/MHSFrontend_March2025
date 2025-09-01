@@ -13,7 +13,7 @@ export default function OrderPage() {
 
 
 
-  const url = "https://d96e3fa91f6a.ngrok-free.app/"
+  const url = "https://abafbb3865a8.ngrok-free.app/"
 
   const {
     register,
@@ -112,7 +112,7 @@ export default function OrderPage() {
       );
       console.log(response.data.order_id)
       localStorage.removeItem(cartKey);
-    setCartItems([]); 
+     setCartItems([]); 
 
     } catch (error) {
       console.error("Error:", error);

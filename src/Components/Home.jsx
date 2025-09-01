@@ -31,13 +31,19 @@ export default function Home() {
     }, [location]);
 
 
+    const headers = {
+
+        'ngrok-skip-browser-warning': '69420',
+        'Content-Type': 'application/json'
+    }
+
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://3j7gm770-8000.inc1.devtunnels.ms/category/')
+            const response2 = await axios.get('https://abafbb3865a8.ngrok-free.app/category/', { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
-            const response3 = await axios.get('https://3j7gm770-8000.inc1.devtunnels.ms/category/')
+            const response3 = await axios.get('https://abafbb3865a8.ngrok-free.app/category/', { headers })
             setdata(response3.data)
             console.log(response3.data)
         } catch (error) {
@@ -58,7 +64,7 @@ export default function Home() {
             <br />
             <br />
             <br />
-            <div>
+            {/* <div>
                 {data
 
 
@@ -74,7 +80,8 @@ export default function Home() {
                             <img
                                 src={
                                     i.category_image
-                                        ? i.category_image.replace("http://localhost:8000/", "http://192.168.29.87:8000/")
+                                        ? i.category_image
+                                        // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
                                         : "no image"
                                 }
                                 alt={i.category_name}
@@ -84,7 +91,7 @@ export default function Home() {
 
 
                     ))}
-            </div>
+            </div> */}
 
 
             {/* Home */}
@@ -136,7 +143,7 @@ export default function Home() {
 
 
 
-            
+
 
 
 
@@ -165,7 +172,7 @@ export default function Home() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {img
                                 // .sort(() => Math.random() - 0.5)
-                                .filter((i) => i.category_name == "Abaya" )
+                                .filter((i) => i.category_name == "Abaya")
                                 .slice(0, 6)
                                 .map((i) => (
                                     <div
@@ -173,17 +180,18 @@ export default function Home() {
                                         className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                         onClick={() => navigate('/ProductPage?category=Abayas')}
                                     >
-                                        {/* {i.images?.map((index,) => ( */}
-                                            <img
-                                                // key={index}
-                                               src={
-                                    i.category_image
-                                        ? i.category_image.replace("http://localhost:8000/", "http://192.168.29.87:8000/")
-                                        : "no image"
-                                }
-                                                alt="Image"
-                                                className='w-full h-full object-cover'
-                                            />
+                                        {/* {i.images?.map((index) => ( */}
+                                        <img
+                                            // key={index}
+                                            src={
+                                                i.category_image
+                                                    ? i.category_image
+                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
+                                                    : "no image"
+                                            }
+                                            alt="Image"
+                                            className='w-full h-full object-cover'
+                                        />
                                         {/* ))} */}
                                     </div>
                                 ))}
@@ -226,7 +234,7 @@ export default function Home() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
-                                .filter((i) => i.category_name === "Stoles" && i.images?.[0])
+                                .filter((i) => i.category_name === "Stoles")
                                 .slice(0, 6)
                                 .map((i) => (
                                     <div
@@ -234,14 +242,19 @@ export default function Home() {
                                         className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                         onClick={() => navigate('/ProductPage?category=Stoles')}
                                     >
-                                        {i.images?.map((index,) => (
+                                        {/* {i.images?.map((index,) => ( */}
                                             <img
-                                                key={index}
-                                                src={i.images[0]}
+                                                // key={index}
+                                               src={
+                                                i.category_image
+                                                    ? i.category_image
+                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
+                                                    : "no image"
+                                            }
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
                                             />
-                                        ))}
+                                        {/* ))} */}
                                     </div>
                                 ))}
                         </div>
@@ -282,7 +295,7 @@ export default function Home() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
-                                .filter((i) => i.category_name === "Accessories" && i.images?.[0])
+                                .filter((i) => i.category_name === "Accessories")
                                 .slice(0, 6)
                                 .map((i) => (
                                     <div
@@ -291,14 +304,19 @@ export default function Home() {
                                         hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                         onClick={() => navigate('/ProductPage?category=Accessories')}
                                     >
-                                        {i.images?.map((index,) => (
+                                        {/* {i.images?.map((index,) => ( */}
                                             <img
-                                                key={index}
-                                                src={i.images[0]}
+                                                // key={index}
+                                                src={
+                                                i.category_image
+                                                    ? i.category_image
+                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
+                                                    : "no image"
+                                            }
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
                                             />
-                                        ))}
+                                        {/* ))} */}
                                     </div>
                                 ))}
                         </div>
@@ -337,7 +355,7 @@ export default function Home() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
-                                .filter((i) => i.category_name === "Hijabs" && i.images?.[0])
+                                .filter((i) => i.category_name === "Hijab")
                                 .slice(0, 6)
                                 .map((i) => (
                                     <div
@@ -347,14 +365,19 @@ export default function Home() {
 
                                         onClick={() => navigate('/ProductPage?category=Hijabs')}
                                     >
-                                        {i.images?.map((index,) => (
+                                        {/* {i.images?.map((index,) => ( */}
                                             <img
-                                                key={index}
-                                                src={i.images[0]}
+                                                // key={index}
+                                                src={
+                                                i.category_image
+                                                    ? i.category_image
+                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
+                                                    : "no image"
+                                            }
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
                                             />
-                                        ))}
+                                        {/* ))} */}
                                     </div>
                                 ))}
                         </div>
