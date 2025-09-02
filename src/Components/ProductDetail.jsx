@@ -363,7 +363,7 @@ export default function ProductDetail() {
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
 const url = 
-'https://abafbb3865a8.ngrok-free.app/'
+'https://06b01936de0f.ngrok-free.app/'
 
 
 const headers = {
@@ -519,9 +519,9 @@ const addToCart = async (product) => {
             <p className="text-2xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
               ₹ {selectedProduct?.price || 'N/A'}
             </p>
-            <p style={{ color: '#666F80' }}>
+            {/* <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.product_variation.stock ?? 'N/A'}
-            </p>
+            </p> */}
             <div className="mb-4 text-sm font-medium" style={{ color: '#C3C8D3' }}>
               Free Shipping | 24hr Dispatch
             </div>
@@ -582,14 +582,14 @@ const addToCart = async (product) => {
               </button>
             </div>
 
-            <div className='mt-2'>
+            {/* <div className='mt-2'>
               <button
                 className="bg-[#FB6D6C] text-white px-6 py-2 rounded-full hover:bg-[#e95a59] transition w-full"
                 onClick={goToOrderPage}
               >
                 Buy Now
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

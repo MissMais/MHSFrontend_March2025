@@ -290,7 +290,7 @@ import React, { useState, useEffect } from "react";
 import { FaFilter, FaTag, FaPalette, FaCubes, FaRupeeSign } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const url = 'https://abafbb3865a8.ngrok-free.app/custom/'
+const url = 'https://06b01936de0f.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 
@@ -345,14 +345,14 @@ const accessToken = localStorage.getItem("AccessToken")
         return Array.from(unique);
     };
 
-    const getUniqueMaterial = () => {
-        const unique = new Set(
-            products
-                .filter(p => p.category_name === selectedCategory && p.variation_type === "Fabric")
-                .map(p => p.variation_name)
-        );
-        return Array.from(unique);
-    };
+    // const getUniqueMaterial = () => {
+    //     const unique = new Set(
+    //         products
+    //             .filter(p => p.category_name === selectedCategory && p.variation_type === "Fabric")
+    //             .map(p => p.variation_name)
+    //     );
+    //     return Array.from(unique);
+    // };
 
 
 
@@ -372,30 +372,27 @@ const accessToken = localStorage.getItem("AccessToken")
     // };
 
 
-    const filteredProducts = products.map((product) => {
+    const filteredProducts = products.filter((product) => {
             // console.log("**********",product.images[0])
         //    return product
+       return(
         (selectedCategory === "All" || product.category_name === selectedCategory) &&
         (selectedColour === "All" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
         // (selectedMaterial === "All" || product.Material?.toLowerCase() === selectedMaterial.toLowerCase()) &&
-        parseFloat(product.price) <= maxPrice
-        console.log(product)
-        return product
-         
+        parseFloat(product.price) <= maxPrice)   
     }
     )
-    
-    console.log("&&&&&&&&&&&&&&&&&&&&&&&",filteredProducts)
+    // console.log("&&&&&&&&&&&&&&&&&&&&&&&",filteredProducts)
 
 
     const filteredProductsWithImages = filteredProducts.filter(
         product => {
-            console.log("**************************",product)
-            product.images && product.images.length > 0 && product.images[0]
-            return product
+            // console.log("**************************",product)
+            return product.images && product.images.length > 0 && product.images[0]
+            
         } 
     );
-
+    // console.log(filteredProductsWithImages)
 
     const handleProductClick = (id) => {
         console.log(id)
@@ -404,8 +401,10 @@ const accessToken = localStorage.getItem("AccessToken")
 
 
     const handleCategoryChange = (value) => {
+        console.log(value)
         setSelectedCategory(value);
         const newParams = new URLSearchParams(searchParams);
+    
         if (value === "All") {
             newParams.delete("category");
         } else {
@@ -453,18 +452,7 @@ const accessToken = localStorage.getItem("AccessToken")
 
 
 
-                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Material</label>
-                <select
-                    className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-                    onChange={(e) => setSelectedMaterial(e.target.value)}
-                >
-                    <option value="All" style={{ color: '#666F80' }} className="text-[#666F80]">All</option>
-                    {getUniqueMaterial().map((mat) => (
-                        <option key={mat} value={mat} style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
-                            {mat}
-                        </option>
-                    ))}
-                </select>
+                
 
 
                 <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
@@ -546,6 +534,24 @@ export default ProductPage;
 
 
 
+
+
+
+
+
+
+{/* <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Material</label>
+                <select
+                    className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
+                    onChange={(e) => setSelectedMaterial(e.target.value)}
+                >
+                    <option value="All" style={{ color: '#666F80' }} className="text-[#666F80]">All</option>
+                    {getUniqueMaterial().map((mat) => (
+                        <option key={mat} value={mat} style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+                            {mat}
+                        </option>
+                    ))}
+                </select> */}
 
 
 

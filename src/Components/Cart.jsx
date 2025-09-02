@@ -538,7 +538,7 @@ export default function Cart() {
   const accesstoken = localStorage.getItem("AccessToken");
 
 
-  const url = "https://abafbb3865a8.ngrok-free.app/"
+  const url = "https://5ffba41f0ff4.ngrok-free.app/"
 
 
   const toOrder = () => {
@@ -579,19 +579,19 @@ export default function Cart() {
             },
           }
         );
-         // console.log(response.data)
+        // console.log(response.data)
 
 
 
         const user_id = JSON.parse(localStorage.getItem("user_id"));
         const backendCart = response.data
-       
+
         const filtererddata = backendCart.filter(item => item.Cart_id == user_id)
         const sliceindex = storedItems.length
         const sliceddata = filtererddata.slice(-sliceindex)
         console.log(sliceddata)
 
-        
+
         //     response data--:
         //    [0{ cart_item_id: 121, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300 }
         //     1{ cart_item_id: 122, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300 }
@@ -761,7 +761,7 @@ export default function Cart() {
                 >
                   <FaTrashAlt />
                 </button>
-                <p>{item.product_variation.product_variation_id}</p>
+
                 <img src={item.images[0]} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
@@ -825,8 +825,12 @@ export default function Cart() {
           </button>
           <div className="flex justify-between mt-4 text-xs text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
             <div>
-              <p className="p-2">🔒 Secure Payment</p>
-              <p className="p-2">↩️ Easy Returns</p>
+              {/* <p className="p-2"> Secure Payment</p>
+              <p className="p-2"> Easy Returns</p> */}
+              <ul>
+                <li className="list-disc space-y-2 p-2">Secure Payment</li>
+                <li className=" list-disc space-y-2 p-2">Easy Returns</li>
+              </ul>
             </div>
           </div>
         </div>

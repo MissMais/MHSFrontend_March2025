@@ -12,7 +12,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const url =
-    "https://wkvkk9t8-8000.inc1.devtunnels.ms/logout/"
+    "https://06b01936de0f.ngrok-free.app/logout/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem("RefreshToken")
-    localStorage.removeItem("AccessToken");
-    localStorage.removeItem("RefreshToken");
-    localStorage.removeItem("user");
+    // localStorage.removeItem("AccessToken");
+    // localStorage.removeItem("RefreshToken");
+    // localStorage.removeItem("user");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
     console.log(refreshToken)
     if (!refreshToken) {

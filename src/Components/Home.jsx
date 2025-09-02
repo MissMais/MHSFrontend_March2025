@@ -39,13 +39,13 @@ export default function Home() {
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://abafbb3865a8.ngrok-free.app/category/', { headers })
+            const response2 = await axios.get('https://06b01936de0f.ngrok-free.app/category/', { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
-            const response3 = await axios.get('https://abafbb3865a8.ngrok-free.app/category/', { headers })
-            setdata(response3.data)
-            console.log(response3.data)
+            // const response3 = await axios.get('https://modestgallery.pythonanywhere.com/custom/')
+            // setdata(response3.data)
+            // console.log(response3.data)
         } catch (error) {
             console.log(error)
         }
@@ -65,7 +65,7 @@ export default function Home() {
             <br />
             <br />
             {/* <div>
-                {data
+                {img
 
 
                     .map((i) => (
@@ -75,18 +75,17 @@ export default function Home() {
                             className="h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                             onClick={() => navigate('/ProductPage?category=Abayas')}
                         >
-                        
+                            {i.category_name}
 
-                            <img
-                                src={
-                                    i.category_image
-                                        ? i.category_image
-                                        // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
-                                        : "no image"
-                                }
-                                alt={i.category_name}
-                                className="w-full h-full object-cover"
-                            />
+
+                            {i.homepage_images.map((i) => (
+                                <img
+                                    // key={index}
+                                    src={i}
+                                    alt={i.category_name}
+                                    className='w-full h-full object-cover'
+                                />
+                            ))}
                         </div>
 
 
@@ -174,27 +173,24 @@ export default function Home() {
                                 // .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name == "Abaya")
                                 .slice(0, 6)
-                                .map((i) => (
-                                    <div
-                                        // key={i.category_id||index}
-                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
-                                        onClick={() => navigate('/ProductPage?category=Abayas')}
-                                    >
-                                        {/* {i.images?.map((index) => ( */}
-                                        <img
-                                            // key={index}
-                                            src={
-                                                i.category_image
-                                                    ? i.category_image
-                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
-                                                    : "no image"
-                                            }
-                                            alt="Image"
-                                            className='w-full h-full object-cover'
-                                        />
-                                        {/* ))} */}
-                                    </div>
-                                ))}
+                                .flatMap((cat) =>
+                                    cat.homepage_images.map((image, index) => (
+                                        <div
+                                            key={index}
+                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            onClick={() => navigate('/ProductPage?category=Abaya')}
+                                        >
+
+                                            <img
+                                                
+                                                src={image}
+                                                alt="Image"
+                                                className='w-full h-full object-cover'
+                                            />
+
+                                        </div>
+                                    ))
+                                )}
                         </div>
 
                     </div>
@@ -236,27 +232,24 @@ export default function Home() {
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Stoles")
                                 .slice(0, 6)
-                                .map((i) => (
-                                    <div
-                                        key={i.product_variation_id}
-                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
-                                        onClick={() => navigate('/ProductPage?category=Stoles')}
-                                    >
-                                        {/* {i.images?.map((index,) => ( */}
+                                .flatMap((cat) =>
+                                    cat.homepage_images.map((image, index) => (
+                                        <div
+                                            key={index}
+                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            onClick={() => navigate('/ProductPage?category=Stoles')}
+                                        >
+
                                             <img
-                                                // key={index}
-                                               src={
-                                                i.category_image
-                                                    ? i.category_image
-                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
-                                                    : "no image"
-                                            }
+                                                
+                                                src={image}
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
                                             />
-                                        {/* ))} */}
-                                    </div>
-                                ))}
+
+                                        </div>
+                                    ))
+                                )}
                         </div>
 
 
@@ -297,28 +290,24 @@ export default function Home() {
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Accessories")
                                 .slice(0, 6)
-                                .map((i) => (
-                                    <div
-                                        key={i.product_variation_id}
-                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out 
-                                        hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
-                                        onClick={() => navigate('/ProductPage?category=Accessories')}
-                                    >
-                                        {/* {i.images?.map((index,) => ( */}
+                                .flatMap((cat) =>
+                                    cat.homepage_images.map((image, index) => (
+                                        <div
+                                            key={index}
+                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            onClick={() => navigate('/ProductPage?category=Accessories')}
+                                        >
+
                                             <img
-                                                // key={index}
-                                                src={
-                                                i.category_image
-                                                    ? i.category_image
-                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
-                                                    : "no image"
-                                            }
+                                                
+                                                src={image}
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
                                             />
-                                        {/* ))} */}
-                                    </div>
-                                ))}
+
+                                        </div>
+                                    ))
+                                )}
                         </div>
 
 
@@ -357,29 +346,24 @@ export default function Home() {
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Hijab")
                                 .slice(0, 6)
-                                .map((i) => (
-                                    <div
-                                        key={i.product_variation_id}
+                                .flatMap((cat) =>
+                                    cat.homepage_images.map((image, index) => (
+                                        <div
+                                            key={index}
+                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            onClick={() => navigate('/ProductPage?category=Hijab')}
+                                        >
 
-                                        className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
-
-                                        onClick={() => navigate('/ProductPage?category=Hijabs')}
-                                    >
-                                        {/* {i.images?.map((index,) => ( */}
                                             <img
-                                                // key={index}
-                                                src={
-                                                i.category_image
-                                                    ? i.category_image
-                                                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")
-                                                    : "no image"
-                                            }
+                                                
+                                                src={image}
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
                                             />
-                                        {/* ))} */}
-                                    </div>
-                                ))}
+
+                                        </div>
+                                    ))
+                                )}
                         </div>
 
 

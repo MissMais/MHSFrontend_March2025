@@ -13,7 +13,7 @@ export default function OrderPage() {
 
 
 
-  const url = "https://abafbb3865a8.ngrok-free.app/"
+  const url = "https://06b01936de0f.ngrok-free.app/"
 
   const {
     register,
