@@ -17,7 +17,7 @@
 //   const accessToken = localStorage.getItem("AccessToken")
 //   const fetchAddress = async () => {
 //     const response = await axios.get(url,
-      
+
 //       {
 //         headers: {
 //           Authorization: `Bearer ${accessToken}`,
@@ -143,13 +143,13 @@ import { MdHome } from "react-icons/md";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 
-const url = 
-// "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
-'https://d96e3fa91f6a.ngrok-free.app/address/'
+const url =
+  // "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
+  'https://d96e3fa91f6a.ngrok-free.app/address/'
 // https://modestgallery.pythonanywhere.com/address/
-const url2 = 
-// "https://3j7gm770-8000.inc1.devtunnels.ms/address"
-'https://d96e3fa91f6a.ngrok-free.app/address/'
+const url2 =
+  // "https://3j7gm770-8000.inc1.devtunnels.ms/address"
+  'https://d96e3fa91f6a.ngrok-free.app/address/'
 
 
 
@@ -161,34 +161,34 @@ export default function Address() {
 
 
 
-const handleSelect = (add) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const email = user?.email;
+  const handleSelect = (add) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const email = user?.email;
 
-  if (!email) {
-    alert("Please login first.");
-    Navigate("/login");
-    return;
-  }
+    if (!email) {
+      alert("Please login first.");
+      Navigate("/login");
+      return;
+    }
 
-  const addressKey = `selectedAddress_${email}`;
-  localStorage.setItem(addressKey, JSON.stringify(add));
-  setSelected(add); 
-  console.log("Selected Address Saved Locally:", add);
-};
+    const addressKey = `selectedAddress_${email}`;
+    localStorage.setItem(addressKey, JSON.stringify(add));
+    setSelected(add);
+    console.log("Selected Address Saved Locally:", add);
+  };
 
 
 
   const accessToken = localStorage.getItem("AccessToken")
-  
+
   const fetchAddress = async () => {
     const response = await axios.get(url,
-      
+
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-           'ngrok-skip-browser-warning':'69420',
-                'Content-Type':'application/json'
+          'ngrok-skip-browser-warning': '69420',
+          'Content-Type': 'application/json'
         },
       }
     )
@@ -275,7 +275,7 @@ const handleSelect = (add) => {
                 <p>Pincode : {add.Pincode}</p>
               </div>
               <div className='mt-3 md:mt-10'>
-                 <button
+                <button
                   className="cursor-pointer bg-green-500 text-white px-3 py-2 rounded-lg mb-2 hover:bg-green-600 transition-all"
                   onClick={() => handleSelect(add)}
                 >

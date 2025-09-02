@@ -10,7 +10,7 @@ export default function ResetPassword() {
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
-  
+
   const onSubmit = async (data) => {
     const accesstoken = localStorage.getItem("AccessToken")
     try {

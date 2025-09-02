@@ -182,7 +182,7 @@ export default function Home() {
                                         >
 
                                             <img
-                                                
+
                                                 src={image}
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
@@ -241,7 +241,7 @@ export default function Home() {
                                         >
 
                                             <img
-                                                
+
                                                 src={image}
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
@@ -299,7 +299,7 @@ export default function Home() {
                                         >
 
                                             <img
-                                                
+
                                                 src={image}
                                                 alt="Image"
                                                 className='w-full h-full object-cover'
@@ -355,7 +355,7 @@ export default function Home() {
                                         >
 
                                             <img
-                                                
+
                                                 src={image}
                                                 alt="Image"
                                                 className='w-full h-full object-cover'

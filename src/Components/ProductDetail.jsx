@@ -67,7 +67,7 @@
 //     const cartKey = `cart_${email}`;
 //     let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-    
+
 //     const existingItem = cart.find(
 //       item => item.product_variation.product_variation_id === product.product_variation.product_variation_id
 //     );
@@ -362,20 +362,20 @@ export default function ProductDetail() {
   }, [allVariations]);
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
-const url = 
-'https://06b01936de0f.ngrok-free.app/'
+  const url =
+    'https://06b01936de0f.ngrok-free.app/'
 
 
-const headers = {
-  //   Authorization: `Bearer ${accessToken}`,
-           'ngrok-skip-browser-warning':'69420',
-                'Content-Type':'application/json'
-}
+  const headers = {
+    //   Authorization: `Bearer ${accessToken}`,
+    'ngrok-skip-browser-warning': '69420',
+    'Content-Type': 'application/json'
+  }
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(url+'custom/',{headers});
-      const response2 = await axios.get(url+'custom/',{headers});
+      const response = await axios.get(url + 'custom/', { headers });
+      const response2 = await axios.get(url + 'custom/', { headers });
       console.log(response)
       const filtered = response.data.filter(item => item.Product_id === id);
       console.log(response.data.category_name)
@@ -390,7 +390,7 @@ const headers = {
     if (!selectedProduct || index === 0) return;
 
     const images = [...selectedProduct.images];
-    
+
     const temp = images[0];
     images[0] = images[index];
     images[index] = temp;
@@ -399,63 +399,63 @@ const headers = {
     setSelectedProduct({ ...selectedProduct });
   };
 
-const addToCart = async (product) => {
-  const accesstoken = localStorage.getItem("AccessToken");
+  const addToCart = async (product) => {
+    const accesstoken = localStorage.getItem("AccessToken");
 
-  if (!accesstoken) {
-    alert('Please login to add items to your cart.');
-    navigate('/login');
-    return;
-  }
-
-  if (product.product_variation.stock > 0) {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const email = user?.email;
-    const cartKey = `cart_${email}`;
-    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-
-    
-    const existingItem = cart.find(
-      item => item.product_variation.product_variation_id === product.product_variation.product_variation_id
-    );
-
-    let quantity;
-    if (existingItem) {
-      existingItem.quantity = (existingItem.quantity || 0) + 1;
-      quantity = existingItem.quantity;
-    } else {
-      cart.push({ ...product, quantity: 1 });
-      quantity = 1;
+    if (!accesstoken) {
+      alert('Please login to add items to your cart.');
+      navigate('/login');
+      return;
     }
 
-    localStorage.setItem(cartKey, JSON.stringify(cart));
+    if (product.product_variation.stock > 0) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const email = user?.email;
+      const cartKey = `cart_${email}`;
+      let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-    try {
-      const payload = {
-        quantity: quantity, 
-        product_variation_id: product.product_variation.product_variation_id,
-      };
 
-      await axios.post(
-        `${url}addtocart/`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${accesstoken}`,
-          },
-        }
+      const existingItem = cart.find(
+        item => item.product_variation.product_variation_id === product.product_variation.product_variation_id
       );
 
-      console.log("Added to server-side cart");
-    } catch (error) {
-      console.error("Error adding to backend cart:", error);
-    }
+      let quantity;
+      if (existingItem) {
+        existingItem.quantity = (existingItem.quantity || 0) + 1;
+        quantity = existingItem.quantity;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+        quantity = 1;
+      }
 
-    navigate("/Cart");
-  } else {
-    alert("Out Of Stock");
-  }
-};
+      localStorage.setItem(cartKey, JSON.stringify(cart));
+
+      try {
+        const payload = {
+          quantity: quantity,
+          product_variation_id: product.product_variation.product_variation_id,
+        };
+
+        await axios.post(
+          `${url}addtocart/`,
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${accesstoken}`,
+            },
+          }
+        );
+
+        console.log("Added to server-side cart");
+      } catch (error) {
+        console.error("Error adding to backend cart:", error);
+      }
+
+      navigate("/Cart");
+    } else {
+      alert("Out Of Stock");
+    }
+  };
 
 
   const goToOrderPage = () => {
@@ -502,7 +502,7 @@ const addToCart = async (product) => {
                 <img
                   key={index}
                   src={img}
-                    // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
+                  // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
                   className="w-20 h-14 object-cover rounded cursor-pointer"
                   onClick={() => swapWithMain(index)}
                   alt={`Thumbnail ${index}`}

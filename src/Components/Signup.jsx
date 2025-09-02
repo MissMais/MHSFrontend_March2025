@@ -30,7 +30,7 @@ export default function Signup() {
   return (
     <div className="flex justify-center  min-h-screen bg-white mt-16">
       <div className="w-full max-w-2xl bg-white shadow-lg p-6 rounded-lg m-6">
-        <h2 className="text-2xl font-bold mb-6 text-center"style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Create an Account</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Create an Account</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Two-column row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -182,15 +182,15 @@ export default function Signup() {
               Login
             </a>
           </p> */}
-        
 
-        {/* {message && (
+
+          {/* {message && (
           <p className="mt-4 text-center text-red-500">{message}</p>
         )} */}
-      
-      
-        <h2 className="text-2xl font-bold mb-5 text-center mt-10" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Add Address</h2>
-      
+
+
+          <h2 className="text-2xl font-bold mb-5 text-center mt-10" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Add Address</h2>
+
           {/* Two-column row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -239,7 +239,7 @@ export default function Signup() {
                 required
               />
             </div>
-            <div> 
+            <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
               <input font-bold
                 {...register("state", { required: true })}
@@ -284,12 +284,12 @@ export default function Signup() {
               Login
             </a>
           </p>
-  
 
-       
-      
-      </form>
-       {message && (
+
+
+
+        </form>
+        {message && (
           <p className="mt-4 text-center text-red-500">{message}</p>
         )}
       </div>

@@ -15,11 +15,11 @@ export default function About() {
     <div>
       {/* <Navbar /> */}
 
-      
+
 
       <section className="py-12 mt-20">
         <div className='container max-w-7xl mx-auto px-4'>
-          <h1 className='text-center text-4xl font-bold mb-10' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}data-aos="fade"
+          <h1 className='text-center text-4xl font-bold mb-10' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }} data-aos="fade"
           >
             Our Story
           </h1>
@@ -47,7 +47,7 @@ export default function About() {
       <section className="py-12">
         <div className='container max-w-7xl mx-auto px-4'>
           <h1 className='text-center text-4xl font-bold mb-10' data-aos="fade"
-           style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+            style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
             Modest Hijab Store
           </h1>
 
@@ -84,7 +84,7 @@ export default function About() {
       <section className="py-12">
         <div className='container max-w-7xl mx-auto px-4'>
           <h1 className='text-center text-4xl font-bold mb-10' data-aos="fade"
-           style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+            style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
             Shaam e Roshan
           </h1>
 

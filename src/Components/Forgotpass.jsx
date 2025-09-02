@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function ForgotPassword() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
   const url = 'https://3j7gm770-8000.inc1.devtunnels.ms/'
-  
+
   const onSubmit = async (data) => {
 
     try {
@@ -18,7 +18,7 @@ export default function ForgotPassword() {
       const response = await axios.post(`${url}send/`, data,);
       // console.log(response.data);
       navigate('/otp')
-      
+
     } catch (error) {
       console.error(error);
       alert("Failed");
@@ -41,7 +41,7 @@ export default function ForgotPassword() {
               className="block text-sm font-bold mb-1"
               style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
             >
-            Email
+              Email
             </label>
             <input
               {...register("to", { required: "email is required" })}

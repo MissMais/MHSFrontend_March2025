@@ -22,9 +22,9 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem("RefreshToken")
-    // localStorage.removeItem("AccessToken");
-    // localStorage.removeItem("RefreshToken");
-    // localStorage.removeItem("user");
+    localStorage.removeItem("AccessToken");
+    localStorage.removeItem("RefreshToken");
+    localStorage.removeItem("user");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
     console.log(refreshToken)
     if (!refreshToken) {

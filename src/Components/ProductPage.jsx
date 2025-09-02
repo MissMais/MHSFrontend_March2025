@@ -364,12 +364,7 @@ const accessToken = localStorage.getItem("AccessToken")
         );
         return Array.from(unique);
     };
-
-    // const getProductImage = (product) => {
-    //     return product.images && product.images.length > 0
-    //         ? product.images[0]
-    //         : "No Image Found";
-    // };
+    
 
 
     const filteredProducts = products.filter((product) => {

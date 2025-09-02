@@ -10,13 +10,13 @@ export default function ForgotPassChange() {
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
-  
+
   const onSubmit = async (data) => {
-   
+
     try {
       console.log(data)
       const response = await axios.post(`${url}forget/`, data,);
-    //   console.log(response.data);
+      //   console.log(response.data);
       alert('Password Changed Successfully');
       navigate("/login");
     } catch (error) {
@@ -75,7 +75,7 @@ export default function ForgotPassChange() {
             )}
           </div>
 
-          
+
 
           <button
             type="submit"
@@ -85,7 +85,7 @@ export default function ForgotPassChange() {
             Change
           </button>
         </form>
-        
+
       </div>
     </div>
   );

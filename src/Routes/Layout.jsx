@@ -8,10 +8,10 @@ export default function Layout() {
   return (
     <div>
       <Navbar />
-    {/* <Header /> */}
-    <Outlet />
-  {/* <Footer /> */}
-    
+      {/* <Header /> */}
+      <Outlet />
+      {/* <Footer /> */}
+
     </div>
   )
 }

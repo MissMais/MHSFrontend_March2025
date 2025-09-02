@@ -538,7 +538,7 @@ export default function Cart() {
   const accesstoken = localStorage.getItem("AccessToken");
 
 
-  const url = "https://5ffba41f0ff4.ngrok-free.app/"
+  const url = "https://06b01936de0f.ngrok-free.app/"
 
 
   const toOrder = () => {

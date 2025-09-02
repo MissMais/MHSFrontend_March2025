@@ -64,7 +64,7 @@ export default function Account() {
               className="text-3xl font-bold mb-6"
               style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
             >
-              Profile 
+              Profile
             </h1>
 
             {/* Profile Image */}
@@ -79,7 +79,7 @@ export default function Account() {
             {/* Profile Info Form */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold mb-1"style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+                <label className="block text-sm font-semibold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
                   First Name
                 </label>
                 <input
@@ -90,7 +90,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-1 "style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+                <label className="block text-sm font-semibold mb-1 " style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
                   Last Name
                 </label>
                 <input
@@ -124,7 +124,7 @@ export default function Account() {
             </div>
 
             <div className="mt-8">
-              <button className="bg-[#FB6D6C] hover:bg-[#e95a59] text-white px-6 py-2 rounded-md font-semibold transition-colors"style={{ fontFamily: "Copperplate, Papyrus, fantasy"}}>
+              <button className="bg-[#FB6D6C] hover:bg-[#e95a59] text-white px-6 py-2 rounded-md font-semibold transition-colors" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
                 Edit Profile
               </button>
             </div>

@@ -70,9 +70,9 @@ export default function OrderPage() {
 
 
   const onSubmit = async (data) => {
-     const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
-  
+
     const cartKey = `cart_${email}`;
 
     // const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
@@ -112,7 +112,7 @@ export default function OrderPage() {
       );
       console.log(response.data.order_id)
       localStorage.removeItem(cartKey);
-     setCartItems([]); 
+      setCartItems([]);
 
     } catch (error) {
       console.error("Error:", error);
