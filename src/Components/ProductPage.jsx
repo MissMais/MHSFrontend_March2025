@@ -288,9 +288,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FaFilter, FaTag, FaPalette, FaCubes, FaRupeeSign } from "react-icons/fa";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const url = 'https://06b01936de0f.ngrok-free.app/custom/'
+const url = 'https://c84927198c55.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 
@@ -302,7 +303,32 @@ const ProductPage = () => {
     const [maxPrice, setMaxPrice] = useState(10000);
     const [products, setProducts] = useState([]);
     const [selectedColour, setSelectedColour] = useState("All");
-    const [selectedMaterial, setSelectedMaterial] = useState("All");
+    // const [selectedMaterial, setSelectedMaterial] = useState("All");
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [wishlist, setWishlist] = useState([]);
+
+    
+
+
+
+    const toggleWishlist = (id) => {
+  setWishlist((prevWishlist) => {
+    
+    if (prevWishlist.includes(id)) {
+    
+      return prevWishlist.filter((item) => item !== id);
+
+    } else {
+    
+      return [...prevWishlist, id];
+      
+    }
+    
+  });
+  console.log(wishlist)
+};
+
+  
 
     const navigate = useNavigate();
 
@@ -359,7 +385,7 @@ const accessToken = localStorage.getItem("AccessToken")
     const getUniqueColours = () => {
         const unique = new Set(
             products
-                .filter(p => p.category_name === selectedCategory && p.variation_type === "Color")
+                .filter(p => p.category_name === selectedCategory || p.variation_type === "Color") 
                 .map(p => p.variation_name)
         );
         return Array.from(unique);
@@ -373,7 +399,7 @@ const accessToken = localStorage.getItem("AccessToken")
        return(
         (selectedCategory === "All" || product.category_name === selectedCategory) &&
         (selectedColour === "All" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
-        // (selectedMaterial === "All" || product.Material?.toLowerCase() === selectedMaterial.toLowerCase()) &&
+        // (selectedColour === "All" || product.variation_name?.toLowerCase()) &&
         parseFloat(product.price) <= maxPrice)   
     }
     )
@@ -465,7 +491,7 @@ const accessToken = localStorage.getItem("AccessToken")
             </div>
 
             {/* Products */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 w-full md:w-2/1 px-4 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-12  w-full md:w-2/1 px-4 mt-10">
                 {filteredProductsWithImages
                     // .sort(() => Math.random() - 0.5)
                     .map((product, idx) => (
@@ -474,7 +500,7 @@ const accessToken = localStorage.getItem("AccessToken")
                             className="flex flex-col bg-white shadow-md hover:shadow-xl transition-all overflow-hidden"
                         >
 
-                            <div className="h-64 w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)]  overflow-hidden">
+                            <div className="h-full w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)]  overflow-hidden">
                                 <img
                                     src={
                                         product.images[0]
@@ -487,31 +513,51 @@ const accessToken = localStorage.getItem("AccessToken")
                             </div>
 
 
-                            <div className="p-4 flex flex-col flex-grow" >
-                                <h3 className="text-lg font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{product.product_description}</h3>
-                                <div className="" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
-                                    <p className="text-sm text-gray-500 mb-1">
+                            <div className="p-4 flex flex-col flex-grow text-xs md:text-sm " >
+                                <h3 className="md:text-lg font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{product.product_description}</h3>
+                                <div className="text-xs md:text-sm" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+                                    {/* <p className=" text-gray-500 mb-1">
 
                                         {product.category_name}
                                     </p>
-                                    <p className="text-sm text-gray-500 mb-1">
+                                    <p className=" text-gray-500 mb-1">
 
                                         {product.sub_category_name}
-                                    </p>
-                                    <p className="text-sm text-gray-500">
+                                    </p> */}
+                                    <p className=" text-gray-500">Color - 
 
                                         {product.variation_name || "N/A"}
                                     </p>
-                                    <p className="text-sm mt-2 text-green-700">Stock: {product.product_variation.stock}</p>
-                                </div>
+                                    <p className=" text-gray-500">Price - 
 
-                                <div className="mt-auto flex justify-between font-bold items-center pt-3" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-                                    <span className="text-xl font-semibold">
-                                        <FaRupeeSign className="inline mr-1" />
+                                        <span className="md:text-sm sm:text-xs ">
+                                        <FaRupeeSign className="inline text-gray-400" />
                                         {parseFloat(product.price).toLocaleString()}
                                     </span>
-                                    <button
+                                    </p>
+                                    {/* <p className=" mt-2 text-green-700">Stock: {product.product_variation.stock}</p> */}
+                                </div>
+
+                                <div className="mt-auto flex justify-between font-bold items-center pt-3" >
+                                    <span className="text-lg ">
+                                        
+                                        {/* <IoHeart  className="text-black stroke-[#FB6D6C] stroke-1"/> */}
+                                        {/* <FaHeart className="text-white border border-[#Fb6D6c]" /> */}
+                                         <div onClick={()=> toggleWishlist(product.Product_id)} style={{ cursor: 'pointer' }} className="text-lg md:text-2xl ">
+                                          {wishlist.includes(product.Product_id) ? (
+                                            <IoHeart color="#FB6D6C" />  ) : (  <IoHeartOutline  color="#FB6D6C" />)
+                                             }
+                                         </div>
+                                        
+                                    </span>
+                                     {/* <button
                                         className="bg-[#FB6D6C] text-white px-4 py-2 rounded-lg hover:bg-[#e95a59] transition-all"
+                                        onClick={() => handleProductClick(product.Product_id)}
+                                    >
+                                        Wishlist
+                                    </button> */}
+                                    <button style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
+                                        className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 rounded-lg transition-all"
                                         onClick={() => handleProductClick(product.Product_id)}
                                     >
                                         View

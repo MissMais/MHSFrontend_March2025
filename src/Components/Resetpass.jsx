@@ -109,14 +109,7 @@ export default function ResetPassword() {
             Change
           </button>
         </form>
-        <div className="text-center mt-4">
-          <small style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-            Remember your password?{" "}
-            <a href="/login" className="text-[#FB6D6C] hover:underline">
-              Login
-            </a>
-          </small>
-        </div>
+        
       </div>
     </div>
   );

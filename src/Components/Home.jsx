@@ -39,7 +39,7 @@ export default function Home() {
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://06b01936de0f.ngrok-free.app/category/', { headers })
+            const response2 = await axios.get('https://c84927198c55.ngrok-free.app/category/', { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
@@ -151,9 +151,9 @@ export default function Home() {
 
             {/* Store */}
             {/* Abayas  */}
-            <section id="store" className="py-10 bg-white">
+            <section id="store" className=" bg-white">
                 <div className="max-w-7xl  px-4">
-                    <div className="p-6 mt-20">
+                    <div className="p-6 mt-10">
 
                         {/* Text Content */}
                         <div className="mb-8">
@@ -202,7 +202,7 @@ export default function Home() {
             {/* Stoles  */}
             <section id="stoles" className="py-10 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className=" p-6 mt-16">
+                    <div className=" p-6 mt-10">
 
                         {/* Text Content */}
                         <div className="mb-8">
@@ -263,7 +263,7 @@ export default function Home() {
             {/* Accessories */}
             <section id="accessories" className="py-10 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="p-6 mt-16">
+                    <div className="p-6 mt-10">
 
                         {/* Heading + Text */}
                         <div className="mb-8">
@@ -321,7 +321,7 @@ export default function Home() {
             {/* Hijabs */}
             <section id="accessories" className="py-10 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="p-6 mt-16">
+                    <div className="p-6 mt-10">
 
                         {/* Heading + Text */}
                         <div className="mb-8">

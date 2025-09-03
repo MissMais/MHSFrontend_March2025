@@ -32,7 +32,7 @@ export default function OrderHistory() {
   const id = localStorage.getItem("user_id")
 
   const Orders = async () => {
-    const response = await axios.get(`https://abafbb3865a8.ngrok-free.app/orderhistory/${id}`,
+    const response = await axios.get(`https://c84927198c55.ngrok-free.app/history/${id}`,
 
       {
         headers: {
@@ -44,7 +44,8 @@ export default function OrderHistory() {
       }
     )
     console.log(response.data)
-    setOrders(response.data)
+    const array = response.data.reverse()
+    setOrders(array)
   }
 
   useEffect(() => {
@@ -79,13 +80,13 @@ export default function OrderHistory() {
                   className="text-sm"
                   style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
                 >
-                  Date: {order.date}
+                  Date: {order.Order_date.split(' ')[0]}
                 </p>
                 <p
                   className="text-sm"
                   style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
                 >
-                  Status: {order.status}
+                  Status: {order.Order_status}
                 </p>
               </div>
               <div className="mt-4 md:mt-0">
@@ -93,13 +94,26 @@ export default function OrderHistory() {
                   className="text-lg font-bold text-right"
                   style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
                 >
-                  ₹{order.total}
+                  ₹{order.cart_item.Quantity * order.cart_item.product_variation.price}
                 </p>
+              </div>
+              <div>
+                <img src={`https://c84927198c55.ngrok-free.app/${order.cart_item.product_variation.images[0]}`} alt="no image" className="w-30"/>
               </div>
             </div>
 
-            {/* <div className="mt-4">
+             <div className="mt-4">
               <p
+                className="font-semibold mb-2"
+                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              >
+                Items:
+              </p>
+              <span  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}>
+                      {order.cart_item.product_variation.product_description} x {order.cart_item.Quantity}
+                    </span>
+            </div> 
+              {/* <p
                 className="font-semibold mb-2"
                 style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
               >
@@ -116,10 +130,10 @@ export default function OrderHistory() {
                       {item.name} x {item.qty}
                     </span>
                     <span>₹{item.price}</span>
-                  </li>
-                ))}
-              </ul>
-            </div> */}
+                  </li> */}
+                {/* ))} */}
+              {/* </ul> */}
+            
           </div>
         ))
       }

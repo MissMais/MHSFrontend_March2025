@@ -145,11 +145,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const url =
   // "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
-  'https://d96e3fa91f6a.ngrok-free.app/address/'
+  'https://c84927198c55.ngrok-free.app/address/'
 // https://modestgallery.pythonanywhere.com/address/
 const url2 =
   // "https://3j7gm770-8000.inc1.devtunnels.ms/address"
-  'https://d96e3fa91f6a.ngrok-free.app/address/'
+  'https://c84927198c55.ngrok-free.app/address/'
 
 
 
@@ -235,7 +235,7 @@ export default function Address() {
           <li>
             <Link
               to="/acc"
-              className="block text-[#FB6D6C] hover:text-[#e95a59] font-semibold transition-colors"
+              className="block text-gray-600 hover:text-[#e95a59] font-semibold transition-colors"
             >
               Profile Settings
             </Link>
@@ -251,7 +251,7 @@ export default function Address() {
           <li>
             <Link
               to="/Address"
-              className="block text-gray-600 hover:text-[#FB6D6C] transition-colors"
+              className="block text-[#FB6D6C] hover:text-[#FB6D6C] transition-colors"
             >
               Address
             </Link>
