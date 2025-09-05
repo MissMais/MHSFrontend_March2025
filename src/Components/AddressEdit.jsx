@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -8,10 +8,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 
 export default function AddressEdit() {
+  const [Info,setdata] =useState()
 
 
   let params = useParams()
   let navigate = useNavigate()
+  
 
   const {
     register,
@@ -26,8 +28,17 @@ export default function AddressEdit() {
 
   const getAdd = async (id) => {
     try {
-      const Data = await axios.get('https://3j7gm770-8000.inc1.devtunnels.ms/address/?id=' + id)
-      console.log(Data)
+      const Data = await axios.get('https://fd32f762dda4.ngrok-free.app/address/?id=' + id,
+        {
+            headers: {
+              // Authorization: `Bearer ${accesstoken}`,
+              'ngrok-skip-browser-warning': '69420',
+              'Content-Type': 'application/json'
+            }
+          }
+      )
+      setdata(Data.data)
+      console.log(Data.data[0]['Address_id'])
 
       reset({
         Name: Data['data'][0]['Name'],
@@ -53,7 +64,21 @@ export default function AddressEdit() {
 
   const saveData = async (data) => {
     try {
-      const Adddata = await axios.put('https://3j7gm770-8000.inc1.devtunnels.ms/filter/' + params.id + '/', data,
+      const Payload = {
+        Address_id:Info[0]['Address_id'],
+        Name:data.Name ,
+        Contact: data.Contact,
+        Address_type: data.Address_type,
+        House_No:data.House_No ,
+        Area_Colony: data.Area_Colony,
+        Landmark:data.Landmark,
+        City:data.City ,
+        State:data.State ,
+        Country: data.Country,
+        Pincode: data.Pincode,
+      }
+
+      const Adddata = await axios.put('https://fd32f762dda4.ngrok-free.app/address/', Payload,
         {
           headers: {
             'Content-Type': 'application/json',

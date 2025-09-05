@@ -1,48 +1,167 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+
+
+const url = "https://fd32f762dda4.ngrok-free.app/user/"
 
 export default function AccountEdit() {
-  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  let params = useParams()
+  const { handleSubmit, register, reset, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
 
+  useEffect(() => {
+    getuser()
+  }, [])
+
+
+
+  const userid = JSON.parse(localStorage.getItem('user_id'))
+  const onSubmit = async (data) => {
+
+
+    const Payload = {
+      id: userid,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+    }
+
+
+    try {
+      await axios.patch(url,
+        Payload,
+        {
+          headers: {
+            // Authorization: `Bearer ${accesstoken}`,
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      console.log(data)
+      reset(data)
+      navigate('/acc')
+
+    } catch (error) {
+      console.error(error);
+      alert("Failed to Reset");
+    }
   };
 
-  const inputclass = "w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+
+  const getuser = async () => {
+
+    try {
+      const Data = await axios.get('https://fd32f762dda4.ngrok-free.app/user/?id=' + userid,
+        {
+          headers: {
+            // Authorization: `Bearer ${accesstoken}`,
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      // setdata(Data.data)
+      console.log(Data.data[0].first_name)
+
+      reset({
+        first_name: Data.data[0].first_name,
+        last_name: Data.data[0].last_name,
+        email: Data.data[0].email
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6 flex justify-center mt-20">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-xl bg-white p-8 rounded shadow-md"
-      >
-        <h2 className="text-2xl font-bold mb-6">Account Details</h2>
+    <div className="flex justify-center items-center min-h-screen px-4">
+      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
+        <h2
+          className="text-center text-2xl font-bold mb-6"
+          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+        >
+          Edit Account
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4">
+            <label
+              htmlFor="First Name"
+              className="block text-sm font-bold mb-1"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            >
+              First Name
+            </label>
+            <input
+              {...register("first_name", { required: "First Name is required" })}
+              type="text"
+              id="first_name"
+              placeholder="Enter your First Name"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.first_name && (
+              <small className="text-red-600">{errors.first_name.message}</small>
+            )}
+          </div>
 
-        <div className="space-y-4 grid grid-col-1 md:grid-col-2 gap-4">
-          <input {...register('email')} type="email" placeholder="Email" className={inputclass} />
-          <input {...register('password')} type="password" placeholder="Password" className={inputclass} />
-          <input {...register('phone')} type="tel" placeholder="Phone Number" className={inputclass} />
+          <div className="mb-4">
+            <label
+              htmlFor="Last Name"
+              className="block text-sm font-bold mb-1"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            >
+              Last Name
+            </label>
+            <input
+              {...register("last_name", { required: "Last Name is required" })}
+              type="text"
+              id="last_name"
+              placeholder="Enter your Last Name"
 
-        </div>
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.last_name && (
+              <small className="text-red-600">{errors.last_name.message}</small>
+            )}
+          </div>
 
-        <h2 className="text-2xl font-bold mt-8 mb-6">Location</h2>
+          <div className="mb-4">
+            <label
+              htmlFor="Email"
+              className="block text-sm font-bold mb-1"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            >
+              Email
+            </label>
+            <input
+              {...register("email", { required: "Email is required" })}
+              type="email"
+              id="email"
+              placeholder="Enter Your Email"
+              disabled
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500
+              cursor-not-allowed"
+            />
+            {errors.email && (
+              <small className="text-red-600">{errors.email.message}</small>
+            )}
+          </div>
 
-        <div className="space-y-4">
-          <input {...register('country')} type="text" placeholder="Country" className={inputclass} />
-          <input {...register('state')} type="text" placeholder="State" className={inputclass} />
-          <input {...register('city')} type="text" placeholder="City" className={inputclass} />
-
-        </div>
-
-        <div className="mt-8 flex items-center justify-between">
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Add
+          <button
+            type="submit"
+            className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
+            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+          >
+            Change
           </button>
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Edit
-          </button>
-        </div>
-      </form>
+        </form>
+
+      </div>
     </div>
   );
 }

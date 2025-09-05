@@ -145,11 +145,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const url =
   // "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
-  'https://c84927198c55.ngrok-free.app/address/'
+  'https://fd32f762dda4.ngrok-free.app/address/'
 // https://modestgallery.pythonanywhere.com/address/
 const url2 =
   // "https://3j7gm770-8000.inc1.devtunnels.ms/address"
-  'https://c84927198c55.ngrok-free.app/address/'
+  'https://fd32f762dda4.ngrok-free.app/address/'
 
 
 
@@ -268,22 +268,40 @@ export default function Address() {
 
 
 
-              <div className='font-medium'>
+              <div className='font-semibold' style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: "#666F80" }} >
                 <p className='text-2xl'>{add.Name}</p>
-                <p>Address : {add.House_No}, {add.Area_Colony}</p>
-                <p>City : {add.City} ({add.State}), {add.Country}</p>
-                <p>Pincode : {add.Pincode}</p>
-              </div>
-              <div className='mt-3 md:mt-10'>
-                <button
-                  className="cursor-pointer bg-green-500 text-white px-3 py-2 rounded-lg mb-2 hover:bg-green-600 transition-all"
-                  onClick={() => handleSelect(add)}
-                >
-                  {selected?.Address_id === add.Address_id ? "Selected" : "Select"}
-                </button>
-                <br />
-                <button className='cursor-pointer bg-[#666F80] text-white px-3 py-2 rounded-lg mb-2 md:mb-1 hover:bg-gray-700 transition-all' onClick={() => ButtonEdit(add.Address_id)}>Edit</button><br />
-                <button className='cursor-pointer bg-red-500 text-white rounded-lg px-1 py-2 hover:bg-red-600 ' onClick={() => ButtonDelete(add.Address_id)}>Delete</button>
+                <p >Address : <span className='text-gray-400'>{add.House_No}, {add.Area_Colony} </span></p>
+                <p>City : <span className='text-gray-400'>{add.City} ({add.State}), {add.Country}</span></p>
+                <p>Pincode : <span className='text-gray-400'>{add.Pincode}</span> </p>
+
+
+
+                <div className="flex flex-wrap gap-3 mt-3 text-sm ">
+                  <button
+                    className={`px-4 py-2 rounded-lg font-semibold text-white transition 
+              ${selected?.Address_id === add.Address_id
+                        ? "bg-[#da5e5d]"
+                        : "bg-[#FB6D6C]"
+                      }`}
+                    onClick={() => handleSelect(add)}
+                  >
+                    {selected?.Address_id === add.Address_id ? "Selected" : "Select"}
+                  </button>
+
+                  <button
+                    className="px-4 py-2 rounded-lg font-semibold bg-white text-[#FB6D6C] border border-[#FB6D6C] transition"
+                    onClick={() => ButtonEdit(add.Address_id)}
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    className="px-4 py-2 rounded-lg font-semibold bg-gray-600 text-white  transition"
+                    onClick={() => ButtonDelete(add.Address_id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
               {add.Address_type.toLowerCase() === 'home' ? <MdHome className='absolute text-3xl top-0 right-0 ' /> : <HiOutlineOfficeBuilding className='absolute text-3xl top-0 right-0' />}
 

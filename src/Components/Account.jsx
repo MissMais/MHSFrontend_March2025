@@ -1,22 +1,50 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const AccountDetail = [
-  {
-    id: "ORD123456",
-    first_name: "Aareb",
-    last_name: "Khan",
-    email: "aareb@gmail.com",
-    phone: "9999988888",
-  },
-];
+
+// const AccountDetail = [
+//   {
+//     id: "ORD123456",
+//     first_name: "Aareb",
+//     last_name: "Khan",
+//     email: "aareb@gmail.com",
+//     phone: "9999988888",
+//   },
+// ];
+
+const url = "https://fd32f762dda4.ngrok-free.app/"
+
 
 export default function Account() {
-  const [orders, setOrders] = useState([]);
+  const [user, setuser] = useState({});
+  const Navigate = useNavigate()
 
-  useEffect(() => {
-    setOrders(AccountDetail);
-  }, []);
+const accesstoken = localStorage.getItem('AccessToken')
+  const headers = {
+     Authorization: `Bearer ${accesstoken}`,
+          "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+  }
+
+const fetchuser = async()=>{
+  const userid = localStorage.getItem('user_id')
+  const userdata = await axios.get(`${url}user/?id=${userid}`,{headers})
+  console.log(userdata.data[0])
+  setuser(userdata.data[0])
+}
+
+useEffect(()=>{
+  fetchuser()
+},[])
+
+
+
+ const ToEdit =async()=>{
+  Navigate('/accedit')
+
+ }
+
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen mt-14 bg-gray-100">
@@ -58,8 +86,8 @@ export default function Account() {
 
       {/* Main Content */}
       <div className="w-full md:flex-1 p-8 bg-white shadow-md rounded-md">
-        {orders.map((order) => (
-          <div key={order.id}>
+        {/* {user.map((order,index) => ( */}
+          <div>
             <h1
               className="text-3xl font-bold mb-6"
               style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
@@ -83,7 +111,7 @@ export default function Account() {
                   First Name
                 </label>
                 <input
-                  value={order.first_name}
+                  value={user.first_name || ''}
                   disabled
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 cursor-not-allowed"
                 />
@@ -94,7 +122,7 @@ export default function Account() {
                   Last Name
                 </label>
                 <input
-                  value={order.last_name}
+                  value={user.last_name || ''}
                   disabled
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 cursor-not-allowed"
                 />
@@ -105,13 +133,13 @@ export default function Account() {
                   Email
                 </label>
                 <input
-                  value={order.email}
+                  value={user.email || ''}
                   disabled
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 cursor-not-allowed"
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <label className="block text-sm font-semibold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
                   Phone
                 </label>
@@ -120,16 +148,17 @@ export default function Account() {
                   disabled
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 cursor-not-allowed"
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="mt-8">
-              <button className="bg-[#FB6D6C] hover:bg-[#e95a59] text-white px-6 py-2 rounded-md font-semibold transition-colors" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+              <button onClick={()=>ToEdit()} className="bg-[#FB6D6C] hover:bg-[#e95a59] text-white px-6 py-2 rounded-md font-semibold transition-colors" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+              >
                 Edit Profile
               </button>
             </div>
           </div>
-        ))}
+        {/* ))} */}
       </div>
     </div>
   );

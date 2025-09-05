@@ -363,7 +363,7 @@ export default function ProductDetail() {
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
   const url =
-    'https://c84927198c55.ngrok-free.app/'
+    'https://fd32f762dda4.ngrok-free.app/'
 
 
   const headers = {

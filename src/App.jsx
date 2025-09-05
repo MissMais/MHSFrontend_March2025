@@ -31,6 +31,7 @@ import Emptycart from './Components/Emptycart';
 import ForgotPassword from './Components/Forgotpass';
 import ForgotPassOtp from './Components/ForgotPassOtp';
 import ForgotPassChange from './Components/ForgotPassChange';
+import AccountEdit from './Components/AccountEdit';
 
 // import AllVO from './1VariationOption/AllVO';
 // import EditVO from './1VariationOption/EditVO';
@@ -45,10 +46,11 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />}></Route>
             <Route path="/home" index element={<Home />} />
-             <Route path="/events" index element={<Events />} />
+            <Route path="/events" index element={<Events />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path='/acc' element={<PrivateRoute element={<Account />} />} />
+            <Route path='/accedit' element={<PrivateRoute element={<AccountEdit />} />} />
             <Route path='/Address' element={<PrivateRoute element={<Address />} />} />
             <Route path="/addaddress" element={<PrivateRoute element={<AddAddress />} />} />
             <Route path='editadd/:id' element={<PrivateRoute element={<AddressEdit />} />} />
@@ -59,13 +61,13 @@ export default function App() {
             <Route path="/Cart" element={<PrivateRoute element={<Cart />} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/reset" element={<PrivateRoute element={<ResetPassword />} />} />
-            <Route path="/forgot"element={<ForgotPassword />} />
-            <Route path="/otp"element={<ForgotPassOtp />} />
-            <Route path="/changepass"element={<ForgotPassChange />} />
-            
-
-
+            <Route path="/forgot" element={<ForgotPassword />} />
+            <Route path="/otp" element={<ForgotPassOtp />} />
+            <Route path="/changepass" element={<ForgotPassChange />} />
             <Route path="/emptycart" element={<Emptycart />} />
+
+
+
             <Route path="/addC" element={<PrivateRoute element={<AddC />} />} />
             <Route path="/allC" element={<PrivateRoute element={<AllC />} />} />
             <Route path='/editC/:id' index element={<EditC />}></Route>

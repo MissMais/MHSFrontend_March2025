@@ -32,7 +32,7 @@ export default function OrderHistory() {
   const id = localStorage.getItem("user_id")
 
   const Orders = async () => {
-    const response = await axios.get(`https://c84927198c55.ngrok-free.app/history/${id}`,
+    const response = await axios.get(`https://fd32f762dda4.ngrok-free.app/history/${id}`,
 
       {
         headers: {
@@ -68,7 +68,7 @@ export default function OrderHistory() {
             key={idx}
             className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-200"
           >
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+            <div className="flex flex-col flex-row justify-between md:items-center">
               <div>
                 <p
                   className="text-lg font-semibold"
@@ -89,31 +89,29 @@ export default function OrderHistory() {
                   Status: {order.Order_status}
                 </p>
               </div>
-              <div className="mt-4 md:mt-0">
+
+              <div>
+                <img src={order.cart_item.product_variation.images[0]} alt="no image" className="w-20 md:w-30" />
+
+              </div>
+            </div>
+            <p
+              className="font-semibold mb-2 text-start"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            >
+              Items:
+            </p>
+          
+              <div className=" flex text-xs justify-between" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}>
+                {order.cart_item.product_variation.product_description} x {order.cart_item.Quantity}
                 <p
-                  className="text-lg font-bold text-right"
+                  className=" text-sm font-bold text-end"
                   style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
                 >
                   ₹{order.cart_item.Quantity * order.cart_item.product_variation.price}
                 </p>
-              </div>
-              <div>
-                <img src={`https://c84927198c55.ngrok-free.app/${order.cart_item.product_variation.images[0]}`} alt="no image" className="w-30"/>
-              </div>
             </div>
-
-             <div className="mt-4">
-              <p
-                className="font-semibold mb-2"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
-              >
-                Items:
-              </p>
-              <span  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}>
-                      {order.cart_item.product_variation.product_description} x {order.cart_item.Quantity}
-                    </span>
-            </div> 
-              {/* <p
+            {/* <p
                 className="font-semibold mb-2"
                 style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
               >
@@ -131,9 +129,9 @@ export default function OrderHistory() {
                     </span>
                     <span>₹{item.price}</span>
                   </li> */}
-                {/* ))} */}
-              {/* </ul> */}
-            
+            {/* ))} */}
+            {/* </ul> */}
+
           </div>
         ))
       }

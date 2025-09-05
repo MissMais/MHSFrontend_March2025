@@ -12,7 +12,7 @@ export default function OrderPage() {
   const [paymentMethod, setPaymentMethod] = useState("card");
 
 
-  const url = "https://c84927198c55.ngrok-free.app/"
+  const url = "https://fd32f762dda4.ngrok-free.app/"
 
   const {
     register,

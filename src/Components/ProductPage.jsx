@@ -287,11 +287,13 @@
 
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { FaFilter, FaTag, FaPalette, FaCubes, FaRupeeSign } from "react-icons/fa";
+import { FaFilter,FaSearch , FaRupeeSign } from "react-icons/fa";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const url = 'https://c84927198c55.ngrok-free.app/custom/'
+
+
+const url = 'https://fd32f762dda4.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 
@@ -306,6 +308,7 @@ const ProductPage = () => {
     // const [selectedMaterial, setSelectedMaterial] = useState("All");
     const [isFavorite, setIsFavorite] = useState(false);
     const [wishlist, setWishlist] = useState([]);
+     const [search, setSearch] = useState("");
 
     
 
@@ -400,6 +403,7 @@ const accessToken = localStorage.getItem("AccessToken")
         (selectedCategory === "All" || product.category_name === selectedCategory) &&
         (selectedColour === "All" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
         // (selectedColour === "All" || product.variation_name?.toLowerCase()) &&
+        (search === "" || product.sub_category_name.toLowerCase().includes(search.toLowerCase()))&&
         parseFloat(product.price) <= maxPrice)   
     }
     )
@@ -444,6 +448,24 @@ const accessToken = localStorage.getItem("AccessToken")
                 <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
                     <FaFilter /> Filters
                 </h2>
+
+
+
+                <div className="relative mb-6">
+                    <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FB6D6C]" />
+                 <input
+                 type="text"
+                 placeholder="Search products..."
+                 className="w-full pl-10 pr-4 py-2 pb-3 rounded-full border border-gray-300 shadow-sm 
+                 focus:outline-none focus:ring-2 focus:ring-[#FB6D6C] focus:border-[#FB6D6C]
+                 transition-all duration-300 placeholder:text-[12px]"
+                 value={search}
+                 onChange={(e) => setSearch(e.target.value)}
+                 />
+                </div>
+
+
+                
 
                 <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Category</label>
                 <select

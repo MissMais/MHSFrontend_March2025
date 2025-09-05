@@ -12,7 +12,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const url =
-    "https://06b01936de0f.ngrok-free.app/logout/"
+    "https://fd32f762dda4.ngrok-free.app/logout/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function Navbar() {
   };
 
   const linkClasses =
-    "block py-1 px-2 text-xs sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
+    "block py-1 px-2 text-[10px] sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
 
   return (
     <>

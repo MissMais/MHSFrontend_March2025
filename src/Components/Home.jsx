@@ -39,7 +39,7 @@ export default function Home() {
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://c84927198c55.ngrok-free.app/category/', { headers })
+            const response2 = await axios.get('https://fd32f762dda4.ngrok-free.app/category/', { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
@@ -103,7 +103,7 @@ export default function Home() {
                                 <h1 className="text-4xl font-bold font-serif text-[#FB6D6C] mb-2 ml-5" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
                                 <p className="text-[21px] font-bold text-[#FB6D6C] underline mb-4 ml-20" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Where Modesty Meets Elegance</p>
 
-                                <p className="text-gray-700 font-sans leading-relaxed text-lg" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                                <p className="text-gray-700 text-justify text-xs font-sans leading-relaxed md:text-lg" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                                     At Modest Gallery, we offer a diverse collection of modest hijabs, abayas, and accessories that blend elegance with comfort,
                                     allowing you to express your unique style with confidence. In addition to our fashion offerings, we proudly present Shaam e Roshan,
                                     our lifestyle, food, and craft exhibitions that celebrate creativity and tradition. Each event showcases exquisite crafts,
@@ -157,18 +157,18 @@ export default function Home() {
 
                         {/* Text Content */}
                         <div className="mb-8">
-                            <h1 className="text-3xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                            <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
                                 Abayas
                             </h1>
                             <br />
-                            <p className="text-[21px] leading-relaxed" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                            <p className="text-xs md:text-lg text-justify leading-relaxed" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                                 When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
                             </p>
                         </div>
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
                             {img
                                 // .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name == "Abaya")
@@ -177,16 +177,18 @@ export default function Home() {
                                     cat.homepage_images.map((image, index) => (
                                         <div
                                             key={index}
-                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            className=" md:h-77 md:w-66 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                             onClick={() => navigate('/ProductPage?category=Abaya')}
                                         >
 
-                                            <img
+                                            <div className="w-full aspect-[3/4]">
+                                                <img
+                                                    src={image}
+                                                    alt="Image"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
 
-                                                src={image}
-                                                alt="Image"
-                                                className='w-full h-full object-cover'
-                                            />
 
                                         </div>
                                     ))
@@ -207,14 +209,14 @@ export default function Home() {
                         {/* Text Content */}
                         <div className="mb-8">
                             <h1
-                                className="text-3xl font-bold"
+                                className="text-2xl md:text-3xl font-bold"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
                             >
                                 Stoles
                             </h1>
                             <br />
                             <p
-                                className="text-[21px]"
+                                className="text-xs md:text-lg text-justify"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 Our hijabs are crafted from premium fabrics, ensuring that they are comfortable,
@@ -227,7 +229,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Stoles")
@@ -236,16 +238,18 @@ export default function Home() {
                                     cat.homepage_images.map((image, index) => (
                                         <div
                                             key={index}
-                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            className=" md:h-77 md:w-66  shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                             onClick={() => navigate('/ProductPage?category=Stoles')}
                                         >
 
-                                            <img
+                                            <div className="w-full aspect-[3/4]">
+                                                <img
+                                                    src={image}
+                                                    alt="Image"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
 
-                                                src={image}
-                                                alt="Image"
-                                                className='w-full h-full object-cover'
-                                            />
 
                                         </div>
                                     ))
@@ -268,14 +272,14 @@ export default function Home() {
                         {/* Heading + Text */}
                         <div className="mb-8">
                             <h1
-                                className="text-3xl font-bold"
+                                className="text-2xl md:text-3xl font-bold"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
                             >
                                 Accessories
                             </h1>
                             <br />
                             <p
-                                className="text-[21px] text-gray-700"
+                                className="text-xs md:text-lg text-justify text-gray-700"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 No outfit is complete without the perfect accessories, and at
@@ -285,7 +289,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Accessories")
@@ -294,16 +298,18 @@ export default function Home() {
                                     cat.homepage_images.map((image, index) => (
                                         <div
                                             key={index}
-                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            className=" md:h-77 md:w-66  shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                             onClick={() => navigate('/ProductPage?category=Accessories')}
                                         >
 
-                                            <img
+                                            <div className="w-full aspect-[3/4]">
+                                                <img
+                                                    src={image}
+                                                    alt="Image"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
 
-                                                src={image}
-                                                alt="Image"
-                                                className='w-full h-full object-cover'
-                                            />
 
                                         </div>
                                     ))
@@ -326,14 +332,14 @@ export default function Home() {
                         {/* Heading + Text */}
                         <div className="mb-8">
                             <h1
-                                className="text-3xl font-bold"
+                                className="text-2xl md:text-3xl font-bold"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
                             >
                                 Hijabs
                             </h1>
                             <br />
                             <p
-                                className="text-[21px] text-gray-700"
+                                className="text-xs md:text-lg text-justify text-gray-700"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 At <span className="text-[#FB6D6C] font-semibold">Modest Gallery</span>, our hijab collection is crafted to empower modern women with elegance, comfort, and versatility. Whether you're dressing for a casual day out, a professional setting, or a special event, we offer hijabs in a wide variety of fabrics, colors, and styles to suit every mood and moment. From breathable cotton and soft jersey to luxurious chiffon and silk, each piece is thoughtfully selected to ensure a perfect blend of modesty and fashion. </p>
@@ -341,7 +347,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Hijab")
@@ -350,16 +356,18 @@ export default function Home() {
                                     cat.homepage_images.map((image, index) => (
                                         <div
                                             key={index}
-                                            className=" h-88 w-77 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-6 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            className=" md:h-77 md:w-66  shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                             onClick={() => navigate('/ProductPage?category=Hijab')}
                                         >
 
-                                            <img
+                                            <div className="w-full aspect-[3/4]">
+                                                <img
+                                                    src={image}
+                                                    alt="Image"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
 
-                                                src={image}
-                                                alt="Image"
-                                                className='w-full h-full object-cover'
-                                            />
 
                                         </div>
                                     ))

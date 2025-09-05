@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
 
-const url = 'https://c84927198c55.ngrok-free.app/'
+const url = 'https://fd32f762dda4.ngrok-free.app/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/"
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/"
 //  'https://modestgallery.pythonanywhere.com/';
