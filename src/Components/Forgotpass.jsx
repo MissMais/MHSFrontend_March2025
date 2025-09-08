@@ -9,13 +9,13 @@ export default function ForgotPassword() {
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
-  const url = 'https://3j7gm770-8000.inc1.devtunnels.ms/'
+  const url = 'https://36878661c9fc.ngrok-free.app/'
 
   const onSubmit = async (data) => {
 
     try {
       console.log(data)
-      const response = await axios.post(`${url}send/`, data,);
+      const response = await axios.post(`${url}mail/`, data,);
       // console.log(response.data);
       navigate('/otp')
 

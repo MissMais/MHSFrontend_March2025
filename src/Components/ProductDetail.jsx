@@ -363,7 +363,7 @@ export default function ProductDetail() {
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
   const url =
-    'https://fd32f762dda4.ngrok-free.app/'
+    'https://36878661c9fc.ngrok-free.app/'
 
 
   const headers = {
@@ -437,7 +437,7 @@ export default function ProductDetail() {
         };
 
         await axios.post(
-          `${url}addtocart/`,
+          `${url}add/`,
           payload,
           {
             headers: {
@@ -513,23 +513,23 @@ export default function ProductDetail() {
 
           {/* Info Section */}
           <div>
-            <h1 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+            <h1 className="text-xl font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
-            <p className="text-2xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+            <p className="text-xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
               ₹ {selectedProduct?.price || 'N/A'}
             </p>
             {/* <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.product_variation.stock ?? 'N/A'}
             </p> */}
-            <div className="mb-4 text-sm font-medium" style={{ color: '#C3C8D3' }}>
+            <div className="mb-4 text-xs font-medium" style={{ color: '#C3C8D3' }}>
               Free Shipping | 24hr Dispatch
             </div>
 
-            {/* Color Selector */}
+            {/* Color Selector
             {allVariations.some(v => v.variation_type === 'Color') && (
               <div className="mt-7">
-                <h2 className="font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Choose Color:</h2>
+                <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Choose Color:</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Color' && v.ColorCode)
@@ -543,7 +543,7 @@ export default function ProductDetail() {
                     ))}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Size Selector */}
             {allVariations.some(v => v.variation_type === 'Size') && (

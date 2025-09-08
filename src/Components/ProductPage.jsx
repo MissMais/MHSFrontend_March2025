@@ -290,10 +290,11 @@ import React, { useState, useEffect } from "react";
 import { FaFilter,FaSearch , FaRupeeSign } from "react-icons/fa";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Footer from "../Routes/Footer";
 
 
 
-const url = 'https://fd32f762dda4.ngrok-free.app/custom/'
+const url = 'https://36878661c9fc.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 
@@ -442,154 +443,172 @@ const accessToken = localStorage.getItem("AccessToken")
 
 
     return (
+      <div>
+
+      
         <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
-            {/* Sidebar */}
-            <div className="w-full md:w-1/3 p-6 mr-5 border-gray-200 bg-gray-100  mb-6 md:mb-0">
-                <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
-                    <FaFilter /> Filters
-                </h2>
+  {/* Sidebar */}
+  <div className="w-full md:w-1/6 p-6 border-gray-200 bg-gray-100 mb-6 md:mb-0">
+    <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
+      <FaFilter /> Filters
+    </h2>
 
+    {/* Category */}
+    <label
+      className="block font-semibold mb-2"
+      style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+    >
+      Category
+    </label>
+    <select
+      className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
+      value={selectedCategory}
+      onChange={(e) => handleCategoryChange(e.target.value)}
+    >
+      <option value="All" className="text-[#666F80]">
+        All
+      </option>
+      {getUniqueCategories().map((cat) => (
+        <option
+          key={cat}
+          value={cat}
+          style={{
+            fontFamily: "Copperplate, Papyrus, fantasy",
+            color: "#666F80",
+          }}
+        >
+          {cat}
+        </option>
+      ))}
+    </select>
 
+    {/* Colour */}
+    <label
+      className="block font-semibold mb-2"
+      style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+    >
+      Colour
+    </label>
+    <select
+      className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
+      onChange={(e) => setSelectedColour(e.target.value)}
+    >
+      <option value="All" className="text-[#666F80]">
+        All
+      </option>
+      {getUniqueColours().map((colour) => (
+        <option
+          key={colour}
+          value={colour}
+          style={{
+            fontFamily: "Copperplate, Papyrus, fantasy",
+            color: "#666F80",
+          }}
+        >
+          {colour}
+        </option>
+      ))}
+    </select>
 
-                <div className="relative mb-6">
-                    <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FB6D6C]" />
-                 <input
-                 type="text"
-                 placeholder="Search products..."
-                 className="w-full pl-10 pr-4 py-2 pb-3 rounded-full border border-gray-300 shadow-sm 
-                 focus:outline-none focus:ring-2 focus:ring-[#FB6D6C] focus:border-[#FB6D6C]
-                 transition-all duration-300 placeholder:text-[12px]"
-                 value={search}
-                 onChange={(e) => setSearch(e.target.value)}
-                 />
-                </div>
+    {/* Max Price */}
+    <label
+      className="block font-semibold mb-2"
+      style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+    >
+      Max Price: ₹{maxPrice.toLocaleString()}
+    </label>
+    <input
+      type="range"
+      min="0"
+      max="10000"
+      value={maxPrice}
+      onChange={(e) => setMaxPrice(Number(e.target.value))}
+      className="w-full accent-[#FB6D6C]"
+    />
+  </div>
 
+  {/* Products Section */}
+  <div className="flex-1 ">
+    {/* Search bar */}
+    <div className="flex justify-center mt-3 mb-4 px-4">
+      <div className="relative w-full max-w-sm">
+        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FB6D6C]" />
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 shadow-sm 
+          focus:outline-none focus:ring-2 focus:ring-[#FB6D6C] focus:border-[#FB6D6C]
+          transition-all duration-300 placeholder:text-[12px]"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+    </div>
 
-                
+    {/* Product grid */}
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-3  px-4 mt-10">
+      {filteredProductsWithImages.map((product, idx) => (
+        <div
+          key={idx}
+          className="flex flex-col bg-white shadow-md hover:shadow-xl transition-all overflow-hidden"
+        >
+          {/* Image */}
+          <div className="h-[200px] md:h-[300px] w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)] overflow-hidden">
+            <img
+              src={product.images[0]}
+              alt="Product"
+              className="object-cover w-full h-full"
+            />
+          </div>
 
-                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Category</label>
-                <select
-                    className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-                    value={selectedCategory}
-                    onChange={(e) => handleCategoryChange(e.target.value)}
-                >
-                    <option value="All" className="text-[#666F80]">All</option>
-                    {getUniqueCategories().map((cat) => (
-                        <option key={cat} value={cat} style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{cat}</option>
-                    ))}
-                </select>
+          {/* Details */}
+          <div  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}  className="p-4 flex flex-col flex-grow text-xs md:text-sm">
+            <h3
+              className="md:text-lg font-bold mb-1 text-[#FB6D6C]"
+             
+            >
+              {product.product_description}
+            </h3>
+            <p className="text-gray-500">
+              {product.variation_name || "N/A"}
+            </p>
+            <p className="text-gray-500">
+            <FaRupeeSign className="inline text-gray-400" />
+              {parseFloat(product.price).toLocaleString()}
+            </p>
 
-
-                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Colour</label>
-                <select
-                    className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-                    onChange={(e) => setSelectedColour(e.target.value)}
-                >
-                    <option value="All" className="text-[#666F80]">All</option>
-                    {getUniqueColours().map((colour) => (
-                        <option key={colour} value={colour} style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
-                            {colour}
-                        </option>
-                    ))}
-                </select>
-
-
-
-                
-
-
-                <label className="block font-semibold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-                    Max Price: ₹{maxPrice.toLocaleString()}
-                </label>
-                <input
-                    type="range"
-                    min="0"
-                    max="10000"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(Number(e.target.value))}
-                    className="w-50% accent-[#FB6D6C]"
-
-                />
+            {/* Wishlist + View */}
+            <div className="mt-auto flex justify-between font-bold items-center pt-3">
+              <div
+                onClick={() => toggleWishlist(product.Product_id)}
+                style={{ cursor: "pointer" }}
+                className="text-lg md:text-2xl"
+              >
+                {wishlist.includes(product.Product_id) ? (
+                  <IoHeart color="#FB6D6C" />
+                ) : (
+                  <IoHeartOutline color="#FB6D6C" />
+                )}
+              </div>
+              <button
+                className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 rounded-lg transition-all"
+                style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                onClick={() => handleProductClick(product.Product_id)}
+              >
+                View
+              </button>
             </div>
-
-            {/* Products */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-12  w-full md:w-2/1 px-4 mt-10">
-                {filteredProductsWithImages
-                    // .sort(() => Math.random() - 0.5)
-                    .map((product, idx) => (
-                        <div
-                            key={idx}
-                            className="flex flex-col bg-white shadow-md hover:shadow-xl transition-all overflow-hidden"
-                        >
-
-                            <div className="h-full w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)]  overflow-hidden">
-                                <img
-                                    src={
-                                        product.images[0]
-                                        // ?.replace("http://localhost:8000/", "http://192.168.18.136:8000/")
-                
-                                    }
-                                    alt="Product"
-                                    className="object-cover w-full h-full"
-                                />
-                            </div>
-
-
-                            <div className="p-4 flex flex-col flex-grow text-xs md:text-sm " >
-                                <h3 className="md:text-lg font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{product.product_description}</h3>
-                                <div className="text-xs md:text-sm" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
-                                    {/* <p className=" text-gray-500 mb-1">
-
-                                        {product.category_name}
-                                    </p>
-                                    <p className=" text-gray-500 mb-1">
-
-                                        {product.sub_category_name}
-                                    </p> */}
-                                    <p className=" text-gray-500">Color - 
-
-                                        {product.variation_name || "N/A"}
-                                    </p>
-                                    <p className=" text-gray-500">Price - 
-
-                                        <span className="md:text-sm sm:text-xs ">
-                                        <FaRupeeSign className="inline text-gray-400" />
-                                        {parseFloat(product.price).toLocaleString()}
-                                    </span>
-                                    </p>
-                                    {/* <p className=" mt-2 text-green-700">Stock: {product.product_variation.stock}</p> */}
-                                </div>
-
-                                <div className="mt-auto flex justify-between font-bold items-center pt-3" >
-                                    <span className="text-lg ">
-                                        
-                                        {/* <IoHeart  className="text-black stroke-[#FB6D6C] stroke-1"/> */}
-                                        {/* <FaHeart className="text-white border border-[#Fb6D6c]" /> */}
-                                         <div onClick={()=> toggleWishlist(product.Product_id)} style={{ cursor: 'pointer' }} className="text-lg md:text-2xl ">
-                                          {wishlist.includes(product.Product_id) ? (
-                                            <IoHeart color="#FB6D6C" />  ) : (  <IoHeartOutline  color="#FB6D6C" />)
-                                             }
-                                         </div>
-                                        
-                                    </span>
-                                     {/* <button
-                                        className="bg-[#FB6D6C] text-white px-4 py-2 rounded-lg hover:bg-[#e95a59] transition-all"
-                                        onClick={() => handleProductClick(product.Product_id)}
-                                    >
-                                        Wishlist
-                                    </button> */}
-                                    <button style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
-                                        className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 rounded-lg transition-all"
-                                        onClick={() => handleProductClick(product.Product_id)}
-                                    >
-                                        View
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-            </div>
+          </div>
         </div>
+      ))}
+    </div>
+  </div>
+  </div>
+  <section id='contact'  >
+                  <Footer />
+              </section>
+</div>
+
     );
 };
 

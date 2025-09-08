@@ -7,7 +7,7 @@ export default function ForgotPassOtp() {
   const navigate = useNavigate();
   const { handleSubmit, register, getValues } = useForm();
 
-  const url = "https://3j7gm770-8000.inc1.devtunnels.ms/";
+  const url = "https://36878661c9fc.ngrok-free.app/";
 
   const onSubmit = async () => {
     const { d1, d2, d3, d4 } = getValues();

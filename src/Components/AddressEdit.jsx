@@ -28,7 +28,7 @@ export default function AddressEdit() {
 
   const getAdd = async (id) => {
     try {
-      const Data = await axios.get('https://fd32f762dda4.ngrok-free.app/address/?id=' + id,
+      const Data = await axios.get('https://36878661c9fc.ngrok-free.app/address/?id=' + id,
         {
             headers: {
               // Authorization: `Bearer ${accesstoken}`,
@@ -78,7 +78,7 @@ export default function AddressEdit() {
         Pincode: data.Pincode,
       }
 
-      const Adddata = await axios.put('https://fd32f762dda4.ngrok-free.app/address/', Payload,
+      const Adddata = await axios.put('https://36878661c9fc.ngrok-free.app/address/', Payload,
         {
           headers: {
             'Content-Type': 'application/json',

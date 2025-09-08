@@ -55,11 +55,11 @@ export default function EmptyCart() {
         `}
       </style>
 
-<div className="roll-in">
-<img src={cartImg} alt="Empty cart" className="w-100" />
-<h1 className="flex justify-center w-100 h-40 text-[#FB6D6C] font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Your Cart is Empty</h1>
-</div>
-      
+      <div className="roll-in">
+        <img src={cartImg} alt="Empty cart" className="w-50 md:w-100" />
+        <h1 className="flex justify-center w-50 md:w-100 h-40 text-[#FB6D6C] font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Your Cart is Empty</h1>
+      </div>
+
 
 
 

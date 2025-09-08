@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const url = "https://fd32f762dda4.ngrok-free.app/user/"
+const url = "https://36878661c9fc.ngrok-free.app/user/"
 
 export default function AccountEdit() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function AccountEdit() {
   const getuser = async () => {
 
     try {
-      const Data = await axios.get('https://fd32f762dda4.ngrok-free.app/user/?id=' + userid,
+      const Data = await axios.get('https://36878661c9fc.ngrok-free.app/user/?id=' + userid,
         {
           headers: {
             // Authorization: `Bearer ${accesstoken}`,

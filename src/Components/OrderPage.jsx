@@ -12,7 +12,7 @@ export default function OrderPage() {
   const [paymentMethod, setPaymentMethod] = useState("card");
 
 
-  const url = "https://fd32f762dda4.ngrok-free.app/"
+  const url = "https://36878661c9fc.ngrok-free.app/"
 
   const {
     register,
@@ -99,7 +99,7 @@ export default function OrderPage() {
       // };
 
       const response = await axios.post(
-        `${url}placeorder/`,
+        `${url}place/`,
         // "https://3j7gm770-8000.inc1.devtunnels.ms/order/",
 
         payload,

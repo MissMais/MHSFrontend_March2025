@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const url = "https://3j7gm770-8000.inc1.devtunnels.ms/";
+const url = "https://36878661c9fc.ngrok-free.app/";
 
 export default function ForgotPassChange() {
   const navigate = useNavigate();

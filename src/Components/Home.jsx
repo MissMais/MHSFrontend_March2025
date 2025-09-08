@@ -39,7 +39,7 @@ export default function Home() {
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://fd32f762dda4.ngrok-free.app/category/', { headers })
+            const response2 = await axios.get('https://36878661c9fc.ngrok-free.app/category/', { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
@@ -100,8 +100,8 @@ export default function Home() {
                         <div className="flex flex-col md:flex-row items-center">
                             {/* Text Content */}
                             <div className="md:w-1/2 md:pr-8">
-                                <h1 className="text-4xl font-bold font-serif text-[#FB6D6C] mb-2 ml-5" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
-                                <p className="text-[21px] font-bold text-[#FB6D6C] underline mb-4 ml-20" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Where Modesty Meets Elegance</p>
+                                <h1 className="md:text-4xl font-bold font-serif text-[#FB6D6C] mb-2 ml-5" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
+                                <p className=" text-[10px] md:text-[21px] font-bold text-[#FB6D6C] underline mb-4 ml-20" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Where Modesty Meets Elegance</p>
 
                                 <p className="text-gray-700 text-justify text-xs font-sans leading-relaxed md:text-lg" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                                     At Modest Gallery, we offer a diverse collection of modest hijabs, abayas, and accessories that blend elegance with comfort,
@@ -153,7 +153,7 @@ export default function Home() {
             {/* Abayas  */}
             <section id="store" className=" bg-white">
                 <div className="max-w-7xl  px-4">
-                    <div className="p-6 mt-10">
+                    <div className="p-6">
 
                         {/* Text Content */}
                         <div className="mb-8">
@@ -202,9 +202,9 @@ export default function Home() {
 
 
             {/* Stoles  */}
-            <section id="stoles" className="py-10 bg-white">
+            <section id="stoles" className=" bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className=" p-6 mt-10">
+                    <div className="p-6">
 
                         {/* Text Content */}
                         <div className="mb-8">
@@ -265,9 +265,9 @@ export default function Home() {
 
 
             {/* Accessories */}
-            <section id="accessories" className="py-10 bg-white">
+            <section id="accessories" className=" bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="p-6 mt-10">
+                    <div className="p-6">
 
                         {/* Heading + Text */}
                         <div className="mb-8">
@@ -325,9 +325,9 @@ export default function Home() {
 
 
             {/* Hijabs */}
-            <section id="accessories" className="py-10 bg-white">
+            <section id="accessories" className=" bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="p-6 mt-10">
+                    <div className="p-6">
 
                         {/* Heading + Text */}
                         <div className="mb-8">

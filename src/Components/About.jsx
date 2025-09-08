@@ -1,13 +1,10 @@
 import Footer from '../Routes/Footer';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+
 import { useEffect } from 'react';
 
 export default function About() {
 
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
+ 
 
 
   return (
@@ -19,25 +16,25 @@ export default function About() {
 
       <section className="py-12 mt-20">
         <div className='container max-w-7xl mx-auto px-4'>
-          <h1 className='text-center text-4xl font-bold mb-10' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }} data-aos="fade"
+          <h1 className='text-center text-3xl font-bold mb-10' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
           >
             Our Story
           </h1>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
-            <div className='md:w-1/2 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg' data-aos="fade-right">
-              <p className='text-[20px] text-white text-justify' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            <div className='md:w-1/2 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg'>
+              <p className='text-[10px] md:text-[20px] text-white text-justify' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                 Modest Gallery was born out of a desire to provide high-quality, stylish, and modest fashion options for women who value both fashion and tradition.
                 Our founder recognized a gap in the market for modest clothing that was not only respectful of religious and cultural values but also fashionable and versatile.
                 With this vision in mind, Modest Gallery was established as a one-stop shop for women seeking modest yet chic clothing and accessories.
               </p>
             </div>
 
-            <div className='md:w-1/2 flex justify-center' data-aos="fade-left">
+            <div className='md:w-1/2 flex justify-center'>
               <img
                 src="/img01.jpg"
                 alt="Our Story"
-                className='rounded-2xl shadow-lg w-[50%] object-cover md:ml-20'
+                className='rounded-2xl shadow-lg w-[90%] md:w-[70%] object-cover md:ml-20'
               />
             </div>
           </div>
@@ -46,21 +43,21 @@ export default function About() {
 
       <section className="py-12">
         <div className='container max-w-7xl mx-auto px-4'>
-          <h1 className='text-center text-4xl font-bold mb-10' data-aos="fade"
+          <h1 className='text-center text-4xl font-bold mb-10'
             style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
             Modest Hijab Store
           </h1>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
-            <div className='md:w-1/2 flex justify-center' data-aos="fade-right">
+            <div className='md:w-1/2 flex justify-center'>
               <img
                 src="/img02.jpg"
                 alt="Our Story"
                 className='rounded-2xl shadow-lg w-[90%] object-cover md:ml-20'
               />
             </div>
-            <div className='md:w-2/3 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg ' data-aos="fade-left">
-              <p className='text-[20px] leading-relaxed text-white text-justify' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            <div className='md:w-2/3 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg'>
+              <p className='text-[10px] md:text-[20px] leading-relaxed text-white text-justify' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                 At the heart of Modest Gallery is our Modest Hijab Store, where we offer an exquisite range of hijabs,
                 abayas, and accessories that cater to the needs of modern, modest women. Our hijab collection is thoughtfully
                 curated to include a variety of styles, fabrics, and colors, ensuring that every woman can find something that
@@ -83,14 +80,14 @@ export default function About() {
 
       <section className="py-12">
         <div className='container max-w-7xl mx-auto px-4'>
-          <h1 className='text-center text-4xl font-bold mb-10' data-aos="fade"
+          <h1 className='text-center text-4xl font-bold mb-10'
             style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
             Shaam e Roshan
           </h1>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
-            <div className='md:w-1/2 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg' data-aos="fade-right">
-              <p className='text-[20px] leading-relaxed text-white text-justify' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            <div className='md:w-1/2 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg'>
+              <p className='text-[10px] md:text-[20px] leading-relaxed text-white text-justify' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                 Modest Gallery is not just about fashion; it's about creating experiences that celebrate culture,
                 creativity, and community. This is where Shaam e Roshan comes in. Shaam e Roshan is our signature series of lifestyle,
                 food, and craft exhibitions that bring people together in a vibrant, festive atmosphere. These events are a celebration of
@@ -107,7 +104,7 @@ export default function About() {
                 that we hold dear at Modest Gallery.
               </p>
             </div>
-            <div className='md:w-1/2 flex justify-center' data-aos="fade-left">
+            <div className='md:w-1/2 flex justify-center'>
               <img
                 src="/img03.jpg"
                 alt="Our Story"
@@ -118,7 +115,7 @@ export default function About() {
         </div>
       </section>
 
-      <div className='text-center px-4 md:px-0 my-10 font-bold text-[21px] leading-relaxed'>
+      <div className='text-center px-4 md:px-0 my-10 font-bold text-[15px] md:text-[20px] leading-relaxed'>
         <h4 style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
           Thank you for choosing Modest Gallery as your trusted source for modest fashion and cultural experiences.
           We look forward to serving you and being a part of your journey.

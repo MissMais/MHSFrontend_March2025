@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 //   },
 // ];
 
-const url = "https://fd32f762dda4.ngrok-free.app/"
+const url = "https://36878661c9fc.ngrok-free.app/"
 
 
 export default function Account() {
