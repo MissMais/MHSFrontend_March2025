@@ -1,0 +1,116 @@
+import React from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const url = "https://36878661c9fc.ngrok-free.app/";
+
+export default function ResetPassword() {
+  const navigate = useNavigate();
+
+  const { handleSubmit, register, formState: { errors } } = useForm();
+
+
+  const onSubmit = async (data) => {
+    const accesstoken = localStorage.getItem("AccessToken")
+    try {
+      console.log(data)
+      const response = await axios.post(`${url}change/`, data,
+        {
+          headers: {
+            Authorization: `Bearer ${accesstoken}`,
+          },
+        }
+      );
+      console.log(response.data);
+      alert('Password Changed Successfully');
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to Reset");
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center min-h-screen px-4">
+      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
+        <h2
+          className="text-center text-2xl font-bold mb-6"
+          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+        >
+          Reset Password
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4">
+            <label
+              htmlFor="Current Password"
+              className="block text-sm font-bold mb-1"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            >
+              Current Password
+            </label>
+            <input
+              {...register("old_password", { required: "Old Password is required" })}
+              type="password"
+              id="old_password"
+              placeholder="Enter your Old Password"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.old_password && (
+              <small className="text-red-600">{errors.old_password.message}</small>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="New Password"
+              className="block text-sm font-bold mb-1"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            >
+              New Password
+            </label>
+            <input
+              {...register("new_password", { required: "New Password is required" })}
+              type="password"
+              id="new_password"
+              placeholder="Enter your New Password"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.new_password && (
+              <small className="text-red-600">{errors.new_password.message}</small>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="Confirm New Password"
+              className="block text-sm font-bold mb-1"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            >
+              Confirm New Password
+            </label>
+            <input
+              {...register("confirm_password", { required: "Confirm New Password is required" })}
+              type="password"
+              id="confirm_password"
+              placeholder="Confirm your New Password"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.confirm_password && (
+              <small className="text-red-600">{errors.confirm_password.message}</small>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
+            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+          >
+            Change
+          </button>
+        </form>
+        
+      </div>
+    </div>
+  );
+}
