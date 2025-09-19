@@ -1,19 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {url} from "../App"
 
 
-// const AccountDetail = [
-//   {
-//     id: "ORD123456",
-//     first_name: "Aareb",
-//     last_name: "Khan",
-//     email: "aareb@gmail.com",
-//     phone: "9999988888",
-//   },
-// ];
+// const url = "https://5d0abf24c6ce.ngrok-free.app/"
 
-const url = "https://36878661c9fc.ngrok-free.app/"
 
 
 export default function Account() {
@@ -21,6 +13,7 @@ export default function Account() {
   const Navigate = useNavigate()
 
 const accesstoken = localStorage.getItem('AccessToken')
+
   const headers = {
      Authorization: `Bearer ${accesstoken}`,
           "ngrok-skip-browser-warning": "69420",
@@ -30,8 +23,11 @@ const accesstoken = localStorage.getItem('AccessToken')
 const fetchuser = async()=>{
   const userid = localStorage.getItem('user_id')
   const userdata = await axios.get(`${url}user/?id=${userid}`,{headers})
-  console.log(userdata.data[0])
+  
+  console.log(userdata.data[0].first_name[0])
   setuser(userdata.data[0])
+
+
 }
 
 useEffect(()=>{
@@ -45,11 +41,15 @@ useEffect(()=>{
 
  }
 
+const fullname = user.first_name
+const firstletter =  fullname?.[0]
+console.log(firstletter)
+ 
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen mt-14 bg-gray-100">
       {/* Sidebar */}
-      <div className="w-full md:w-1/6 bg-white p-6 shadow-md">
+      <div className="w-full md:w-1/6 bg-white p-6 shadow-">
         <h2
           className="text-xl font-bold mb-6"
           style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
@@ -96,12 +96,8 @@ useEffect(()=>{
             </h1>
 
             {/* Profile Image */}
-            <div className="flex items-center mb-8 gap-6">
-              <img
-                src="/logo.jpeg"
-                alt="profile"
-                className="rounded-full border-4 border-[#FB6D6C] w-40 h-40 object-cover"
-              />
+            <div className="flex items-center justify-center mb-8 gap-6 rounded-full shadow-md shadow-black bg-[#FB6D6C] w-40 h-40 object-cover">
+             <div className="text-6xl font-semibold text-white">{firstletter}</div>
             </div>
 
             {/* Profile Info Form */}

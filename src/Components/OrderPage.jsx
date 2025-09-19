@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import {url} from "../App"
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 export default function OrderPage() {
   const location = useLocation();
@@ -11,8 +13,11 @@ export default function OrderPage() {
   const [Address, setAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("card");
 
+   const stripe = useStripe();  
+  const elements = useElements();
 
-  const url = "https://36878661c9fc.ngrok-free.app/"
+
+  // const url = "https://5d0abf24c6ce.ngrok-free.app/"
 
   const {
     register,
@@ -32,6 +37,13 @@ export default function OrderPage() {
     const cartKey = `cart_${email}`;
     const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
     setCartItems(storedItems);
+
+    if(storedItems==0){
+      alert("Add products")
+      navigate("/ProductPage")
+      return;
+      
+    }
     // console.log(storedItems)
   }, [navigate]);
 
@@ -67,64 +79,75 @@ export default function OrderPage() {
 
 
 
+const onSubmit = async (data) => {
 
-  const onSubmit = async (data) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const email = user?.email;
+  const user = JSON.parse(localStorage.getItem("user"));
+  const email = user?.email;
+  const cartKey = `cart_${email}`;
+  const accesstoken = localStorage.getItem("AccessToken");
 
-    const cartKey = `cart_${email}`;
+  try {
+    if (paymentMethod === "card") {
+    
+      const res = await axios.post(`${url}test/`,{
+          amount: subtotal * 100,
+      }); 
+      const { clientSecret } = res.data;
 
-    // const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
-    // setCartItems(storedItems);
-    const accesstoken = localStorage.getItem("AccessToken")
+      // Confirm payment with Stripe
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+        },
+      });
 
-    try {
-      // // // Sh
+      
+
+        if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+        
+        const payload = {
+          Delivery_Address: Address.Address_id,
+          // payment_id: result.paymentIntent.id,
+          payment_id: paymentMethod,
+          payment_confirmation: true,
+          order_status: "Booked",
+          cart_item_id: cartItems,
+        };
+
+        const orderRes = await axios.post(`${url}place/`, payload, {
+          headers: { Authorization: `Bearer ${accesstoken}` },
+        });
+
+        console.log("Order placed:", orderRes.data);
+        localStorage.removeItem(cartKey);
+        setCartItems([]);
+    
+        // navigate("/ProductPage");
+      }
+    } else {
+      // Cash on Delivery
       const payload = {
         Delivery_Address: Address.Address_id,
-        payment_id: paymentMethod,
+        payment_id: "Cash",
         payment_confirmation: false,
         order_status: "Booked",
-        cart_item_id: cartItems
+        cart_item_id: cartItems,
       };
 
-      // // // SA
-      // const payload = {
+      await axios.post(`${url}place/`, payload, {
+        headers: { Authorization: `Bearer ${accesstoken}` },
+      });
 
-      //   delivery_Address: Address.Address_id,
-      //   payment_id: paymentMethod,
-      //   payment_confirmation: false,
-      //   order_status: "Booked",
-      //   cart_id: cartItems
-      // };
-
-      const response = await axios.post(
-        `${url}place/`,
-        // "https://3j7gm770-8000.inc1.devtunnels.ms/order/",
-
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${accesstoken}`,
-          },
-        }
-      );
-      console.log(response.data.order_id)
       localStorage.removeItem(cartKey);
       setCartItems([]);
-
-    } catch (error) {
-      console.error("Error:", error);
+    
+      // navigate("/ProductPage");
     }
-    console.log("Form Data:", data);
-    console.log("Selected payment method:", paymentMethod);
-    console.log("Product:", cartItems);
-
-
-    alert(`Order placed using ${paymentMethod === "Cash" ? "Cash on Delivery" : "Card"}`);
-    // reset();
-
-  };
+  } catch (error) {
+    console.error(error);
+    
+  }
+};
 
 
   let subtotal = 0;
@@ -313,7 +336,11 @@ export default function OrderPage() {
 
               {paymentMethod === "card" && (
                 <div id="card-details" className="card-fields">
-                  <input
+                    <CardElement className="p-2 border mb-4" />
+                  
+
+
+                  {/* <input
                     type="text"
                     placeholder="Name on Card"
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
@@ -334,7 +361,7 @@ export default function OrderPage() {
                       placeholder="CVC"
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
                     />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>

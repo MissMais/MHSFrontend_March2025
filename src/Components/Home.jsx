@@ -6,6 +6,7 @@ import axios from 'axios';
 import { scroller } from "react-scroll";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import {url} from "../App"
 
 export default function Home() {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function Home() {
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://36878661c9fc.ngrok-free.app/category/', { headers })
+            const response2 = await axios.get(`${url}category/`, { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
@@ -94,7 +95,7 @@ export default function Home() {
 
 
             {/* Home */}
-            <section id="home" className="py-10" >
+            <section id="home" >
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="bg-white rounded-lg shadow-md p-6">
                         <div className="flex flex-col md:flex-row items-center">
@@ -237,7 +238,7 @@ export default function Home() {
                                 .flatMap((cat) =>
                                     cat.homepage_images.map((image, index) => (
                                         <div
-                                            key={index}
+                                            key={index || ''}
                                             className=" md:h-77 md:w-66  shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                             onClick={() => navigate('/ProductPage?category=Stoles')}
                                         >

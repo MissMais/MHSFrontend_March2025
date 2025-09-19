@@ -1,28 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import {url} from "../App"
 
-// const Orders = [
-//   {
-//     id: "ORD123456",
-//     date: "2025-06-01",
-//     status: "Delivered",
-//     total: 1799,
-//     items: [
-//       { name: "Black Abaya", qty: 1, price: 1199 },
-//       { name: "Cotton Hijab", qty: 2, price: 300 },
-//     ],
-//   },
-//   {
-//     id: "ORD789101",
-//     date: "2025-05-21",
-//     status: "Processing",
-//     total: 999,
-//     items: [
-//       { name: "Printed Stole", qty: 1, price: 499 },
-//       { name: "Underscarf", qty: 1, price: 500 },
-//     ],
-//   },
-// ];
 
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
@@ -32,7 +11,7 @@ export default function OrderHistory() {
   const id = localStorage.getItem("user_id")
 
   const Orders = async () => {
-    const response = await axios.get(`https://36878661c9fc.ngrok-free.app/history/${id}`,
+    const response = await axios.get(`${url}history/${id}`,
 
       {
         headers: {
@@ -68,7 +47,7 @@ export default function OrderHistory() {
             key={idx}
             className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-200"
           >
-            <div className="flex flex-col flex-row justify-between md:items-center">
+            <div className="flex flex-row justify-between md:items-center">
               <div>
                 <p
                   className="text-lg font-semibold"

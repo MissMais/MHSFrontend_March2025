@@ -1,25 +1,27 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
+import {useNavigate } from "react-router-dom";
+import {url} from "../App"
 
 export default function Signup() {
   const { register, handleSubmit, reset } = useForm();
   const [message, setMessage] = useState("");
-
-  const url = "https://3j7gm770-8000.inc1.devtunnels.ms/signup/"
+const navigate = useNavigate()
+  // const url = "https://f7c671b11927.ngrok-free.app/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/register/"
 
   const onSubmit = async (data) => {
     try {
-      data.is_customer = true;
-      data.is_employee = false;
+      
 
       console.log(data);
-      const response = await axios.post(url, data);
+       await axios.post(`${url}signup/`, data);
 
-      const token = response.data.token;
-      localStorage.setItem("jwt", token);
+      
       alert("Signup successful!");
+      navigate('/login')
+      
       // reset();
     } catch (error) {
       console.error(error);
@@ -55,7 +57,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Username</label>
               <input
-                {...register("username", { required: true })}
+                {...register("Name", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -196,7 +198,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
               <input
-                {...register("address_type", { required: true })}
+                {...register("Address_type", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -206,7 +208,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
               <input
-                {...register("house_no", { required: true })}
+                {...register("House_No", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -215,7 +217,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
               <input
-                {...register("area_colony", { required: true })}
+                {...register("Area_Colony", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -224,7 +226,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
               <input
-                {...register("landmark", { required: true })}
+                {...register("Landmark", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -233,7 +235,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
               <input
-                {...register("city", { required: true })}
+                {...register("City", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -242,7 +244,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
               <input font-bold
-                {...register("state", { required: true })}
+                {...register("State", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -251,7 +253,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
               <input
-                {...register("country", { required: true })}
+                {...register("Country", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -260,7 +262,7 @@ export default function Signup() {
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
               <input
-                {...register("pincode", { required: true })}
+                {...register("Pincode", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -278,7 +280,8 @@ export default function Signup() {
             Signup
           </button>
 
-          <p className="mt-3 text-center text-gray-600">
+          <p className="mt-3 text-center text-gray-600"
+          style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
             Already have an account?{" "}
             <a href="/login" className="text-[#FB6D6C] hover:underline">
               Login

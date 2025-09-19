@@ -4,15 +4,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
-// import jwtDecode from "jwt-decode";
+import {url} from "../App"
+
 
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
-  const url =
-    "https://36878661c9fc.ngrok-free.app/logout/"
+  // const url =
+    // "https://5d0abf24c6ce.ngrok-free.app/logout/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function Navbar() {
     localStorage.removeItem("AccessToken");
     localStorage.removeItem("RefreshToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("user_id");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
     console.log(refreshToken)
     if (!refreshToken) {
@@ -36,7 +38,7 @@ export default function Navbar() {
 
     // try {
     const response = await axios.post(
-      url,
+      `${url}logout/`,
       {},
       {
         headers: {
@@ -202,6 +204,14 @@ export default function Navbar() {
                   >
                     My Cart
                   </Link>
+                   <Link
+                    to="/Wish"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    Wish List
+                  </Link>
                   <hr />
                   <button
                     onClick={handleLogout}
@@ -216,14 +226,14 @@ export default function Navbar() {
                   <Link
                     to="/login"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     Login
                   </Link>
                   <Link
                     to="/Signup"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     SignUp
                   </Link>

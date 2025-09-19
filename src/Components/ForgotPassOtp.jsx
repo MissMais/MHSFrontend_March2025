@@ -2,12 +2,13 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import {url} from "../App"
 
 export default function ForgotPassOtp() {
   const navigate = useNavigate();
   const { handleSubmit, register, getValues } = useForm();
 
-  const url = "https://36878661c9fc.ngrok-free.app/";
+  // const url = "https://5d0abf24c6ce.ngrok-free.app/";
 
   const onSubmit = async () => {
     const { d1, d2, d3, d4 } = getValues();

@@ -291,10 +291,12 @@ import { FaFilter,FaSearch , FaRupeeSign } from "react-icons/fa";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Footer from "../Routes/Footer";
+import {url} from "../App"
+import { CloudDownload } from "lucide-react";
 
 
 
-const url = 'https://36878661c9fc.ngrok-free.app/custom/'
+// const url = 'https://5d0abf24c6ce.ngrok-free.app/custom/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
 
@@ -307,32 +309,18 @@ const ProductPage = () => {
     const [products, setProducts] = useState([]);
     const [selectedColour, setSelectedColour] = useState("All");
     // const [selectedMaterial, setSelectedMaterial] = useState("All");
-    const [isFavorite, setIsFavorite] = useState(false);
+  
     const [wishlist, setWishlist] = useState([]);
      const [search, setSearch] = useState("");
+     const [customerId, setCustomerId] = useState(null);
 
+
+     const user_id = localStorage.getItem('user_id')
     
 
 
 
-    const toggleWishlist = (id) => {
-  setWishlist((prevWishlist) => {
-    
-    if (prevWishlist.includes(id)) {
-    
-      return prevWishlist.filter((item) => item !== id);
 
-    } else {
-    
-      return [...prevWishlist, id];
-      
-    }
-    
-  });
-  console.log(wishlist)
-};
-
-  
 
     const navigate = useNavigate();
 
@@ -351,7 +339,7 @@ const ProductPage = () => {
 const accessToken = localStorage.getItem("AccessToken")
     const fetchProducts = async () => {
         try {
-            const res = await axios.get(url,
+            const res = await axios.get(`${url}custom/`,
                 {
         headers: {
         //   Authorization: `Bearer ${accessToken}`,
@@ -422,8 +410,15 @@ const accessToken = localStorage.getItem("AccessToken")
 
     const handleProductClick = (id) => {
         console.log(id)
-        navigate(`/ProductDetail/${id}`);
+        navigate(`/quote/${id}`)
+        // navigate(`/ProductDetail/${id}`);
     };
+
+
+
+
+
+
 
 
     const handleCategoryChange = (value) => {
@@ -438,6 +433,90 @@ const accessToken = localStorage.getItem("AccessToken")
         }
         navigate({ search: newParams.toString() });
     };
+
+
+useEffect(()=>{
+  getcustomerid()
+},[])
+
+    
+    // get customer id from customer endpoint
+
+const getcustomerid = async () =>{
+ const res = await axios.get(`${url}customer`,{ 
+           headers: {
+        //   Authorization: `Bearer ${accessToken}`,
+           'ngrok-skip-browser-warning':'69420',
+                'Content-Type':'application/json'
+        },})
+//  console.log(res.data)
+ const data = res.data
+ const filtereddata = data.filter(item=>item.User_id == user_id)
+ setCustomerId(filtereddata[0].id)
+ 
+// console.log(filtereddata[0].id)
+
+}
+
+
+
+    const toggleWishlist = async (product) => {
+      
+      // const user_id = localStorage.getItem('user_id')
+
+      console.log(product)
+      const variationId = product.product_variation.product_variation_id;
+
+  if (wishlist.includes(variationId)) {
+  
+    try {
+      await axios.delete(`${url}wishlist/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+        },
+        data: {
+          customer_id: user_id,
+          product_variation_id: variationId,
+        },
+      });
+
+      setWishlist((prev) => prev.filter((id) => id !== variationId));
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+  
+    try {
+      await axios.post(
+        `${url}wishlist/`,
+        {
+          customer_id: customerId,
+          product_variation_id: variationId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "ngrok-skip-browser-warning": "69420",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setWishlist((prev) => [...prev, variationId]);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+
+
+
+
+
+
 
 
 
@@ -530,7 +609,7 @@ const accessToken = localStorage.getItem("AccessToken")
   {/* Products Section */}
   <div className="flex-1 ">
     {/* Search bar */}
-    <div className="flex justify-center mt-3 mb-4 px-4">
+    <div className="flex justify-start mt-3 mb-4 px-4">
       <div className="relative w-full max-w-sm">
         <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FB6D6C]" />
         <input
@@ -579,21 +658,21 @@ const accessToken = localStorage.getItem("AccessToken")
 
             {/* Wishlist + View */}
             <div className="mt-auto flex justify-between font-bold items-center pt-3">
-              <div
-                onClick={() => toggleWishlist(product.Product_id)}
+             <div
+                onClick={() => toggleWishlist(product)}
                 style={{ cursor: "pointer" }}
-                className="text-lg md:text-2xl"
-              >
-                {wishlist.includes(product.Product_id) ? (
-                  <IoHeart color="#FB6D6C" />
+                className="text-lg md:text-2xl">
+                {wishlist.includes(product.product_variation.product_variation_id) ? (
+                <IoHeart color="#FB6D6C" />
                 ) : (
-                  <IoHeartOutline color="#FB6D6C" />
+                <IoHeartOutline color="#FB6D6C" />
                 )}
-              </div>
+            </div>
+
               <button
                 className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 rounded-lg transition-all"
                 style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                onClick={() => handleProductClick(product.Product_id)}
+                onClick={() => handleProductClick(product.product_variation.product_variation_id)}
               >
                 View
               </button>

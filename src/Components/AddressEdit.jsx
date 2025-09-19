@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
+import {url} from "../App"
 
 
 
@@ -14,6 +15,7 @@ export default function AddressEdit() {
   let params = useParams()
   let navigate = useNavigate()
   
+//  const url = "https://5d0abf24c6ce.ngrok-free.app/";
 
   const {
     register,
@@ -28,7 +30,7 @@ export default function AddressEdit() {
 
   const getAdd = async (id) => {
     try {
-      const Data = await axios.get('https://36878661c9fc.ngrok-free.app/address/?id=' + id,
+      const Data = await axios.get(`${url}address/?id=` + id,
         {
             headers: {
               // Authorization: `Bearer ${accesstoken}`,
@@ -78,7 +80,7 @@ export default function AddressEdit() {
         Pincode: data.Pincode,
       }
 
-      const Adddata = await axios.put('https://36878661c9fc.ngrok-free.app/address/', Payload,
+      const Adddata = await axios.put(`${url}address/`, Payload,
         {
           headers: {
             'Content-Type': 'application/json',

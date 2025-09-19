@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import {url} from "../App"
 
 
-const url = "https://36878661c9fc.ngrok-free.app/user/"
+// const url = "https://5d0abf24c6ce.ngrok-free.app/"
 
 export default function AccountEdit() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export default function AccountEdit() {
 
 
     try {
-      await axios.patch(url,
+      await axios.patch(`${url}/user/`,
         Payload,
         {
           headers: {
@@ -56,7 +57,7 @@ export default function AccountEdit() {
   const getuser = async () => {
 
     try {
-      const Data = await axios.get('https://36878661c9fc.ngrok-free.app/user/?id=' + userid,
+      const Data = await axios.get("https://954b3107d62b.ngrok-free.app/user/?id=" + userid,
         {
           headers: {
             // Authorization: `Bearer ${accesstoken}`,

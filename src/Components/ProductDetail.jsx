@@ -343,6 +343,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IoCartSharp } from 'react-icons/io5';
 import { FaRupeeSign } from "react-icons/fa";
+import {url} from "../App"
 
 export default function ProductDetail() {
   const navigate = useNavigate();
@@ -362,8 +363,8 @@ export default function ProductDetail() {
   }, [allVariations]);
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
-  const url =
-    'https://36878661c9fc.ngrok-free.app/'
+  // const url =
+    // 'https://5d0abf24c6ce.ngrok-free.app/'
 
 
   const headers = {
@@ -377,7 +378,7 @@ export default function ProductDetail() {
       const response = await axios.get(url + 'custom/', { headers });
       const response2 = await axios.get(url + 'custom/', { headers });
       console.log(response)
-      const filtered = response.data.filter(item => item.Product_id === id);
+      const filtered = response.data.filter(item => item.product_variation.product_variation_id === id);
       console.log(response.data.category_name)
       setAllVariations(filtered);
       setrelatedproduct(response2.data)
@@ -489,11 +490,11 @@ export default function ProductDetail() {
       <div className="max-w-7xl bg-white shadow-lg rounded-xl overflow-hidden">
         <div className="grid md:grid-cols-2 gap-8 p-8">
           {/* Image Section */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center ">
             <img
               src={selectedProduct?.images?.[0]}
               // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
-              className="rounded-lg shadow-md w-full h-auto"
+              className="rounded-lg shadow-md w-full h-auto md:w-full md:h-125 object-cover aspect-[5/6]"
               onClick={() => swapWithMain(0)}
               alt="Product"
             />
@@ -513,17 +514,17 @@ export default function ProductDetail() {
 
           {/* Info Section */}
           <div>
-            <h1 className="text-xl font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+            <h1 className="text-xl md:text-3xl text-center  font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
-            <p className="text-xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+            <p className="text-xl md:text-3xl  font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
               ₹ {selectedProduct?.price || 'N/A'}
             </p>
             {/* <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.product_variation.stock ?? 'N/A'}
             </p> */}
-            <div className="mb-4 text-xs font-medium" style={{ color: '#C3C8D3' }}>
-              Free Shipping | 24hr Dispatch
+            <div className="mb-4  text-xs md: font-medium" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#C3C8D3' }}>
+              Free Shipping 
             </div>
 
             {/* Color Selector
@@ -578,7 +579,7 @@ export default function ProductDetail() {
                 onClick={() => addToCart(selectedProduct)}
               >
                 <IoCartSharp className="text-xl" />
-                <span>Add to Cart</span>
+                <span  style={{ fontFamily: 'Copperplate, Papyrus, fantasy'}}>Add to Cart</span>
               </button>
             </div>
 

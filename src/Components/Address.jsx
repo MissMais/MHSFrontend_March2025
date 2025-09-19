@@ -142,14 +142,16 @@ import React, { useEffect, useState } from 'react';
 import { MdHome } from "react-icons/md";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
+import { url } from "../App"
 
-const url =
-  // "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
-  'https://36878661c9fc.ngrok-free.app/address/'
+
+// const url =
+// "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
+// 'https://5d0abf24c6ce.ngrok-free.app/address/'
 // https://modestgallery.pythonanywhere.com/address/
-const url2 =
-  // "https://3j7gm770-8000.inc1.devtunnels.ms/address"
-  'https://36878661c9fc.ngrok-free.app/address/'
+// const url2 =
+// "https://3j7gm770-8000.inc1.devtunnels.ms/address"
+// 'https://5d0abf24c6ce.ngrok-free.app/address/'
 
 
 
@@ -159,7 +161,11 @@ export default function Address() {
   const Navigate = useNavigate()
 
 
+  const User_id = localStorage.getItem("user_id")
 
+  // useEffect(() => {
+  //   ButtonDelete()
+  // }, [])
 
   const handleSelect = (add) => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -182,7 +188,7 @@ export default function Address() {
   const accessToken = localStorage.getItem("AccessToken")
 
   const fetchAddress = async () => {
-    const response = await axios.get(url,
+    const response = await axios.get(`${url}address/`,
 
       {
         headers: {
@@ -192,8 +198,10 @@ export default function Address() {
         },
       }
     )
-    setaddress(response.data)
-    console.log(response.data)
+    const fetcheddata = response.data
+    const filtereddata = fetcheddata.filter(item => item.user_id == User_id)
+    setaddress(filtereddata)
+    console.log(filtereddata)
   }
 
   useEffect(() => {
@@ -206,9 +214,20 @@ export default function Address() {
   }
 
   const ButtonDelete = async (id) => {
+    const Payload = {
+      Address_id: id
+    }
+
     try {
-      await axios.delete(`${url2}${id}/`)
-      setaddress(address.filter(add => add.Address_id !== id))
+      console.log(id)
+      await axios.delete(`${url}address/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+        },
+        data: Payload
+      })
     } catch (error) {
       console.log(error)
     }
@@ -276,7 +295,7 @@ export default function Address() {
 
 
 
-                <div className="flex flex-wrap gap-3 mt-3 text-sm ">
+                <div className="flex flex-wrap gap-3 mt-3 text-xs ">
                   <button
                     className={`px-4 py-2 rounded-lg font-semibold text-white transition 
               ${selected?.Address_id === add.Address_id
@@ -302,6 +321,7 @@ export default function Address() {
                     Delete
                   </button>
                 </div>
+
               </div>
               {add.Address_type.toLowerCase() === 'home' ? <MdHome className='absolute text-3xl top-0 right-0 ' /> : <HiOutlineOfficeBuilding className='absolute text-3xl top-0 right-0' />}
 

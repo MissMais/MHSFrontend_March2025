@@ -3,8 +3,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
+import {url} from "../App"
 
-const url = 'https://36878661c9fc.ngrok-free.app/'
+// const url = 'https://5d0abf24c6ce.ngrok-free.app/'
 // "https://3j7gm770-8000.inc1.devtunnels.ms/"
 // "https://wkvkk9t8-8000.inc1.devtunnels.ms/"
 //  'https://modestgallery.pythonanywhere.com/';

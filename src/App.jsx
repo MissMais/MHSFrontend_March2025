@@ -32,15 +32,24 @@ import ForgotPassword from './Components/Forgotpass';
 import ForgotPassOtp from './Components/ForgotPassOtp';
 import ForgotPassChange from './Components/ForgotPassChange';
 import AccountEdit from './Components/AccountEdit';
+import Quote from './Components/Quote';
+import Wishlist from './Components/Wishlist';
+export const url = "https://4f248fc1c712.ngrok-free.app/"
 
-// import AllVO from './1VariationOption/AllVO';
-// import EditVO from './1VariationOption/EditVO';
-// import AddVO from './1VariationOption/AddVO';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+
+// initialize Stripe with your publishable key
+const stripePromise = loadStripe("pk_test_51S6QsRH2tmS5tW8J9U1kngvfEcnzixF1Xc1GhdZLeL7SzLN4ZAlbQgvnnITLqcZMYbA4VCzryAsg7HozPSi1ITeU00pRf2xhYe");
+
+
 
 export default function App() {
   return (
     <div>
       <BrowserRouter>
+      <Elements stripe={stripePromise}>
         <Routes>
 
           <Route path="/" element={<Layout />}>
@@ -55,6 +64,8 @@ export default function App() {
             <Route path="/addaddress" element={<PrivateRoute element={<AddAddress />} />} />
             <Route path='editadd/:id' element={<PrivateRoute element={<AddressEdit />} />} />
             <Route path='/history' element={<PrivateRoute element={<OrderHistory />} />} />
+            <Route path='/Wish' element={<PrivateRoute element={<Wishlist />} />} />
+            <Route path="/quote/:id" element={<Quote />} />
             <Route path="/ProductPage" element={<ProductPage />} />
             <Route path="/OrderPage" element={<OrderPage />} />
             <Route path="/ProductDetail/:id" element={<ProductDetail />} />
@@ -81,9 +92,8 @@ export default function App() {
 
 
           </Route>
-
-
         </Routes>
+        </Elements>
       </BrowserRouter>
     </div>
   );
