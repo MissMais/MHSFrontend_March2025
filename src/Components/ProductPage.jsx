@@ -303,16 +303,19 @@ import { CloudDownload } from "lucide-react";
 const ProductPage = () => {
     const [searchParams] = useSearchParams();
     const defaultCategory = searchParams.get("category") || "All";
-
+    const defaultBrand = searchParams.get("brand") || "All";
+    const [selectedbrand,setSelectedBrand] = useState(defaultBrand)
     const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
     const [maxPrice, setMaxPrice] = useState(10000);
     const [products, setProducts] = useState([]);
     const [selectedColour, setSelectedColour] = useState("All");
+
     // const [selectedMaterial, setSelectedMaterial] = useState("All");
   
     const [wishlist, setWishlist] = useState([]);
-     const [search, setSearch] = useState("");
-     const [customerId, setCustomerId] = useState(null);
+    const [search, setSearch] = useState("");
+    const [customerId, setCustomerId] = useState(null);
+    const [wish, setwish] = useState([])
 
 
      const user_id = localStorage.getItem('user_id')
@@ -333,7 +336,12 @@ const ProductPage = () => {
     useEffect(() => {
         const categoryFromUrl = searchParams.get("category") || "All";
         setSelectedCategory(categoryFromUrl);
+        const brandFromUrl = searchParams.get("brand") || "All";
+        setSelectedBrand(brandFromUrl);
+        console.log(brandFromUrl)
     }, [searchParams, products]);
+
+  
 
 
 const accessToken = localStorage.getItem("AccessToken")
@@ -363,6 +371,12 @@ const accessToken = localStorage.getItem("AccessToken")
         return Array.from(unique);
     };
 
+
+    const getUniqueBrand = () => {
+        const unique = new Set(products.map(p => p.brand));
+        return Array.from(unique);
+    };
+
     // const getUniqueMaterial = () => {
     //     const unique = new Set(
     //         products
@@ -382,6 +396,9 @@ const accessToken = localStorage.getItem("AccessToken")
         );
         return Array.from(unique);
     };
+
+
+    
     
 
 
@@ -391,6 +408,7 @@ const accessToken = localStorage.getItem("AccessToken")
        return(
         (selectedCategory === "All" || product.category_name === selectedCategory) &&
         (selectedColour === "All" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
+        (selectedbrand === "All" || product.brand === selectedbrand) &&
         // (selectedColour === "All" || product.variation_name?.toLowerCase()) &&
         (search === "" || product.sub_category_name.toLowerCase().includes(search.toLowerCase()))&&
         parseFloat(product.price) <= maxPrice)   
@@ -419,8 +437,6 @@ const accessToken = localStorage.getItem("AccessToken")
 
 
 
-
-
     const handleCategoryChange = (value) => {
         console.log(value)
         setSelectedCategory(value);
@@ -434,10 +450,22 @@ const accessToken = localStorage.getItem("AccessToken")
         navigate({ search: newParams.toString() });
     };
 
+    const handleBrandChange = (value) => {
+        console.log(value)
+        setSelectedBrand(value);
+        const newParams = new URLSearchParams(searchParams);
+    
+        if (value === "All") {
+            newParams.delete("brand");
+        } else {
+            newParams.set("brand",value);
+        }
+        navigate({ search: newParams.toString() });
+    };
 
-useEffect(()=>{
-  getcustomerid()
-},[])
+
+
+
 
     
     // get customer id from customer endpoint
@@ -451,65 +479,111 @@ const getcustomerid = async () =>{
         },})
 //  console.log(res.data)
  const data = res.data
+ console.log(data)
+ 
  const filtereddata = data.filter(item=>item.User_id == user_id)
+ console.log(filtereddata[0].id)
  setCustomerId(filtereddata[0].id)
  
 // console.log(filtereddata[0].id)
 
 }
 
+useEffect(()=>{
+  getcustomerid()
+},[])
 
 
-    const toggleWishlist = async (product) => {
-      
-      // const user_id = localStorage.getItem('user_id')
+useEffect(() => {
+  if (!customerId) return; 
 
-      console.log(product)
-      const variationId = product.product_variation.product_variation_id;
-
-  if (wishlist.includes(variationId)) {
-  
+  const fetchWishlist = async () => {
     try {
+      const res = await axios.get(`${url}wishlist/`, {
+        headers: {
+          'ngrok-skip-browser-warning': '69420',
+     'Content-Type': 'application/json',
+        },
+      });
+      const customerWishlist = res.data.filter(item => item.customer_id == customerId);
+      setwish(customerWishlist);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchWishlist();
+}, [customerId]);
+
+// console.log(customerId)
+
+// const fetchingwish = async()=>{
+//       const res = await axios.get(`${url}wishlist/`, {
+//         headers: {
+//         //   Authorization: `Bearer ${accessToken}`,
+//            'ngrok-skip-browser-warning':'69420',
+//                 'Content-Type':'application/json'
+//         },
+//       })
+//       const data = res.data
+//       // console.log(res)
+      
+//       const filter = data.filter(item => item.customer_id == customerId)
+//       console.log(filter)
+//       setwish(filter)
+//     }
+    
+
+//     useEffect(()=>{
+//       fetchingwish()
+//     },[])
+// console.log(wish)
+
+    const Wishlist = async (product) => {
+  const variationId = product.product_variation.product_variation_id;
+
+  try {
+    
+    const existing = wish.find(item => item.product_variation_id == variationId);
+
+    if (existing) {
+      
       await axios.delete(`${url}wishlist/`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "ngrok-skip-browser-warning": "69420",
-          "Content-Type": "application/json",
+          'ngrok-skip-browser-warning': '69420',
+          'Content-Type': 'application/json',
         },
-        data: {
-          customer_id: user_id,
-          product_variation_id: variationId,
+        data: { 
+          wishlist_id: existing.wishlist_id 
         },
       });
 
-      setWishlist((prev) => prev.filter((id) => id !== variationId));
-    } catch (error) {
-      console.error(error);
-    }
-  } else {
-  
-    try {
-      await axios.post(
-        `${url}wishlist/`,
-        {
-          customer_id: customerId,
-          product_variation_id: variationId,
+    
+      setwish(prev => prev.filter(item => item.product_variation_id != variationId));
+      console.log("Wishlist Deleted")
+    } else {
+    
+      await axios.post(`${url}wishlist/`, {
+        customer_id: customerId,
+        product_variation_id: variationId,
+      }, {
+        headers: {
+          'ngrok-skip-browser-warning': '69420',
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "ngrok-skip-browser-warning": "69420",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      });
 
-      setWishlist((prev) => [...prev, variationId]);
-    } catch (error) {
-      console.error(error);
+     const wishlistRes = await axios.get(`${url}wishlist/`, { headers: { 'ngrok-skip-browser-warning':'69420', 'Content-Type':'application/json' } });
+const customerWishlist = wishlistRes.data.filter(item => item.customer_id == customerId);
+setwish(customerWishlist);
+console.log("Wishlist Added")
+
     }
+  } catch (error) {
+    console.error(error);
   }
 };
+
 
 
 
@@ -589,6 +663,38 @@ const getcustomerid = async () =>{
       ))}
     </select>
 
+
+
+    {/*Brand*/}
+     <label
+      className="block font-semibold mb-2"
+      style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+    >
+      Brands
+    </label>
+    <select
+      className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
+      onChange={(e) => handleBrandChange(e.target.value)}
+      value={selectedbrand}
+    >
+      <option value="All" className="text-[#666F80]">
+        All
+      </option>
+      {getUniqueBrand().map((brand) => (
+        <option
+          key={brand}
+          value={brand}
+          style={{
+            fontFamily: "Copperplate, Papyrus, fantasy",
+            color: "#666F80",
+          }}
+        >
+          {brand}
+        </option>
+      ))}
+    </select>
+
+
     {/* Max Price */}
     <label
       className="block font-semibold mb-2"
@@ -659,10 +765,10 @@ const getcustomerid = async () =>{
             {/* Wishlist + View */}
             <div className="mt-auto flex justify-between font-bold items-center pt-3">
              <div
-                onClick={() => toggleWishlist(product)}
+                onClick={() => Wishlist(product)}
                 style={{ cursor: "pointer" }}
                 className="text-lg md:text-2xl">
-                {wishlist.includes(product.product_variation.product_variation_id) ? (
+                {wish.some(item => item.product_variation_id == product.product_variation.product_variation_id) ? (
                 <IoHeart color="#FB6D6C" />
                 ) : (
                 <IoHeartOutline color="#FB6D6C" />

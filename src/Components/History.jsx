@@ -1,17 +1,33 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {url} from "../App"
+import { url } from "../App"
 
 
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
 
 
+
   const accesstoken = localStorage.getItem('AccessToken')
   const id = localStorage.getItem("user_id")
 
   const Orders = async () => {
-    const response = await axios.get(`${url}history/${id}`,
+
+     const res1 = await axios.get(`${url}customer/`, {
+      headers: {
+
+        'ngrok-skip-browser-warning': '69420',
+        'Content-Type': 'application/json'
+      },
+    })
+    //  console.log(res.data)
+    const data = res1.data
+    const filtereddata = data.filter(item => item.User_id == id)
+    // console.log(filtereddata)
+    const customerid = filtereddata[0].id
+
+
+    const response = await axios.get(`${url}history/?id=${customerid}`,
 
       {
         headers: {
@@ -22,6 +38,7 @@ export default function OrderHistory() {
         }
       }
     )
+   
     console.log(response.data)
     const array = response.data.reverse()
     setOrders(array)
@@ -80,15 +97,15 @@ export default function OrderHistory() {
             >
               Items:
             </p>
-          
-              <div className=" flex text-xs justify-between" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}>
-                {order.cart_item.product_variation.product_description} x {order.cart_item.Quantity}
-                <p
-                  className=" text-sm font-bold text-end"
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-                >
-                  ₹{order.cart_item.Quantity * order.cart_item.product_variation.price}
-                </p>
+
+            <div className=" flex text-xs justify-between" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}>
+              {order.cart_item.product_variation.product_description} x {order.cart_item.Quantity}
+              <p
+                className=" text-sm font-bold text-end"
+                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+              >
+                ₹{order.cart_item.Quantity * order.cart_item.product_variation.price}
+              </p>
             </div>
             {/* <p
                 className="font-semibold mb-2"

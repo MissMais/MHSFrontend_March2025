@@ -34,7 +34,7 @@ import ForgotPassChange from './Components/ForgotPassChange';
 import AccountEdit from './Components/AccountEdit';
 import Quote from './Components/Quote';
 import Wishlist from './Components/Wishlist';
-export const url = "https://4f248fc1c712.ngrok-free.app/"
+export const url = "https://045120d6d1b2.ngrok-free.app/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";

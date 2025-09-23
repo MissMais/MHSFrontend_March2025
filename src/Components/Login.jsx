@@ -60,7 +60,7 @@ export default function Login() {
               {...register("email", { required: "email is required" })}
               type="text"
               id="formName"
-              placeholder="Enter your username"
+            
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
@@ -76,7 +76,7 @@ export default function Login() {
               {...register("password", { required: "Password is required" })}
               type="password"
               id="formpass"
-              placeholder="Enter your password"
+              
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && (

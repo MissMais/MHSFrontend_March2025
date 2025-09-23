@@ -6,17 +6,38 @@ import axios from 'axios';
 import { scroller } from "react-scroll";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import {url} from "../App"
+import { url } from "../App"
+import Marquee from 'react-fast-marquee';
+
 
 export default function Home() {
     const navigate = useNavigate();
     const [img, setimg] = useState([])
     const [data, setdata] = useState([])
-
+    const [brand, setbrand] = useState([])
+    const [CurrentIndex, setCurrentIndex] = useState(0)
 
     useEffect(() => {
         AOS.init({ duration: 900, once: true });
     }, []);
+
+
+    // const handleNext = () => {
+    //     setCurrentIndex((prevIndex) => (prevIndex + 1) );
+    // };
+
+    // const handlePrev = () => {
+    //     setCurrentIndex((prevIndex) => (prevIndex - 1 ) );
+    // };
+
+    // useEffect(() => {
+    //     if (CurrentIndex > brand.length - 3) {
+    //         console.log(CurrentIndex)
+    //         setCurrentIndex(0)
+    //         console.log("hi")
+    //     }
+    // }, [])
+
 
 
 
@@ -44,9 +65,8 @@ export default function Home() {
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
-            // const response3 = await axios.get('https://modestgallery.pythonanywhere.com/custom/')
-            // setdata(response3.data)
-            // console.log(response3.data)
+            const brand = await axios.get(`${url}brand/`, { headers })
+            setbrand(brand.data)
         } catch (error) {
             console.log(error)
         }
@@ -56,6 +76,14 @@ export default function Home() {
     useEffect(() => {
         fetchimage()
     }, [])
+
+    const handleclick = async(value)=>{
+        console.log(value)
+
+        const newbrand = encodeURIComponent(value)
+        console.log(newbrand)
+        navigate(`/ProductPage?brand=${newbrand}`)
+    }
 
 
 
@@ -97,7 +125,7 @@ export default function Home() {
             {/* Home */}
             <section id="home" >
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-white rounded-lg shadow-md p-6">
+                    <div className="p-6">
                         <div className="flex flex-col md:flex-row items-center">
                             {/* Text Content */}
                             <div className="md:w-1/2 md:pr-8">
@@ -141,6 +169,45 @@ export default function Home() {
                 </div>
             </section>
 
+            <section id="brand" className=" bg-white">
+                <div className="mt-8">
+                    <div className="max-w-7xl mx-auto px-4 ">
+
+                        <div>
+                            <h1 className="text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                                Brands
+                            </h1>
+
+                        </div>
+                        <div className="p-6">
+
+
+                            {/* Image Grid */}
+
+                            <div className="flex justify-center row-auto  gap-10">
+                                 <Marquee gradient={false} speed={40}>
+                                {brand.map((item) => (
+                                    <div onClick={()=>handleclick(item.Brand_name)} key={item.Brand_id} className="flex items-center text-[10px] md:text-base 
+                                    text-[#FB6D6C] justify-center m-2 md:m-6  md:gap-8  rounded-full shadow-md shadow-[#FB6D6C] md:w-40 md:h-40 w-15 h-15  object-cover">
+                                        {item.Brand_name}
+                                    </div>
+                                ))
+                                }
+                                </Marquee>
+                            </div>
+                            {/* <div className='flex items-center justify-between mt-4 relative bottom-34 '>
+
+                                <button className='relative w-6 h-6 text-4xl rounded-full right-4' onClick={handlePrev}>&lt;</button>
+                                <button className='relative w-6 h-6 text-4xl rounded-full left-10' onClick={handleNext}>&gt;</button>
+
+                            </div> */}
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 
 
 
@@ -152,7 +219,7 @@ export default function Home() {
 
             {/* Store */}
             {/* Abayas  */}
-            <section id="store" className=" bg-white">
+            <section id="store" className=" bg-white mt-10">
                 <div className="max-w-7xl  px-4">
                     <div className="p-6">
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import {url} from "../App"
+import { url } from "../App"
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 export default function OrderPage() {
@@ -11,9 +11,10 @@ export default function OrderPage() {
   // const product = location.state?.product;
   const [cartItems, setCartItems] = useState([]);
   const [Address, setAddress] = useState({});
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [payment, setPayment] = useState([])
 
-   const stripe = useStripe();  
+  const stripe = useStripe();
   const elements = useElements();
 
 
@@ -38,15 +39,16 @@ export default function OrderPage() {
     const storedItems = JSON.parse(localStorage.getItem(cartKey)) || [];
     setCartItems(storedItems);
 
-    if(storedItems==0){
+    if (storedItems == 0) {
       alert("Add products")
       navigate("/ProductPage")
       return;
-      
+
     }
     // console.log(storedItems)
   }, [navigate]);
 
+  console.log(paymentMethod)
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -77,83 +79,104 @@ export default function OrderPage() {
   }, [navigate, reset]);
 
 
+  // useEffect(()=>{
+  //   try {
+  //     const res = 
+
+  //   } catch (error) {
+
+  //   }
+  // })
+
+  // const pay = payment.filter(item => item.Payment_mode == paymentMethod)
+  // const paymentid = pay[0].Payment_id
+  // console.log(paymentid)
 
 
-const onSubmit = async (data) => {
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const email = user?.email;
-  const cartKey = `cart_${email}`;
-  const accesstoken = localStorage.getItem("AccessToken");
+  const onSubmit = async (data) => {
 
-  try {
-    if (paymentMethod === "card") {
-    
-      const res = await axios.post(`${url}test/`,{
+    const user = JSON.parse(localStorage.getItem("user"));
+    const email = user?.email;
+    const cartKey = `cart_${email}`;
+    const accesstoken = localStorage.getItem("AccessToken");
+
+    try {
+      if (paymentMethod.toLowerCase() === "upi") {
+
+        const res = await axios.post(`${url}test/`, {
           amount: subtotal * 100,
-      }); 
-      const { clientSecret } = res.data;
+        });
+        const { clientSecret } = res.data;
 
-      // Confirm payment with Stripe
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      });
-
-      
-
-        if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+        // Confirm payment with Stripe
+        const result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        });
+        // if(error)
+        // console.log(result)
         
+        if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+          console.log("Payment successfull",result.paymentIntent)
+
+          const pay = payment.filter(item => item.Payment_mode == paymentMethod)
+          const paymentid = pay[0].Payment_id
+          const payload = {
+            Delivery_Address: Address.Address_id,
+            // payment_id: result.paymentIntent.id,
+            payment_id: paymentid,
+            payment_confirmation: true,
+            order_status: "Booked",
+            cart_item_id: cartItems,
+          };
+
+          const orderRes = await axios.post(`${url}place/`, payload, {
+            headers: { Authorization: `Bearer ${accesstoken}` },
+          });
+
+          console.log("Order placed:", orderRes.data);
+          localStorage.removeItem(cartKey);
+          setCartItems([]);
+          // navigate("/ProductPage");
+        }
+      } else {
+
+        // const paymentid = 
+        // console.log(payment)
+        const pay = payment.filter(item => item.Payment_mode == paymentMethod)
+        const paymentid = pay[0].Payment_id
+        // Cash on Delivery
         const payload = {
           Delivery_Address: Address.Address_id,
-          // payment_id: result.paymentIntent.id,
-          payment_id: paymentMethod,
-          payment_confirmation: true,
+          payment_id: paymentid,        
+          payment_confirmation: false,
           order_status: "Booked",
           cart_item_id: cartItems,
         };
 
-        const orderRes = await axios.post(`${url}place/`, payload, {
+        await axios.post(`${url}place/`, payload, {
           headers: { Authorization: `Bearer ${accesstoken}` },
         });
 
-        console.log("Order placed:", orderRes.data);
         localStorage.removeItem(cartKey);
         setCartItems([]);
-    
+
         // navigate("/ProductPage");
       }
-    } else {
-      // Cash on Delivery
-      const payload = {
-        Delivery_Address: Address.Address_id,
-        payment_id: "Cash",
-        payment_confirmation: false,
-        order_status: "Booked",
-        cart_item_id: cartItems,
-      };
-
-      await axios.post(`${url}place/`, payload, {
-        headers: { Authorization: `Bearer ${accesstoken}` },
-      });
-
-      localStorage.removeItem(cartKey);
-      setCartItems([]);
-    
-      // navigate("/ProductPage");
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-    
-  }
-};
+  };
 
 
   let subtotal = 0;
   cartItems.forEach(item => {
     subtotal += item.price * (item.quantity || 1);
   });
+
+
   // if (!product) {
   //   return (
   //     <div className="h-screen flex items-center justify-center text-xl text-gray-600">
@@ -161,6 +184,34 @@ const onSubmit = async (data) => {
   //     </div>
   //   );
   // }
+
+
+  const fetchpayment = async () => {
+    const response = await axios.get(`${url}payment/`,
+
+      {
+        headers: {
+          // Authorization: `Bearer ${accessToken}`,
+          'ngrok-skip-browser-warning': '69420',
+          'Content-Type': 'application/json'
+        },
+      }
+    )
+    const fetcheddata = response.data
+    console.log(fetcheddata)
+    setPayment(fetcheddata)
+
+    // console.log(payment[0])
+    // const filtereddata = fetcheddata.filter(item => item.uzser_id == User_id)
+    // setaddress(filtereddata)
+    // console.log(filtereddata)
+  }
+
+  useEffect(() => {
+    fetchpayment();
+
+  }, []);
+
 
 
   return (
@@ -251,13 +302,7 @@ const onSubmit = async (data) => {
                 {...register("telephone")}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
               />
-              {/* <input
-                type="email"
-                placeholder="Email address"
-                value={Add}
-                {...register("email", { required: true })}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
-              /> */}
+
             </div>
 
             <button
@@ -308,63 +353,30 @@ const onSubmit = async (data) => {
                 <p className="font-semibold">₹{subtotal.toFixed(2)}</p>
               </div>
             </div>
-
-            <div className="mt-4 space-y-4 font-bold" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
-              <label className="flex items-center gap-2 text-sm">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="card"
-                  checked={paymentMethod === "card"}
-                  onChange={() => setPaymentMethod("card")}
-                  className="accent-[#666F80]"
-                />
-                Credit or Debit Card
-              </label>
-
-              <label className="flex items-center gap-2 text-sm">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="Cash"
-                  checked={paymentMethod === "Cash"}
-                  onChange={() => setPaymentMethod("Cash")}
-                  className="accent-[#FB6D6C]"
-                />
-                Cash on Delivery
-              </label>
-
-              {paymentMethod === "card" && (
-                <div id="card-details" className="card-fields">
-                    <CardElement className="p-2 border mb-4" />
-                  
-
-
-                  {/* <input
-                    type="text"
-                    placeholder="Name on Card"
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
-                  />
+            {payment.map((item, idx) => (
+              <div key={item.Payment_id} className="mt-4 space-y-4 font-bold" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+                <label className="flex items-center gap-2 text-sm">
                   <input
-                    type="text"
-                    placeholder="•••• •••• •••• ••••"
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
+                    type="radio"
+                    name="payment"
+                    value="card"
+                    checked={paymentMethod === item.Payment_mode}
+                    onChange={() => setPaymentMethod(item.Payment_mode)}
+                    className="accent-[#666F80]"
                   />
-                  <div className="flex gap-4">
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
-                    />
-                    <input
-                      type="text"
-                      placeholder="CVC"
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 "
-                    />
-                  </div> */}
-                </div>
-              )}
-            </div>
+                  {item.Payment_mode}
+                </label>
+
+              </div>
+
+            ))}
+            {paymentMethod.toLowerCase() === "upi" && (
+              <div id="card-details" className="card-fields">
+                <CardElement className="p-2 border mb-4" />
+
+              </div>
+            )}
+
 
             <div className="mt-6 space-y-3 text-sm">
               <label className="flex items-start gap-2">
