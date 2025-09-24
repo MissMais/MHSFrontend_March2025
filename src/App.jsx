@@ -34,10 +34,11 @@ import ForgotPassChange from './Components/ForgotPassChange';
 import AccountEdit from './Components/AccountEdit';
 import Quote from './Components/Quote';
 import Wishlist from './Components/Wishlist';
-export const url = "https://045120d6d1b2.ngrok-free.app/"
+export const url = "https://46efb629bf1f.ngrok-free.app/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Notification from './Components/Notification';
 
 
 // initialize Stripe with your publishable key
@@ -76,6 +77,7 @@ export default function App() {
             <Route path="/otp" element={<ForgotPassOtp />} />
             <Route path="/changepass" element={<ForgotPassChange />} />
             <Route path="/emptycart" element={<Emptycart />} />
+            <Route path="/notification" element={<Notification />}></Route>
 
 
 

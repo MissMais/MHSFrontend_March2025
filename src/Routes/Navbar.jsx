@@ -22,14 +22,14 @@ export default function Navbar() {
 
 
   const handleLogout = async () => {
-    const refreshToken = localStorage.getItem("RefreshToken")
-    localStorage.removeItem("AccessToken");
-    localStorage.removeItem("RefreshToken");
-    localStorage.removeItem("user");
-    localStorage.removeItem("user_id");
+    const accessToken = localStorage.getItem("AccessToken")
+    // localStorage.removeItem("AccessToken");
+    // localStorage.removeItem("RefreshToken");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("user_id");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
-    console.log(refreshToken)
-    if (!refreshToken) {
+    console.log(accessToken)
+    if (!accessToken) {
       alert("No refresh token found. Logging out...");
       localStorage.clear();
       navigate("/login");
@@ -39,10 +39,10 @@ export default function Navbar() {
     // try {
     const response = await axios.post(
       `${url}logout/`,
-      {},
+      { },
       {
         headers: {
-          Authorization: `Bearer ${refreshToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -211,6 +211,14 @@ export default function Navbar() {
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     Wish List
+                  </Link>
+                   <Link
+                    to="/notification"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    Notifications
                   </Link>
                   <hr />
                   <button

@@ -88,7 +88,7 @@ export default function Home() {
 
 
     return (
-        <div>
+        <div >
             {/* <Navbar /> */}
             <br />
             <br />
@@ -188,7 +188,7 @@ export default function Home() {
                                  <Marquee gradient={false} speed={40}>
                                 {brand.map((item) => (
                                     <div onClick={()=>handleclick(item.Brand_name)} key={item.Brand_id} className="flex items-center text-[10px] md:text-base 
-                                    text-[#FB6D6C] justify-center m-2 md:m-6  md:gap-8  rounded-full shadow-md shadow-[#FB6D6C] md:w-40 md:h-40 w-15 h-15  object-cover">
+                                    text-[#FB6D6C] justify-center m-2 md:m-6  md:gap-8 rounded-full shadow-md shadow-[#FB6D6C] md:w-40 md:h-40 w-15 h-15 hover:text-lg  object-cover cursor-pointer">
                                         {item.Brand_name}
                                     </div>
                                 ))

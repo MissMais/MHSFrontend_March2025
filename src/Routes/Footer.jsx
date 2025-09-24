@@ -23,7 +23,7 @@ export default function Footer() {
           {/* Contact Info */}
           <div className='text-center md:mr-40' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
             <div>
-              <h4 className="text-[17px] font-semibold mb-2" >Contact Us</h4>
+              <h4 className="text-[14px] font-semibold mb-2" >Contact Us</h4>
 
             </div>
 
@@ -58,7 +58,7 @@ export default function Footer() {
 
           {/* Office Address */}
           <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
-            <h4 className="text-[17px] font-semibold mb-2">Registered Office Address</h4>
+            <h4 className="text-[14px] font-semibold mb-2">Registered Office Address</h4>
             <div className='text-[10px] md:text-[15px]'>
               <p >Modest Gallery, Koh e fiza, Bhopal,</p>
               <p>Madhya Pradesh, India</p>
