@@ -27,18 +27,25 @@ import AddressEdit from './Components/AddressEdit';
 import ResetPassword from './Components/Resetpass';
 import AddAddress from './Components/AddAddress';
 import Events from './Components/Events';
-import Emptycart from './Components/Emptycart';
 import ForgotPassword from './Components/Forgotpass';
 import ForgotPassOtp from './Components/ForgotPassOtp';
 import ForgotPassChange from './Components/ForgotPassChange';
 import AccountEdit from './Components/AccountEdit';
 import Quote from './Components/Quote';
 import Wishlist from './Components/Wishlist';
-export const url = "https://46efb629bf1f.ngrok-free.app/"
+import Notification from './Components/Notification';
+import EmptyCart from './Components/Emptycart';
+
+
+import ScrollToTop from './Components/ScrollToTop';
+
+export const url = "https://781576f0fd62.ngrok-free.app/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Notification from './Components/Notification';
+
+
+
 
 
 // initialize Stripe with your publishable key
@@ -51,8 +58,8 @@ export default function App() {
     <div>
       <BrowserRouter>
       <Elements stripe={stripePromise}>
+        <ScrollToTop />
         <Routes>
-
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />}></Route>
             <Route path="/home" index element={<Home />} />
@@ -66,9 +73,9 @@ export default function App() {
             <Route path='editadd/:id' element={<PrivateRoute element={<AddressEdit />} />} />
             <Route path='/history' element={<PrivateRoute element={<OrderHistory />} />} />
             <Route path='/Wish' element={<PrivateRoute element={<Wishlist />} />} />
-            <Route path="/quote/:id" element={<Quote />} />
+            <Route path="/quote/:id"  element={<PrivateRoute element={<Quote />} />} />
             <Route path="/ProductPage" element={<ProductPage />} />
-            <Route path="/OrderPage" element={<OrderPage />} />
+            <Route path="/OrderPage"  element={<PrivateRoute element={<OrderPage />} />} />
             <Route path="/ProductDetail/:id" element={<ProductDetail />} />
             <Route path="/Cart" element={<PrivateRoute element={<Cart />} />} />
             <Route path="/signup" element={<Signup />} />
@@ -76,8 +83,8 @@ export default function App() {
             <Route path="/forgot" element={<ForgotPassword />} />
             <Route path="/otp" element={<ForgotPassOtp />} />
             <Route path="/changepass" element={<ForgotPassChange />} />
-            <Route path="/emptycart" element={<Emptycart />} />
-            <Route path="/notification" element={<Notification />}></Route>
+            <Route path="/emptycart"  element={<PrivateRoute element={<EmptyCart />} />} />
+            <Route path="/notification"  element={<PrivateRoute element={<Notification />} />} />
 
 
 

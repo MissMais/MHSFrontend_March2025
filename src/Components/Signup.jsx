@@ -20,7 +20,7 @@ const navigate = useNavigate()
 
       
       alert("Signup successful!");
-      navigate('/login')
+      // navigate('/login')
       
       // reset();
     } catch (error) {

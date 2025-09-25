@@ -22,14 +22,14 @@ export default function Navbar() {
 
 
   const handleLogout = async () => {
-    const accessToken = localStorage.getItem("AccessToken")
+    const refresh = localStorage.getItem("RefreshToken")
     // localStorage.removeItem("AccessToken");
     // localStorage.removeItem("RefreshToken");
     // localStorage.removeItem("user");
     // localStorage.removeItem("user_id");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
-    console.log(accessToken)
-    if (!accessToken) {
+    console.log(refresh)
+    if (!refresh) {
       alert("No refresh token found. Logging out...");
       localStorage.clear();
       navigate("/login");
@@ -38,13 +38,7 @@ export default function Navbar() {
 
     // try {
     const response = await axios.post(
-      `${url}logout/`,
-      { },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${url}logout/`, {refresh:refresh },
     );
 
     if (response.status === 200) {

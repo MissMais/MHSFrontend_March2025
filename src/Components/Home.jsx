@@ -77,7 +77,7 @@ export default function Home() {
         fetchimage()
     }, [])
 
-    const handleclick = async(value)=>{
+    const handleclick = async (value) => {
         console.log(value)
 
         const newbrand = encodeURIComponent(value)
@@ -153,13 +153,16 @@ export default function Home() {
                             </div>
 
                             {/* Image Content */}
-                            <div className="md:w-1/2 mt-6 md:mt-0">
+                            <div className=" md:w-1/2 mt-6 md:mt-0">
 
                                 <img
                                     src="/Imghome.jpg"
                                     alt="Modest Gallery"
                                     className="w-full h-full object-cover rounded-md shadow-lg"
+
                                 />
+
+
 
                             </div>
                         </div>
@@ -175,7 +178,7 @@ export default function Home() {
 
                         <div>
                             <h1 className="text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-                                Brands
+                                Featured  Brands
                             </h1>
 
                         </div>
@@ -185,14 +188,16 @@ export default function Home() {
                             {/* Image Grid */}
 
                             <div className="flex justify-center row-auto  gap-10">
-                                 <Marquee gradient={false} speed={40}>
-                                {brand.map((item) => (
-                                    <div onClick={()=>handleclick(item.Brand_name)} key={item.Brand_id} className="flex items-center text-[10px] md:text-base 
-                                    text-[#FB6D6C] justify-center m-2 md:m-6  md:gap-8 rounded-full shadow-md shadow-[#FB6D6C] md:w-40 md:h-40 w-15 h-15 hover:text-lg  object-cover cursor-pointer">
-                                        {item.Brand_name}
-                                    </div>
-                                ))
-                                }
+                                <Marquee gradient={false} speed={30}>
+                                    {brand.map((item) => (
+                                        <div onClick={() => handleclick(item.Brand_name)} key={item.Brand_id} className="relative overflow-hidden
+                                     m-2 md:m-3  md:gap-8 shadow-md shadow-[#FB6D6C] md:w-50 md:h-50 w-15 h-15 hover:text-lg cursor-pointer
+                                     transition duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+                                            <img src={item.Brand_image} alt="no image" className='w-full h-full object-cover' />
+                                            <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg drop-shadow-black items-center font-bold'>{item.Brand_name}</div>
+                                        </div>
+                                    ))
+                                    }
                                 </Marquee>
                             </div>
                             {/* <div className='flex items-center justify-between mt-4 relative bottom-34 '>
@@ -212,12 +217,8 @@ export default function Home() {
 
 
 
-
-
-
-
-
             {/* Store */}
+            
             {/* Abayas  */}
             <section id="store" className=" bg-white mt-10">
                 <div className="max-w-7xl  px-4">
@@ -236,7 +237,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {img
                                 // .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name == "Abaya")
@@ -297,7 +298,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Stoles")
@@ -357,7 +358,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Accessories")
@@ -415,7 +416,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Hijab")
@@ -448,6 +449,40 @@ export default function Home() {
             </section>
 
 
+
+
+            {/* Variety */}
+            <section id="brand">
+                <div className="mt-20">
+                    <div className="bg-[#FB6D6C] max-w-7xl pt-10 pb-10 mx-auto px-4 ">
+
+                        <div>
+                            <h1 className="text-white text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                                Varieties
+                            </h1>
+
+                        </div>
+                        <div className="p-6">
+
+                            {/* Image Grid */}
+
+                            <div className="flex justify-center row-auto gap-3">
+                            
+                                    {brand.map((item) => (
+                                        <div onClick={() => handleclick(item.Brand_name)} key={item.Brand_id} className="relative overflow-hidden
+                                       md:gap-3 md:w-50 md:h-50 w-15 h-15 cursor-pointer 
+                                       transition duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+                                            <img src={item.Brand_image} alt="no image" className='w-full h-full object-cover' />
+                                            <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg drop-shadow-black items-center font-bold'>{item.Brand_name}</div>
+                                        </div>
+                                    ))
+                                    }
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
             <section id='contact'  >

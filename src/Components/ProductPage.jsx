@@ -356,12 +356,12 @@ const ProductPage = () => {
 
 
   return (
-    <div onClick={()=>func()}>
+    <div >
 
 
-      <div  className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
+      <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
         {isMobile && <div className="flex justify-end-safe z-[9999]">
-          <button className="bg-[#FB6D6C] text-[15px] rounded-2xl mt-2 w-15 h-10 flex items-center justify-center text-white gap-1" onClick={func}><FaFilter className="text-[13px]"/>Filters </button>
+          <button className="bg-[#FB6D6C] text-[15px] rounded-2xl mt-2 w-15 h-10 flex items-center justify-center text-white gap-1" onClick={func}><FaFilter className="text-[13px]" />Filters </button>
         </div>
         }
 
@@ -369,7 +369,10 @@ const ProductPage = () => {
         {/* // SideBar For Phone */}
         {sideOpen && <div className=" mt-15 fixed inset-0 z-[9998]">
 
-       
+          <div
+            className="absolute inset-0 bg-transparent"
+            onClick={() => setSideOpen(false)}
+          ></div>
 
           <div className="absolute left-0 top-0 bottom-0 h-full w--/4 md:w-1/6 p-6 border-gray-200 bg-gray-100 mb-6 md:mb-0">
             <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
@@ -479,11 +482,11 @@ const ProductPage = () => {
               className="w-full accent-[#FB6D6C]"
             />
           </div>
-           </div>}
+        </div>}
 
         {/* // SideBar For Desktop */}
         {(!isMobile) &&
-          
+
           <div className="w-full md:w-1/6 p-6 border-gray-200 bg-gray-100 mb-6 md:mb-0">
             <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
               <FaFilter /> Filters

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { url } from '../App'
+import { TbBellRingingFilled } from "react-icons/tb";
 
 
 export default function Notification() {
@@ -45,16 +46,23 @@ export default function Notification() {
                     <div className='flex justify-center' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>No Notification !!</div>
                 ) : (
                     Notification.map((item) => (
-                        <div key={item.notification_id}
-                            className="bg-white font-semibold text-[10px] md:text-base shadow-md rounded-lg p-6 mb-6 border border-gray-200"
+                        <div key={item.notification_id}>
+                             <div 
+                            className="bg-white font-semibold text-[10px] md:text-base rounded-lg p-6 mb-6 border border-gray-200"
                             style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
-                            {item.notification_msg}
+                            <div className='flex justify-between'>{item.notification_msg} <TbBellRingingFilled style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB636C" }} /> </div>
                         </div>
+                       
+                        </div>
+                       
+                        
                     ))
-                )}
+                )
+                }
 
 
             </div>
+           
         </div>
     )
 }
