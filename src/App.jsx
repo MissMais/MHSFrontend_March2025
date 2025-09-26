@@ -39,7 +39,7 @@ import EmptyCart from './Components/Emptycart';
 
 import ScrollToTop from './Components/ScrollToTop';
 
-export const url = "https://781576f0fd62.ngrok-free.app/"
+export const url = "https://f4cdd95b0699.ngrok-free.app/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";

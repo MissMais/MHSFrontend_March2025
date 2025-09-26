@@ -92,7 +92,9 @@ export default function OrderPage() {
   // const paymentid = pay[0].Payment_id
   // console.log(paymentid)
 
-
+// const handleclick = async()=>{
+//   navigate('/address')
+// }
 
   const onSubmit = async (data) => {
 
@@ -117,9 +119,9 @@ export default function OrderPage() {
         });
         // if(error)
         // console.log(result)
-        
+
         if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-          console.log("Payment successfull",result.paymentIntent)
+          console.log("Payment successfull", result.paymentIntent)
 
           const pay = payment.filter(item => item.Payment_mode == paymentMethod)
           const paymentid = pay[0].Payment_id
@@ -139,6 +141,7 @@ export default function OrderPage() {
           console.log("Order placed:", orderRes.data);
           localStorage.removeItem(cartKey);
           setCartItems([]);
+          alert(orderRes.message)
           // navigate("/ProductPage");
         }
       } else {
@@ -150,20 +153,22 @@ export default function OrderPage() {
         // Cash on Delivery
         const payload = {
           Delivery_Address: Address.Address_id,
-          payment_id: paymentid,        
+          payment_id: paymentid,
           payment_confirmation: false,
           order_status: "Booked",
           cart_item_id: cartItems,
         };
 
-        await axios.post(`${url}place/`, payload, {
+        const orderRes = await axios.post(`${url}place/`, payload, {
           headers: { Authorization: `Bearer ${accesstoken}` },
         });
 
         localStorage.removeItem(cartKey);
+        console.log(orderRes.data.message)
         setCartItems([]);
+        alert(orderRes.data.message)
 
-        // navigate("/ProductPage");
+        navigate("/ProductPage");
       }
     } catch (error) {
       console.error(error);
@@ -219,7 +224,11 @@ export default function OrderPage() {
       <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 rounded-3xl shadow-2xl">
         {/* Left Column - Invoice Details */}
         <div>
-          <h2 className="text-2xl font-bold mb-6 text-gray-800" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Payment Details</h2>
+          <div className="flex justify-between mb-3">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Payment Details</h2>
+            <button onClick={()=>navigate('/address')} style={{ fontFamily: "Copperplate, Papyrus, fantasy"}} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 text-sm text-gray-700">
             <div className="flex gap-4">
               <input

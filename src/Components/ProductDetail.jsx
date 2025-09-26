@@ -453,6 +453,7 @@ export default function ProductDetail() {
       }
 
       navigate("/Cart");
+      alert("Added To Cart !")
     } else {
       alert("Out Of Stock");
     }

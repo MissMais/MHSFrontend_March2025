@@ -360,14 +360,14 @@ const ProductPage = () => {
 
 
       <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
-        {isMobile && <div className="flex justify-end-safe z-[9999]">
+        {isMobile && <div className="flex justify-end-safe z-[9998]">
           <button className="bg-[#FB6D6C] text-[15px] rounded-2xl mt-2 w-15 h-10 flex items-center justify-center text-white gap-1" onClick={func}><FaFilter className="text-[13px]" />Filters </button>
         </div>
         }
 
 
         {/* // SideBar For Phone */}
-        {sideOpen && <div className=" mt-15 fixed inset-0 z-[9998]">
+        {sideOpen && <div className=" mt-15 fixed inset-0 z-[9997]">
 
           <div
             className="absolute inset-0 bg-transparent"

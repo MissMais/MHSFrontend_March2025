@@ -155,7 +155,7 @@ export default function Navbar() {
 
       {/* Profile Sidebar */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-[9998]">
+        <div className="fixed inset-0 z-[9999]">
           {/* Overlay */}
           <div
             className="absolute inset-0 bg-transparent"

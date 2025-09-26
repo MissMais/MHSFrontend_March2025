@@ -7,19 +7,48 @@ import { scroller } from "react-scroll";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { url } from "../App"
+
 import Marquee from 'react-fast-marquee';
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 export default function Home() {
     const navigate = useNavigate();
     const [img, setimg] = useState([])
-    const [data, setdata] = useState([])
     const [brand, setbrand] = useState([])
-    const [CurrentIndex, setCurrentIndex] = useState(0)
+    const [variety, setvariety] = useState([])
 
     useEffect(() => {
         AOS.init({ duration: 900, once: true });
     }, []);
+
+
+    const settings = {
+        autoplay:true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        // adaptiveHeight: true,
+        arrows: true,
+
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    infinite: true,
+                    speed: 500,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+
+                }
+            }
+
+        ]
+
+    }
 
 
     // const handleNext = () => {
@@ -65,8 +94,13 @@ export default function Home() {
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
+
             const brand = await axios.get(`${url}brand/`, { headers })
             setbrand(brand.data)
+
+            const variety = await axios.get(`${url}variety/`, { headers })
+            setvariety(variety.data)
+
         } catch (error) {
             console.log(error)
         }
@@ -218,7 +252,7 @@ export default function Home() {
 
 
             {/* Store */}
-            
+
             {/* Abayas  */}
             <section id="store" className=" bg-white mt-10">
                 <div className="max-w-7xl  px-4">
@@ -395,7 +429,7 @@ export default function Home() {
 
             {/* Hijabs */}
             <section id="accessories" className=" bg-white">
-                <div className="max-w-7xl mx-auto px-4">
+                <div className=" max-w-7xl  mx-auto px-4">
                     <div className="p-6">
 
                         {/* Heading + Text */}
@@ -453,8 +487,8 @@ export default function Home() {
 
             {/* Variety */}
             <section id="brand">
-                <div className="mt-20">
-                    <div className="bg-[#FB6D6C] max-w-7xl pt-10 pb-10 mx-auto px-4 ">
+                <div className=" mt-15">
+                    <div className="bg-[#FB6D6C] max-w-7xl pt-7 pb-4 ">
 
                         <div>
                             <h1 className="text-white text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
@@ -462,34 +496,38 @@ export default function Home() {
                             </h1>
 
                         </div>
-                        <div className="p-6">
+                        <div className="p-7 md:p-10">
 
                             {/* Image Grid */}
 
-                            <div className="flex justify-center row-auto gap-3">
-                            
-                                    {brand.map((item) => (
-                                        <div onClick={() => handleclick(item.Brand_name)} key={item.Brand_id} className="relative overflow-hidden
-                                       md:gap-3 md:w-50 md:h-50 w-15 h-15 cursor-pointer 
-                                       transition duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                            <img src={item.Brand_image} alt="no image" className='w-full h-full object-cover' />
-                                            <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg drop-shadow-black items-center font-bold'>{item.Brand_name}</div>
+                          
+
+                                <Slider {...settings}>
+                                    {variety.map((item) => (
+                                        <div onClick={() => handleclick(item.Variation_option_id)} key={item.Variety_id||''} className="relative overflow-hidden
+                                       cursor-pointer aspect-[3/4]
+                                       transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+                                            <img src={item.Variety_image} alt="no image" className='w-full h-full object-cover' />
+                                            {/* <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                                className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg
+                                             drop-shadow-black items-center font-bold'>{item.Brand_name}</div> */}
                                         </div>
                                     ))
                                     }
-                        
-                            </div>
+                                </Slider>
+                            
+
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
 
             <section id='contact'  >
                 <Footer />
             </section>
 
-        </div>
+        </div >
 
     );
 }
