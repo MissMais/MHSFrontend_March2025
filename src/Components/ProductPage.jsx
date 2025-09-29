@@ -1,26 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FaFilter, FaSearch, FaRupeeSign } from "react-icons/fa";
@@ -51,12 +28,10 @@ const ProductPage = () => {
   const [customerId, setCustomerId] = useState(null);
   const [wish, setwish] = useState([])
   const [isMobile, setIsMobile] = useState(false)
+  const [variety, setSelectedvar] = useState([])
 
 
   const user_id = localStorage.getItem('user_id')
-
-
-
 
 
 
@@ -65,6 +40,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     fetchProducts();
+
   }, []);
 
 
@@ -74,12 +50,24 @@ const ProductPage = () => {
     const brandFromUrl = searchParams.get("brand") || "All";
     setSelectedBrand(brandFromUrl);
     console.log(brandFromUrl)
+
+    const brandid = searchParams.get("brandid") || "All"
+    const Brandid = parseInt(brandid)
+    console.log(brandid)
+    // console.log(typeof(brandid))
+    const varopid = searchParams.get("varopid") || "All"
+    console.log(varopid)
+
+    const brandvar = { Brandid, varopid }
+    console.log(brandvar)
+    setSelectedvar(brandvar)
   }, [searchParams, products]);
 
 
 
 
   const accessToken = localStorage.getItem("AccessToken")
+
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`${url}custom/`,
@@ -101,6 +89,44 @@ const ProductPage = () => {
   };
 
 
+
+  const Brandid = variety.Brandid
+  // console.log(Brandid)
+
+  const fetchBrandName = async () => {
+    try {
+      const branddata = await axios.get(`${url}brand/`,
+        {
+          headers: {
+            //   Authorization: `Bearer ${accessToken}`,
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json'
+          },
+        }
+      );
+
+      console.log(branddata.data)
+      // console.log(branddata.data)
+
+    
+        const filterbrand = branddata.data.filter(item => item.Brand_id === Brandid)
+        // console.log(filterbrand[0].Brand_name)
+        const BrandName = filterbrand[0].Brand_name
+        setSelectedBrand(BrandName)
+
+
+    } catch (err) {
+      console.error(err)
+    }
+  };
+  // console.log(variety.Brandid)
+
+
+  useEffect(() => {
+    fetchBrandName()
+  }, [products])
+
+
   const getUniqueCategories = () => {
     const unique = new Set(products.map(p => p.category_name));
     return Array.from(unique);
@@ -108,7 +134,7 @@ const ProductPage = () => {
 
 
   const getUniqueBrand = () => {
-    const unique = new Set(products.map(p => p.brand));
+    const unique = new Set(products.map(p => p.brand.Brand_name));
     return Array.from(unique);
   };
 
@@ -133,17 +159,25 @@ const ProductPage = () => {
   };
 
 
-
-
-
-
   const filteredProducts = products.filter((product) => {
     // console.log("**********",product.images[0])
     //    return product
+    // console.log(product)
+    // console.log(product.brand.Brand_id)
+    // console.log(variety.varopid)
+    // console.log(product.product_variation.variation_option_id)
+    // if (!variety || variety.Brandid === "NaN" || variety.varopid === "All") {
+    //   return true;
+    // }
+
     return (
       (selectedCategory === "All" || product.category_name === selectedCategory) &&
       (selectedColour === "All" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
-      (selectedbrand === "All" || product.brand === selectedbrand) &&
+      (selectedbrand === "All" || product.brand.Brand_name === selectedbrand) &&
+      (!variety || variety.Brandid === "NaN" || variety.varopid === "All"
+        ? true
+        : product.brand?.Brand_id === variety.Brandid &&
+        product.product_variation?.variation_option_id === variety.varopid) &&
       // (selectedColour === "All" || product.variation_name?.toLowerCase()) &&
       (search === "" || product.sub_category_name.toLowerCase().includes(search.toLowerCase())) &&
       parseFloat(product.price) <= maxPrice)
@@ -530,6 +564,7 @@ const ProductPage = () => {
             </label>
             <select
               className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
+              value={selectedColour}
               onChange={(e) => setSelectedColour(e.target.value)}
             >
               <option value="All" className="text-[#666F80]">

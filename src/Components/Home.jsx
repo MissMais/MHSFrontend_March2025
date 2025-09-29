@@ -26,7 +26,7 @@ export default function Home() {
 
 
     const settings = {
-        autoplay:true,
+        autoplay: true,
         infinite: true,
         speed: 500,
         slidesToShow: 5,
@@ -117,6 +117,15 @@ export default function Home() {
         const newbrand = encodeURIComponent(value)
         console.log(newbrand)
         navigate(`/ProductPage?brand=${newbrand}`)
+    }
+
+
+    const handlevarclick = async (value,value2) => {
+        console.log(value)
+        console.log(value2)
+        const newbrand = encodeURIComponent(value)
+        console.log(newbrand)
+        navigate(`/ProductPage?brandid=${newbrand}&varopid=${value2}`)
     }
 
 
@@ -500,22 +509,22 @@ export default function Home() {
 
                             {/* Image Grid */}
 
-                          
 
-                                <Slider {...settings}>
-                                    {variety.map((item) => (
-                                        <div onClick={() => handleclick(item.Variation_option_id)} key={item.Variety_id||''} className="relative overflow-hidden
-                                       cursor-pointer aspect-[3/4]
-                                       transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
-                                            <img src={item.Variety_image} alt="no image" className='w-full h-full object-cover' />
-                                            {/* <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+
+                            <Slider {...settings}>
+                                {variety.map((item) => (
+                                    <div onClick={() => handlevarclick(item.Brand_id, item.Variation_option_id)} key={item.Variety_id || ''}
+                                        className="relative overflow-hidden cursor-pointer aspect-[3/4]
+                                        transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+                                        <img src={item.Variety_image} alt="no image" className='w-full h-full object-cover' />
+                                        {/* <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                                                 className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg
                                              drop-shadow-black items-center font-bold'>{item.Brand_name}</div> */}
-                                        </div>
-                                    ))
-                                    }
-                                </Slider>
-                            
+                                    </div>
+                                ))
+                                }
+                            </Slider>
+
 
                         </div>
                     </div>
