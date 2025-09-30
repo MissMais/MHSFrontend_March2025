@@ -16,7 +16,7 @@ export default function ResetPassword() {
     const accesstoken = localStorage.getItem("AccessToken")
     try {
       console.log(data)
-      const response = await axios.post(`${url}change/`, data,
+      const response = await axios.post(`${url}changepassword/`, data,
         {
           headers: {
             Authorization: `Bearer ${accesstoken}`,

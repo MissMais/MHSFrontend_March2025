@@ -263,7 +263,7 @@ export default function Home() {
             {/* Store */}
 
             {/* Abayas  */}
-            <section id="store" className=" bg-white mt-10">
+            <section id="store" className=" bg-white mt-2">
                 <div className="max-w-7xl  px-4">
                     <div className="p-6">
 

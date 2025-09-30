@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { FaFilter, FaSearch, FaRupeeSign } from "react-icons/fa";
+import { FaFilter, FaSearch, FaRupeeSign, FaStar } from "react-icons/fa";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Footer from "../Routes/Footer";
 import { url } from "../App"
-import { CloudDownload } from "lucide-react";
+
 
 
 
@@ -108,11 +108,15 @@ const ProductPage = () => {
       console.log(branddata.data)
       // console.log(branddata.data)
 
-    
-        const filterbrand = branddata.data.filter(item => item.Brand_id === Brandid)
-        // console.log(filterbrand[0].Brand_name)
-        const BrandName = filterbrand[0].Brand_name
-        setSelectedBrand(BrandName)
+
+      const filterbrand = branddata.data.filter(item => item.Brand_id === Brandid)
+      
+    if (filterbrand.length > 0) {
+      setSelectedBrand(filterbrand[0].Brand_name);
+    } else {
+      
+      setSelectedBrand("All");
+    }
 
 
     } catch (err) {
@@ -197,7 +201,8 @@ const ProductPage = () => {
 
   const handleProductClick = (id) => {
     console.log(id)
-    navigate(`/quote/${id}`)
+    navigate(`/ProductDetail/${id}`);
+    // navigate(`/quote/${id}`)
     // navigate(`/ProductDetail/${id}`);
   };
 
@@ -285,29 +290,7 @@ const ProductPage = () => {
     fetchWishlist();
   }, [customerId]);
 
-  // console.log(customerId)
 
-  // const fetchingwish = async()=>{
-  //       const res = await axios.get(`${url}wishlist/`, {
-  //         headers: {
-  //         //   Authorization: `Bearer ${accessToken}`,
-  //            'ngrok-skip-browser-warning':'69420',
-  //                 'Content-Type':'application/json'
-  //         },
-  //       })
-  //       const data = res.data
-  //       // console.log(res)
-
-  //       const filter = data.filter(item => item.customer_id == customerId)
-  //       console.log(filter)
-  //       setwish(filter)
-  //     }
-
-
-  //     useEffect(()=>{
-  //       fetchingwish()
-  //     },[])
-  // console.log(wish)
 
   const Wishlist = async (product) => {
     const variationId = product.product_variation.product_variation_id;
@@ -343,7 +326,13 @@ const ProductPage = () => {
           },
         });
 
-        const wishlistRes = await axios.get(`${url}wishlist/`, { headers: { 'ngrok-skip-browser-warning': '69420', 'Content-Type': 'application/json' } });
+        const wishlistRes = await axios.get(`${url}wishlist/`,
+          {
+            headers: {
+              'ngrok-skip-browser-warning': '69420',
+              'Content-Type': 'application/json'
+            }
+          });
         const customerWishlist = wishlistRes.data.filter(item => item.customer_id == customerId);
         setwish(customerWishlist);
         console.log("Wishlist Added")
@@ -353,6 +342,8 @@ const ProductPage = () => {
       console.error(error);
     }
   };
+
+
 
 
   const func = () => {
@@ -653,7 +644,7 @@ const ProductPage = () => {
           </div>
 
           {/* Product grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-3  px-4 mt-10">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-3 md:gap-y-8 px-4 mt-3">
             {filteredProductsWithImages.map((product, idx) => (
               <div
                 key={idx}
@@ -676,29 +667,53 @@ const ProductPage = () => {
                   >
                     {product.product_description}
                   </h3>
-                  <p className="text-gray-500">
-                    {product.variation_name || "N/A"}
-                  </p>
-                  <p className="text-gray-500">
-                    <FaRupeeSign className="inline text-gray-400" />
-                    {parseFloat(product.price).toLocaleString()}
-                  </p>
+
+                  <div className="flex justify-between">
+                    <div>
+                      <p className="text-gray-500">
+                        {product.variation_name || "N/A"}
+                      </p>
+                      <p className="text-gray-500">
+                        <FaRupeeSign className="inline text-gray-400" />
+                        {parseFloat(product.price).toLocaleString()}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500">
+                        {product.product_variation.avg_rating !== null ? (
+                          <>
+                            {product.product_variation.avg_rating.toFixed(1)}
+                            <FaStar className="inline text-yellow-400" />
+                          </>
+                        ) : (
+                          <span className="invisible">0</span>
+
+                        )}
+                      </p>
+
+
+                      {/* skaskajsjasja */}
+                      <div
+                        onClick={() => Wishlist(product)}
+                        style={{ cursor: "pointer" }}
+                        className="text-lg md:text-2xl">
+                        {wish.some(item => item.product_variation_id == product.product_variation.product_variation_id) ? (
+                          <IoHeart color="#FB6D6C" />
+                        ) : (
+                          <IoHeartOutline color="#FB6D6C" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+
 
                   {/* Wishlist + View */}
                   <div className="mt-auto flex justify-between font-bold items-center pt-3">
-                    <div
-                      onClick={() => Wishlist(product)}
-                      style={{ cursor: "pointer" }}
-                      className="text-lg md:text-2xl">
-                      {wish.some(item => item.product_variation_id == product.product_variation.product_variation_id) ? (
-                        <IoHeart color="#FB6D6C" />
-                      ) : (
-                        <IoHeartOutline color="#FB6D6C" />
-                      )}
-                    </div>
+
 
                     <button
-                      className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 rounded-lg transition-all"
+                      className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 w-full rounded-full transition-all"
                       style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                       onClick={() => handleProductClick(product.product_variation.product_variation_id)}
                     >

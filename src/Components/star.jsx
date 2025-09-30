@@ -5,7 +5,7 @@ export default function RateStar() {
 
   const rating = 4.5; // rating from backend
 
-  // Function to render stars
+  
   const renderStars = (rating) => {
     const stars = [];
     

@@ -31,7 +31,7 @@ import ForgotPassword from './Components/Forgotpass';
 import ForgotPassOtp from './Components/ForgotPassOtp';
 import ForgotPassChange from './Components/ForgotPassChange';
 import AccountEdit from './Components/AccountEdit';
-import Quote from './Components/Quote';
+// import Quote from './Components/Quote';
 import Wishlist from './Components/Wishlist';
 import Notification from './Components/Notification';
 import EmptyCart from './Components/Emptycart';
@@ -39,7 +39,7 @@ import EmptyCart from './Components/Emptycart';
 
 import ScrollToTop from './Components/ScrollToTop';
 
-export const url = "https://81f7813d08ae.ngrok-free.app/"
+export const url = "https://6e81a529e12e.ngrok-free.app/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -75,7 +75,7 @@ export default function App() {
             <Route path='editadd/:id' element={<PrivateRoute element={<AddressEdit />} />} />
             <Route path='/history' element={<PrivateRoute element={<OrderHistory />} />} />
             <Route path='/Wish' element={<PrivateRoute element={<Wishlist />} />} />
-            <Route path="/quote/:id"  element={<PrivateRoute element={<Quote />} />} />
+            {/* <Route path="/quote/:id"  element={<PrivateRoute element={<Quote />} />} /> */}
             <Route path="/ProductPage" element={<ProductPage />} />
             <Route path="/OrderPage"  element={<PrivateRoute element={<OrderPage />} />} />
             <Route path="/ProductDetail/:id" element={<ProductDetail />} />
