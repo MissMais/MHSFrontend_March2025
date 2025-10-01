@@ -199,9 +199,9 @@ const ProductPage = () => {
   );
   // console.log(filteredProductsWithImages)
 
-  const handleProductClick = (id) => {
+  const handleProductClick = (id , productid) => {
     console.log(id)
-    navigate(`/ProductDetail/${id}`);
+    navigate(`/ProductDetail/?id=${id}&product=${productid}`);
     // navigate(`/quote/${id}`)
     // navigate(`/ProductDetail/${id}`);
   };
@@ -715,7 +715,7 @@ const ProductPage = () => {
                     <button
                       className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 w-full rounded-full transition-all"
                       style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                      onClick={() => handleProductClick(product.product_variation.product_variation_id)}
+                      onClick={() => handleProductClick(product.product_variation.product_variation_id , product.Product_id)}
                     >
                       View
                     </button>

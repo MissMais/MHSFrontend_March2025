@@ -39,7 +39,7 @@ import EmptyCart from './Components/Emptycart';
 
 import ScrollToTop from './Components/ScrollToTop';
 
-export const url = "https://6e81a529e12e.ngrok-free.app/"
+export const url = "https://b03320dbe0d3.ngrok-free.app/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -78,7 +78,7 @@ export default function App() {
             {/* <Route path="/quote/:id"  element={<PrivateRoute element={<Quote />} />} /> */}
             <Route path="/ProductPage" element={<ProductPage />} />
             <Route path="/OrderPage"  element={<PrivateRoute element={<OrderPage />} />} />
-            <Route path="/ProductDetail/:id" element={<ProductDetail />} />
+            <Route path="/ProductDetail" element={<ProductDetail />} />
             <Route path="/Cart" element={<PrivateRoute element={<Cart />} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/reset" element={<PrivateRoute element={<ResetPassword />} />} />

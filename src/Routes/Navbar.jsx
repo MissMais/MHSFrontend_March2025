@@ -3,17 +3,20 @@ import { Link as ScrollLink } from "react-scroll";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
+
 import axios from "axios";
-import {url} from "../App"
+import { url } from "../App"
+import Notification from "../Components/Notification";
 
 
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [NotifsideBar, setNotifOpen] = useState(false);
   const navigate = useNavigate();
 
   // const url =
-    // "https://5d0abf24c6ce.ngrok-free.app/logout/"
+  // "https://5d0abf24c6ce.ngrok-free.app/logout/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
@@ -38,7 +41,7 @@ export default function Navbar() {
 
     // try {
     const response = await axios.post(
-      `${url}logout/`, {refresh:refresh },
+      `${url}logout/`, { refresh: refresh },
     );
 
     if (response.status === 200) {
@@ -88,7 +91,7 @@ export default function Navbar() {
   };
 
   const linkClasses =
-    "block py-1 px-2 text-[10px] sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
+    "block py-1 px-2 text-[8px] sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
 
   return (
     <>
@@ -141,11 +144,16 @@ export default function Navbar() {
                   </span>
                 </ScrollLink>
               </li>
-
+              {/* Notification Icon */}
+              <li>
+                <button onClick={() => setNotifOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
+                  <CgProfile className="text-xl" />
+                </button>
+              </li>
               {/* Profile Icon */}
               <li>
                 <button onClick={() => setSidebarOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
-                  <CgProfile className="text-2xl" />
+                  <CgProfile className="text-xl" />
                 </button>
               </li>
             </ul>
@@ -153,99 +161,128 @@ export default function Navbar() {
         </div>
       </nav>
 
+      {/* Notification Sidebar */}
+      <div className="fixed inset-0 z-[9999] pointer-events-none">
+        {/* Overlay */}
+        <div
+          className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${NotifsideBar ? "opacity-100 pointer-events-auto" : "opacity-0"
+            }`}
+          onClick={() => setNotifOpen(false)}
+        ></div>
+
+        {/* Sidebar */}
+        <div
+          className={`absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col
+      transform transition-transform duration-300
+      ${NotifsideBar ? "translate-x-0" : "translate-x-full"}`}
+        >
+          <button onClick={() => setNotifOpen(false)}>
+            <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
+          </button>
+          
+            <Notification />
+          
+        </div>
+      </div>
+
       {/* Profile Sidebar */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-[9999]">
-          {/* Overlay */}
-          <div
-            className="absolute inset-0 bg-transparent"
-            onClick={() => setSidebarOpen(false)}
-          ></div>
+      <div className="fixed inset-0 z-[9999] pointer-events-none">
+        {/* Overlay */}
+        <div
+          className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0"
+            }`}
+          onClick={() => setSidebarOpen(false)}
+        ></div>
 
-          {/* Sidebar */}
-          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">Profile</h2>
-              <button onClick={() => setSidebarOpen(false)}>
-                <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
-              </button>
-            </div>
+        {/* Sidebar */}
+        <div
+          className={`absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col
+      transform transition-transform duration-300
+      ${sidebarOpen ? "translate-x-0" : "translate-x-full"}`}
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">Profile</h2>
+            <button onClick={() => setSidebarOpen(false)}>
+              <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
+            </button>
+          </div>
 
-            <div className="flex flex-col gap-3">
-              {loggedIn ? (
-                <>
-                  <Link
-                    to="/acc"
-                    onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    Account
-                  </Link>
-                  <Link
-                    to="/history"
-                    onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    Order History
-                  </Link>
-                  <Link
-                    to="/Cart"
-                    onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    My Cart
-                  </Link>
-                   <Link
-                    to="/Wish"
-                    onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    Wish List
-                  </Link>
-                   <Link
-                    to="/notification"
-                    onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    Notifications
-                  </Link>
-                  <hr />
-                  <button
-                    onClick={handleLogout}
-                    className={linkClasses + " text-left w-full"}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    onClick={() => setSidebarOpen(false)}
-                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    to="/Signup"
-                    onClick={() => setSidebarOpen(false)}
-                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                  >
-                    SignUp
-                  </Link>
-                </>
-              )}
-            </div>
-
+          <div className="flex flex-col gap-3">
+            {loggedIn ? (
+              <>
+                <Link
+                  to="/acc"
+                  onClick={() => setSidebarOpen(false)}
+                  className={linkClasses}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  Account
+                </Link>
+                <Link
+                  to="/history"
+                  onClick={() => setSidebarOpen(false)}
+                  className={linkClasses}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  Order History
+                </Link>
+                <Link
+                  to="/Cart"
+                  onClick={() => setSidebarOpen(false)}
+                  className={linkClasses}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  My Cart
+                </Link>
+                <Link
+                  to="/Wish"
+                  onClick={() => setSidebarOpen(false)}
+                  className={linkClasses}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  Wish List
+                </Link>
+                <Link
+                  to="/notification"
+                  onClick={() => setSidebarOpen(false)}
+                  className={linkClasses}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  Notifications
+                </Link>
+                <hr />
+                <button
+                  onClick={handleLogout}
+                  className={linkClasses + " text-left w-full"}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setSidebarOpen(false)}
+                  className={linkClasses}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/Signup"
+                  onClick={() => setSidebarOpen(false)}
+                  className={linkClasses}
+                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                >
+                  SignUp
+                </Link>
+              </>
+            )}
           </div>
         </div>
-      )}
+      </div>
+
     </>
   );
 }

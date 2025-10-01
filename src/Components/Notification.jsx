@@ -34,23 +34,23 @@ export default function Notification() {
 
 
     return (
-        <div className="max-w-5xl mx-auto px-4 py-10 mt-20">
+        <div className="max-w-2xl mx-auto px-4 py-10 mt-20">
             <div>
                 <h1
-                    className="text-3xl font-bold mb-6"
+                    className="text-xl font-bold mb-6"
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
                 >
                     Notifications
                 </h1>
                 {(Notification.length == 0) ? (
-                    <div className='flex justify-center' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>No Notification !!</div>
+                    <div className='flex justify-center text-xs' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>No Notification !!</div>
                 ) : (
                     Notification.map((item) => (
                         <div key={item.notification_id}>
                              <div 
-                            className="bg-white font-semibold text-[10px] md:text-base rounded-lg p-6 mb-6 border border-gray-200"
+                            className="bg-white font-semibold text-[7px] md:text-[10px] md:p-4 rounded-lg p-2 mb-6 border border-gray-200"
                             style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
-                            <div className='flex justify-between'>{item.notification_msg} <TbBellRingingFilled style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB636C" }} /> </div>
+                            <div className='flex justify-between items-center'>{item.notification_msg} <TbBellRingingFilled style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB636C" }} /> </div>
                         </div>
                        
                         </div>

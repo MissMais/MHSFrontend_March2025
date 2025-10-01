@@ -340,7 +340,7 @@
 // // ########## SH
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { IoCartSharp } from 'react-icons/io5';
 import { FaRupeeSign, FaStar } from "react-icons/fa";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
@@ -349,7 +349,12 @@ import { url } from "../App"
 export default function ProductDetail() {
   const navigate = useNavigate();
   // const location = useLocation()
-  const { id } = useParams();
+  // const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id")
+  console.log(id)
+  const product_id = searchParams.get("product")
+  console.log(product_id)
   const [allVariations, setAllVariations] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [relatedproduct, setrelatedproduct] = useState([])
@@ -358,8 +363,8 @@ export default function ProductDetail() {
   const [wish, setwish] = useState([])
   const [customerId, setCustomerId] = useState(null);
 
-
-
+  console.log(allVariations)
+  console.log(selectedProduct)
 
   useEffect(() => {
     fetchProduct();
@@ -391,12 +396,16 @@ export default function ProductDetail() {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(url + 'custom/', { headers });
-      const response2 = await axios.get(url + 'custom/', { headers });
-      console.log(response)
-      const filtered = response.data.filter(item => item.product_variation.product_variation_id === id);
+      // const response2 = await axios.get(url + 'custom/', { headers });
+      console.log(response.data)
+      const filtered = response.data.filter(item => item.Product_id === product_id);
       // console.log(response.data.category_name)
       setAllVariations(filtered);
-      setrelatedproduct(response2.data)
+
+
+      const variation = filtered.find(v => v.product_variation.product_variation_id === id)
+      setSelectedProduct(variation)
+      // setrelatedproduct(response2.data)
 
       setTimeout(() => {
         setloading(false)
@@ -518,7 +527,7 @@ export default function ProductDetail() {
 
 
 
-  
+  const user_id = localStorage.getItem('user_id')
   const getcustomerid = async () => {
     const res = await axios.get(`${url}customer`, {
       headers: {
@@ -700,7 +709,7 @@ export default function ProductDetail() {
               Free Shipping
             </div>
 
-            {/* Color Selector
+            {/* Color Selector */}
             {allVariations.some(v => v.variation_type === 'Color') && (
               <div className="mt-7">
                 <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Choose Color:</h2>
@@ -717,10 +726,10 @@ export default function ProductDetail() {
                     ))}
                 </div>
               </div>
-            )} */}
+            )}
 
             {/* Size Selector */}
-            {allVariations.some(v => v.variation_type === 'Size') && (
+            {/* {allVariations.some(v => v.variation_type === 'Size') && (
 
               <div className="mt-7">
                 <h2 className="font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{allVariations[0]?.category_name === 'Abayas' ? 'Choose Size:' : 'Size:'}</h2>
@@ -743,38 +752,39 @@ export default function ProductDetail() {
                     })}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Buttons */}
-            <div className="mt-10 flex gap-4">
-              <div >
+            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+        
+              <div className="flex-1">
                 <button
-                  className="border border-[#FB6D6C] bg-white text-[#FB6D6C] px-6 py-2 rounded-full hover:bg-[#e95a59] hover:text-white transition w-full flex items-center justify-center gap-2"
                   onClick={() => addToCart(selectedProduct)}
+                  className="w-full h-12 sm:h-14 border border-[#FB6D6C] bg-[#FB6D6C] text-white 
+                 px-6 sm:px-8 rounded-full transition flex items-center justify-center gap-2 shadow-md"
                 >
-                  <IoCartSharp className="text-xl" />
-                  <span style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Add to Cart</span>
+                  <IoCartSharp className="text-lg sm:text-xl" />
+                  <span className="font-semibold sm:text-lg tracking-wide">Add to Cart</span>
                 </button>
               </div>
-              <div>
+
+          
+              <div className="w-full sm:w-40">
                 <button
                   onClick={() => Wishlist(selectedProduct)}
-                  style={{ cursor: "pointer" }}
-                  className=" border border-[#FB6D6C] rounded-full px-5 py-2 w-full flex items-center justify-center gap-2"
+                  className="w-full h-12 sm:h-14 border border-[#FB6D6C] bg-white text-[#FB6D6C] 
+                 px-4 sm:px-5 rounded-full hover:bg-[#fff0f0] transition flex items-center justify-center gap-2"
                 >
                   {wish.some(item => item.product_variation_id == selectedProduct.product_variation.product_variation_id) ? (
-                  <IoHeart className='text-xl text-[#FB6D6C]' /> 
-                  
+                    <IoHeart className="text-lg sm:text-xl text-[#FB6D6C]" />
                   ) : (
-                  <IoHeartOutline className='text-xl text-[#FB6D6C]' />
+                    <IoHeartOutline className="text-lg sm:text-xl text-[#FB6D6C]" />
                   )}
-                  <span>Wishlist</span>
+                  <span className="text-sm sm:text-base">Wishlist</span>
                 </button>
-
               </div>
-
-
             </div>
+
 
 
 
