@@ -264,7 +264,7 @@ export default function Home() {
 
             {/* Abayas  */}
             <section id="store" className=" bg-white mt-2">
-                <div className="max-w-7xl  px-4">
+                <div className="max-w-7xl mx-auto  px-4">
                     <div className="p-6">
 
                         {/* Text Content */}
@@ -497,7 +497,7 @@ export default function Home() {
             {/* Variety */}
             <section id="brand">
                 <div className=" mt-15">
-                    <div className="bg-[#FB6D6C] max-w-7xl pt-7 pb-4 ">
+                    <div className="bg-[#FB6D6C] max-w-7xl pt-7 mx-auto pb-4 ">
 
                         <div>
                             <h1 className="text-white text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>

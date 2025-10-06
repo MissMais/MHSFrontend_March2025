@@ -683,7 +683,7 @@ export default function ProductDetail() {
       <div className=" p-6 rounded-lg w-full">
         {quotes && (
           <h2
-            className="text-center text-2xl font-bold mb-6 animate-pulse"
+            className="text-center text-[11px] md:text-2xl font-bold mb-6 animate-pulse"
             style={{
               fontFamily: 'Copperplate, Papyrus, fantasy',
               color: '#666F80',
@@ -806,30 +806,30 @@ export default function ProductDetail() {
             )} */}
 
             {/* Buttons */}
-            <div className="mt-10 flex flex-col sm:flex-row">
+            <div className="mt-10 flex">
 
               <div className="flex-1">
                 <button
                   onClick={() => addToCart(selectedProduct)}
-                  className="w-full h-12 sm:h-14 border border-[#FB6D6C] bg-[#FB6D6C] text-white 
-                 px-6 sm:px-8 rounded-full transition flex items-center justify-center gap-2 shadow-md"
+                  className="w-full h-12 md:h-14 border border-[#FB6D6C] bg-[#FB6D6C] text-white 
+                 px-13  md:px-8 rounded-full transition flex items-center justify-center gap-2 shadow-md"
                 >
-                  <IoCartSharp className="text-lg sm:text-xl" />
-                  <span className="font-semibold sm:text-lg tracking-wide">Add to Cart</span>
+                  <IoCartSharp className="text-xl md:text-2xl" />
+                  <div className="font-semibold text-[10px] md:text-xl tracking-wide whitespace-nowrap">Add to Cart</div>
                 </button>
               </div>
 
 
-              <div className="w-full sm:w-40">
+              <div className="w-full md:w-40">
                 <button
                   onClick={() => Wishlist(selectedProduct)}
-                  className="w-25 h-12 sm:h-14 bg-white text-[#FB6D6C] 
+                  className="w-25 h-12 md:h-14 bg-white text-[#FB6D6C] 
                   rounded-full hover:bg-[#fff0f0] transition flex items-center justify-center"
                 >
                   {wish.some(item => item.product_variation_id == selectedProduct.product_variation.product_variation_id) ? (
-                    <IoHeart className="text-4xl  text-[#FB6D6C]" />
+                    <IoHeart className="text-3xl md:text-4xl text-[#FB6D6C]" />
                   ) : (
-                    <IoHeartOutline className="text-4xl  text-[#FB6D6C]" />
+                    <IoHeartOutline className="text-3xl md:text-4xl  text-[#FB6D6C]" />
                   )}
                   {/* <span className="text-sm sm:text-base">Wishlist</span> */}
                 </button>

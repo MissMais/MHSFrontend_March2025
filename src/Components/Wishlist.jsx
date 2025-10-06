@@ -200,7 +200,7 @@ return (
     </h1>
 
     {wishlist.length === 0 ? (
-      <p className="text-center text-gray-500">Your wishlist is empty.</p>
+      <p className="text-center text-[#666F80]">Your wishlist is empty.</p>
     ) : (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {wishlist.map((item, idx) => {
@@ -209,51 +209,63 @@ return (
           return (
             <div
               key={idx}
-              className="bg-white shadow-md rounded-lg p-6 border border-gray-200 flex flex-col items-center "
+              className="bg-white shadow-md rounded-lg p-6 border border-gray-200 flex flex-col h-full"
             >
-              <div>
+              {/* Image */}
+              <div className="flex justify-center">
                 <img
                   src={prod.images[0]}
                   alt="wishlist product"
-                  className="w-25 h-30 md:h-40 md:w-40 object-cover rounded aspect-[5/6] "
+                  className="w-28 h-32 md:h-40 md:w-40 object-cover rounded aspect-[5/6]"
                 />
               </div>
 
-              <div className="flex flex-col items-center text-center">
-                <p
-                  className="text-xs  md:text-xl font-semibold"
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#FB6D6C",
-                  }}
-                >
-                  {prod.product_description}
-                </p>
-                <p
-                  className="text-sm font-bold"
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#666F80",
-                  }}
-                >
-                  ₹{prod.price}
-                </p>
+              {/* Content */}
+              <div className="flex flex-col flex-grow justify-between text-center mt-3">
+                <div>
+                  <p
+                    className="text-xs md:text-lg font-semibold"
+                    style={{
+                      fontFamily: "Copperplate, Papyrus, fantasy",
+                      color: "#FB6D6C",
+                    }}
+                  >
+                    {prod.product_description}
+                  </p>
+                  <p
+                    className="text-sm font-bold"
+                    style={{
+                      fontFamily: "Copperplate, Papyrus, fantasy",
+                      color: "#666F80",
+                    }}
+                  >
+                    ₹{prod.price}
+                  </p>
+                </div>
 
-                <div className="flex gap-2 text-[7px] mt-2">
+                {/* Buttons at bottom */}
+                <div className="flex items-center justify-center gap-2 mt-4">
                   <button
-                    className="border md:text-[10px] border-[#FB6D6C] bg-white text-[#FB6D6C] px-6 py-2 rounded-full hover:bg-[#e95a59] hover:text-white transition w-full flex items-center justify-center"
+                    className="flex items-center gap-2 border border-[#FB6D6C] bg-white text-[#FB6D6C]
+                     px-2 md:px-5 py-2 rounded-full hover:bg-[#e95a59] hover:text-white transition text-[10px] 
+                     md:text-sm"
                     onClick={() => addToCart(prod)}
                   >
-                    <IoCartSharp className="text-xl" />
-                    <span style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Move to Cart</span>
+                    <IoCartSharp className="text-sm md:text-lg" />
+                    <span
+                      style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                      className="whitespace-nowrap font-semibold"
+                    >
+                      Move to Cart
+                    </span>
                   </button>
 
                   <button
                     onClick={() => removeFromWishlist(item.wishlist_id)}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                    className="px-4 py-2 text-[15px] text-gray-400 hover:text-[#FB6D6C] rounded-lg"
+                    className="p-2 text-[#666F80] hover:text-[#FB6D6C] transition"
                   >
-                    <FaTrashAlt />
+                    <FaTrashAlt className="text-sm md:text-lg" />
                   </button>
                 </div>
               </div>
@@ -264,5 +276,6 @@ return (
     )}
   </div>
 );
+
 
 }

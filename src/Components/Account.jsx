@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {url} from "../App"
 
+import { MdAccountCircle } from "react-icons/md";
+import { TbLockPassword } from "react-icons/tb";
+import { TbAddressBook } from "react-icons/tb";
+
 
 // const url = "https://5d0abf24c6ce.ngrok-free.app/"
 
@@ -62,23 +66,23 @@ console.log(firstletter)
               to="/acc"
               className="block text-[#FB6D6C] hover:text-[#e95a59] font-semibold transition-colors"
             >
-              Profile settings
+             <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> Profile settings</span>
             </Link>
           </li>
           <li>
             <Link
               to="/reset"
-              className="block text-gray-600 hover:text-[#FB6D6C] transition-colors"
+              className="block text-[#666F80] hover:text-[#FB6D6C] transition-colors"
             >
-              Password
+             <span className="flex items-center gap-2 "><TbLockPassword className="text-xl text-[#FB6D6C]" />Password</span> 
             </Link>
           </li>
           <li>
             <Link
               to="/Address"
-              className="block text-gray-600 hover:text-[#FB6D6C] transition-colors"
+              className="block text-[#666F80] hover:text-[#FB6D6C] transition-colors"
             >
-              Address
+              <span className="flex items-center gap-2 "><TbAddressBook className="text-xl text-[#FB6D6C]" />Address</span>
             </Link>
           </li>
         </ul>

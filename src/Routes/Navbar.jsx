@@ -4,11 +4,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
-import { IoNotificationsSharp } from "react-icons/io5"; 
+import { IoNotificationsSharp } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
 import { MdHistory } from "react-icons/md";
 import { IoCartSharp } from "react-icons/io5";
 import { IoHeartOutline } from "react-icons/io5";
+import { IoLogOutOutline } from "react-icons/io5";
 
 import axios from "axios";
 import { url } from "../App"
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [NotifsideBar, setNotifOpen] = useState(false);
+  const [user, setuser] = useState({});
   const navigate = useNavigate();
 
   // const url =
@@ -96,8 +98,38 @@ export default function Navbar() {
 
   };
 
+const accesstoken = localStorage.getItem('AccessToken')
+
+  const headers = {
+    Authorization: `Bearer ${accesstoken}`,
+    "ngrok-skip-browser-warning": "69420",
+    "Content-Type": "application/json",
+  }
+
+
+  const fetchuser = async () => {
+    const userid = localStorage.getItem('user_id')
+    const userdata = await axios.get(`${url}user/?id=${userid}`, { headers })
+
+    console.log(userdata.data[0].first_name[0])
+    setuser(userdata.data[0])
+
+
+  }
+
+  useEffect(() => {
+    fetchuser()
+  }, [])
+
+  const firstname = user?.first_name
+  const firstletter = firstname?.[0]
+  // console.log(firstletter)
+
+  const fullname = `${user?.first_name} ${ user?.last_name}`
+  // console.log(fullname)
+
   const linkClasses =
-    "block py-1 px-2 text-[8px] sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
+    "block py-1 px-2 text-[8px] sm:py-2 sm:px-4 sm:text-base text-[#666F80] hover:text-[#FB6D6C] font-bold cursor-pointer";
 
   return (
     <>
@@ -113,7 +145,7 @@ export default function Navbar() {
             </div>
 
             {/* Menu Items */}
-            <ul className="flex flex-row gap-1 sm:gap-6 items-center text-gray-700 font-medium">
+            <ul className="flex flex-row gap-1 sm:gap-6 items-center text-[#666F80] font-medium">
               <li>
                 <Link to="/home">
                   <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
@@ -152,13 +184,13 @@ export default function Navbar() {
               </li>
               {/* Notification Icon */}
               <li>
-                <button onClick={() => setNotifOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
+                <button onClick={() => setNotifOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C]">
                   <IoNotificationsSharp className="text-xl" />
                 </button>
               </li>
               {/* Profile Icon */}
               <li>
-                <button onClick={() => setSidebarOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
+                <button onClick={() => setSidebarOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C]">
                   <CgProfile className="text-xl" />
                 </button>
               </li>
@@ -174,9 +206,9 @@ export default function Navbar() {
             onClick={() => setNotifOpen(false)}
           ></div>
 
-          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
+          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col overflow-y-scroll">
             <button onClick={() => setNotifOpen(false)}>
-              <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
+              <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
 
             </button>
             <div className="flex justify-between items-center mb-4">
@@ -196,25 +228,36 @@ export default function Navbar() {
           ></div>
 
           {/* Sidebar */}
-          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
+          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col overflow-y-scroll">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>Profile</h2>
+                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: '#666F80' }}>Profile</h2>
               <button onClick={() => setSidebarOpen(false)}>
-                <IoClose className="text-2xl text-gray-700 hover:text-red-500" /> 
+                <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
               </button>
             </div>
 
             <div className="flex flex-col gap-3">
               {loggedIn ? (
                 <>
+                  <div  className="flex items-center gap-2 py-1">
+                    <div className="flex items-center justify-center rounded-full shadow-md shadow-black bg-[#FB6D6C] w-10 h-10 object-cover">
+                      <div className="text-xl font-semibold text-white">{firstletter}</div>
+                      
+                    </div>
+                    <div className="flex font-bold text-[#666F80]"
+                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                      {fullname}
+                    </div>
+                  </div>
+                  <hr />
                   <Link
                     to="/acc"
                     onClick={() => setSidebarOpen(false)}
                     className={linkClasses}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    <span className="flex items-center gap-2 "> <MdAccountCircle className="text-xl" /> Account</span>
+                    <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> Account</span>
                   </Link>
                   <Link
                     to="/history"
@@ -222,7 +265,7 @@ export default function Navbar() {
                     className={linkClasses}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                   <span  className="flex items-center gap-2 "><MdHistory className="text-xl" /> Order History</span> 
+                    <span className="flex items-center gap-2 "><MdHistory className="text-xl text-[#FB6D6C]" /> Order History</span>
                   </Link>
                   <Link
                     to="/Cart"
@@ -230,7 +273,7 @@ export default function Navbar() {
                     className={linkClasses}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                     <span  className="flex items-center gap-2 "><IoCartSharp  className="text-xl" /> My Cart</span>
+                    <span className="flex items-center gap-2 "><IoCartSharp className="text-xl text-[#FB6D6C]" /> My Cart</span>
                   </Link>
                   <Link
                     to="/Wish"
@@ -238,16 +281,16 @@ export default function Navbar() {
                     className={linkClasses}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    <span  className="flex items-center gap-2 "><IoHeartOutline className="text-xl" /> Wish List</span>
+                    <span className="flex items-center gap-2 "><IoHeartOutline className="text-xl text-[#FB6D6C]" /> Wish List</span>
                   </Link>
-                 
+
                   <hr />
                   <button
                     onClick={handleLogout}
                     className={linkClasses + " text-left w-full"}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    Logout
+                    <span className="flex items-center gap-2 "><IoLogOutOutline className="text-xl text-[#FB6D6C]" />Logout</span>
                   </button>
                 </>
               ) : (
