@@ -293,6 +293,13 @@ const ProductPage = () => {
 
 
   const Wishlist = async (product) => {
+
+const accesstoken = localStorage.getItem('AccessToken')
+
+    if(!accesstoken){
+      alert('Login to Add Wishlist')
+      navigate('/login')
+    }
     const variationId = product.product_variation.product_variation_id;
 
     try {

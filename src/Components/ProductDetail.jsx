@@ -363,8 +363,12 @@ export default function ProductDetail() {
   const [wish, setwish] = useState([])
   const [customerId, setCustomerId] = useState(null);
 
+  const [rating, setRating] = useState(0);
+  const [showBox, setShowBox] = useState(false);
+
   console.log(allVariations)
-  console.log(selectedProduct)
+  console.log(selectedProduct?.product_variation?.product_variation_id)
+  console.log(rating)
 
   useEffect(() => {
     fetchProduct();
@@ -381,6 +385,40 @@ export default function ProductDetail() {
       setSelectedProduct(allVariations[0]);
     }
   }, [allVariations]);
+
+
+
+  const handleSubmit = async () => {
+    const accesstoken = localStorage.getItem('AccessToken')
+    if (!accesstoken) {
+      navigate('/login')
+    }
+
+
+    const product_variation_id = selectedProduct.product_variation.product_variation_id
+    const payload = {
+      customer_id: customerId,
+      product_variation_id: product_variation_id,
+      rating: rating,
+    }
+
+    await axios.post(`${url}rating/`, payload)
+
+
+     setSelectedProduct(prev => ({
+      ...prev,
+      product_variation: {
+        ...prev.product_variation,
+        avg_rating: rating
+      }
+    }));
+
+    alert("Rating submitted!")
+    setShowBox(false);
+
+    
+  }
+
 
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
   // const url =
@@ -577,6 +615,14 @@ export default function ProductDetail() {
 
 
   const Wishlist = async (product) => {
+
+    const accesstoken = localStorage.getItem('AccessToken')
+
+    if (!accesstoken) {
+      alert('Login to Add Wishlist')
+      navigate('/login')
+    }
+
     const variationId = product.product_variation.product_variation_id;
 
     try {
@@ -653,7 +699,7 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-gray-100 px-0 mt-15">
-      <div className="max-w-7xl bg-white shadow-lg rounded-xl overflow-hidden">
+      <div className="max-w-7xl bg-white shadow-lg rounded-xl overflow-hidden pb-20">
         <div className="grid md:grid-cols-2 gap-8 p-8">
           {/* Image Section */}
           <div className="flex flex-col items-center ">
@@ -676,7 +722,12 @@ export default function ProductDetail() {
                 />
               ))}
             </div>
+
           </div>
+
+
+
+
 
           {/* Info Section */}
           <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
@@ -686,7 +737,7 @@ export default function ProductDetail() {
             <h1 className="text-sm md:text-xl font-bold mb-2">
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
-            <p className="text-gray-500 text-xs md:text-sm font-bold border rounded-lg w-12 px-2 flex items-center border-[#666F80]">
+            <p className="text-gray-500 text-sm md:text-lg font-bold w-12 flex items-center border-[#666F80]">
               {selectedProduct?.product_variation?.avg_rating !== null ? (
                 <>
                   {selectedProduct?.product_variation?.avg_rating?.toFixed(1)}
@@ -755,8 +806,8 @@ export default function ProductDetail() {
             )} */}
 
             {/* Buttons */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
-        
+            <div className="mt-10 flex flex-col sm:flex-row">
+
               <div className="flex-1">
                 <button
                   onClick={() => addToCart(selectedProduct)}
@@ -768,19 +819,19 @@ export default function ProductDetail() {
                 </button>
               </div>
 
-          
+
               <div className="w-full sm:w-40">
                 <button
                   onClick={() => Wishlist(selectedProduct)}
-                  className="w-full h-12 sm:h-14 border border-[#FB6D6C] bg-white text-[#FB6D6C] 
-                 px-4 sm:px-5 rounded-full hover:bg-[#fff0f0] transition flex items-center justify-center gap-2"
+                  className="w-25 h-12 sm:h-14 bg-white text-[#FB6D6C] 
+                  rounded-full hover:bg-[#fff0f0] transition flex items-center justify-center"
                 >
                   {wish.some(item => item.product_variation_id == selectedProduct.product_variation.product_variation_id) ? (
-                    <IoHeart className="text-lg sm:text-xl text-[#FB6D6C]" />
+                    <IoHeart className="text-4xl  text-[#FB6D6C]" />
                   ) : (
-                    <IoHeartOutline className="text-lg sm:text-xl text-[#FB6D6C]" />
+                    <IoHeartOutline className="text-4xl  text-[#FB6D6C]" />
                   )}
-                  <span className="text-sm sm:text-base">Wishlist</span>
+                  {/* <span className="text-sm sm:text-base">Wishlist</span> */}
                 </button>
               </div>
             </div>
@@ -788,7 +839,7 @@ export default function ProductDetail() {
 
 
 
-            <div className='md:text-xs mt-7 text-gray-400 space-y-2'>
+            <div className='md:text-xs text-[10px] mt-7 text-gray-400 space-y-2'>
               <p>100% Original Products</p>
               <p>High Quality</p>
               <p>No Returns & Exchange</p>
@@ -802,8 +853,64 @@ export default function ProductDetail() {
               <p>Comfortable & Trendy Products</p>
             </div>
           </div>
+
+
+          {/* RATING */}
+          <div className="flex justify-center items-center relative"
+            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            <button
+              onClick={() => setShowBox(true)}
+              className="px-4 py-2 bg-[#FB6D6C] text-white rounded-lg"
+            >
+              Rate Product
+            </button>
+
+            {/* Rating Box */}
+            {showBox && (
+              <div className="absolute inset-0 flex items-center justify-center z-30">
+                <div className="bg-white p-6 rounded-xl w-80 text-center shadow-lg border border-gray-200">
+                  <h2 className="text-lg font-bold mb-4 text-[#FB6D6C]">Give Rating</h2>
+
+                  {/* Stars */}
+                  <div className="flex justify-center gap-2 mb-4">
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <button
+                        key={num}
+                        onClick={() => setRating(num)}
+                        className={`text-3xl ${num <= rating ? "text-yellow-400" : "text-gray-400"
+                          }`}
+                      >
+                        ★
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex justify-center gap-3">
+                    <button
+                      onClick={handleSubmit}
+                      disabled={rating === 0}
+                      className="px-4 py-2 bg-[#FB6D6C] text-white rounded-lg disabled:bg-gray-400"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      onClick={() => setShowBox(false)}
+                      className="px-4 py-2 bg-gray-300 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+
         </div>
       </div>
+
+
 
       {/* Similar Products Section */}
       {selectedProduct && (

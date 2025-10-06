@@ -161,6 +161,22 @@ export default function Address() {
   const Navigate = useNavigate()
 
 
+  useEffect(() => {
+  fetchAddress();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const email = user?.email;
+  if (email) {
+    const addressKey = `selectedAddress_${email}`;
+    const savedAddress = localStorage.getItem(addressKey);
+    if (savedAddress) {
+      setSelected(JSON.parse(savedAddress));
+    }
+  }
+}, []);
+
+
+
   const User_id = localStorage.getItem("user_id")
 
   // useEffect(() => {
@@ -289,7 +305,7 @@ export default function Address() {
 
               <div className='font-semibold' style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: "#666F80" }} >
                 <p className='text-2xl'>{add.Name}</p>
-                <p >Address : <span className='text-gray-400'>{add.House_No}, {add.Area_Colony} </span></p>
+                <p>Address : <span className='text-gray-400'>{add.House_No}, {add.Area_Colony} </span></p>
                 <p>City : <span className='text-gray-400'>{add.City} ({add.State}), {add.Country}</span></p>
                 <p>Pincode : <span className='text-gray-400'>{add.Pincode}</span> </p>
 

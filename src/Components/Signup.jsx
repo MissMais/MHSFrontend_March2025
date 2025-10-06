@@ -16,11 +16,11 @@ const navigate = useNavigate()
       
 
       console.log(data);
-       await axios.post(`${url}signup/`, data);
+       const res= await axios.post(`${url}signup/`, data);
 
       
-      alert("Signup successful!");
-      // navigate('/login')
+      alert(res.data.message);
+      navigate('/login')
       
       // reset();
     } catch (error) {

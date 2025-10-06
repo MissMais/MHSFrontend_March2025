@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
+import { IoNotificationsSharp } from "react-icons/io5"; 
+import { MdAccountCircle } from "react-icons/md";
+import { MdHistory } from "react-icons/md";
+import { IoCartSharp } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
 
 import axios from "axios";
 import { url } from "../App"
@@ -147,7 +153,7 @@ export default function Navbar() {
               {/* Notification Icon */}
               <li>
                 <button onClick={() => setNotifOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
-                  <CgProfile className="text-xl" />
+                  <IoNotificationsSharp className="text-xl" />
                 </button>
               </li>
               {/* Profile Icon */}
@@ -160,129 +166,113 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+      {NotifsideBar && (
+        <div className="fixed inset-0 z-[9999]">
 
-      {/* Notification Sidebar */}
-      <div className="fixed inset-0 z-[9999] pointer-events-none">
-        {/* Overlay */}
-        <div
-          className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${NotifsideBar ? "opacity-100 pointer-events-auto" : "opacity-0"
-            }`}
-          onClick={() => setNotifOpen(false)}
-        ></div>
+          <div
+            className="absolute inset-0 bg-transparent"
+            onClick={() => setNotifOpen(false)}
+          ></div>
 
-        {/* Sidebar */}
-        <div
-          className={`absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col
-      transform transition-transform duration-300
-      ${NotifsideBar ? "translate-x-0" : "translate-x-full"}`}
-        >
-          <button onClick={() => setNotifOpen(false)}>
-            <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
-          </button>
-          
-            <Notification />
-          
+          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
+            <button onClick={() => setNotifOpen(false)}>
+              <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
+
+            </button>
+            <div className="flex justify-between items-center mb-4">
+              <Notification />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Profile Sidebar */}
-      <div className="fixed inset-0 z-[9999] pointer-events-none">
-        {/* Overlay */}
-        <div
-          className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0"
-            }`}
-          onClick={() => setSidebarOpen(false)}
-        ></div>
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-[9999]">
+          {/* Overlay */}
+          <div
+            className="absolute inset-0 bg-transparent"
+            onClick={() => setSidebarOpen(false)}
+          ></div>
 
-        {/* Sidebar */}
-        <div
-          className={`absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col
-      transform transition-transform duration-300
-      ${sidebarOpen ? "translate-x-0" : "translate-x-full"}`}
-        >
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Profile</h2>
-            <button onClick={() => setSidebarOpen(false)}>
-              <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
-            </button>
-          </div>
+          {/* Sidebar */}
+          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>Profile</h2>
+              <button onClick={() => setSidebarOpen(false)}>
+                <IoClose className="text-2xl text-gray-700 hover:text-red-500" /> 
+              </button>
+            </div>
 
-          <div className="flex flex-col gap-3">
-            {loggedIn ? (
-              <>
-                <Link
-                  to="/acc"
-                  onClick={() => setSidebarOpen(false)}
-                  className={linkClasses}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  Account
-                </Link>
-                <Link
-                  to="/history"
-                  onClick={() => setSidebarOpen(false)}
-                  className={linkClasses}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  Order History
-                </Link>
-                <Link
-                  to="/Cart"
-                  onClick={() => setSidebarOpen(false)}
-                  className={linkClasses}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  My Cart
-                </Link>
-                <Link
-                  to="/Wish"
-                  onClick={() => setSidebarOpen(false)}
-                  className={linkClasses}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  Wish List
-                </Link>
-                <Link
-                  to="/notification"
-                  onClick={() => setSidebarOpen(false)}
-                  className={linkClasses}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  Notifications
-                </Link>
-                <hr />
-                <button
-                  onClick={handleLogout}
-                  className={linkClasses + " text-left w-full"}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  onClick={() => setSidebarOpen(false)}
-                  className={linkClasses}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/Signup"
-                  onClick={() => setSidebarOpen(false)}
-                  className={linkClasses}
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                >
-                  SignUp
-                </Link>
-              </>
-            )}
+            <div className="flex flex-col gap-3">
+              {loggedIn ? (
+                <>
+                  <Link
+                    to="/acc"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    <span className="flex items-center gap-2 "> <MdAccountCircle className="text-xl" /> Account</span>
+                  </Link>
+                  <Link
+                    to="/history"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                   <span  className="flex items-center gap-2 "><MdHistory className="text-xl" /> Order History</span> 
+                  </Link>
+                  <Link
+                    to="/Cart"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                     <span  className="flex items-center gap-2 "><IoCartSharp  className="text-xl" /> My Cart</span>
+                  </Link>
+                  <Link
+                    to="/Wish"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    <span  className="flex items-center gap-2 "><IoHeartOutline className="text-xl" /> Wish List</span>
+                  </Link>
+                 
+                  <hr />
+                  <button
+                    onClick={handleLogout}
+                    className={linkClasses + " text-left w-full"}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/Signup"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    SignUp
+                  </Link>
+                </>
+              )}
+            </div>
+
           </div>
         </div>
-      </div>
-
+      )}
     </>
   );
 }

@@ -34,7 +34,7 @@ export default function Notification() {
 
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-10 mt-20">
+        <div className="max-w-2xl mx-auto px-4 py-10">
             <div>
                 <h1
                     className="text-xl font-bold mb-6"
