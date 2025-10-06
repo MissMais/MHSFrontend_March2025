@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
+import { IoNotificationsSharp } from "react-icons/io5"; 
+import { MdAccountCircle } from "react-icons/md";
+import { MdHistory } from "react-icons/md";
+import { IoCartSharp } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
+
 import axios from "axios";
-// import jwtDecode from "jwt-decode";
+import { url } from "../App"
+import Notification from "../Components/Notification";
+
 
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("AccessToken"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [NotifsideBar, setNotifOpen] = useState(false);
   const navigate = useNavigate();
 
-  const url =
-    "https://36878661c9fc.ngrok-free.app/logout/"
+  // const url =
+  // "https://5d0abf24c6ce.ngrok-free.app/logout/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
 
   useEffect(() => {
@@ -21,13 +31,14 @@ export default function Navbar() {
 
 
   const handleLogout = async () => {
-    const refreshToken = localStorage.getItem("RefreshToken")
-    localStorage.removeItem("AccessToken");
-    localStorage.removeItem("RefreshToken");
-    localStorage.removeItem("user");
+    const refresh = localStorage.getItem("RefreshToken")
+    // localStorage.removeItem("AccessToken");
+    // localStorage.removeItem("RefreshToken");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("user_id");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
-    console.log(refreshToken)
-    if (!refreshToken) {
+    console.log(refresh)
+    if (!refresh) {
       alert("No refresh token found. Logging out...");
       localStorage.clear();
       navigate("/login");
@@ -36,13 +47,7 @@ export default function Navbar() {
 
     // try {
     const response = await axios.post(
-      url,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      }
+      `${url}logout/`, { refresh: refresh },
     );
 
     if (response.status === 200) {
@@ -92,7 +97,7 @@ export default function Navbar() {
   };
 
   const linkClasses =
-    "block py-1 px-2 text-[10px] sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
+    "block py-1 px-2 text-[8px] sm:py-2 sm:px-4 sm:text-base text-gray-700 hover:text-[#FB6D6C] font-bold cursor-pointer";
 
   return (
     <>
@@ -145,21 +150,45 @@ export default function Navbar() {
                   </span>
                 </ScrollLink>
               </li>
-
+              {/* Notification Icon */}
+              <li>
+                <button onClick={() => setNotifOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
+                  <IoNotificationsSharp className="text-xl" />
+                </button>
+              </li>
               {/* Profile Icon */}
               <li>
                 <button onClick={() => setSidebarOpen(true)} className="text-gray-700 hover:text-[#FB6D6C]">
-                  <CgProfile className="text-2xl" />
+                  <CgProfile className="text-xl" />
                 </button>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+      {NotifsideBar && (
+        <div className="fixed inset-0 z-[9999]">
+
+          <div
+            className="absolute inset-0 bg-transparent"
+            onClick={() => setNotifOpen(false)}
+          ></div>
+
+          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
+            <button onClick={() => setNotifOpen(false)}>
+              <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
+
+            </button>
+            <div className="flex justify-between items-center mb-4">
+              <Notification />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Profile Sidebar */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-[9998]">
+        <div className="fixed inset-0 z-[9999]">
           {/* Overlay */}
           <div
             className="absolute inset-0 bg-transparent"
@@ -169,9 +198,10 @@ export default function Navbar() {
           {/* Sidebar */}
           <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">Profile</h2>
+              <h2 className="text-lg font-semibold"
+              style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>Profile</h2>
               <button onClick={() => setSidebarOpen(false)}>
-                <IoClose className="text-2xl text-gray-700 hover:text-red-500" />
+                <IoClose className="text-2xl text-gray-700 hover:text-red-500" /> 
               </button>
             </div>
 
@@ -184,7 +214,7 @@ export default function Navbar() {
                     className={linkClasses}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    Account
+                    <span className="flex items-center gap-2 "> <MdAccountCircle className="text-xl" /> Account</span>
                   </Link>
                   <Link
                     to="/history"
@@ -192,7 +222,7 @@ export default function Navbar() {
                     className={linkClasses}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    Order History
+                   <span  className="flex items-center gap-2 "><MdHistory className="text-xl" /> Order History</span> 
                   </Link>
                   <Link
                     to="/Cart"
@@ -200,8 +230,17 @@ export default function Navbar() {
                     className={linkClasses}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    My Cart
+                     <span  className="flex items-center gap-2 "><IoCartSharp  className="text-xl" /> My Cart</span>
                   </Link>
+                  <Link
+                    to="/Wish"
+                    onClick={() => setSidebarOpen(false)}
+                    className={linkClasses}
+                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                  >
+                    <span  className="flex items-center gap-2 "><IoHeartOutline className="text-xl" /> Wish List</span>
+                  </Link>
+                 
                   <hr />
                   <button
                     onClick={handleLogout}
@@ -216,14 +255,14 @@ export default function Navbar() {
                   <Link
                     to="/login"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     Login
                   </Link>
                   <Link
                     to="/Signup"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     SignUp
                   </Link>

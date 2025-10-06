@@ -2,19 +2,28 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {url} from "../App"
 
 export default function AddAddress() {
     const { register, handleSubmit, reset } = useForm();
     const [message, setMessage] = useState("");
     const Navigate = useNavigate()
+    
 
-    const url = "https://36878661c9fc.ngrok-free.app/address/";
-    // Change this to your actual POST address endpoint
+    // const url = "https://5d0abf24c6ce.ngrok-free.app/address/";
+
+    const user_id = JSON.parse(localStorage.getItem("user_id"))
 
     const onSubmit = async (data) => {
         try {
-            console.log(data);
-            await axios.post(url, data);
+            console.log(data)
+
+            await axios.post(`${url}address/`, {
+                User_id:user_id,
+                ...data
+            });
+
+
             alert("Address added successfully!");
             // Navigate("/Address")
             //   reset();

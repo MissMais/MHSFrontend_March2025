@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import {url} from "../App"
 
 
 export default function ForgotPassword() {
@@ -9,7 +10,7 @@ export default function ForgotPassword() {
 
   const { handleSubmit, register, formState: { errors } } = useForm();
 
-  const url = 'https://36878661c9fc.ngrok-free.app/'
+  // const url = 'https://5d0abf24c6ce.ngrok-free.app/'
 
   const onSubmit = async (data) => {
 

@@ -340,20 +340,45 @@
 // // ########## SH
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { IoCartSharp } from 'react-icons/io5';
-import { FaRupeeSign } from "react-icons/fa";
+import { FaRupeeSign, FaStar } from "react-icons/fa";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { url } from "../App"
 
 export default function ProductDetail() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  // const location = useLocation()
+  // const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id")
+  console.log(id)
+  const product_id = searchParams.get("product")
+  console.log(product_id)
   const [allVariations, setAllVariations] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [relatedproduct, setrelatedproduct] = useState([])
+  const [isloading, setloading] = useState(true)
+  const [quotes, setQuotes] = useState([])
+  const [wish, setwish] = useState([])
+  const [customerId, setCustomerId] = useState(null);
+
+  const [rating, setRating] = useState(0);
+  const [showBox, setShowBox] = useState(false);
+
+  console.log(allVariations)
+  console.log(selectedProduct?.product_variation?.product_variation_id)
+  console.log(rating)
 
   useEffect(() => {
     fetchProduct();
   }, [id]);
+
+  useEffect(() => {
+    fetchquote()
+  }, [])
+
+
 
   useEffect(() => {
     if (allVariations.length > 0) {
@@ -361,9 +386,43 @@ export default function ProductDetail() {
     }
   }, [allVariations]);
 
+
+
+  const handleSubmit = async () => {
+    const accesstoken = localStorage.getItem('AccessToken')
+    if (!accesstoken) {
+      navigate('/login')
+    }
+
+
+    const product_variation_id = selectedProduct.product_variation.product_variation_id
+    const payload = {
+      customer_id: customerId,
+      product_variation_id: product_variation_id,
+      rating: rating,
+    }
+
+    await axios.post(`${url}rating/`, payload)
+
+
+     setSelectedProduct(prev => ({
+      ...prev,
+      product_variation: {
+        ...prev.product_variation,
+        avg_rating: rating
+      }
+    }));
+
+    alert("Rating submitted!")
+    setShowBox(false);
+
+    
+  }
+
+
   // const cmt_url = 'https://modestgallery.pythonanywhere.com/custom/'
-  const url =
-    'https://36878661c9fc.ngrok-free.app/'
+  // const url =
+  // 'https://5d0abf24c6ce.ngrok-free.app/'
 
 
   const headers = {
@@ -375,16 +434,27 @@ export default function ProductDetail() {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(url + 'custom/', { headers });
-      const response2 = await axios.get(url + 'custom/', { headers });
-      console.log(response)
-      const filtered = response.data.filter(item => item.Product_id === id);
-      console.log(response.data.category_name)
+      // const response2 = await axios.get(url + 'custom/', { headers });
+      console.log(response.data)
+      const filtered = response.data.filter(item => item.Product_id === product_id);
+      // console.log(response.data.category_name)
       setAllVariations(filtered);
-      setrelatedproduct(response2.data)
+
+
+      const variation = filtered.find(v => v.product_variation.product_variation_id === id)
+      setSelectedProduct(variation)
+      // setrelatedproduct(response2.data)
+
+      setTimeout(() => {
+        setloading(false)
+      }, 3000)
+
     } catch (error) {
       console.error('Failed to fetch product variations:', error);
     }
   };
+
+
 
   const swapWithMain = (index) => {
     if (!selectedProduct || index === 0) return;
@@ -452,6 +522,7 @@ export default function ProductDetail() {
       }
 
       navigate("/Cart");
+      alert("Added To Cart !")
     } else {
       alert("Out Of Stock");
     }
@@ -484,16 +555,158 @@ export default function ProductDetail() {
     navigate(`/ProductDetail/${productId}`);
   };
 
+  const fetchquote = async () => {
+    const response = await axios.get(`${url}quote/`, { headers })
+    const data = response.data
+    const randomquoteindex = Math.floor(Math.random() * data.length)
+    setQuotes(data[randomquoteindex])
+    console.log(response.data)
+  }
+
+
+
+  const user_id = localStorage.getItem('user_id')
+  const getcustomerid = async () => {
+    const res = await axios.get(`${url}customer`, {
+      headers: {
+        //   Authorization: `Bearer ${accessToken}`,
+        'ngrok-skip-browser-warning': '69420',
+        'Content-Type': 'application/json'
+      },
+    })
+    //  console.log(res.data)
+    const data = res.data
+    console.log(data)
+
+    const filtereddata = data.filter(item => item.User_id == user_id)
+    console.log(filtereddata[0].id)
+    setCustomerId(filtereddata[0].id)
+
+    // console.log(filtereddata[0].id)
+
+  }
+
+  useEffect(() => {
+    getcustomerid()
+  }, [])
+
+
+  useEffect(() => {
+    if (!customerId) return;
+
+    const fetchWishlist = async () => {
+      try {
+        const res = await axios.get(`${url}wishlist/`, {
+          headers: {
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json',
+          },
+        });
+        const customerWishlist = res.data.filter(item => item.customer_id == customerId);
+        setwish(customerWishlist);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchWishlist();
+  }, [customerId]);
+
+
+
+  const Wishlist = async (product) => {
+
+    const accesstoken = localStorage.getItem('AccessToken')
+
+    if (!accesstoken) {
+      alert('Login to Add Wishlist')
+      navigate('/login')
+    }
+
+    const variationId = product.product_variation.product_variation_id;
+
+    try {
+
+      const existing = wish.find(item => item.product_variation_id == variationId);
+
+      if (existing) {
+
+        await axios.delete(`${url}wishlist/`, {
+          headers: {
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json',
+          },
+          data: {
+            wishlist_id: existing.wishlist_id
+          },
+        });
+
+
+        setwish(prev => prev.filter(item => item.product_variation_id != variationId));
+        console.log("Wishlist Deleted")
+      } else {
+
+        await axios.post(`${url}wishlist/`, {
+          customer_id: customerId,
+          product_variation_id: variationId,
+        }, {
+          headers: {
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const wishlistRes = await axios.get(`${url}wishlist/`,
+          {
+            headers: {
+              'ngrok-skip-browser-warning': '69420',
+              'Content-Type': 'application/json'
+            }
+          });
+        const customerWishlist = wishlistRes.data.filter(item => item.customer_id == customerId);
+        setwish(customerWishlist);
+        console.log("Wishlist Added")
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+
+
+  // console.log(selectedProduct)
+  if (isloading) {
+    return <div className="flex justify-center items-center min-h-screen px-4">
+      <div className=" p-6 rounded-lg w-full">
+        {quotes && (
+          <h2
+            className="text-center text-2xl font-bold mb-6 animate-pulse"
+            style={{
+              fontFamily: 'Copperplate, Papyrus, fantasy',
+              color: '#666F80',
+            }}
+          >
+            {quotes.quote}
+          </h2>
+        )}
+      </div>
+    </div>
+
+  }
+
   return (
     <div className="bg-gray-100 px-0 mt-15">
-      <div className="max-w-7xl bg-white shadow-lg rounded-xl overflow-hidden">
+      <div className="max-w-7xl bg-white shadow-lg rounded-xl overflow-hidden pb-20">
         <div className="grid md:grid-cols-2 gap-8 p-8">
           {/* Image Section */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center ">
             <img
               src={selectedProduct?.images?.[0]}
               // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
-              className="rounded-lg shadow-md w-full h-auto"
+              className="rounded-lg shadow-md w-full h-auto md:w-full md:h-125 object-cover aspect-[5/6]"
               onClick={() => swapWithMain(0)}
               alt="Product"
             />
@@ -509,24 +722,45 @@ export default function ProductDetail() {
                 />
               ))}
             </div>
+
           </div>
 
+
+
+
+
           {/* Info Section */}
-          <div>
-            <h1 className="text-xl font-bold mb-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+          <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+            <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
+              {selectedProduct?.sub_category_name || 'Product Name'}
+            </h1>
+            <h1 className="text-sm md:text-xl font-bold mb-2">
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
-            <p className="text-xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+            <p className="text-gray-500 text-sm md:text-lg font-bold w-12 flex items-center border-[#666F80]">
+              {selectedProduct?.product_variation?.avg_rating !== null ? (
+                <>
+                  {selectedProduct?.product_variation?.avg_rating?.toFixed(1)}
+                  <FaStar className="inline text-yellow-400" />
+                </>
+              ) : (
+                <span className="invisible">0</span>
+
+              )}
+            </p>
+
+            <p className="text-xl md:text-3xl pt-7  font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
               ₹ {selectedProduct?.price || 'N/A'}
             </p>
+
             {/* <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.product_variation.stock ?? 'N/A'}
             </p> */}
-            <div className="mb-4 text-xs font-medium" style={{ color: '#C3C8D3' }}>
-              Free Shipping | 24hr Dispatch
+            <div className=" text-xs md:font-medium" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#C3C8D3' }}>
+              Free Shipping
             </div>
 
-            {/* Color Selector
+            {/* Color Selector */}
             {allVariations.some(v => v.variation_type === 'Color') && (
               <div className="mt-7">
                 <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Choose Color:</h2>
@@ -543,10 +777,10 @@ export default function ProductDetail() {
                     ))}
                 </div>
               </div>
-            )} */}
+            )}
 
             {/* Size Selector */}
-            {allVariations.some(v => v.variation_type === 'Size') && (
+            {/* {allVariations.some(v => v.variation_type === 'Size') && (
 
               <div className="mt-7">
                 <h2 className="font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{allVariations[0]?.category_name === 'Abayas' ? 'Choose Size:' : 'Size:'}</h2>
@@ -569,30 +803,114 @@ export default function ProductDetail() {
                     })}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Buttons */}
-            <div className="mt-10 flex gap-4">
-              <button
-                className="border border-[#FB6D6C] bg-white text-[#FB6D6C] px-6 py-2 rounded-full hover:bg-[#e95a59] hover:text-white transition w-full flex items-center justify-center gap-2"
-                onClick={() => addToCart(selectedProduct)}
-              >
-                <IoCartSharp className="text-xl" />
-                <span>Add to Cart</span>
-              </button>
+            <div className="mt-10 flex flex-col sm:flex-row">
+
+              <div className="flex-1">
+                <button
+                  onClick={() => addToCart(selectedProduct)}
+                  className="w-full h-12 sm:h-14 border border-[#FB6D6C] bg-[#FB6D6C] text-white 
+                 px-6 sm:px-8 rounded-full transition flex items-center justify-center gap-2 shadow-md"
+                >
+                  <IoCartSharp className="text-lg sm:text-xl" />
+                  <span className="font-semibold sm:text-lg tracking-wide">Add to Cart</span>
+                </button>
+              </div>
+
+
+              <div className="w-full sm:w-40">
+                <button
+                  onClick={() => Wishlist(selectedProduct)}
+                  className="w-25 h-12 sm:h-14 bg-white text-[#FB6D6C] 
+                  rounded-full hover:bg-[#fff0f0] transition flex items-center justify-center"
+                >
+                  {wish.some(item => item.product_variation_id == selectedProduct.product_variation.product_variation_id) ? (
+                    <IoHeart className="text-4xl  text-[#FB6D6C]" />
+                  ) : (
+                    <IoHeartOutline className="text-4xl  text-[#FB6D6C]" />
+                  )}
+                  {/* <span className="text-sm sm:text-base">Wishlist</span> */}
+                </button>
+              </div>
             </div>
 
-            {/* <div className='mt-2'>
-              <button
-                className="bg-[#FB6D6C] text-white px-6 py-2 rounded-full hover:bg-[#e95a59] transition w-full"
-                onClick={goToOrderPage}
-              >
-                Buy Now
-              </button>
-            </div> */}
+
+
+
+            <div className='md:text-xs text-[10px] mt-7 text-gray-400 space-y-2'>
+              <p>100% Original Products</p>
+              <p>High Quality</p>
+              <p>No Returns & Exchange</p>
+              <p>Cash on Delivery Available</p>
+              <p>Secure & Safe Packaging</p>
+              <p>Affordable Prices</p>
+              <p>Wide Range of Collections</p>
+              <p>Fast & Reliable Delivery</p>
+              <p>Trusted by Hundreds of Customers</p>
+              <p>Exclusive & Unique Designs</p>
+              <p>Comfortable & Trendy Products</p>
+            </div>
           </div>
+
+
+          {/* RATING */}
+          <div className="flex justify-center items-center relative"
+            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            <button
+              onClick={() => setShowBox(true)}
+              className="px-4 py-2 bg-[#FB6D6C] text-white rounded-lg"
+            >
+              Rate Product
+            </button>
+
+            {/* Rating Box */}
+            {showBox && (
+              <div className="absolute inset-0 flex items-center justify-center z-30">
+                <div className="bg-white p-6 rounded-xl w-80 text-center shadow-lg border border-gray-200">
+                  <h2 className="text-lg font-bold mb-4 text-[#FB6D6C]">Give Rating</h2>
+
+                  {/* Stars */}
+                  <div className="flex justify-center gap-2 mb-4">
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <button
+                        key={num}
+                        onClick={() => setRating(num)}
+                        className={`text-3xl ${num <= rating ? "text-yellow-400" : "text-gray-400"
+                          }`}
+                      >
+                        ★
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex justify-center gap-3">
+                    <button
+                      onClick={handleSubmit}
+                      disabled={rating === 0}
+                      className="px-4 py-2 bg-[#FB6D6C] text-white rounded-lg disabled:bg-gray-400"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      onClick={() => setShowBox(false)}
+                      className="px-4 py-2 bg-gray-300 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+
         </div>
       </div>
+
+
 
       {/* Similar Products Section */}
       {selectedProduct && (

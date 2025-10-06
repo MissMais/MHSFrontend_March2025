@@ -531,6 +531,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { url } from "../App"
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -538,7 +539,7 @@ export default function Cart() {
   const accesstoken = localStorage.getItem("AccessToken");
 
 
-  const url = "https://36878661c9fc.ngrok-free.app/"
+  // const url = "https://5d0abf24c6ce.ngrok-free.app/"
 
 
   const toOrder = () => {
@@ -580,17 +581,52 @@ export default function Cart() {
           }
         );
         // console.log(response.data)
+        const res = await axios.get(
+          `${url}customer/`,
+          {
+            headers: {
+              Authorization: `Bearer ${accesstoken}`,
+              'ngrok-skip-browser-warning': '69420',
+              'Content-Type': 'application/json'
+            },
+          }
+        );
+        const res2 = await axios.get(
+          `${url}cart/`,
+          {
+            headers: {
+              Authorization: `Bearer ${accesstoken}`,
+              'ngrok-skip-browser-warning': '69420',
+              'Content-Type': 'application/json'
+            },
+          }
+        );
 
-
-
+        // For getting customer id 
         const user_id = JSON.parse(localStorage.getItem("user_id"));
-        const backendCart = response.data
+        const customer = res.data
+        const filtercustomer = customer.filter(item => item.User_id == user_id)
+        console.log(filtercustomer[0].id)
+        const customerid = filtercustomer[0].id
 
-        const filtererddata = backendCart.filter(item => item.Cart_id == user_id)
+
+        // For getting cart id 
+        const cart = res2.data
+        const filtercart = cart.filter(item => item.customer_id == customerid)
+        console.log(filtercart[0].Cart_id)
+        const cartid = filtercart[0].Cart_id
+
+
+
+
+
+
+        // For getting lower cart data
+        const backendCart = response.data
+        const filtererddata = backendCart.filter(item => item.Cart_id == cartid)
         const sliceindex = storedItems.length
         const sliceddata = filtererddata.slice(-sliceindex)
         console.log(sliceddata)
-
 
         //     response data--:
         //    [0{ cart_item_id: 121, Cart_id: 2, product_variation_id: 'PV0001', Quantity: 1, Sub_Total: 300 }
@@ -761,40 +797,44 @@ export default function Cart() {
                   <FaTrashAlt />
                 </button>
 
-                <img src={item.images[0]} alt={item.name} className="md:w-20 md:h-20 w-13 h-13 object-cover rounded-lg" />
+                <img src={item.images[0]} alt={item.name} className="md:w-20 md:h-20 w-13 h-13 object-cover rounded-lg aspect-[5/6]" />
                 <div className="flex-1">
                   <h3 className="font-semibold text-[10px] md:text-sm text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
                   <p className="text-[7px] md:text-xs text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{item.variation_name}</p>
 
 
                   {item.quantity >= item.product_variation.stock && (
-                    <p className="text-[7px] text-red-500 mt-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy'}} >Max stock reached</p>
+                    <p className="text-[7px] text-red-500 mt-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} >Max stock reached</p>
                   )}
                 </div>
 
-                <div className="text-right">
-                  <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
-                  <div className="flex items-center mt-2 border rounded overflow-hidden">
-                    <button
-                      onClick={() => updateQuantity(item.cart_item_id, (item.quantity || 1) - 1)}
-                      className="px-2 py-1 bg-gray-100 text-gray-600"
-                      disabled={(item.quantity || 1) <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="px-4 py-1">{item.quantity || 1}</span>
-                    <button
-                      onClick={() => updateQuantity(item.cart_item_id, (item.quantity || 1) + 1)}
-                      className="px-2 py-1 bg-gray-100 text-gray-600"
-                      disabled={item.product_variation.stock === 0 || (item.quantity || 1) >= item.product_variation.stock}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
 
-                <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
-                  ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
+                <div className=" text-right overflow-hidden">
+                  <div className="text-right">
+                    <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
+                    <div className="flex items-center mt-2 border rounded overflow-hidden">
+                      <button
+                        onClick={() => updateQuantity(item.cart_item_id, (item.quantity || 1) - 1)}
+                        className="w-8 h-8 flex items-center justify-center bg-gray-100 text-gray-600"
+                        disabled={(item.quantity || 1) <= 1}
+                      >
+                        −
+                      </button>
+                      <span className="px-4 py-1">{item.quantity || 1}</span>
+                      <button
+                        onClick={() => updateQuantity(item.cart_item_id, (item.quantity || 1) + 1)}
+                        className="w-8 h-8 flex items-center justify-center bg-gray-100 text-gray-600"
+                        disabled={item.product_variation.stock === 0 || (item.quantity || 1) >= item.product_variation.stock}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                      ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
             ))

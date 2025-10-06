@@ -2,8 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {url} from "../App"
 
-const url = "https://36878661c9fc.ngrok-free.app/";
+// const url = "https://5d0abf24c6ce.ngrok-free.app/";
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function ResetPassword() {
     const accesstoken = localStorage.getItem("AccessToken")
     try {
       console.log(data)
-      const response = await axios.post(`${url}change/`, data,
+      const response = await axios.post(`${url}changepassword/`, data,
         {
           headers: {
             Authorization: `Bearer ${accesstoken}`,
@@ -53,7 +54,7 @@ export default function ResetPassword() {
               {...register("old_password", { required: "Old Password is required" })}
               type="password"
               id="old_password"
-              placeholder="Enter your Old Password"
+              
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.old_password && (
@@ -73,7 +74,7 @@ export default function ResetPassword() {
               {...register("new_password", { required: "New Password is required" })}
               type="password"
               id="new_password"
-              placeholder="Enter your New Password"
+              
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.new_password && (
@@ -93,7 +94,7 @@ export default function ResetPassword() {
               {...register("confirm_password", { required: "Confirm New Password is required" })}
               type="password"
               id="confirm_password"
-              placeholder="Confirm your New Password"
+              
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.confirm_password && (

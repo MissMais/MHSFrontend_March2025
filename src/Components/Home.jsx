@@ -6,16 +6,67 @@ import axios from 'axios';
 import { scroller } from "react-scroll";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { url } from "../App"
+
+import Marquee from 'react-fast-marquee';
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 export default function Home() {
     const navigate = useNavigate();
     const [img, setimg] = useState([])
-    const [data, setdata] = useState([])
-
+    const [brand, setbrand] = useState([])
+    const [variety, setvariety] = useState([])
 
     useEffect(() => {
         AOS.init({ duration: 900, once: true });
     }, []);
+
+
+    const settings = {
+        autoplay: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        // adaptiveHeight: true,
+        arrows: true,
+
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    infinite: true,
+                    speed: 500,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+
+                }
+            }
+
+        ]
+
+    }
+
+
+    // const handleNext = () => {
+    //     setCurrentIndex((prevIndex) => (prevIndex + 1) );
+    // };
+
+    // const handlePrev = () => {
+    //     setCurrentIndex((prevIndex) => (prevIndex - 1 ) );
+    // };
+
+    // useEffect(() => {
+    //     if (CurrentIndex > brand.length - 3) {
+    //         console.log(CurrentIndex)
+    //         setCurrentIndex(0)
+    //         console.log("hi")
+    //     }
+    // }, [])
+
 
 
 
@@ -39,13 +90,17 @@ export default function Home() {
 
     const fetchimage = async () => {
         try {
-            const response2 = await axios.get('https://36878661c9fc.ngrok-free.app/category/', { headers })
+            const response2 = await axios.get(`${url}category/`, { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
             console.log(response2.data)
-            // const response3 = await axios.get('https://modestgallery.pythonanywhere.com/custom/')
-            // setdata(response3.data)
-            // console.log(response3.data)
+
+            const brand = await axios.get(`${url}brand/`, { headers })
+            setbrand(brand.data)
+
+            const variety = await axios.get(`${url}variety/`, { headers })
+            setvariety(variety.data)
+
         } catch (error) {
             console.log(error)
         }
@@ -56,10 +111,27 @@ export default function Home() {
         fetchimage()
     }, [])
 
+    const handleclick = async (value) => {
+        console.log(value)
+
+        const newbrand = encodeURIComponent(value)
+        console.log(newbrand)
+        navigate(`/ProductPage?brand=${newbrand}`)
+    }
+
+
+    const handlevarclick = async (value,value2) => {
+        console.log(value)
+        console.log(value2)
+        const newbrand = encodeURIComponent(value)
+        console.log(newbrand)
+        navigate(`/ProductPage?brandid=${newbrand}&varopid=${value2}`)
+    }
+
 
 
     return (
-        <div>
+        <div >
             {/* <Navbar /> */}
             <br />
             <br />
@@ -94,9 +166,9 @@ export default function Home() {
 
 
             {/* Home */}
-            <section id="home" className="py-10" >
+            <section id="home" >
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-white rounded-lg shadow-md p-6">
+                    <div className="p-6">
                         <div className="flex flex-col md:flex-row items-center">
                             {/* Text Content */}
                             <div className="md:w-1/2 md:pr-8">
@@ -124,13 +196,16 @@ export default function Home() {
                             </div>
 
                             {/* Image Content */}
-                            <div className="md:w-1/2 mt-6 md:mt-0">
+                            <div className=" md:w-1/2 mt-6 md:mt-0">
 
                                 <img
                                     src="/Imghome.jpg"
                                     alt="Modest Gallery"
                                     className="w-full h-full object-cover rounded-md shadow-lg"
+
                                 />
+
+
 
                             </div>
                         </div>
@@ -140,18 +215,55 @@ export default function Home() {
                 </div>
             </section>
 
+            <section id="brand" className=" bg-white">
+                <div className="mt-8">
+                    <div className="max-w-7xl mx-auto px-4 ">
+
+                        <div>
+                            <h1 className="text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                                Featured  Brands
+                            </h1>
+
+                        </div>
+                        <div className="p-6">
 
 
+                            {/* Image Grid */}
+
+                            <div className="flex justify-center row-auto  gap-10">
+                                <Marquee gradient={false} speed={30}>
+                                    {brand.map((item) => (
+                                        <div onClick={() => handleclick(item.Brand_name)} key={item.Brand_id} className="relative overflow-hidden
+                                     m-2 md:m-3  md:gap-8 shadow-md shadow-[#FB6D6C] md:w-50 md:h-50 w-15 h-15 hover:text-lg cursor-pointer
+                                     transition duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+                                            <img src={item.Brand_image} alt="no image" className='w-full h-full object-cover' />
+                                            <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg drop-shadow-black items-center font-bold'>{item.Brand_name}</div>
+                                        </div>
+                                    ))
+                                    }
+                                </Marquee>
+                            </div>
+                            {/* <div className='flex items-center justify-between mt-4 relative bottom-34 '>
+
+                                <button className='relative w-6 h-6 text-4xl rounded-full right-4' onClick={handlePrev}>&lt;</button>
+                                <button className='relative w-6 h-6 text-4xl rounded-full left-10' onClick={handleNext}>&gt;</button>
+
+                            </div> */}
 
 
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
 
 
 
             {/* Store */}
+
             {/* Abayas  */}
-            <section id="store" className=" bg-white">
+            <section id="store" className=" bg-white mt-2">
                 <div className="max-w-7xl  px-4">
                     <div className="p-6">
 
@@ -168,7 +280,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {img
                                 // .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name == "Abaya")
@@ -229,7 +341,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Stoles")
@@ -237,7 +349,7 @@ export default function Home() {
                                 .flatMap((cat) =>
                                     cat.homepage_images.map((image, index) => (
                                         <div
-                                            key={index}
+                                            key={index || ''}
                                             className=" md:h-77 md:w-66  shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
                                             onClick={() => navigate('/ProductPage?category=Stoles')}
                                         >
@@ -289,7 +401,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Accessories")
@@ -326,7 +438,7 @@ export default function Home() {
 
             {/* Hijabs */}
             <section id="accessories" className=" bg-white">
-                <div className="max-w-7xl mx-auto px-4">
+                <div className=" max-w-7xl  mx-auto px-4">
                     <div className="p-6">
 
                         {/* Heading + Text */}
@@ -347,7 +459,7 @@ export default function Home() {
 
                         {/* Image Grid */}
 
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18 mt-16">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
                             {[...img]
                                 .sort(() => Math.random() - 0.5)
                                 .filter((i) => i.category_name === "Hijab")
@@ -382,11 +494,49 @@ export default function Home() {
 
 
 
+            {/* Variety */}
+            <section id="brand">
+                <div className=" mt-15">
+                    <div className="bg-[#FB6D6C] max-w-7xl pt-7 pb-4 ">
+
+                        <div>
+                            <h1 className="text-white text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                                Varieties
+                            </h1>
+
+                        </div>
+                        <div className="p-7 md:p-10">
+
+                            {/* Image Grid */}
+
+
+
+                            <Slider {...settings}>
+                                {variety.map((item) => (
+                                    <div onClick={() => handlevarclick(item.Brand_id, item.Variation_option_id)} key={item.Variety_id || ''}
+                                        className="relative overflow-hidden cursor-pointer aspect-[3/4]
+                                        transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+                                        <img src={item.Variety_image} alt="no image" className='w-full h-full object-cover' />
+                                        {/* <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                                className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg
+                                             drop-shadow-black items-center font-bold'>{item.Brand_name}</div> */}
+                                    </div>
+                                ))
+                                }
+                            </Slider>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section >
+
+
             <section id='contact'  >
                 <Footer />
             </section>
 
-        </div>
+        </div >
 
     );
 }

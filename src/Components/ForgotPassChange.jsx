@@ -2,8 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {url} from "../App"
 
-const url = "https://36878661c9fc.ngrok-free.app/";
+// const url = "https://5d0abf24c6ce.ngrok-free.app/";
 
 export default function ForgotPassChange() {
   const navigate = useNavigate();
