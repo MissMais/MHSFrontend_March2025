@@ -392,7 +392,7 @@ const accesstoken = localStorage.getItem('AccessToken')
 
 
       <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
-        {isMobile && <div className="flex justify-end-safe z-[9998]">
+        {isMobile && <div className="flex justify-end-safe mr-3 z-[9998]">
           <button className="bg-[#FB6D6C] text-[15px] rounded-2xl mt-2 w-15 h-10 flex items-center justify-center text-white gap-1" onClick={func}><FaFilter className="text-[13px]" />Filters </button>
         </div>
         }
