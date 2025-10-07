@@ -20,10 +20,10 @@ export default function OrderHistory() {
         'Content-Type': 'application/json'
       },
     })
-    //  console.log(res.data)
+    
     const data = res1.data
     const filtereddata = data.filter(item => item.User_id == id)
-    // console.log(filtereddata)
+    
     const customerid = filtereddata[0].id
 
 
@@ -39,7 +39,7 @@ export default function OrderHistory() {
       }
     )
    
-    console.log(response.data)
+    
     const array = response.data.reverse()
     setOrders(array)
   }
@@ -52,10 +52,10 @@ export default function OrderHistory() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-10 mt-20">
       <h1
-        className="text-3xl font-bold mb-6"
+        className="text-4xl text-center underline font-bold mb-6"
         style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
       >
-        Orders
+        Order Tales
       </h1>
 
       {

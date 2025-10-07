@@ -21,7 +21,7 @@ export default function ForgotPassOtp() {
 
     try {
       const response = await axios.post(`${url}verify/`, { otp });
-      //   console.log(response.data);
+      
       navigate("/changepass");
     } catch (error) {
       console.error(error);

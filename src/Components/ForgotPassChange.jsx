@@ -15,9 +15,9 @@ export default function ForgotPassChange() {
   const onSubmit = async (data) => {
 
     try {
-      console.log(data)
+    
       const response = await axios.post(`${url}forget/`, data,);
-      //   console.log(response.data);
+      
       alert('Password Changed Successfully');
       navigate("/login");
     } catch (error) {

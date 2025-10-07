@@ -48,7 +48,7 @@ export default function OrderPage() {
     // console.log(storedItems)
   }, [navigate]);
 
-  console.log(paymentMethod)
+  
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -75,26 +75,11 @@ export default function OrderPage() {
       telephone: storedAdd.Contact || "",
     });
 
-    console.log(storedAdd);
+    
   }, [navigate, reset]);
 
 
-  // useEffect(()=>{
-  //   try {
-  //     const res = 
-
-  //   } catch (error) {
-
-  //   }
-  // })
-
-  // const pay = payment.filter(item => item.Payment_mode == paymentMethod)
-  // const paymentid = pay[0].Payment_id
-  // console.log(paymentid)
-
-// const handleclick = async()=>{
-//   navigate('/address')
-// }
+  
 
   const onSubmit = async (data) => {
 
@@ -121,7 +106,7 @@ export default function OrderPage() {
         // console.log(result)
 
         if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-          console.log("Payment successfull", result.paymentIntent)
+          // console.log("Payment successfull", result.paymentIntent)
 
           const pay = payment.filter(item => item.Payment_mode == paymentMethod)
           const paymentid = pay[0].Payment_id
@@ -138,7 +123,7 @@ export default function OrderPage() {
             headers: { Authorization: `Bearer ${accesstoken}` },
           });
 
-          console.log("Order placed:", orderRes.data);
+          // console.log("Order placed:", orderRes.data);
           localStorage.removeItem(cartKey);
           setCartItems([]);
           alert(orderRes.message)
@@ -164,7 +149,7 @@ export default function OrderPage() {
         });
 
         localStorage.removeItem(cartKey);
-        console.log(orderRes.data.message)
+        // console.log(orderRes.data.message)
         setCartItems([]);
         alert(orderRes.data.message)
 
@@ -203,7 +188,7 @@ export default function OrderPage() {
       }
     )
     const fetcheddata = response.data
-    console.log(fetcheddata)
+    // console.log(fetcheddata)
     setPayment(fetcheddata)
 
     // console.log(payment[0])

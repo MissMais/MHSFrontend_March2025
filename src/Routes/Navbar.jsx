@@ -39,7 +39,7 @@ export default function Navbar() {
     // localStorage.removeItem("user");
     // localStorage.removeItem("user_id");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
-    console.log(refresh)
+  
     if (!refresh) {
       alert("No refresh token found. Logging out...");
       localStorage.clear();
@@ -56,7 +56,7 @@ export default function Navbar() {
       localStorage.removeItem("AccessToken");
       localStorage.removeItem("RefreshToken");
       localStorage.removeItem("user");
-      console.log(response)
+    
       alert(response.data)
       navigate("/login");
     } else {
@@ -111,7 +111,7 @@ const accesstoken = localStorage.getItem('AccessToken')
     const userid = localStorage.getItem('user_id')
     const userdata = await axios.get(`${url}user/?id=${userid}`, { headers })
 
-    console.log(userdata.data[0].first_name[0])
+    // console.log(userdata.data[0].first_name[0])
     setuser(userdata.data[0])
 
 
@@ -125,7 +125,13 @@ const accesstoken = localStorage.getItem('AccessToken')
   const firstletter = firstname?.[0]
   // console.log(firstletter)
 
-  const fullname = `${user?.first_name} ${ user?.last_name}`
+  // const firstname = user?.first_name;
+const lastname = user?.last_name;
+const fullname =
+  firstname && lastname
+    ? `${firstname} ${lastname}`
+    : firstname || lastname || undefined;
+
   // console.log(fullname)
 
   const linkClasses =
@@ -206,7 +212,7 @@ const accesstoken = localStorage.getItem('AccessToken')
             onClick={() => setNotifOpen(false)}
           ></div>
 
-          <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col overflow-y-scroll">
+          <div className="absolute right-0 top-0 h-full w-80 bg-white shadow-lg p-6 flex flex-col overflow-y-scroll">
             <button onClick={() => setNotifOpen(false)}>
               <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
 
@@ -247,7 +253,7 @@ const accesstoken = localStorage.getItem('AccessToken')
                     </div>
                     <div className="flex font-bold text-[#666F80]"
                      style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-                      {fullname}
+                      {fullname ? fullname : "Unknown"}
                     </div>
                   </div>
                   <hr />

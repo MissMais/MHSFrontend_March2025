@@ -28,7 +28,7 @@ const fetchuser = async()=>{
   const userid = localStorage.getItem('user_id')
   const userdata = await axios.get(`${url}user/?id=${userid}`,{headers})
   
-  console.log(userdata.data[0].first_name[0])
+  // console.log(userdata.data[0].first_name[0])
   setuser(userdata.data[0])
 
 
@@ -47,7 +47,7 @@ useEffect(()=>{
 
 const fullname = user.first_name
 const firstletter =  fullname?.[0]
-console.log(firstletter)
+// console.log(firstletter)
  
 
   return (

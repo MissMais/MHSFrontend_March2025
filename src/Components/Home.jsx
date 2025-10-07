@@ -51,21 +51,7 @@ export default function Home() {
     }
 
 
-    // const handleNext = () => {
-    //     setCurrentIndex((prevIndex) => (prevIndex + 1) );
-    // };
-
-    // const handlePrev = () => {
-    //     setCurrentIndex((prevIndex) => (prevIndex - 1 ) );
-    // };
-
-    // useEffect(() => {
-    //     if (CurrentIndex > brand.length - 3) {
-    //         console.log(CurrentIndex)
-    //         setCurrentIndex(0)
-    //         console.log("hi")
-    //     }
-    // }, [])
+   
 
 
 
@@ -93,7 +79,7 @@ export default function Home() {
             const response2 = await axios.get(`${url}category/`, { headers })
             // ('https://modestgallery.pythonanywhere.com/custom/')
             setimg(response2.data)
-            console.log(response2.data)
+            // console.log(response2.data)
 
             const brand = await axios.get(`${url}brand/`, { headers })
             setbrand(brand.data)
@@ -112,19 +98,18 @@ export default function Home() {
     }, [])
 
     const handleclick = async (value) => {
-        console.log(value)
+    
 
         const newbrand = encodeURIComponent(value)
-        console.log(newbrand)
+        // console.log(newbrand)
         navigate(`/ProductPage?brand=${newbrand}`)
     }
 
 
     const handlevarclick = async (value,value2) => {
-        console.log(value)
-        console.log(value2)
+        
         const newbrand = encodeURIComponent(value)
-        console.log(newbrand)
+        // console.log(newbrand)
         navigate(`/ProductPage?brandid=${newbrand}&varopid=${value2}`)
     }
 
@@ -201,11 +186,9 @@ export default function Home() {
                                 <img
                                     src="/Imghome.jpg"
                                     alt="Modest Gallery"
-                                    className="w-full h-full object-cover rounded-md shadow-lg"
+                                    className="w-full md:h-full h-60 object-cover rounded-md shadow-lg"
 
                                 />
-
-
 
                             </div>
                         </div>

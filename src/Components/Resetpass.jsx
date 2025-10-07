@@ -15,7 +15,7 @@ export default function ResetPassword() {
   const onSubmit = async (data) => {
     const accesstoken = localStorage.getItem("AccessToken")
     try {
-      console.log(data)
+    
       const response = await axios.post(`${url}changepassword/`, data,
         {
           headers: {
@@ -23,7 +23,7 @@ export default function ResetPassword() {
           },
         }
       );
-      console.log(response.data);
+      
       alert('Password Changed Successfully');
       navigate("/");
     } catch (error) {

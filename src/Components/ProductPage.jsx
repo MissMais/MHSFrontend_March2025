@@ -49,17 +49,17 @@ const ProductPage = () => {
     setSelectedCategory(categoryFromUrl);
     const brandFromUrl = searchParams.get("brand") || "All";
     setSelectedBrand(brandFromUrl);
-    console.log(brandFromUrl)
+    // console.log(brandFromUrl)
 
     const brandid = searchParams.get("brandid") || "All"
     const Brandid = parseInt(brandid)
-    console.log(brandid)
+    // console.log(brandid)
     // console.log(typeof(brandid))
     const varopid = searchParams.get("varopid") || "All"
-    console.log(varopid)
+    // console.log(varopid)
 
     const brandvar = { Brandid, varopid }
-    console.log(brandvar)
+    // console.log(brandvar)
     setSelectedvar(brandvar)
   }, [searchParams, products]);
 
@@ -80,7 +80,7 @@ const ProductPage = () => {
         }
       );
       setProducts(res.data);
-      console.log(res.data)
+      // console.log(res.data)
       // console.log(res.data)
       // console.log(res.data[0].images[0].replace("http://localhost:8000/", "http://192.168.29.87:8000/"))
     } catch (err) {
@@ -105,7 +105,7 @@ const ProductPage = () => {
         }
       );
 
-      console.log(branddata.data)
+      // console.log(branddata.data)
       // console.log(branddata.data)
 
 
@@ -200,7 +200,7 @@ const ProductPage = () => {
   // console.log(filteredProductsWithImages)
 
   const handleProductClick = (id , productid) => {
-    console.log(id)
+    
     navigate(`/ProductDetail/?id=${id}&product=${productid}`);
     // navigate(`/quote/${id}`)
     // navigate(`/ProductDetail/${id}`);
@@ -212,7 +212,7 @@ const ProductPage = () => {
 
 
   const handleCategoryChange = (value) => {
-    console.log(value)
+    
     setSelectedCategory(value);
     const newParams = new URLSearchParams(searchParams);
 
@@ -225,7 +225,7 @@ const ProductPage = () => {
   };
 
   const handleBrandChange = (value) => {
-    console.log(value)
+    
     setSelectedBrand(value);
     const newParams = new URLSearchParams(searchParams);
 
@@ -254,10 +254,10 @@ const ProductPage = () => {
     })
     //  console.log(res.data)
     const data = res.data
-    console.log(data)
+    
 
     const filtereddata = data.filter(item => item.User_id == user_id)
-    console.log(filtereddata[0].id)
+    // console.log(filtereddata[0].id)
     setCustomerId(filtereddata[0].id)
 
     // console.log(filtereddata[0].id)
@@ -320,7 +320,7 @@ const accesstoken = localStorage.getItem('AccessToken')
 
 
         setwish(prev => prev.filter(item => item.product_variation_id != variationId));
-        console.log("Wishlist Deleted")
+        // console.log("Wishlist Deleted")
       } else {
 
         await axios.post(`${url}wishlist/`, {
@@ -342,7 +342,7 @@ const accesstoken = localStorage.getItem('AccessToken')
           });
         const customerWishlist = wishlistRes.data.filter(item => item.customer_id == customerId);
         setwish(customerWishlist);
-        console.log("Wishlist Added")
+        // console.log("Wishlist Added")
 
       }
     } catch (error) {
@@ -355,7 +355,7 @@ const accesstoken = localStorage.getItem('AccessToken')
 
   const func = () => {
     if (sideOpen) {
-      console.log("first")
+      // console.log("first")
       setSideOpen(false)
     }
     else {
