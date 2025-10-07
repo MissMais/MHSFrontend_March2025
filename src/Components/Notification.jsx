@@ -25,7 +25,8 @@ export default function Notification() {
         const res = await axios.get(`${url}notif/`, { headers })
        
         const filter = res.data.filter(item => item.customer_id == customerid)
-        setNotification(filter)
+        const reverse = filter.reverse()
+        setNotification(reverse)
     }
 
     useEffect(() => {
@@ -50,7 +51,7 @@ export default function Notification() {
                              <div 
                             className="bg-white font-semibold text-[7px] md:text-[12px] md:p-4 rounded-lg p-2 mb-6 border border-gray-200"
                             style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
-                            <div className='flex justify-between items-center'>{item.notification_msg} <TbBellRingingFilled style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB636C" }} className='text-2xl' /> </div>
+                            <div className='flex justify-between items-center'>{item.notification_msg} <TbBellRingingFilled style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB636C" }} className='text-xl' /> </div>
                         </div>
                        
                         </div>

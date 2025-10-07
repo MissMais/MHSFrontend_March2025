@@ -79,7 +79,7 @@ export default function Address() {
       }
     )
     const fetcheddata = response.data
-    const filtereddata = fetcheddata.filter(item => item.user_id == User_id)
+    const filtereddata = fetcheddata.filter(item => item.User_id == User_id)
     setaddress(filtereddata)
     // console.log(filtereddata)
   }

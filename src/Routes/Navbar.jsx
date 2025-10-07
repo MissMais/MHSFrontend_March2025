@@ -118,8 +118,11 @@ const accesstoken = localStorage.getItem('AccessToken')
   }
 
   useEffect(() => {
-    fetchuser()
-  }, [])
+  if (localStorage.getItem("AccessToken")) {
+    fetchuser();
+  }
+}, [localStorage.getItem("AccessToken")]);
+
 
   const firstname = user?.first_name
   const firstletter = firstname?.[0]
@@ -127,7 +130,7 @@ const accesstoken = localStorage.getItem('AccessToken')
 
   // const firstname = user?.first_name;
 const lastname = user?.last_name;
-const fullname =
+const fullname = 
   firstname && lastname
     ? `${firstname} ${lastname}`
     : firstname || lastname || undefined;
@@ -190,13 +193,13 @@ const fullname =
               </li>
               {/* Notification Icon */}
               <li>
-                <button onClick={() => setNotifOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C]">
+                <button onClick={() => setNotifOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C] cursor-pointer">
                   <IoNotificationsSharp className="text-xl" />
                 </button>
               </li>
               {/* Profile Icon */}
               <li>
-                <button onClick={() => setSidebarOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C]">
+                <button onClick={() => setSidebarOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C] cursor-pointer">
                   <CgProfile className="text-xl" />
                 </button>
               </li>
