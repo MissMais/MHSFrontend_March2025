@@ -48,7 +48,7 @@ export default function OrderPage() {
     // console.log(storedItems)
   }, [navigate]);
 
-  console.log(paymentMethod)
+  
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -75,26 +75,11 @@ export default function OrderPage() {
       telephone: storedAdd.Contact || "",
     });
 
-    console.log(storedAdd);
+    
   }, [navigate, reset]);
 
 
-  // useEffect(()=>{
-  //   try {
-  //     const res = 
-
-  //   } catch (error) {
-
-  //   }
-  // })
-
-  // const pay = payment.filter(item => item.Payment_mode == paymentMethod)
-  // const paymentid = pay[0].Payment_id
-  // console.log(paymentid)
-
-// const handleclick = async()=>{
-//   navigate('/address')
-// }
+  
 
   const onSubmit = async (data) => {
 
@@ -121,7 +106,7 @@ export default function OrderPage() {
         // console.log(result)
 
         if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-          console.log("Payment successfull", result.paymentIntent)
+          // console.log("Payment successfull", result.paymentIntent)
 
           const pay = payment.filter(item => item.Payment_mode == paymentMethod)
           const paymentid = pay[0].Payment_id
@@ -138,7 +123,7 @@ export default function OrderPage() {
             headers: { Authorization: `Bearer ${accesstoken}` },
           });
 
-          console.log("Order placed:", orderRes.data);
+          // console.log("Order placed:", orderRes.data);
           localStorage.removeItem(cartKey);
           setCartItems([]);
           alert(orderRes.message)
@@ -164,7 +149,7 @@ export default function OrderPage() {
         });
 
         localStorage.removeItem(cartKey);
-        console.log(orderRes.data.message)
+        // console.log(orderRes.data.message)
         setCartItems([]);
         alert(orderRes.data.message)
 
@@ -203,7 +188,7 @@ export default function OrderPage() {
       }
     )
     const fetcheddata = response.data
-    console.log(fetcheddata)
+    // console.log(fetcheddata)
     setPayment(fetcheddata)
 
     // console.log(payment[0])
@@ -225,11 +210,11 @@ export default function OrderPage() {
         {/* Left Column - Invoice Details */}
         <div>
           <div className="flex justify-between mb-3">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Payment Details</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-[#666F80]" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Payment Details</h2>
             <button onClick={()=>navigate('/address')} style={{ fontFamily: "Copperplate, Papyrus, fantasy"}} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 text-sm text-gray-700">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 text-sm text-[#666F80]">
             <div className="flex gap-4">
               <input
                 type="text"
@@ -260,7 +245,7 @@ export default function OrderPage() {
               readOnly
 
               disabled
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-400"
+              className="w-full px-4 py-2 border rounded-lg bg-gray-100 text-[#C3C8D3]"
             />
             <input
               type="text"
@@ -325,7 +310,7 @@ export default function OrderPage() {
 
         {/* Right Column - Order Summary */}
         <div>
-          <h2 className="text-2xl font-bold mb-6 text-gray-800" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Your Order</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#666F80]" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Your Order</h2>
           <div className="bg-gray-50 p-6 rounded-2xl shadow-inner space-y-5">
             {cartItems.map((product, idx) => (
               <div key={idx} className="flex justify-between items-start border-b pb-4">
@@ -399,7 +384,7 @@ export default function OrderPage() {
               >
                 Complete Payment
               </button>
-              <div className="text-xs text-center text-gray-400 mt-2" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+              <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
                 3D Secure Payment | Fast and Easy Returns
               </div>
             </div>

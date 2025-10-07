@@ -40,7 +40,7 @@ export default function AddressEdit() {
           }
       )
       setdata(Data.data)
-      console.log(Data.data[0]['Address_id'])
+      // console.log(Data.data[0]['Address_id'])
 
       reset({
         Name: Data['data'][0]['Name'],
@@ -87,7 +87,7 @@ export default function AddressEdit() {
           },
         }
       )
-      console.log(params.id, data)
+      // console.log(params.id, data)
       reset()
       navigate('/Address')
     } catch (error) {

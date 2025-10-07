@@ -34,16 +34,16 @@ import AccountEdit from './Components/AccountEdit';
 // import Quote from './Components/Quote';
 import Wishlist from './Components/Wishlist';
 import Notification from './Components/Notification';
-import EmptyCart from './Components/Emptycart';
+// import EmptyCart from './Components/Emptycart';
 
 
 import ScrollToTop from './Components/ScrollToTop';
 
-export const url = "https://73c07052c09f.ngrok-free.app/"
+export const url = "https://mohammadsaklen.pythonanywhere.com/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import RateStar from './Components/star';
+
 
 
 
@@ -66,7 +66,7 @@ export default function App() {
             <Route path="/home" index element={<Home />} />
             <Route path="/events" index element={<Events />} />
             <Route path="/about" element={<About />} />
-            <Route path="/rate" element={<RateStar />} />
+            
             <Route path="/login" element={<Login />} />
             <Route path='/acc' element={<PrivateRoute element={<Account />} />} />
             <Route path='/accedit' element={<PrivateRoute element={<AccountEdit />} />} />
@@ -85,7 +85,7 @@ export default function App() {
             <Route path="/forgot" element={<ForgotPassword />} />
             <Route path="/otp" element={<ForgotPassOtp />} />
             <Route path="/changepass" element={<ForgotPassChange />} />
-            <Route path="/emptycart"  element={<PrivateRoute element={<EmptyCart />} />} />
+            {/* <Route path="/emptycart"  element={<PrivateRoute element={<EmptyCart />} />} /> */}
             <Route path="/notification"  element={<PrivateRoute element={<Notification />} />} />
 
 

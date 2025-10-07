@@ -19,11 +19,11 @@ export default function Notification() {
         const res1 = await axios.get(`${url}customer/`, { headers })
         const filtereddata = res1.data.filter(item => item.User_id == id)
         const customerid = filtereddata[0].id
-        console.log(customerid)
+        
 
 
         const res = await axios.get(`${url}notif/`, { headers })
-        console.log(res.data)
+       
         const filter = res.data.filter(item => item.customer_id == customerid)
         setNotification(filter)
     }
@@ -40,7 +40,7 @@ export default function Notification() {
                     className="text-xl font-bold mb-6"
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
                 >
-                    Notifications
+                    What’s New
                 </h1>
                 {(Notification.length == 0) ? (
                     <div className='flex justify-center text-xs' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>No Notification !!</div>
@@ -48,9 +48,9 @@ export default function Notification() {
                     Notification.map((item) => (
                         <div key={item.notification_id}>
                              <div 
-                            className="bg-white font-semibold text-[7px] md:text-[10px] md:p-4 rounded-lg p-2 mb-6 border border-gray-200"
+                            className="bg-white font-semibold text-[7px] md:text-[12px] md:p-4 rounded-lg p-2 mb-6 border border-gray-200"
                             style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
-                            <div className='flex justify-between items-center'>{item.notification_msg} <TbBellRingingFilled style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB636C" }} /> </div>
+                            <div className='flex justify-between items-center'>{item.notification_msg} <TbBellRingingFilled style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB636C" }} className='text-2xl' /> </div>
                         </div>
                        
                         </div>

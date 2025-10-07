@@ -16,7 +16,7 @@ export default function AddAddress() {
 
     const onSubmit = async (data) => {
         try {
-            console.log(data)
+            // console.log(data)
 
             await axios.post(`${url}address/`, {
                 User_id:user_id,
@@ -34,8 +34,8 @@ export default function AddAddress() {
     };
 
     return (
-        <div className="flex justify-center min-h-screen bg-white mt-16">
-            <div className="w-full max-w-2xl bg-white shadow-lg p-6 rounded-lg m-6">
+        <div className="flex justify-center bg-white mt-16 min-h-[400px] ">
+            <div className="w-full max-w-xl bg-white shadow-lg p-4 m-4 rounded-lg">
                 <h2
                     className="text-2xl font-bold mb-6 text-center"
                     style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}
@@ -49,7 +49,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">Address Type</label>
                             <input
                                 {...register("Address_type", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 placeholder="Home/Office"
                                 type="text"
                             />
@@ -58,7 +58,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">Name</label>
                             <input
                                 {...register("Name", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 placeholder="Home/Office"
                                 type="text"
                             />
@@ -68,7 +68,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">House No</label>
                             <input
                                 {...register("House_No", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -77,7 +77,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">Area/Colony</label>
                             <input
                                 {...register("Area_Colony", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -86,7 +86,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">Landmark</label>
                             <input
                                 {...register("Landmark", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -95,7 +95,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">Pincode</label>
                             <input
                                 {...register("Pincode", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -104,7 +104,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">City</label>
                             <input
                                 {...register("City", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -112,7 +112,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">State</label>
                             <input
                                 {...register("State", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -121,7 +121,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">Country</label>
                             <input
                                 {...register("Country", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -130,7 +130,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700">Contact</label>
                             <input
                                 {...register("Contact", { required: true })}
-                                className="w-full px-3 py-2 border rounded-lg"
+                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
 
                                 type="text"
                             />

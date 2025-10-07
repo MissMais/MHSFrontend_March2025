@@ -42,7 +42,7 @@ export default function AccountEdit() {
           }
         }
       )
-      console.log(data)
+      // console.log(data)
       reset(data)
       navigate('/acc')
 
@@ -67,7 +67,7 @@ export default function AccountEdit() {
         }
       )
       // setdata(Data.data)
-      console.log(Data.data[0].first_name)
+      // console.log(Data.data[0].first_name)
 
       reset({
         first_name: Data.data[0].first_name,

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -24,13 +23,12 @@ export default function Login() {
     try {
       const response = await axios.post(`${url}login/`, data);
 
-      console.log(response.data.access)
-      console.log(response.data.refresh)
+      
       localStorage.setItem('AccessToken', response.data.access);
       localStorage.setItem('RefreshToken', response.data.refresh);
       localStorage.setItem('user_id', response.data.user_id);
       localStorage.setItem('user', JSON.stringify({ email: response.data.email }));
-      console.log(response.data.first_name)
+    
       alert(response.data.message);
 
 
@@ -43,7 +41,7 @@ export default function Login() {
 
       console.error(error);
       alert('Login failed! ');
-      console.log(data)
+      
     }
   };
 

@@ -15,7 +15,7 @@ const navigate = useNavigate()
     try {
       
 
-      console.log(data);
+      
        const res= await axios.post(`${url}signup/`, data);
 
       
