@@ -14,9 +14,7 @@ const navigate = useNavigate()
   const onSubmit = async (data) => {
     try {
       
-
-      
-       const res= await axios.post(`${url}signup/`, data);
+       const res= await axios.post(`${url}register/`, data);
 
       
       alert(res.data.message);
@@ -57,7 +55,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Username</label>
               <input
-                {...register("Name", { required: true })}
+                {...register("name", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -198,7 +196,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
               <input
-                {...register("Address_type", { required: true })}
+                {...register("address_type", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -208,7 +206,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
               <input
-                {...register("House_No", { required: true })}
+                {...register("house_no", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -217,7 +215,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
               <input
-                {...register("Area_Colony", { required: true })}
+                {...register("area_colony", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -226,7 +224,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
               <input
-                {...register("Landmark", { required: true })}
+                {...register("landmark", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -235,7 +233,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
               <input
-                {...register("City", { required: true })}
+                {...register("city", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -244,7 +242,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
               <input font-bold
-                {...register("State", { required: true })}
+                {...register("state", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -253,7 +251,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
               <input
-                {...register("Country", { required: true })}
+                {...register("country", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
@@ -262,7 +260,7 @@ const navigate = useNavigate()
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
               <input
-                {...register("Pincode", { required: true })}
+                {...register("pincode", { required: true })}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 type="text"
                 required
