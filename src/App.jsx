@@ -69,7 +69,7 @@ export default function App() {
             
             <Route path="/login" element={<Login />} />
             <Route path='/acc' element={<PrivateRoute element={<Account />} />} />
-            <Route path='/accedit' element={<PrivateRoute element={<AccountEdit />} />} />
+            <Route path='/accedit/:id' element={<PrivateRoute element={<AccountEdit />} />} />
             <Route path='/Address' element={<PrivateRoute element={<Address />} />} />
             <Route path="/addaddress" element={<PrivateRoute element={<AddAddress />} />} />
             <Route path='editadd/:id' element={<PrivateRoute element={<AddressEdit />} />} />

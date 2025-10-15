@@ -195,9 +195,10 @@ export default function AddressEdit() {
               />
             </div>
           </div>
-          <div className="flex space-x-4 mt-4">
+          <div className="flex space-x-4 mt-4 font-semibold"
+          style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
             <button type="submit" className="bg-[#FB6D6C] text-white py-2 px-4 rounded-md hover:bg-[#e95a59] focus:outline-none focus:ring-2 focus:ring-blue-500">
-              Submit
+              Change
             </button>
             <button type="reset" className="bg-[#666F80] text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500">
               Reset
