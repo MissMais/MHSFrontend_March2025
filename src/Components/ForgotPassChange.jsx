@@ -62,7 +62,7 @@ export default function ForgotPassChange() {
               className="block text-sm font-bold mb-1"
               style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
             >
-              New Password
+              Confirm New Password
             </label>
             <input
               {...register("confirm_password", { required: "New Password is required" })}
