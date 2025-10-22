@@ -16,6 +16,11 @@ export default function ProductDetail() {
   const id = searchParams.get("id")
   const product_id = searchParams.get("product")
 
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const productId = params.get("product");
+  const variationId = params.get("id");
+
   const [allVariations, setAllVariations] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [relatedproduct, setrelatedproduct] = useState([])
@@ -43,9 +48,13 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (allVariations.length > 0) {
-      setSelectedProduct(allVariations[0]);
+      const matched = allVariations.find(
+        (v) => v.product_variation.product_variation_id === variationId
+      );
+      setSelectedProduct(matched || allVariations[0]);
     }
-  }, [allVariations]);
+  }, [allVariations, variationId]);
+
 
 
 
@@ -66,7 +75,7 @@ export default function ProductDetail() {
     await axios.post(`${url}rating/`, payload)
 
 
-     setSelectedProduct(prev => ({
+    setSelectedProduct(prev => ({
       ...prev,
       product_variation: {
         ...prev.product_variation,
@@ -77,7 +86,7 @@ export default function ProductDetail() {
     alert("Rating submitted!")
     setShowBox(false);
 
-    
+
   }
 
 
@@ -221,7 +230,7 @@ export default function ProductDetail() {
     const data = response.data
     const randomquoteindex = Math.floor(Math.random() * data.length)
     setQuotes(data[randomquoteindex])
-    
+
   }
 
 
@@ -237,7 +246,7 @@ export default function ProductDetail() {
     })
     //  console.log(res.data)
     const data = res.data
-   
+
 
     const filtereddata = data.filter(item => item.User_id == user_id)
     // console.log(filtereddata[0].id)
@@ -619,7 +628,6 @@ export default function ProductDetail() {
           </div>
         </div>
       )}
-
     </div>
   );
 }

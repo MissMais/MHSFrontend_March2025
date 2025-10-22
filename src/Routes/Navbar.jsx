@@ -21,6 +21,7 @@ export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [NotifsideBar, setNotifOpen] = useState(false);
   const [user, setuser] = useState({});
+  const [Image, setImage] = useState([])
   const navigate = useNavigate();
 
   // const url =
@@ -39,7 +40,7 @@ export default function Navbar() {
     // localStorage.removeItem("user");
     // localStorage.removeItem("user_id");
     //  localStorage.removeItem("cart_mohdadan@gmail.com")
-  
+
     if (!refresh) {
       alert("No refresh token found. Logging out...");
       localStorage.clear();
@@ -56,7 +57,7 @@ export default function Navbar() {
       localStorage.removeItem("AccessToken");
       localStorage.removeItem("RefreshToken");
       localStorage.removeItem("user");
-    
+
       alert(response.data)
       navigate("/login");
     } else {
@@ -81,24 +82,9 @@ export default function Navbar() {
 
 
 
-
-    // ⏱️ Auto logout when access token expires
-    // const decoded = jwtDecode(accessToken);
-    // const expiryTime = decoded.exp * 1000; // exp is in seconds
-    // const timeUntilExpiry = expiryTime - Date.now();
-
-
-    //  setTimeout(() => {
-    //   localStorage.removeItem("AccessToken");
-    //   localStorage.removeItem("RefreshToken");
-    //   localStorage.removeItem("user");
-    //   alert("Session expired. Logged out.");
-    //   navigate("/login");
-    // }, timeUntilExpiry);
-
   };
 
-const accesstoken = localStorage.getItem('AccessToken')
+  const accesstoken = localStorage.getItem('AccessToken')
 
   const headers = {
     Authorization: `Bearer ${accesstoken}`,
@@ -110,18 +96,22 @@ const accesstoken = localStorage.getItem('AccessToken')
   const fetchuser = async () => {
     const userid = localStorage.getItem('user_id')
     const userdata = await axios.get(`${url}user/?id=${userid}`, { headers })
-
     // console.log(userdata.data[0].first_name[0])
     setuser(userdata.data[0])
+
+    const image = await axios.get(`${url}customer`, { headers })
+    const filterimage = image.data
+    const filterimg = filterimage.filter(item => item.User_id == userid)
+    setImage(filterimg[0])
 
 
   }
 
   useEffect(() => {
-  if (localStorage.getItem("AccessToken")) {
-    fetchuser();
-  }
-}, [localStorage.getItem("AccessToken")]);
+    if (localStorage.getItem("AccessToken")) {
+      fetchuser();
+    }
+  }, [localStorage.getItem("AccessToken"),navigate]);
 
 
   const firstname = user?.first_name
@@ -129,27 +119,46 @@ const accesstoken = localStorage.getItem('AccessToken')
   // console.log(firstletter)
 
   // const firstname = user?.first_name;
-const lastname = user?.last_name;
-const fullname = 
-  firstname && lastname
-    ? `${firstname} ${lastname}`
-    : firstname || lastname || undefined;
+  const lastname = user?.last_name;
+  const fullname =
+    firstname && lastname
+      ? `${firstname} ${lastname}`
+      : firstname || lastname || undefined;
 
   // console.log(fullname)
+  const firstLetter = user.first_name?.[0] || "";
+
+
+  const function2 = async () => {
+    setNotifOpen(true)
+    setSidebarOpen(false)
+
+  }
+
+  const function1 = async () => {
+    setNotifOpen(false)
+    setSidebarOpen(true)
+  }
+
 
   const linkClasses =
-    "block py-1 px-2 text-[8px] sm:py-2 sm:px-4 sm:text-base text-[#666F80] hover:text-[#FB6D6C] font-bold cursor-pointer";
+    "block py-1 px-2 text-[13px] sm:py-2 sm:px-4 sm:text-base text-[#FFFFFF] hover:text-[#FB6D6C] font-bold cursor-pointer";
+
+
+  const linkClasses1 =
+    "block py-1 px-2 text-[13px] sm:py-2 sm:px-4 sm:text-base text-[#666F80] hover:text-[#FB6D6C] font-bold cursor-pointer";
+
 
   return (
     <>
       {/* Navbar */}
-      <nav className="bg-white fixed top-0 left-0 right-0 shadow z-[9999]">
+      <nav className="bg-gray-400 fixed top-0 left-0 right-0 shadow z-[9999]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0 h-12 w-12 sm:h-16 sm:w-16">
               <Link to="/" className="no-underline">
-                <img src="/logo.jpeg" alt="Logo" className="object-cover h-full w-full" />
+                <img src="/logo.jpeg" alt="Logo" className="object-cover rounded-full h-full w-full" />
               </Link>
             </div>
 
@@ -191,22 +200,38 @@ const fullname =
                   </span>
                 </ScrollLink>
               </li>
-              {/* Notification Icon */}
-              <li>
-                <button onClick={() => setNotifOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C] cursor-pointer">
-                  <IoNotificationsSharp className="text-xl" />
-                </button>
-              </li>
+
               {/* Profile Icon */}
               <li>
-                <button onClick={() => setSidebarOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C] cursor-pointer">
-                  <CgProfile className="text-xl" />
-                </button>
+                {loggedIn ? (
+                  <div>
+                    <button onClick={() => setSidebarOpen(true)} className="text-[#666F80] hover:text-[#FB6D6C] cursor-pointer">
+                      <div className="flex items-center justify-center mt-2 mb-2 ml-2 rounded-full bg-[#FB6D6C] w-7 h-7 overflow-hidden">
+                        {Image?.Profile_picture ? (
+                          <img
+                            src={Image.Profile_picture}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="text-xs font-semibold text-white flex items-center justify-center">
+                            {firstLetter}
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  </div>) : (
+                  <div>
+                    <CgProfile className="text-xl mt-2" />
+                  </div>
+                )}
+
               </li>
             </ul>
           </div>
         </div>
       </nav>
+
       {NotifsideBar && (
         <div className="fixed inset-0 z-[9999]">
 
@@ -216,7 +241,7 @@ const fullname =
           ></div>
 
           <div className="absolute right-0 top-0 h-full w-80 bg-white shadow-lg p-6 flex flex-col overflow-y-scroll">
-            <button onClick={() => setNotifOpen(false)}>
+            <button onClick={function1}>
               <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
 
             </button>
@@ -249,21 +274,37 @@ const fullname =
             <div className="flex flex-col gap-3">
               {loggedIn ? (
                 <>
-                  <div  className="flex items-center gap-2 py-1">
-                    <div className="flex items-center justify-center rounded-full shadow-md shadow-black bg-[#FB6D6C] w-10 h-10 object-cover">
-                      <div className="text-xl font-semibold text-white">{firstletter}</div>
-                      
+                  {/* Profile Image */}
+
+
+                  <div className="flex items-center gap-2 py-1">
+                    <div className="flex items-center justify-center mb-2 rounded-full shadow-md shadow-[#FB6D6C] bg-[#FB6D6C] w-16 h-16 overflow-hidden">
+                      {Image?.Profile_picture ? (
+                        <img
+                          src={Image.Profile_picture}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="text-xl font-semibold text-white flex items-center justify-center">
+                          {firstLetter}
+                        </div>
+                      )}
                     </div>
-                    <div className="flex font-bold text-[#666F80]"
-                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-                      {fullname ? fullname : "Unknown"}
+
+                    <div
+                      className="flex font-bold text-[#666F80]"
+                      style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    >
+                      {fullname || "Unknown"}
                     </div>
                   </div>
+
                   <hr />
                   <Link
                     to="/acc"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses1}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> Account</span>
@@ -271,7 +312,7 @@ const fullname =
                   <Link
                     to="/history"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses1}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     <span className="flex items-center gap-2 "><MdHistory className="text-xl text-[#FB6D6C]" /> Order History</span>
@@ -279,7 +320,7 @@ const fullname =
                   <Link
                     to="/Cart"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses1}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     <span className="flex items-center gap-2 "><IoCartSharp className="text-xl text-[#FB6D6C]" /> My Cart</span>
@@ -287,16 +328,23 @@ const fullname =
                   <Link
                     to="/Wish"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses}
+                    className={linkClasses1}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     <span className="flex items-center gap-2 "><IoHeartOutline className="text-xl text-[#FB6D6C]" /> Wish List</span>
                   </Link>
 
+                  {/* Notification Icon */}
+                  <p className={linkClasses1}>
+                    <button onClick={function2} className="text-[#666F80] hover:text-[#FB6D6C] cursor-pointer">
+                      <span className="flex items-center gap-2 "><IoNotificationsSharp className="text-xl text-[#FB6D6C]" /> Notification</span>
+                    </button>
+                  </p>
+
                   <hr />
                   <button
                     onClick={handleLogout}
-                    className={linkClasses + " text-left w-full"}
+                    className={linkClasses1 + " text-left w-full"}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     <span className="flex items-center gap-2 "><IoLogOutOutline className="text-xl text-[#FB6D6C]" />Logout</span>
@@ -307,14 +355,14 @@ const fullname =
                   <Link
                     to="/login"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    className={linkClasses1} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     Login
                   </Link>
                   <Link
                     to="/Signup"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    className={linkClasses1} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
                     SignUp
                   </Link>

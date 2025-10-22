@@ -51,7 +51,7 @@ export default function Home() {
     }
 
 
-   
+
 
 
 
@@ -98,7 +98,7 @@ export default function Home() {
     }, [])
 
     const handleclick = async (value) => {
-    
+
 
         const newbrand = encodeURIComponent(value)
         // console.log(newbrand)
@@ -106,8 +106,8 @@ export default function Home() {
     }
 
 
-    const handlevarclick = async (value,value2) => {
-        
+    const handlevarclick = async (value, value2) => {
+
         const newbrand = encodeURIComponent(value)
         // console.log(newbrand)
         navigate(`/ProductPage?brandid=${newbrand}&varopid=${value2}`)
@@ -152,22 +152,25 @@ export default function Home() {
 
             {/* Home */}
             <section id="home" >
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="p-6">
-                        <div className="flex flex-col md:flex-row items-center">
+                <div className="max-w-7xl px-4">
+                    <div className="">
+                        <div className="flex flex-col md:flex-row items-center bg-white shadow-xl drop-shadow-amber-600 ">
                             {/* Text Content */}
-                            <div className="md:w-1/2 md:pr-8">
-                                <h1 className="md:text-4xl font-bold font-serif text-[#FB6D6C] mb-2 ml-5" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
-                                <p className=" text-[10px] md:text-[21px] font-bold text-[#FB6D6C] underline mb-4 ml-20" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Where Modesty Meets Elegance</p>
+                            <div className="md:w-1/2 p-10">
+                                <div className=''>
 
-                                <p className="text-gray-700 text-justify text-xs font-sans leading-relaxed md:text-lg" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                                    <h1 className="md:text-4xl text-[20px] font-bold font-serif text-[#FB6D6C] mb-2 ml-3" style={{ fontFamily: ' Papyrus' }}><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
+                                    <p className=" text-[12px] md:text-[21px] font-bold text-[#FB6D6C] underline mb-4 md:ml-20 ml-12" style={{ fontFamily: 'Papyrus' }}>Where Modesty Meets Elegance</p>
+
+                                </div>
+                                <p className="text-gray-700 pt-7 text-justify text-[16px] font-sans leading-relaxed md:text-lg" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                                     At Modest Gallery, we offer a diverse collection of modest hijabs, abayas, and accessories that blend elegance with comfort,
                                     allowing you to express your unique style with confidence. In addition to our fashion offerings, we proudly present Shaam e Roshan,
                                     our lifestyle, food, and craft exhibitions that celebrate creativity and tradition. Each event showcases exquisite crafts,
                                     delightful foods, and unique lifestyle products, creating a vibrant community space. Join us at Modest Gallery and Shaam e Roshan,
                                     where style and culture come together beautifully.
                                     <br /><br />
-                                    Our Modest Hijab Store can be your ultimate destination for modest fashion that empowers and celebrates your unique style.
+                                    {/* Our Modest Hijab Store can be your ultimate destination for modest fashion that empowers and celebrates your unique style.
                                     We are passionate about providing a curated selection of high-quality hijabs, abayas, and hijab accessories that are not only beautiful
                                     but also thoughtfully designed to meet the needs of modern, modest women. We believe that modesty and fashion go hand in hand.
                                     Our collection is a reflection of this philosophy, offering a diverse range of styles that cater to every taste, occasion, and personality.
@@ -176,17 +179,17 @@ export default function Home() {
                                     <br /><br />
                                     Our Event, Shaam e Roshan, is a vibrant celebration of culture, creativity, and community. These lifestyle, food, and craft exhibitions are
                                     designed to bring people together, offering a unique experience that blends tradition with modernity. At Shaam e Roshan, we showcase an array
-                                    of exquisite crafts, delectable foods, and lifestyle products that reflect the richness of our heritage and the creativity of artisans from across the region.
+                                    of exquisite crafts, delectable foods, and lifestyle products that reflect the richness of our heritage and the creativity of artisans from across the region. */}
                                 </p>
                             </div>
 
                             {/* Image Content */}
-                            <div className=" md:w-1/2 mt-6 md:mt-0">
+                            <div className=" md:w-1/2 md:mt-6 md:pl-25 md:p-7 pb-7 md:pb-15">
 
                                 <img
                                     src="/Imghome.jpg"
                                     alt="Modest Gallery"
-                                    className="w-full md:h-full h-60 object-cover rounded-md shadow-lg"
+                                    className="md:w-100 w-full md:h-full h-100 object-cover rounded-md shadow-lg"
 
                                 />
 
@@ -199,7 +202,7 @@ export default function Home() {
             </section>
 
             <section id="brand" className=" bg-white">
-                <div className="mt-8">
+                <div className="mt-12">
                     <div className="max-w-7xl mx-auto px-4 ">
 
                         <div>
@@ -208,7 +211,7 @@ export default function Home() {
                             </h1>
 
                         </div>
-                        <div className="p-6">
+                        <div className="p-8">
 
 
                             {/* Image Grid */}
@@ -217,7 +220,7 @@ export default function Home() {
                                 <Marquee gradient={false} speed={30}>
                                     {brand.map((item) => (
                                         <div onClick={() => handleclick(item.Brand_name)} key={item.Brand_id} className="relative overflow-hidden
-                                     m-2 md:m-3  md:gap-8 shadow-md shadow-[#FB6D6C] md:w-50 md:h-50 w-15 h-15 hover:text-lg cursor-pointer
+                                     m-2 md:m-3  md:gap-8 shadow-md shadow-[#FB6D6C] md:w-50 md:h-50 w-20 h-20 hover:text-lg cursor-pointer
                                      transition duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                             <img src={item.Brand_image} alt="no image" className='w-full h-full object-cover' />
                                             <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg drop-shadow-black items-center font-bold'>{item.Brand_name}</div>
@@ -256,7 +259,7 @@ export default function Home() {
                                 Abayas
                             </h1>
                             <br />
-                            <p className="text-xs md:text-lg text-justify leading-relaxed" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                            <p className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
                                 When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
                             </p>
                         </div>
@@ -311,7 +314,7 @@ export default function Home() {
                             </h1>
                             <br />
                             <p
-                                className="text-xs md:text-lg text-justify"
+                                className="text-sm md:text-lg text-justify leading-relaxed text-[#666F80]"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 Our hijabs are crafted from premium fabrics, ensuring that they are comfortable,
@@ -374,7 +377,7 @@ export default function Home() {
                             </h1>
                             <br />
                             <p
-                                className="text-xs md:text-lg text-justify text-gray-700"
+                                className="text-sm md:text-lg text-justify leading-relaxed text-[#666F80]"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 No outfit is complete without the perfect accessories, and at
@@ -434,7 +437,7 @@ export default function Home() {
                             </h1>
                             <br />
                             <p
-                                className="text-xs md:text-lg text-justify text-gray-700"
+                                className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed"
                                 style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
                             >
                                 At <span className="text-[#FB6D6C] font-semibold">Modest Gallery</span>, our hijab collection is crafted to empower modern women with elegance, comfort, and versatility. Whether you're dressing for a casual day out, a professional setting, or a special event, we offer hijabs in a wide variety of fabrics, colors, and styles to suit every mood and moment. From breathable cotton and soft jersey to luxurious chiffon and silk, each piece is thoughtfully selected to ensure a perfect blend of modesty and fashion. </p>

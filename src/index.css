@@ -6,3 +6,13 @@
 }
 
 
+@font-face {
+  font-family: 'Papyrus';
+  src: url('./assets/fonts/papyrus.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Papyrus', cursive;
+}

@@ -1,30 +1,79 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
-import {useNavigate } from "react-router-dom";
-import {url} from "../App"
+import { useNavigate } from "react-router-dom";
+import { url } from "../App"
 
 export default function Signup() {
   const { register, handleSubmit, reset } = useForm();
   const [message, setMessage] = useState("");
-const navigate = useNavigate()
+  const [image, setImage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate()
   // const url = "https://f7c671b11927.ngrok-free.app/"
   // "https://3j7gm770-8000.inc1.devtunnels.ms/register/"
 
   const onSubmit = async (data) => {
-    try {
-      
-       const res= await axios.post(`${url}register/`, data);
 
-      
-      alert(res.data.message);
-      navigate('/login')
-      
-      // reset();
-    } catch (error) {
-      console.error(error);
-      alert("Signup failed. Try again.");
+    const formData = new FormData();
+
+
+    formData.append("first_name", data.first_name);
+    formData.append("last_name", data.last_name);
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("contact", data.contact);
+    formData.append("address_type", data.address_type);
+    formData.append("house_no", data.house_no);
+    formData.append("area_colony", data.area_colony);
+    formData.append("landmark", data.landmark);
+    formData.append("city", data.city);
+    formData.append("state", data.state);
+    formData.append("country", data.country);
+    formData.append("pincode", data.pincode);
+
+
+    if (image) {
+      formData.append("Profile_picture", image);
+    } else {
+      formData.append("Profile_picture", null);
+      alert("Please select a profile picture.");
+      return;
     }
+
+    try {
+      const res = await axios.post(`${url}register/`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+
+      if (res.status === 201 && res.data.message) {
+        alert(res.data.message);
+        setErrorMessage("");
+        navigate('/login');
+        reset();
+      }
+
+      else if (res.data.error) {
+        setErrorMessage(res.data.error);
+      }
+
+    } catch (error) {
+      // console.log(error.response)
+      if (error.response?.data?.error) {
+
+        setErrorMessage(error.response.data.error);
+      } else {
+
+        setErrorMessage("Signup failed. Please try again.");
+      }
+
+    }
+  }
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
   };
 
   return (
@@ -34,11 +83,37 @@ const navigate = useNavigate()
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Two-column row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="mb-6">
+              <label
+                className="block mb-2 text-sm font-semibold tracking-wide"
+                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}
+              >
+                Select Profile Picture
+              </label>
+
+              <input
+                {...register("Profile_picture")}
+                type="file"
+                onChange={handleImageChange}
+                className="block w-full text-sm text-[#666F80] bg-[#F8FAFC]
+                file:py-2 file:px-4 
+               file:rounded-lg file:border-0 
+               file:text-sm file:font-semibold 
+               file:bg-[#E6EEF8] file:text-[#666F80] 
+               hover:file:bg-[#D8E3F3] 
+               cursor-pointer border border-[#D1D5DB] 
+               rounded-xl shadow-sm
+               focus:outline-none focus:ring-2 focus:ring-[#666F80] focus:border-blue-300
+               transition duration-200"
+              />
+            </div>
+
+
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>First Name</label>
               <input
                 {...register("first_name", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -47,7 +122,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Last Name</label>
               <input
                 {...register("last_name", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -56,7 +131,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Username</label>
               <input
                 {...register("name", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -65,7 +140,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Email</label>
               <input font-bold
                 {...register("email", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="email"
                 required
               />
@@ -77,7 +152,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Password</label>
               <input
                 {...register("password", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="password"
                 required
               />
@@ -89,105 +164,15 @@ const navigate = useNavigate()
               <label className="block text-gray-700">Contact</label>
               <input
                 {...register("contact", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
             </div>
-            {/* <div>
-              <label className="block text-gray-700">House No</label>
-              <input
-                {...register("house_no", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div> */}
-            {/* <div>
-              <label className="block text-gray-700">Area/Colony</label>
-              <input
-                {...register("area_colony", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div> */}
-            {/* <div>
-              <label className="block text-gray-700">Landmark</label>
-              <input
-                {...register("landmark", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">City</label>
-              <input
-                {...register("city", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">State</label>
-              <input
-                {...register("state", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Country</label>
-              <input
-                {...register("ountry", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Pincode</label>
-              <input
-                {...register("Pincode", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Address Type</label>
-              <input
-                {...register("address_type", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-                required
-              />
-            </div> */}
-            {/* </div> */}
+            {errorMessage && (
+              <p className="text-red-600">{errorMessage}</p>
+            )}
           </div>
-          {/* Button */}
-          {/* <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 mt-6 rounded-lg hover:bg-blue-600"
-          >
-            Signup
-          </button>
-
-          <p className="mt-3 text-center text-gray-600">
-            Already have an account?{" "}
-            <a href="/login" className="text-blue-500 hover:underline">
-              Login
-            </a>
-          </p> */}
-
-
-          {/* {message && (
-          <p className="mt-4 text-center text-red-500">{message}</p>
-        )} */}
-
 
           <h2 className="text-2xl font-bold mb-5 text-center mt-10" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Add Address</h2>
 
@@ -197,7 +182,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
               <input
                 {...register("address_type", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -207,7 +192,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
               <input
                 {...register("house_no", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -216,7 +201,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
               <input
                 {...register("area_colony", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -225,7 +210,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
               <input
                 {...register("landmark", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -234,7 +219,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
               <input
                 {...register("city", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -243,7 +228,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
               <input font-bold
                 {...register("state", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -252,7 +237,7 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
               <input
                 {...register("country", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
@@ -261,11 +246,13 @@ const navigate = useNavigate()
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
               <input
                 {...register("pincode", { required: true })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
                 required
               />
             </div>
+
+
 
             {/* </div> */}
           </div>
@@ -277,9 +264,12 @@ const navigate = useNavigate()
           >
             Signup
           </button>
+          {errorMessage && (
+            <p className="text-red-600 text-center">{errorMessage}</p>
+          )}
 
           <p className="mt-3 text-center text-gray-600"
-          style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
             Already have an account?{" "}
             <a href="/login" className="text-[#FB6D6C] hover:underline">
               Login

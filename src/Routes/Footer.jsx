@@ -4,12 +4,8 @@ import { BsFillTelephoneFill } from "react-icons/bs";
 
 export default function Footer() {
 
-
-  const hexColor = "#666f82";
-
-
   return (
-    <footer style={{ backgroundColor: hexColor }} className=" text-white py-8 mt-16 rounded-tl-4xl rounded-tr-4xl">
+    <footer  className=" text-white bg-gray-400 py-8 mt-16 rounded-tl-4xl rounded-tr-4xl">
       <div className="max-w-6xl mx-auto px-4 text-center">
         <div className="grid grid-cols-1 text-start md:text-center md:grid-cols-3 gap-8 ">
 
@@ -22,12 +18,12 @@ export default function Footer() {
           
 
           {/* Contact Info */}
-          <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+          <div className='flex flex-col items-center text-center' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
             
-              <h4 className="text-[14px] font-semibold mb-2" >Contact Us</h4>
+              <h4 className="text-[14px] text-center font-semibold mb-2" >Contact Us</h4>
 
             
-            <div className="mb-2 flex md:justify-center gap-2   ">
+            <div className="mb-2 flex md:justify-center  gap-2   ">
               <FaWhatsapp />
               <a href="https://chat.whatsapp.com/KRHfwgUq6iz33YU3XqUa7N" target="_blank" className=" text-white text-[10px] md:text-[15px] hover:underline">
                 Modest Hijab Store
@@ -57,7 +53,7 @@ export default function Footer() {
           </div>
 
           {/* Office Address */}
-          <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+          <div className='flex flex-col items-center text-center' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
             <h4 className="text-[14px] font-semibold mb-2">Registered Office Address</h4>
             <div className='text-[10px] md:text-[15px]'>
               <p >Modest Gallery, Koh e fiza, Bhopal,</p>
