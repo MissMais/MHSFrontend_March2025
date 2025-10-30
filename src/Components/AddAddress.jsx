@@ -2,15 +2,32 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {url} from "../App"
-
+import { url } from "../App"
+import { Country, State, City } from "country-state-city";
+import toast, { Toaster } from "react-hot-toast";
 export default function AddAddress() {
     const { register, handleSubmit, reset } = useForm();
     const [message, setMessage] = useState("");
     const Navigate = useNavigate()
-    
 
-    // const url = "https://5d0abf24c6ce.ngrok-free.app/address/";
+
+    const [country, setCountry] = useState("");
+    const [state, setState] = useState("");
+    const [city, setCity] = useState("");
+
+
+    const countries = Country.getAllCountries();
+    const selectedCountry = Country.getCountryByCode(country);
+    // console.log(selectedCountry?.name)
+
+    const states = country ? State.getStatesOfCountry(country) : [];
+    const selectedState = State.getStateByCodeAndCountry(state, country);
+    // console.log(selectedState?.name)
+
+    const cities = state ? City.getCitiesOfState(country, state) : [];
+    const selectedCity = cities.find((c) => c.name === city);
+    // console.log(selectedCity?.name)
+
 
     const user_id = JSON.parse(localStorage.getItem("user_id"))
 
@@ -19,13 +36,18 @@ export default function AddAddress() {
             // console.log(data)
 
             await axios.post(`${url}address/`, {
-                User_id:user_id,
+                User_id: user_id,
+                City: selectedCity?.name,
+                State: selectedState?.name,
+                Country: selectedCountry?.name,
                 ...data
             });
 
+            toast.success("New Address Added")
+            setTimeout(() => {
+                Navigate("/Address")
+            }, 2000);
 
-            alert("Address added successfully!");
-            Navigate("/Address")
             //   reset();
         } catch (error) {
             console.error(error);
@@ -49,7 +71,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
                             <input
                                 {...register("Address_type", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 placeholder="Home/Office"
                                 type="text"
                             />
@@ -58,8 +80,8 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Name</label>
                             <input
                                 {...register("Name", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                            
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+
                                 type="text"
                             />
                         </div>
@@ -68,7 +90,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
                             <input
                                 {...register("House_No", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -77,7 +99,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
                             <input
                                 {...register("Area_Colony", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -86,7 +108,7 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
                             <input
                                 {...register("Landmark", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
@@ -95,42 +117,75 @@ export default function AddAddress() {
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
                             <input
                                 {...register("Pincode", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                                 type="text"
                             />
                         </div>
 
                         <div>
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
-                            <input
+                            <select
                                 {...register("City", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                                type="text"
-                            />
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                disabled={!state}
+                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                            >
+                                <option value="">Select City</option>
+                                {cities.map((ci) => (
+                                    <option key={ci.name} value={ci.name}>
+                                        {ci.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div>
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
-                            <input
+                            <select
                                 {...register("State", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                                type="text"
-                            />
+                                value={state}
+                                onChange={(e) => {
+                                    setState(e.target.value);
+                                    setCity("");
+                                }}
+                                disabled={!country}
+                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                            >
+                                <option value="">Select State</option>
+                                {states.map((s) => (
+                                    <option key={s.isoCode} value={s.isoCode}>
+                                        {s.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div>
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
-                            <input
+                            <select
                                 {...register("Country", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                                type="text"
-                            />
+                                value={country}
+                                onChange={(e) => {
+                                    setCountry(e.target.value);
+                                    setState("");
+                                    setCity("");
+                                }}
+                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                            >
+                                <option value="">Select Country</option>
+                                {countries.map((c) => (
+                                    <option key={c.isoCode} value={c.isoCode}>
+                                        {c.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div>
                             <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Contact</label>
                             <input
                                 {...register("Contact", { required: true })}
-                                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
 
                                 type="text"
                             />
@@ -152,6 +207,7 @@ export default function AddAddress() {
                     )}
                 </form>
             </div>
+            <Toaster position="bottom-center" reverseOrder={false} />
         </div>
     );
 }

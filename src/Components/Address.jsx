@@ -9,13 +9,7 @@ import { url } from "../App"
 import { MdAccountCircle } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { TbAddressBook } from "react-icons/tb";
-// const url =
-// "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
-// 'https://5d0abf24c6ce.ngrok-free.app/address/'
-// https://modestgallery.pythonanywhere.com/address/
-// const url2 =
-// "https://3j7gm770-8000.inc1.devtunnels.ms/address"
-// 'https://5d0abf24c6ce.ngrok-free.app/address/'
+
 
 
 
@@ -52,7 +46,7 @@ export default function Address() {
     const email = user?.email;
 
     if (!email) {
-      alert("Please login first.");
+      // alert("Please login first.");
       Navigate("/login");
       return;
     }
@@ -78,11 +72,15 @@ export default function Address() {
         },
       }
     )
+    console.log(response.data)
     const fetcheddata = response.data
-    const filtereddata = fetcheddata.filter(item => item.User_id == User_id)
+    const filtereddata = fetcheddata.filter(item => item.User_id === User_id)
+    console.log(filtereddata)
     setaddress(filtereddata)
     // console.log(filtereddata)
   }
+
+  
 
   useEffect(() => {
     fetchAddress();
@@ -122,41 +120,39 @@ export default function Address() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen mt-14 bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-full md:w-1/6 bg-white p-6 shadow-md">
-        <h2
-          className="text-xl font-bold mb-6"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
-        >
-          Account Settings
-        </h2>
-        <ul className="space-y-4 text-sm" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-          <li>
-            <Link
-              to="/acc"
-              className="block text-[#666F80] hover:text-[#FB6D6C] font-semibold transition-colors"
-            >
-              <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> Profile settings</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/reset"
-              className="block text-[#666F80] hover:text-[#FB6D6C] transition-colors"
-            >
-              <span className="flex items-center gap-2 "><TbLockPassword className="text-xl text-[#FB6D6C]" />Password</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/Address"
-              className="block text-[#FB6D6C] hover:text-[#FB6D6C] transition-colors"
-            >
-              <span className="flex items-center gap-2 "><TbAddressBook className="text-xl text-[#FB6D6C]" />Address</span>
-            </Link>
-          </li>
-        </ul>
-      </div>
+
+       {/* Sidebar */}
+            <div className="w-full md:w-1/6 bg-white p-6 shadow-md">
+              <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+                Account Settings
+              </h2>
+              <ul className="space-y-4 text-sm" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                <li>
+                  <Link to="/acc" className="block text-[#666F80]  hover:text-[#e95a59]  transition-colors">
+                    <span className="flex items-center gap-2">
+                      <MdAccountCircle className="text-xl text-[#FB6D6C]" /> Profile settings
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/reset" className="block text-[#666F80]  hover:text-[#FB6D6C]  transition-colors">
+                    <span className="flex items-center gap-2">
+                      <TbLockPassword className="text-xl text-[#FB6D6C]" /> Password
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/Address" className="block  text-[#FB6D6C] hover:text-[#FB6D6C] font-semibold transition-colors">
+                    <span className="flex items-center gap-2">
+                      <TbAddressBook className="text-xl text-[#FB6D6C]" /> Address
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+              <br />
+              <hr />
+            </div>
+      
 
       {/* Main Content */}
       {/* <div><button className='cursor-pointer bg-red-500 text-white rounded-lg px-1 py-2 hover:bg-red-600 ' onClick={() => Buttonadd()}>add another address</button></div> */}

@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { url } from "../App"
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import Popup from "./Popup";
+
 
 export default function OrderPage() {
   const location = useLocation();
@@ -13,6 +15,7 @@ export default function OrderPage() {
   const [Address, setAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [payment, setPayment] = useState([])
+  const [showPopup, setShowPopup] = useState(false);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -31,7 +34,7 @@ export default function OrderPage() {
     const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
     if (!email) {
-      alert("Please login first.");
+      // alert("Please login first.");
       navigate("/login");
       return;
     }
@@ -40,7 +43,7 @@ export default function OrderPage() {
     setCartItems(storedItems);
 
     if (storedItems == 0) {
-      alert("Add products")
+      // alert("Add products")
       navigate("/ProductPage")
       return;
 
@@ -48,13 +51,13 @@ export default function OrderPage() {
     // console.log(storedItems)
   }, [navigate]);
 
-  
+
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
     if (!email) {
-      alert("Please login first.");
+      // alert("Please login first.");
       navigate("/login");
       return;
     }
@@ -75,11 +78,11 @@ export default function OrderPage() {
       telephone: storedAdd.Contact || "",
     });
 
-    
+
   }, [navigate, reset]);
 
 
-  
+
 
   const onSubmit = async (data) => {
 
@@ -124,9 +127,10 @@ export default function OrderPage() {
           });
 
           // console.log("Order placed:", orderRes.data);
+          setShowPopup(true);
           localStorage.removeItem(cartKey);
           setCartItems([]);
-          alert(orderRes.message)
+          // alert(orderRes.message)
           // navigate("/ProductPage");
         }
       } else {
@@ -150,10 +154,13 @@ export default function OrderPage() {
 
         localStorage.removeItem(cartKey);
         // console.log(orderRes.data.message)
+        setShowPopup(true);
         setCartItems([]);
-        alert(orderRes.data.message)
+        // alert(orderRes.data.message)
+        setTimeout(() => {
+          navigate("/ProductPage");
+        }, 3000);
 
-        navigate("/ProductPage");
       }
     } catch (error) {
       console.error(error);
@@ -166,14 +173,6 @@ export default function OrderPage() {
     subtotal += item.price * (item.quantity || 1);
   });
 
-
-  // if (!product) {
-  //   return (
-  //     <div className="h-screen flex items-center justify-center text-xl text-gray-600">
-  //       No product selected. Please go back and select a product.
-  //     </div>
-  //   );
-  // }
 
 
   const fetchpayment = async () => {
@@ -211,7 +210,7 @@ export default function OrderPage() {
         <div>
           <div className="flex justify-between mb-3">
             <h2 className="text-xl md:text-2xl font-bold text-[#666F80]" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Payment Details</h2>
-            <button onClick={()=>navigate('/address')} style={{ fontFamily: "Copperplate, Papyrus, fantasy"}} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
+            <button onClick={() => navigate('/address')} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 text-sm text-[#666F80]">
@@ -391,6 +390,12 @@ export default function OrderPage() {
           </div>
         </div>
       </div>
+      {/* Popup Component */}
+      <Popup
+        show={showPopup}
+        title="Order Placed"
+        message="Order has been placed succesfully "
+      />
     </div>
   );
 }

@@ -7,6 +7,9 @@ import { IoCartSharp } from 'react-icons/io5';
 import { FaRupeeSign, FaStar } from "react-icons/fa";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { url } from "../App"
+import toast, { Toaster } from "react-hot-toast";
+import Popup from './Popup';
+
 
 export default function ProductDetail() {
   const navigate = useNavigate();
@@ -31,6 +34,8 @@ export default function ProductDetail() {
 
   const [rating, setRating] = useState(0);
   const [showBox, setShowBox] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupcart, setShowPopupcart] = useState(false);
 
   // console.log(allVariations)
   // console.log(selectedProduct?.product_variation?.product_variation_id)
@@ -83,7 +88,8 @@ export default function ProductDetail() {
       }
     }));
 
-    alert("Rating submitted!")
+    // alert("Rating submitted!")
+    toast.success("Rating submitted!");
     setShowBox(false);
 
 
@@ -143,7 +149,7 @@ export default function ProductDetail() {
     const accesstoken = localStorage.getItem("AccessToken");
 
     if (!accesstoken) {
-      alert('Please login to add items to your cart.');
+      // alert('Please login to add items to your cart.');
       navigate('/login');
       return;
     }
@@ -186,15 +192,20 @@ export default function ProductDetail() {
           }
         );
 
-        // console.log("Added to server-side cart");
+
+
       } catch (error) {
         console.error("Error adding to backend cart:", error);
       }
+      setShowPopupcart(true)
+      setTimeout(() => {
+        navigate("/Cart");
+      }, 3000);
 
-      navigate("/Cart");
-      alert("Added To Cart !")
+
     } else {
-      alert("Out Of Stock");
+      // alert("Out Of Stock");
+      toast.error("Out Of Stock");
     }
   };
 
@@ -202,8 +213,11 @@ export default function ProductDetail() {
   const goToOrderPage = () => {
     const token = localStorage.getItem('AccessToken');
     if (!token) {
-      alert('Please login to continue with your order.');
-      navigate('/login');
+      toast.error('Please login to continue with your order.');
+      // alert('Please login to continue with your order.');
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
       return;
     }
     navigate('/OrderPage', { state: { product: selectedProduct } });
@@ -289,8 +303,12 @@ export default function ProductDetail() {
     const accesstoken = localStorage.getItem('AccessToken')
 
     if (!accesstoken) {
-      alert('Login to Add Wishlist')
-      navigate('/login')
+
+      toast.error('Login to Add Wishlist');
+      setTimeout(() => {
+        navigate('/login')
+      }, 3000);
+
     }
 
     const variationId = product.product_variation.product_variation_id;
@@ -335,9 +353,12 @@ export default function ProductDetail() {
           });
         const customerWishlist = wishlistRes.data.filter(item => item.customer_id == customerId);
         setwish(customerWishlist);
-        // console.log("Wishlist Added")
 
+        // console.log("Wishlist Added")
+        setShowPopup(true)
+        setTimeout(() => setShowPopup(false), 2000);
       }
+
     } catch (error) {
       console.error(error);
     }
@@ -583,7 +604,7 @@ export default function ProductDetail() {
 
 
       {/* Similar Products Section */}
-      {selectedProduct && (
+      {/* {selectedProduct && (
         <div className="px-4 mt-12">
           <h2 className="text-2xl font-semibold mb-6" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Related Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -627,7 +648,22 @@ export default function ProductDetail() {
               ))}
           </div>
         </div>
-      )}
+      )} */}
+
+
+      {/* Popup Component */}
+      <Popup
+        show={showPopup}
+        title="Item Added!"
+        message="item Added to Wishlist"
+      />
+      {/* Popup Component */}
+      <Popup
+        show={showPopupcart}
+        title="Item Added!"
+        message="item Added to Cart"
+      />
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 }

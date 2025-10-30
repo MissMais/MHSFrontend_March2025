@@ -10,7 +10,10 @@ import { MdHistory } from "react-icons/md";
 import { IoCartSharp } from "react-icons/io5";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
+import { IoLogInOutline } from "react-icons/io5";
+import { MdPersonAddAlt1 } from "react-icons/md";
 
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { url } from "../App"
 import Notification from "../Components/Notification";
@@ -24,9 +27,7 @@ export default function Navbar() {
   const [Image, setImage] = useState([])
   const navigate = useNavigate();
 
-  // const url =
-  // "https://5d0abf24c6ce.ngrok-free.app/logout/"
-  // "https://3j7gm770-8000.inc1.devtunnels.ms/logout/"
+
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem("AccessToken"))
@@ -35,20 +36,17 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     const refresh = localStorage.getItem("RefreshToken")
-    // localStorage.removeItem("AccessToken");
-    // localStorage.removeItem("RefreshToken");
-    // localStorage.removeItem("user");
-    // localStorage.removeItem("user_id");
-    //  localStorage.removeItem("cart_mohdadan@gmail.com")
+    
+
 
     if (!refresh) {
-      alert("No refresh token found. Logging out...");
+      // alert("No refresh token found. Logging out...");
       localStorage.clear();
       navigate("/login");
       return;
     }
 
-    // try {
+
     const response = await axios.post(
       `${url}logout/`, { refresh: refresh },
     );
@@ -56,32 +54,19 @@ export default function Navbar() {
     if (response.status === 200) {
       localStorage.removeItem("AccessToken");
       localStorage.removeItem("RefreshToken");
+      localStorage.removeItem("user_id");
       localStorage.removeItem("user");
 
-      alert(response.data)
-      navigate("/login");
+      // alert(response.data)
+      toast.success("Successfully Logged Out");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+
     } else {
-      alert("Failed to log out");
+      // alert("Failed to log out");
+      toast.error("Failed to log out");
     }
-    // } catch (error) {
-    //   if (error.response.status === 404) {
-    //     localStorage.removeItem("AccessToken");
-    //     localStorage.removeItem("RefreshToken");
-    //     localStorage.removeItem("user");
-    //     alert("Session expired. Logged out.");
-    //     navigate("/login");
-    //   } else {
-    //     alert("Logout failed due to network or server error");
-    //     console.error(error);
-    //   }
-    // }
-
-
-
-
-
-
-
   };
 
   const accesstoken = localStorage.getItem('AccessToken')
@@ -111,7 +96,7 @@ export default function Navbar() {
     if (localStorage.getItem("AccessToken")) {
       fetchuser();
     }
-  }, [localStorage.getItem("AccessToken"),navigate]);
+  }, [localStorage.getItem("AccessToken"), navigate]);
 
 
   const firstname = user?.first_name
@@ -156,7 +141,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex-shrink-0 h-12 w-12 sm:h-16 sm:w-16">
+            <div className="flex-shrink-0 md:h-14 md:w-14 h-12 w-12">
               <Link to="/" className="no-underline">
                 <img src="/logo.jpeg" alt="Logo" className="object-cover rounded-full h-full w-full" />
               </Link>
@@ -210,7 +195,7 @@ export default function Navbar() {
                         {Image?.Profile_picture ? (
                           <img
                             src={Image.Profile_picture}
-                            alt="Profile"
+
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -221,8 +206,8 @@ export default function Navbar() {
                       </div>
                     </button>
                   </div>) : (
-                  <div>
-                    <CgProfile className="text-xl mt-2" />
+                  <div className="cursor-pointer">
+                    <CgProfile className="text-xl" onClick={() => setSidebarOpen(true)} />
                   </div>
                 )}
 
@@ -265,13 +250,15 @@ export default function Navbar() {
           <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col overflow-y-scroll">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: '#666F80' }}>Profile</h2>
+                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: '#666F80' }}>Account</h2>
+                
               <button onClick={() => setSidebarOpen(false)}>
                 <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
               </button>
             </div>
+            <hr />
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 mt-1">
               {loggedIn ? (
                 <>
                   {/* Profile Image */}
@@ -282,7 +269,7 @@ export default function Navbar() {
                       {Image?.Profile_picture ? (
                         <img
                           src={Image.Profile_picture}
-                          alt="Profile"
+
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -307,7 +294,7 @@ export default function Navbar() {
                     className={linkClasses1}
                     style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> Account</span>
+                    <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> My Space</span>
                   </Link>
                   <Link
                     to="/history"
@@ -357,20 +344,21 @@ export default function Navbar() {
                     onClick={() => setSidebarOpen(false)}
                     className={linkClasses1} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    Login
+                    <span className="flex items-center gap-2"><IoLogInOutline className="text-2xl text-[#FB6D6C]" />Login</span>
                   </Link>
                   <Link
                     to="/Signup"
                     onClick={() => setSidebarOpen(false)}
                     className={linkClasses1} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
                   >
-                    SignUp
+                    <span className="flex items-center gap-2"><MdPersonAddAlt1 className="text-2xl text-[#FB6D6C]" />SignUp</span>
                   </Link>
                 </>
               )}
             </div>
 
           </div>
+          <Toaster position="bottom-center" reverseOrder={false} />
         </div>
       )}
     </>

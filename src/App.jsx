@@ -31,8 +31,8 @@ import Notification from './Components/Notification';
 
 import ScrollToTop from './Components/ScrollToTop';
 
-export const url ="https://196fe80b8e99.ngrok-free.app/"
-// export const url = "https://mohammadsaklen.pythonanywhere.com/"
+// export const url ="https://5b3d74e7074b.ngrok-free.app/"
+export const url = "https://mohammadsaklen.pythonanywhere.com/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";

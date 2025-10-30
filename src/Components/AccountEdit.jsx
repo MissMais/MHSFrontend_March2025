@@ -6,6 +6,7 @@ import { url } from "../App";
 import { IoClose } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { FaTrashAlt } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function AccountEdit() {
   const navigate = useNavigate();
@@ -90,11 +91,15 @@ export default function AccountEdit() {
         });
       }
 
-      alert("Profile updated successfully!");
-      navigate('/acc');
+      // alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!")
+      setTimeout(() => {
+        navigate('/acc');
+      }, 3000);
+
     } catch (error) {
       console.error(error);
-      alert("Failed to update profile");
+      // alert("Failed to update profile");
     }
   };
 
@@ -108,8 +113,8 @@ export default function AccountEdit() {
 
 
 
-  const deleteprofile = async (id) => {
-    console.log(id)
+  const deleteprofile = async () => {
+    // console.log(id)
     try {
       const accesstoken = localStorage.getItem('AccessToken')
       // console.log(id)
@@ -196,7 +201,7 @@ export default function AccountEdit() {
                       <button onClick={() => setcard(false)}>
                         <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
                       </button>
-                      <button className="text-gray-400 hover:text-[#FB6D6C]" onClick={() => deleteprofile(id)}>
+                      <button className="text-gray-400 hover:text-[#FB6D6C]" onClick={deleteprofile}>
                         <FaTrashAlt className="text-sm" />
                       </button>
                     </div>
@@ -244,7 +249,7 @@ export default function AccountEdit() {
                       <button onClick={() => setcard1(false)}>
                         <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
                       </button>
-                      <button className="text-gray-400 hover:text-[#FB6D6C]" onClick={() => deleteprofile(id)}>
+                      <button className="text-gray-400 hover:text-[#FB6D6C]" onClick={deleteprofile}>
                         <FaTrashAlt className="text-sm" />
                       </button>
                     </div>
@@ -338,6 +343,7 @@ export default function AccountEdit() {
           </button>
         </form>
       </div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 }

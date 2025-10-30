@@ -2,20 +2,21 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
-import {url} from "../App"
+import { url } from "../App"
+import toast, { Toaster } from "react-hot-toast";
 
 
 
 
 
 export default function AddressEdit() {
-  const [Info,setdata] =useState()
+  const [Info, setdata] = useState()
 
 
   let params = useParams()
   let navigate = useNavigate()
-  
-//  const url = "https://5d0abf24c6ce.ngrok-free.app/";
+
+  //  const url = "https://5d0abf24c6ce.ngrok-free.app/";
 
   const {
     register,
@@ -32,12 +33,12 @@ export default function AddressEdit() {
     try {
       const Data = await axios.get(`${url}address/?id=` + id,
         {
-            headers: {
-              // Authorization: `Bearer ${accesstoken}`,
-              'ngrok-skip-browser-warning': '69420',
-              'Content-Type': 'application/json'
-            }
+          headers: {
+            // Authorization: `Bearer ${accesstoken}`,
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json'
           }
+        }
       )
       setdata(Data.data)
       // console.log(Data.data[0]['Address_id'])
@@ -67,15 +68,15 @@ export default function AddressEdit() {
   const saveData = async (data) => {
     try {
       const Payload = {
-        Address_id:Info[0]['Address_id'],
-        Name:data.Name ,
+        Address_id: Info[0]['Address_id'],
+        Name: data.Name,
         Contact: data.Contact,
         Address_type: data.Address_type,
-        House_No:data.House_No ,
+        House_No: data.House_No,
         Area_Colony: data.Area_Colony,
-        Landmark:data.Landmark,
-        City:data.City ,
-        State:data.State ,
+        Landmark: data.Landmark,
+        City: data.City,
+        State: data.State,
         Country: data.Country,
         Pincode: data.Pincode,
       }
@@ -88,8 +89,12 @@ export default function AddressEdit() {
         }
       )
       // console.log(params.id, data)
+      toast.success("Address Updated")
       reset()
-      navigate('/Address')
+      setTimeout(() => {
+        navigate('/Address')
+      }, 3000);
+
     } catch (error) {
       console.log(error)
     }
@@ -196,7 +201,7 @@ export default function AddressEdit() {
             </div>
           </div>
           <div className="flex space-x-4 mt-4 font-semibold"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
             <button type="submit" className="bg-[#FB6D6C] text-white py-2 px-4 rounded-md hover:bg-[#e95a59] focus:outline-none focus:ring-2 focus:ring-blue-500">
               Change
             </button>
@@ -207,6 +212,7 @@ export default function AddressEdit() {
 
         </form>
       </div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
 
   )

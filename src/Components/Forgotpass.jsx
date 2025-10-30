@@ -22,7 +22,7 @@ export default function ForgotPassword() {
 
     } catch (error) {
       console.error(error);
-      alert("Failed");
+    
     }
   };
 

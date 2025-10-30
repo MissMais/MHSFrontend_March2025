@@ -12,7 +12,9 @@ import Marquee from 'react-fast-marquee';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 import Slider from "react-slick";
+import Bot from './Bot';
 
 export default function Home() {
     const navigate = useNavigate();
@@ -23,6 +25,7 @@ export default function Home() {
     useEffect(() => {
         AOS.init({ duration: 900, once: true });
     }, []);
+
 
 
     const settings = {
@@ -97,6 +100,36 @@ export default function Home() {
         fetchimage()
     }, [])
 
+
+     const fetchcustomer = async () => {
+    const user_id = localStorage.getItem('user_id')
+    const accessToken = localStorage.getItem("AccessToken")
+    try {
+       const response = await axios.get(`${url}customer/`,
+  
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'application/json'
+          },
+        }
+      )
+      console.log(response.data)
+      const filterData = response.data.filter(item => item.User_id == user_id)
+      console.log(filterData[0]?.Customer_id)
+      localStorage.setItem('id', filterData[0]?.Customer_id);
+    } catch (error) {
+      console.log(error)
+    }
+      
+    }
+
+    useEffect(()=>{
+      fetchcustomer()
+    },[])
+
+
     const handleclick = async (value) => {
 
 
@@ -116,7 +149,7 @@ export default function Home() {
 
 
     return (
-        <div >
+        <div className=''>
             {/* <Navbar /> */}
             <br />
             <br />
@@ -150,9 +183,19 @@ export default function Home() {
             </div> */}
 
 
+
+
+            {/* <div className="fixed bottom-0 top-60 right-4 w-[90%] max-w-[350px] z-50">
+    <Bot />
+</div> */}
+
+
+
+
+
             {/* Home */}
             <section id="home" >
-                <div className="max-w-7xl px-4">
+                <div className="max-w-7xl mx-auto px-4">
                     <div className="">
                         <div className="flex flex-col md:flex-row items-center bg-white shadow-xl drop-shadow-amber-600 ">
                             {/* Text Content */}
@@ -518,15 +561,21 @@ export default function Home() {
             </section >
 
 
-            <section id='contact'  >
+            {/* Footer Section */}
+            <section id='contact'>
                 <Footer />
             </section>
+
+            {/* Chatbot */}
+            <div className="relative bottom-0 right-4 top-60 w-[90%] max-w-[350px] z-50">
+                <Bot />
+            </div>
+
 
         </div >
 
     );
 }
-
 
 
 

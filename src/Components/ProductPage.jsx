@@ -1,10 +1,16 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FaFilter, FaSearch, FaRupeeSign, FaStar } from "react-icons/fa";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Footer from "../Routes/Footer";
 import { url } from "../App"
+import Bot from "./Bot";
+import Popup from "./Popup";
+
+
 
 
 
@@ -15,13 +21,13 @@ import { url } from "../App"
 
 const ProductPage = () => {
   const [searchParams] = useSearchParams();
-  const defaultCategory = searchParams.get("category") || "All";
-  const defaultBrand = searchParams.get("brand") || "All";
+  const defaultCategory = searchParams.get("category") || "Category" || "All";
+  const defaultBrand = searchParams.get("brand") || "Brands" || "All";
   const [selectedbrand, setSelectedBrand] = useState(defaultBrand)
   const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
-  const [maxPrice, setMaxPrice] = useState(10000);
+  const [maxPrice, setMaxPrice] = useState(selectedCategory == "Stoles" ? 4000 : 10000);
   const [products, setProducts] = useState([]);
-  const [selectedColour, setSelectedColour] = useState("All");
+  const [selectedColour, setSelectedColour] = useState("Color" || "All");
   const [sideOpen, setSideOpen] = useState(false)
   const [wishlist, setWishlist] = useState([]);
   const [search, setSearch] = useState("");
@@ -29,6 +35,28 @@ const ProductPage = () => {
   const [wish, setwish] = useState([])
   const [isMobile, setIsMobile] = useState(false)
   const [variety, setSelectedvar] = useState([])
+  const [showPopup, setShowPopup] = useState(false);
+
+
+
+  const [openctg, setopenctg] = useState(false);
+  const handleOptionClick1 = (value) => {
+    setSelectedCategory(value);
+    setopenctg(false);
+  };
+
+  const [openclr, setopenclr] = useState(false);
+  const handleOptionClick = (value) => {
+    setSelectedColour(value);
+    setopenclr(false);
+  };
+
+  const [openbrand, setopenbrand] = useState(false);
+  const handleOptionClick2 = (value) => {
+    setSelectedBrand(value);
+    setopenbrand(false);
+  };
+
 
 
   const user_id = localStorage.getItem('user_id')
@@ -45,9 +73,9 @@ const ProductPage = () => {
 
 
   useEffect(() => {
-    const categoryFromUrl = searchParams.get("category") || "All";
+    const categoryFromUrl = searchParams.get("category") || "Category" || "All";
     setSelectedCategory(categoryFromUrl);
-    const brandFromUrl = searchParams.get("brand") || "All";
+    const brandFromUrl = searchParams.get("brand") || "Brands" || "All";
     setSelectedBrand(brandFromUrl);
     // console.log(brandFromUrl)
 
@@ -66,7 +94,7 @@ const ProductPage = () => {
 
 
 
-  const accessToken = localStorage.getItem("AccessToken")
+
 
   const fetchProducts = async () => {
     try {
@@ -80,9 +108,7 @@ const ProductPage = () => {
         }
       );
       setProducts(res.data);
-      // console.log(res.data)
-      // console.log(res.data)
-      // console.log(res.data[0].images[0].replace("http://localhost:8000/", "http://192.168.29.87:8000/"))
+
     } catch (err) {
       console.error("Error fetching products", err);
     }
@@ -105,18 +131,16 @@ const ProductPage = () => {
         }
       );
 
-      // console.log(branddata.data)
-      // console.log(branddata.data)
 
 
       const filterbrand = branddata.data.filter(item => item.Brand_id === Brandid)
-      
-    if (filterbrand.length > 0) {
-      setSelectedBrand(filterbrand[0].Brand_name);
-    } else {
-      
-      setSelectedBrand("All");
-    }
+
+      if (filterbrand.length > 0) {
+        setSelectedBrand(filterbrand[0].Brand_name);
+      } else {
+
+        setSelectedBrand("Brands" || "All");
+      }
 
 
     } catch (err) {
@@ -163,6 +187,8 @@ const ProductPage = () => {
   };
 
 
+
+
   const filteredProducts = products.filter((product) => {
     // console.log("**********",product.images[0])
     //    return product
@@ -175,9 +201,9 @@ const ProductPage = () => {
     // }
 
     return (
-      (selectedCategory === "All" || product.category_name === selectedCategory) &&
-      (selectedColour === "All" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
-      (selectedbrand === "All" || product.brand.Brand_name === selectedbrand) &&
+      (selectedCategory === "All" || selectedCategory === "Category" || product.category_name === selectedCategory) &&
+      (selectedColour === "All" || selectedColour === "Color" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
+      (selectedbrand === "All" || selectedbrand === "Brands" || product.brand.Brand_name === selectedbrand) &&
       (!variety || variety.Brandid === "NaN" || variety.varopid === "All"
         ? true
         : product.brand?.Brand_id === variety.Brandid &&
@@ -199,8 +225,8 @@ const ProductPage = () => {
   );
   // console.log(filteredProductsWithImages)
 
-  const handleProductClick = (id , productid) => {
-    
+  const handleProductClick = (id, productid) => {
+
     navigate(`/ProductDetail/?id=${id}&product=${productid}`);
     // navigate(`/quote/${id}`)
     // navigate(`/ProductDetail/${id}`);
@@ -212,7 +238,7 @@ const ProductPage = () => {
 
 
   const handleCategoryChange = (value) => {
-    
+
     setSelectedCategory(value);
     const newParams = new URLSearchParams(searchParams);
 
@@ -225,7 +251,7 @@ const ProductPage = () => {
   };
 
   const handleBrandChange = (value) => {
-    
+
     setSelectedBrand(value);
     const newParams = new URLSearchParams(searchParams);
 
@@ -254,7 +280,7 @@ const ProductPage = () => {
     })
     //  console.log(res.data)
     const data = res.data
-    
+
 
     const filtereddata = data.filter(item => item.User_id == user_id)
     // console.log(filtereddata[0].id)
@@ -294,10 +320,10 @@ const ProductPage = () => {
 
   const Wishlist = async (product) => {
 
-const accesstoken = localStorage.getItem('AccessToken')
+    const accesstoken = localStorage.getItem('AccessToken')
 
-    if(!accesstoken){
-      alert('Login to Add Wishlist')
+    if (!accesstoken) {
+      // alert('Login to Add Wishlist')
       navigate('/login')
     }
     const variationId = product.product_variation.product_variation_id;
@@ -344,6 +370,8 @@ const accesstoken = localStorage.getItem('AccessToken')
         setwish(customerWishlist);
         // console.log("Wishlist Added")
 
+        setShowPopup(true);
+        setTimeout(() => setShowPopup(false), 2000);
       }
     } catch (error) {
       console.error(error);
@@ -385,13 +413,14 @@ const accesstoken = localStorage.getItem('AccessToken')
 
 
 
-
+  // console.log(selectedCategory)
+  // console.log()
 
   return (
     <div >
 
 
-      <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row bg-white shadow-xl rounded-2xl">
+      <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row  shadow-xl rounded-2xl">
         {isMobile && <div className="flex justify-end-safe mr-3 z-[9998]">
           <button className="bg-[#FB6D6C] text-[15px] rounded-2xl mt-2 w-15 h-10 flex items-center justify-center text-white gap-1" onClick={func}><FaFilter className="text-[13px]" />Filters </button>
         </div>
@@ -411,225 +440,314 @@ const accesstoken = localStorage.getItem('AccessToken')
               <FaFilter /> Filters
             </h2>
 
+
             {/* Category */}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Category
-            </label>
-            <select
-              className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-              value={selectedCategory}
-              onChange={(e) => handleCategoryChange(e.target.value)}
-            >
-              <option value="All" className="text-[#666F80]">
-                All
-              </option>
-              {getUniqueCategories().map((cat) => (
-                <option
-                  key={cat}
-                  value={cat}
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#666F80",
-                  }}
+
+            <div>
+              <div className="flex justify-between items-center">
+                <div onClick={() => {
+                  setopenctg(!openctg);
+                  setopenclr(false);
+                  setopenbrand(false)
+                }}
+                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                 >
-                  {cat}
-                </option>
-              ))}
-            </select>
+                  <div onClick={() => handleOptionClick1("All")}>
+                    {selectedCategory || "Category"}
+                  </div>
+                  <div>
+                    <IoMdArrowDropdown className="inline" />
+                  </div>
+
+                </div>
+
+              </div>
+              {openctg && (
+                <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
+
+                    onClick={() => handleOptionClick1("All")}>
+                    All
+                  </div>
+                  {getUniqueCategories().map((cat) => (
+                    <div
+                      key={cat}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick1(cat)}>
+                      {cat}
+                    </div>
+
+                  ))}
+                </div>
+              )}
+
+            </div>
+
 
             {/* Colour */}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Colour
-            </label>
-            <select
-              className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-              onChange={(e) => setSelectedColour(e.target.value)}
-            >
-              <option value="All" className="text-[#666F80]">
-                All
-              </option>
-              {getUniqueColours().map((colour) => (
-                <option
-                  key={colour}
-                  value={colour}
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#666F80",
-                  }}
+
+
+            <div className="mt-5">
+              <div className="flex justify-between items-center">
+                <div onClick={() => {
+                  setopenclr(!openclr);
+                  setopenbrand(false);
+                  setopenctg(false)
+                }}
+                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                 >
-                  {colour}
-                </option>
-              ))}
-            </select>
+                  <div onClick={() => handleOptionClick("All")}>
+                    {selectedColour || "Color"}
+                  </div>
+                  <div>
+                    <IoMdArrowDropdown className="inline" />
+                  </div>
+
+                </div>
+
+              </div>
+              {openclr && (
+                <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleOptionClick("All")}>
+                    All
+                  </div>
+                  {getUniqueColours().map((colour) => (
+                    <div
+                      key={colour}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick(colour)}>
+                      {colour}
+                    </div>
+
+                  ))}
+                </div>
+              )}
+
+            </div>
+
+
 
             {/*Brand*/}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Brands
-            </label>
-            <select
-              className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-              onChange={(e) => handleBrandChange(e.target.value)}
-              value={selectedbrand}
-            >
-              <option value="All" className="text-[#666F80]">
-                All
-              </option>
-              {getUniqueBrand().map((brand) => (
-                <option
-                  key={brand}
-                  value={brand}
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#666F80",
-                  }}
+
+            <div className="mt-5">
+              <div className="flex justify-between items-center">
+                <div onClick={() => {
+                  setopenbrand(!openbrand);
+                  setopenclr(false);
+                  setopenctg(false);
+                }}
+                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                 >
-                  {brand}
-                </option>
-              ))}
-            </select>
+                  <div onClick={() => handleOptionClick2("All")}>
+                    {selectedbrand || "Brands"}
+                  </div>
+                  <div>
+                    <IoMdArrowDropdown className="inline" />
+                  </div>
+
+                </div>
+
+              </div>
+              {openbrand && (
+                <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleOptionClick2("All")}>
+                    All
+                  </div>
+                  {getUniqueBrand().map((B) => (
+                    <div
+                      key={B}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick2(B)}>
+                      {B}
+                    </div>
+
+                  ))}
+                </div>
+              )}
+
+            </div>
 
 
             {/* Max Price */}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Max Price: ₹{maxPrice.toLocaleString()}
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="10000"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-full accent-[#FB6D6C]"
-            />
+            <div className="mt-5">
+              <label
+                className="block font-semibold mb-2"
+                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+              >
+                Max Price: ₹{maxPrice.toLocaleString()}
+              </label>
+              <input
+                type="range"
+                min="0"
+                max={`${selectedCategory == "Stoles" ? "4000" : "10000"}`}
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+                className="w-full accent-[#FB6D6C]"
+              />
+            </div>
+
           </div>
         </div>}
 
         {/* // SideBar For Desktop */}
         {(!isMobile) &&
 
-          <div className="w-full md:w-1/6 p-6 border-gray-200 bg-gray-100 mb-6 md:mb-0">
+          <div className="w-full relative md:w-1/6 p-6 border-gray-200 b mb-6 md:mb-0">
             <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
               <FaFilter /> Filters
             </h2>
 
             {/* Category */}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Category
-            </label>
-            <select
-              className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-              value={selectedCategory}
-              onChange={(e) => handleCategoryChange(e.target.value)}
-            >
-              <option value="All" className="text-[#666F80]">
-                All
-              </option>
-              {getUniqueCategories().map((cat) => (
-                <option
-                  key={cat}
-                  value={cat}
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#666F80",
-                  }}
+
+            <div>
+              <div className="flex justify-between items-center">
+                <div onClick={() => {
+                  setopenctg(!openctg);
+                  setopenclr(false);
+                  setopenbrand(false)
+                }}
+                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                 >
-                  {cat}
-                </option>
-              ))}
-            </select>
+                  <div onClick={() => handleOptionClick1("All")}>
+                    {selectedCategory || "Category"}
+                  </div>
+                  <div>
+                    <IoMdArrowDropdown className="inline" />
+                  </div>
+
+                </div>
+
+              </div>
+              {openctg && (
+                <div className="absolute z-10 w-42 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
+
+                    onClick={() => handleOptionClick1("All")}>
+                    All
+                  </div>
+                  {getUniqueCategories().map((cat) => (
+                    <div
+                      key={cat}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick1(cat)}>
+                      {cat}
+                    </div>
+
+                  ))}
+                </div>
+              )}
+
+            </div>
+
 
             {/* Colour */}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Colour
-            </label>
-            <select
-              className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-              value={selectedColour}
-              onChange={(e) => setSelectedColour(e.target.value)}
-            >
-              <option value="All" className="text-[#666F80]">
-                All
-              </option>
-              {getUniqueColours().map((colour) => (
-                <option
-                  key={colour}
-                  value={colour}
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#666F80",
-                  }}
+
+
+            <div className="mt-5">
+              <div className="flex justify-between items-center">
+                <div onClick={() => {
+                  setopenclr(!openclr);
+                  setopenbrand(false);
+                  setopenctg(false)
+                }}
+                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                 >
-                  {colour}
-                </option>
-              ))}
-            </select>
+                  <div onClick={() => handleOptionClick("All")}>
+                    {selectedColour || "Color"}
+                  </div>
+                  <div>
+                    <IoMdArrowDropdown className="inline" />
+                  </div>
+
+                </div>
+
+              </div>
+              {openclr && (
+                <div className="absolute z-10 w-42 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleOptionClick("All")}>
+                    All
+                  </div>
+                  {getUniqueColours().map((colour) => (
+                    <div
+                      key={colour}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick(colour)}>
+                      {colour}
+                    </div>
+
+                  ))}
+                </div>
+              )}
+
+            </div>
 
 
 
             {/*Brand*/}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Brands
-            </label>
-            <select
-              className="w-full p-2 mb-4 border rounded-lg focus:outline-none"
-              onChange={(e) => handleBrandChange(e.target.value)}
-              value={selectedbrand}
-            >
-              <option value="All" className="text-[#666F80]">
-                All
-              </option>
-              {getUniqueBrand().map((brand) => (
-                <option
-                  key={brand}
-                  value={brand}
-                  style={{
-                    fontFamily: "Copperplate, Papyrus, fantasy",
-                    color: "#666F80",
-                  }}
+
+            <div className="mt-5">
+              <div className="flex justify-between items-center">
+                <div onClick={() => {
+                  setopenbrand(!openbrand);
+                  setopenclr(false);
+                  setopenctg(false);
+                }}
+                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                 >
-                  {brand}
-                </option>
-              ))}
-            </select>
+                  <div onClick={() => handleOptionClick2("All")}>
+                    {selectedbrand || "Brands"}
+                  </div>
+                  <div>
+                    <IoMdArrowDropdown className="inline" />
+                  </div>
+
+                </div>
+
+              </div>
+              {openbrand && (
+                <div className="absolute z-10 w-42 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleOptionClick2("All")}>
+                    All
+                  </div>
+                  {getUniqueBrand().map((B) => (
+                    <div
+                      key={B}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick2(B)}>
+                      {B}
+                    </div>
+
+                  ))}
+                </div>
+              )}
+
+            </div>
 
 
             {/* Max Price */}
-            <label
-              className="block font-semibold mb-2"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-            >
-              Max Price: ₹{maxPrice.toLocaleString()}
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="10000"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-full accent-[#FB6D6C]"
-            />
-          </div>}
+            <div className="mt-5">
+              <label
+                className="block font-semibold mb-2"
+                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+              >
+                Max Price: ₹{maxPrice.toLocaleString()}
+              </label>
+              <input
+                type="range"
+                min="0"
+                max={`${selectedCategory == "Stoles" ? "4000" : "10000"}`}
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+                className="w-full accent-[#FB6D6C]"
+              />
+            </div>
+          </div>
+
+        }
 
 
         {/* Products Section */}
@@ -722,7 +840,7 @@ const accesstoken = localStorage.getItem('AccessToken')
                     <button
                       className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 w-full rounded-full transition-all"
                       style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                      onClick={() => handleProductClick(product.product_variation.product_variation_id , product.Product_id)}
+                      onClick={() => handleProductClick(product.product_variation.product_variation_id, product.Product_id)}
                     >
                       View
                     </button>
@@ -733,9 +851,22 @@ const accesstoken = localStorage.getItem('AccessToken')
           </div>
         </div>
       </div>
+
       <section id='contact'  >
         <Footer />
       </section>
+
+      {/* Popup Component */}
+      <Popup
+        show={showPopup}
+        title="Item Added!"
+        message="item Added to Wishlist"
+      />
+
+      {/* Chatbot */}
+      <div className="relative bottom-0 right-4 top-60 w-[90%] max-w-[350px] z-50">
+        <Bot />
+      </div>
     </div>
 
   );

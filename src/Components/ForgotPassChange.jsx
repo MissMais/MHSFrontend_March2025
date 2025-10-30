@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {url} from "../App"
+import toast, { Toaster } from "react-hot-toast";
 
 // const url = "https://5d0abf24c6ce.ngrok-free.app/";
 
@@ -18,11 +19,16 @@ export default function ForgotPassChange() {
     
       const response = await axios.post(`${url}forget/`, data,);
       
-      alert('Password Changed Successfully');
-      navigate("/login");
+      
+      toast.success('Password Change Successfully')
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+      
     } catch (error) {
       console.error(error);
-      alert("Failed to Reset");
+      toast.error("Failed to Reset")
+      
     }
   };
 
@@ -88,6 +94,7 @@ export default function ForgotPassChange() {
         </form>
 
       </div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 }

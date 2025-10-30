@@ -29,7 +29,7 @@ export default function Cart() {
     const email = user?.email;
 
     if (!email) {
-      alert("Please login to view your cart.");
+      // alert("Please login to view your cart.");
       navigate("/login");
       return;
     }
@@ -408,6 +408,5 @@ export default function Cart() {
     </div>
   );
 }
-
 
 

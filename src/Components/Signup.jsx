@@ -3,24 +3,54 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { url } from "../App"
+import { Country, State, City } from "country-state-city";
+
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
+
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Signup() {
   const { register, handleSubmit, reset } = useForm();
   const [message, setMessage] = useState("");
   const [image, setImage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage1, setErrorMessage1] = useState("");
+
+  const [type, setType] = useState('password')
+  const [icon, setIcon] = useState(FaRegEyeSlash);
+
   const navigate = useNavigate()
-  // const url = "https://f7c671b11927.ngrok-free.app/"
-  // "https://3j7gm770-8000.inc1.devtunnels.ms/register/"
+
+
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+
+
+  const countries = Country.getAllCountries();
+  const selectedCountry = Country.getCountryByCode(country);
+  // console.log(selectedCountry?.name)
+
+  const states = country ? State.getStatesOfCountry(country) : [];
+  const selectedState = State.getStateByCodeAndCountry(state, country);
+  // console.log(selectedState?.name)
+
+  const cities = state ? City.getCitiesOfState(country, state) : [];
+  const selectedCity = cities.find((c) => c.name === city);
+  // console.log(selectedCity?.name)
+
+
+
+
 
   const onSubmit = async (data) => {
-
+    // console.log(data)
     const formData = new FormData();
 
 
     formData.append("first_name", data.first_name);
     formData.append("last_name", data.last_name);
-    formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("contact", data.contact);
@@ -28,18 +58,16 @@ export default function Signup() {
     formData.append("house_no", data.house_no);
     formData.append("area_colony", data.area_colony);
     formData.append("landmark", data.landmark);
-    formData.append("city", data.city);
-    formData.append("state", data.state);
-    formData.append("country", data.country);
+    formData.append("city", selectedCity?.name);
+    formData.append("state", selectedState?.name);
+    formData.append("country", selectedCountry?.name);
     formData.append("pincode", data.pincode);
 
 
     if (image) {
       formData.append("Profile_picture", image);
     } else {
-      formData.append("Profile_picture", null);
-      alert("Please select a profile picture.");
-      return;
+      formData.append("Profile_picture", "");
     }
 
     try {
@@ -47,36 +75,68 @@ export default function Signup() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
+      // console.log(res.data.error)
 
       if (res.status === 201 && res.data.message) {
-        alert(res.data.message);
+        // alert(res.data.message);
         setErrorMessage("");
-        navigate('/login');
-        reset();
+        setErrorMessage1("")
+        // navigate('/login');
+        // reset();
       }
 
-      else if (res.data.error) {
-        setErrorMessage(res.data.error);
-      }
+      // else if ( res.data.error == "Invalid contact number") {
+      //   setErrorMessage1("")
+      //   setErrorMessage(res.data.error);
+
+      // }
+      // else if ( res.data.error == "UNIQUE constraint failed: MHSapp_customuser.email") {
+      //   setErrorMessage("")
+      //   setErrorMessage1(res.data.error)
+
+      // }
+      toast.success(response.data.message);
+
 
     } catch (error) {
       // console.log(error.response)
-      if (error.response?.data?.error) {
 
-        setErrorMessage(error.response.data.error);
-      } else {
 
-        setErrorMessage("Signup failed. Please try again.");
+      if (error.response?.data?.error == "Invalid contact number") {
+        setErrorMessage1("")
+        setErrorMessage(error.response?.data?.error);
+
       }
+      else if (error.response?.data?.error == "UNIQUE constraint failed: MHSapp_customuser.email") {
+        setErrorMessage("")
+        setErrorMessage1(error.response?.data?.error)
+
+      }
+      
+
 
     }
   }
+
+  const handleToggle = () => {
+    if (type === 'password') {
+      setIcon(FaRegEye);
+      setType('text')
+    } else {
+      setIcon(FaRegEyeSlash)
+      setType('password')
+    }
+  }
+
+  // console.log(errorMessage)
+  // console.log(errorMessage1)
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
 
   return (
+    
     <div className="flex justify-center  min-h-screen bg-white mt-16">
       <div className="w-full max-w-2xl bg-white shadow-lg p-6 rounded-lg m-6">
         <h2 className="text-2xl font-bold mb-6 text-center" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Create an Account</h2>
@@ -92,7 +152,7 @@ export default function Signup() {
               </label>
 
               <input
-                {...register("Profile_picture")}
+                {...register("Profile_picture", { required: false })}
                 type="file"
                 onChange={handleImageChange}
                 className="block w-full text-sm text-[#666F80] bg-[#F8FAFC]
@@ -127,15 +187,7 @@ export default function Signup() {
                 required
               />
             </div>
-            <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Username</label>
-              <input
-                {...register("name", { required: true })}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                type="text"
-                required
-              />
-            </div>
+
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Email</label>
               <input font-bold
@@ -144,23 +196,36 @@ export default function Signup() {
                 type="email"
                 required
               />
+              {errorMessage1 && (
+                <span className="text-red-600">Email already exists</span>
+              )}
             </div>
 
 
             {/* Password */}
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Password</label>
-              <input
-                {...register("password", { required: true })}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                type="password"
-                required
-              />
+              <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+                Password
+              </label>
+              <div className=" flex mb-4">
+
+                <input
+                  {...register("password", { required: "Password is required" })}
+                  type={type}
+                  id="formpass"
+
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <span class="flex justify-around items-center" onClick={handleToggle}>
+                  <div className="absolute mr-10 text-lg">{icon}</div>
+                </span>
+
+              </div>
             </div>
 
             {/* Address & Contact */}
             {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"> */}
-            <div>
+            <div className="block">
               <label className="block text-gray-700">Contact</label>
               <input
                 {...register("contact", { required: true })}
@@ -168,10 +233,12 @@ export default function Signup() {
                 type="text"
                 required
               />
+
+              {errorMessage && (
+                <span className="text-red-600">Invalid Contact Number</span>
+              )}
+              {/* <p>hello</p> */}
             </div>
-            {errorMessage && (
-              <p className="text-red-600">{errorMessage}</p>
-            )}
           </div>
 
           <h2 className="text-2xl font-bold mb-5 text-center mt-10" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Add Address</h2>
@@ -216,41 +283,92 @@ export default function Signup() {
               />
             </div>
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
-              <input
-                {...register("city", { required: true })}
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
+              <select
+                {...register("country", { required: true })}
+                value={country}
+                onChange={(e) => {
+                  setCountry(e.target.value);
+                  setState("");
+                  setCity("");
+                }}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                type="text"
-                required
-              />
+              >
+                <option value="">Select Country</option>
+                {countries.map((c) => (
+                  <option key={c.isoCode} value={c.isoCode}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
             </div>
+
+
+
             <div>
               <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
-              <input font-bold
+              <select
                 {...register("state", { required: true })}
+                value={state}
+                onChange={(e) => {
+                  setState(e.target.value);
+                  setCity("");
+                }}
+                disabled={!country}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                type="text"
-                required
-              />
+              >
+                <option value="">Select State</option>
+                {states.map((s) => (
+                  <option key={s.isoCode} value={s.isoCode}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
             </div>
+
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
-              <input
-                {...register("country", { required: true })}
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
+              <select
+                {...register("city", { required: true })}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                disabled={!state}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
-                type="text"
-                required
-              />
+              >
+                <option value="">Select City</option>
+                {cities.map((ci) => (
+                  <option key={ci.name} value={ci.name}>
+                    {ci.name}
+                  </option>
+                ))}
+              </select>
             </div>
+
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
+              <label
+                className="block font-bold text-gray-700"
+                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}
+              >
+                Pincode
+              </label>
+
               <input
-                {...register("pincode", { required: true })}
+                {...register("pincode", {
+                  required: true,
+                })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
+                maxLength="6"
+                inputMode="numeric"
+                placeholder="Enter 6-digit pincode"
+                onInput={(e) => {
+                  // only allow numbers
+                  e.target.value = e.target.value.replace(/\D/g, "");
+                }}
                 required
               />
             </div>
+
 
 
 
@@ -264,9 +382,7 @@ export default function Signup() {
           >
             Signup
           </button>
-          {errorMessage && (
-            <p className="text-red-600 text-center">{errorMessage}</p>
-          )}
+
 
           <p className="mt-3 text-center text-gray-600"
             style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
@@ -284,6 +400,7 @@ export default function Signup() {
           <p className="mt-4 text-center text-red-500">{message}</p>
         )}
       </div>
+       <Toaster  position="bottom-center" reverseOrder={false} />
     </div>
   );
 }

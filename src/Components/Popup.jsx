@@ -319,7 +319,7 @@ export default function Wishlist() {
       <Popup
         show={showPopup}
         title="Item Added!"
-        message="item Added to Cart"
+        message="This product has been added to your cart 🛒"
       />
 
       <Toaster position="bottom-center" reverseOrder={false} />

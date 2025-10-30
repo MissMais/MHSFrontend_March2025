@@ -1,15 +1,15 @@
 import Footer from '../Routes/Footer';
-
 import { useEffect } from 'react';
+import Bot from './Bot';
 
 export default function About() {
 
- 
+
 
 
   return (
 
-    <div>
+    <div className='relative'>
       {/* <Navbar /> */}
 
 
@@ -125,6 +125,11 @@ export default function About() {
       <section id='contact'>
         <Footer />
       </section>
+
+      {/* Chatbot */}
+      <div className="relative bottom-0 right-4 top-60 w-[90%] max-w-[350px] z-50">
+        <Bot />
+      </div>
     </div>
   );
 }
