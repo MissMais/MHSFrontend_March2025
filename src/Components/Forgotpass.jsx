@@ -31,7 +31,7 @@ export default function ForgotPassword() {
       <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
         <h2
           className="text-center text-2xl font-bold mb-6"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+          style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
         >
           Forgot Password?
         </h2>
@@ -40,7 +40,7 @@ export default function ForgotPassword() {
             <label
               htmlFor="Current Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               Email
             </label>
@@ -59,7 +59,7 @@ export default function ForgotPassword() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Send OTP
           </button>

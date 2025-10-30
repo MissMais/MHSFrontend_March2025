@@ -25,7 +25,7 @@ const ProductPage = () => {
   const defaultBrand = searchParams.get("brand") || "Brands" || "All";
   const [selectedbrand, setSelectedBrand] = useState(defaultBrand)
   const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
-  const [maxPrice, setMaxPrice] = useState(selectedCategory == "Stoles" ? 4000 : 10000);
+  const [maxPrice, setMaxPrice] = useState(10000);
   const [products, setProducts] = useState([]);
   const [selectedColour, setSelectedColour] = useState("Color" || "All");
   const [sideOpen, setSideOpen] = useState(false)
@@ -57,6 +57,10 @@ const ProductPage = () => {
     setopenbrand(false);
   };
 
+useEffect(() => {
+    const newMaxPrice = selectedCategory === "Stoles" ? 4000 : 10000;
+    setMaxPrice(newMaxPrice);
+}, [selectedCategory]);
 
 
   const user_id = localStorage.getItem('user_id')
@@ -422,174 +426,184 @@ const ProductPage = () => {
 
       <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row  shadow-xl rounded-2xl">
         {isMobile && <div className="flex justify-end-safe mr-3 z-[9998]">
-          <button className="bg-[#FB6D6C] text-[15px] rounded-2xl mt-2 w-15 h-10 flex items-center justify-center text-white gap-1" onClick={func}><FaFilter className="text-[13px]" />Filters </button>
+          <button
+            onClick={func}
+            className="flex items-center justify-center gap-2 px-4 py-2 mt-2 
+             bg-[#FB6D6C]  active:scale-95 
+             text-white text-sm font-semibold rounded-full 
+             shadow-md transition-all duration-200 ease-in-out"
+          >
+            <FaFilter className="text-sm" />
+            Filters
+          </button>
+
         </div>
         }
 
 
         {/* // SideBar For Phone */}
-        {sideOpen && <div className=" mt-15 fixed inset-0 z-[9997]">
+        {sideOpen &&
+          <div className=" mt-15 w-full fixed inset-0 z-[9997]">
 
-          <div
-            className="absolute inset-0 bg-transparent"
-            onClick={() => setSideOpen(false)}
-          ></div>
+            <div
+              className="absolute inset-0 bg-transparent"
+              onClick={() => setSideOpen(false)}
+            ></div>
 
-          <div className="absolute left-0 top-0 bottom-0 h-full w--/4 md:w-1/6 p-6 border-gray-200 bg-gray-100 mb-6 md:mb-0">
-            <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
-              <FaFilter /> Filters
-            </h2>
+            <div className="fixed mt-14 left-0 top-0 bottom-0 h-full w-50 md:w-1/6 p-6 border-gray-200 bg-gray-100 mb-6 md:mb-0">
+              <h2 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#666F80]">
+                <FaFilter /> Filters
+              </h2>
 
 
-            {/* Category */}
+              {/* Category */}
 
-            <div>
-              <div className="flex justify-between items-center">
-                <div onClick={() => {
-                  setopenctg(!openctg);
-                  setopenclr(false);
-                  setopenbrand(false)
-                }}
-                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
-                >
-                  <div onClick={() => handleOptionClick1("All")}>
-                    {selectedCategory || "Category"}
-                  </div>
-                  <div>
-                    <IoMdArrowDropdown className="inline" />
-                  </div>
-
-                </div>
-
-              </div>
-              {openctg && (
-                <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
-                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
-
-                    onClick={() => handleOptionClick1("All")}>
-                    All
-                  </div>
-                  {getUniqueCategories().map((cat) => (
-                    <div
-                      key={cat}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleOptionClick1(cat)}>
-                      {cat}
+              <div>
+                <div className="flex justify-between items-center">
+                  <div onClick={() => {
+                    setopenctg(!openctg);
+                    setopenclr(false);
+                    setopenbrand(false)
+                  }}
+                    className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
+                  >
+                    <div onClick={() => handleOptionClick1("All")}>
+                      {selectedCategory || "Category"}
+                    </div>
+                    <div>
+                      <IoMdArrowDropdown className="inline" />
                     </div>
 
-                  ))}
-                </div>
-              )}
-
-            </div>
-
-
-            {/* Colour */}
-
-
-            <div className="mt-5">
-              <div className="flex justify-between items-center">
-                <div onClick={() => {
-                  setopenclr(!openclr);
-                  setopenbrand(false);
-                  setopenctg(false)
-                }}
-                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
-                >
-                  <div onClick={() => handleOptionClick("All")}>
-                    {selectedColour || "Color"}
-                  </div>
-                  <div>
-                    <IoMdArrowDropdown className="inline" />
                   </div>
 
                 </div>
+                {openctg && (
+                  <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                    <div className="p-2 hover:bg-gray-100 cursor-pointer"
+
+                      onClick={() => handleOptionClick1("All")}>
+                      All
+                    </div>
+                    {getUniqueCategories().map((cat) => (
+                      <div
+                        key={cat}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleOptionClick1(cat)}>
+                        {cat}
+                      </div>
+
+                    ))}
+                  </div>
+                )}
 
               </div>
-              {openclr && (
-                <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
-                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleOptionClick("All")}>
-                    All
-                  </div>
-                  {getUniqueColours().map((colour) => (
-                    <div
-                      key={colour}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleOptionClick(colour)}>
-                      {colour}
+
+
+              {/* Colour */}
+
+              <div className="mt-5">
+                <div className="flex justify-between items-center">
+                  <div onClick={() => {
+                    setopenclr(!openclr);
+                    setopenbrand(false);
+                    setopenctg(false)
+                  }}
+                    className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
+                  >
+                    <div onClick={() => handleOptionClick("All")}>
+                      {selectedColour || "Color"}
+                    </div>
+                    <div>
+                      <IoMdArrowDropdown className="inline" />
                     </div>
 
-                  ))}
-                </div>
-              )}
-
-            </div>
-
-
-
-            {/*Brand*/}
-
-            <div className="mt-5">
-              <div className="flex justify-between items-center">
-                <div onClick={() => {
-                  setopenbrand(!openbrand);
-                  setopenclr(false);
-                  setopenctg(false);
-                }}
-                  className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
-                >
-                  <div onClick={() => handleOptionClick2("All")}>
-                    {selectedbrand || "Brands"}
-                  </div>
-                  <div>
-                    <IoMdArrowDropdown className="inline" />
                   </div>
 
                 </div>
+                {openclr && (
+                  <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                    <div className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick("All")}>
+                      All
+                    </div>
+                    {getUniqueColours().map((colour) => (
+                      <div
+                        key={colour}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleOptionClick(colour)}>
+                        {colour}
+                      </div>
+
+                    ))}
+                  </div>
+                )}
 
               </div>
-              {openbrand && (
-                <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
-                  <div className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleOptionClick2("All")}>
-                    All
-                  </div>
-                  {getUniqueBrand().map((B) => (
-                    <div
-                      key={B}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleOptionClick2(B)}>
-                      {B}
+
+
+
+              {/*Brand*/}
+
+              <div className="mt-5">
+                <div className="flex justify-between items-center">
+                  <div onClick={() => {
+                    setopenbrand(!openbrand);
+                    setopenclr(false);
+                    setopenctg(false);
+                  }}
+                    className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
+                  >
+                    <div onClick={() => handleOptionClick2("All")}>
+                      {selectedbrand || "Brands"}
+                    </div>
+                    <div>
+                      <IoMdArrowDropdown className="inline" />
                     </div>
 
-                  ))}
+                  </div>
+
                 </div>
-              )}
+                {openbrand && (
+                  <div className="absolute z-10 w-34 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto">
+                    <div className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleOptionClick2("All")}>
+                      All
+                    </div>
+                    {getUniqueBrand().map((B) => (
+                      <div
+                        key={B}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleOptionClick2(B)}>
+                        {B}
+                      </div>
+
+                    ))}
+                  </div>
+                )}
+
+              </div>
+
+
+              {/* Max Price */}
+              <div className="mt-5">
+                <label
+                  className="block font-semibold mb-2"
+                  style={{ fontFamily: 'Papyrus' , color: "#FB6D6C" }}
+                >
+                  Max Price: ₹{maxPrice.toLocaleString()}
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max={`${selectedCategory == "Stoles" ? "4000" : "10000"}`}
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  className="w-full accent-[#FB6D6C]"
+                />
+              </div>
 
             </div>
-
-
-            {/* Max Price */}
-            <div className="mt-5">
-              <label
-                className="block font-semibold mb-2"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
-              >
-                Max Price: ₹{maxPrice.toLocaleString()}
-              </label>
-              <input
-                type="range"
-                min="0"
-                max={`${selectedCategory == "Stoles" ? "4000" : "10000"}`}
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full accent-[#FB6D6C]"
-              />
-            </div>
-
-          </div>
-        </div>}
+          </div>}
 
         {/* // SideBar For Desktop */}
         {(!isMobile) &&
@@ -732,7 +746,7 @@ const ProductPage = () => {
             <div className="mt-5">
               <label
                 className="block font-semibold mb-2"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+                style={{ fontFamily: 'Papyrus' , color: "#FB6D6C" }}
               >
                 Max Price: ₹{maxPrice.toLocaleString()}
               </label>
@@ -785,7 +799,7 @@ const ProductPage = () => {
                 </div>
 
                 {/* Details */}
-                <div style={{ fontFamily: "Copperplate, Papyrus, fantasy" }} className="p-4 flex flex-col flex-grow text-xs md:text-sm">
+                <div style={{ fontFamily: 'Papyrus'  }} className="p-4 flex flex-col flex-grow text-xs md:text-sm">
                   <h3
                     className="md:text-lg font-bold mb-1 text-[#FB6D6C]"
 
@@ -839,7 +853,7 @@ const ProductPage = () => {
 
                     <button
                       className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 w-full rounded-full transition-all"
-                      style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                      style={{ fontFamily: 'Papyrus'  }}
                       onClick={() => handleProductClick(product.product_variation.product_variation_id, product.Product_id)}
                     >
                       View

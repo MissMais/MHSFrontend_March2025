@@ -209,8 +209,8 @@ export default function OrderPage() {
         {/* Left Column - Invoice Details */}
         <div>
           <div className="flex justify-between mb-3">
-            <h2 className="text-xl md:text-2xl font-bold text-[#666F80]" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Payment Details</h2>
-            <button onClick={() => navigate('/address')} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
+            <h2 className="text-xl md:text-2xl font-bold text-[#666F80]" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>Payment Details</h2>
+            <button onClick={() => navigate('/address')} style={{ fontFamily: 'Papyrus'  }} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 text-sm text-[#666F80]">
@@ -309,7 +309,7 @@ export default function OrderPage() {
 
         {/* Right Column - Order Summary */}
         <div>
-          <h2 className="text-2xl font-bold mb-6 text-[#666F80]" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Your Order</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#666F80]" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>Your Order</h2>
           <div className="bg-gray-50 p-6 rounded-2xl shadow-inner space-y-5">
             {cartItems.map((product, idx) => (
               <div key={idx} className="flex justify-between items-start border-b pb-4">
@@ -321,23 +321,23 @@ export default function OrderPage() {
                     alt="Product"
                     className="w-16 h-16 object-cover rounded-md"
                   />
-                  <div style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+                  <div style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
                     <p className="font-medium">{product?.product_description || "N/A"}</p>
                     {/* </div> */}
-                    {/* <div  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}> */}
-                    <p className="font-medium" >Quantity: <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }} >{product?.quantity || "N/A"}</span></p>
+                    {/* <div  style={{ fontFamily: 'Papyrus' , color: "#666F80" }}> */}
+                    <p className="font-medium" >Quantity: <span className="font-bold" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }} >{product?.quantity || "N/A"}</span></p>
                   </div>
                 </div>
-                <p className="font-semibold text-right " style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>₹{product?.price * product.quantity}</p>
+                <p className="font-semibold text-right " style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>₹{product?.price * product.quantity}</p>
               </div>
             )
             )}
-            <div className="text-sm font-bold space-y-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+            <div className="text-sm font-bold space-y-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <p className="font-semibold">₹{subtotal.toFixed(2)}</p>
               </div>
-              <div className="flex justify-between " style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+              <div className="flex justify-between " style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
                 <span>Shipping</span>
                 <span>Free</span>
               </div>
@@ -347,7 +347,7 @@ export default function OrderPage() {
               </div>
             </div>
             {payment.map((item, idx) => (
-              <div key={item.Payment_id} className="mt-4 space-y-4 font-bold" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+              <div key={item.Payment_id} className="mt-4 space-y-4 font-bold" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
                 <label className="flex items-center gap-2 text-sm">
                   <input
                     type="radio"
@@ -379,11 +379,11 @@ export default function OrderPage() {
               <button
                 onClick={handleSubmit(onSubmit)}
                 className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl  hover:bg-[#e95a59] font-semibold transition"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                style={{ fontFamily: 'Papyrus'  }}
               >
                 Complete Payment
               </button>
-              <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+              <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: 'Papyrus'  }}>
                 3D Secure Payment | Fast and Easy Returns
               </div>
             </div>

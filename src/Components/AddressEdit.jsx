@@ -109,7 +109,7 @@ export default function AddressEdit() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-4">
-              <label htmlFor="Name" className="block font-bold  text-sm text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Name</label>
+              <label htmlFor="Name" className="block font-bold  text-sm text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Name</label>
               <input
                 {...register('Name', { required: true })}
                 type="text"
@@ -118,7 +118,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4'>
-              <label className="block font-bold  text-sm  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Contact</label>
+              <label className="block font-bold  text-sm  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Contact</label>
               <input
                 {...register("Contact", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -127,7 +127,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4'>
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Address Type</label>
               <input
                 {...register("Address_type", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -137,7 +137,7 @@ export default function AddressEdit() {
             </div>
 
             <div className='mb-4'>
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>House No</label>
               <input
                 {...register("House_No", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -146,7 +146,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4'>
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Area/Colony</label>
               <input
                 {...register("Area_Colony", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -155,7 +155,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4'>
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Landmark</label>
               <input
                 {...register("Landmark", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -164,7 +164,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4'>
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>City</label>
               <input
                 {...register("City", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -173,7 +173,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4'>
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>State</label>
               <input
                 {...register("State", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -182,7 +182,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4' >
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Country</label>
               <input
                 {...register("Country", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -191,7 +191,7 @@ export default function AddressEdit() {
               />
             </div>
             <div className='mb-4'>
-              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
+              <label className="block font-bold  text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Pincode</label>
               <input
                 {...register("Pincode", { required: true })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -201,7 +201,7 @@ export default function AddressEdit() {
             </div>
           </div>
           <div className="flex space-x-4 mt-4 font-semibold"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+            style={{ fontFamily: 'Papyrus'  }}>
             <button type="submit" className="bg-[#FB6D6C] text-white py-2 px-4 rounded-md hover:bg-[#e95a59] focus:outline-none focus:ring-2 focus:ring-blue-500">
               Change
             </button>

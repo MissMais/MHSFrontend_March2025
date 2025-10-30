@@ -60,6 +60,7 @@ export default function Address() {
 
 
   const accessToken = localStorage.getItem("AccessToken")
+  const custId = localStorage.getItem("id")
 
   const fetchAddress = async () => {
     const response = await axios.get(`${url}address/`,
@@ -74,7 +75,7 @@ export default function Address() {
     )
     console.log(response.data)
     const fetcheddata = response.data
-    const filtereddata = fetcheddata.filter(item => item.User_id === User_id)
+    const filtereddata = fetcheddata.filter(item => item.Customer_id === custId)
     console.log(filtereddata)
     setaddress(filtereddata)
     // console.log(filtereddata)
@@ -123,10 +124,10 @@ export default function Address() {
 
        {/* Sidebar */}
             <div className="w-full md:w-1/6 bg-white p-6 shadow-md">
-              <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+              <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
                 Account Settings
               </h2>
-              <ul className="space-y-4 text-sm" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+              <ul className="space-y-4 text-sm" style={{ fontFamily: 'Papyrus'  }}>
                 <li>
                   <Link to="/acc" className="block text-[#666F80]  hover:text-[#e95a59]  transition-colors">
                     <span className="flex items-center gap-2">
@@ -161,7 +162,7 @@ export default function Address() {
           <button
             onClick={() => Buttonadd()}
             className="w-full border border-[#FB6D6C] text-[#FB6D6C] bg-white font-semibold py-3 rounded-lg hover:bg-[#FB6D6C] hover:text-white transition"
-            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+            style={{ fontFamily: ' Papyrus'  }}
           >
             + Add Address
           </button>
@@ -173,7 +174,7 @@ export default function Address() {
 
 
 
-              <div className='font-semibold' style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: "#666F80" }} >
+              <div className='font-semibold' style={{ fontFamily: ' Papyrus' , color: "#666F80" }} >
                 <p className='text-2xl'>{add.Name}</p>
                 <p>Address : <span className='text-gray-400'>{add.House_No}, {add.Area_Colony} </span></p>
                 <p>City : <span className='text-gray-400'>{add.City} ({add.State}), {add.Country}</span></p>

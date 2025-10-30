@@ -157,7 +157,7 @@ export default function AccountEdit() {
       <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
         <h2
           className="text-center text-2xl font-bold mb-6"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+          style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
         >
           Edit Account
         </h2>
@@ -210,7 +210,7 @@ export default function AccountEdit() {
                       <label
                         htmlFor="Profile_picture"
                         className="text-xs mt-1 font-semibold text-[#666F80] cursor-pointer hover:text-[#FB6D6C] transition"
-                        style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                        style={{ fontFamily: ' Papyrus'  }}
                       >
                         <div className="flex justify-center items-center gap-2">
                           <CgProfile className="text-xl" /> Change Profile Picture
@@ -258,7 +258,7 @@ export default function AccountEdit() {
                       <label
                         htmlFor="Profile_picture"
                         className="text-xs mt-1 font-semibold text-[#666F80] cursor-pointer hover:text-[#FB6D6C] transition"
-                        style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                        style={{ fontFamily: ' Papyrus'  }}
                       >
                         <div className="flex justify-center items-center gap-2">
                           <CgProfile className="text-xl" /> Change Profile Picture
@@ -289,7 +289,7 @@ export default function AccountEdit() {
 
           {/* First Name */}
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+            <label className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
               First Name
             </label>
             <input
@@ -303,7 +303,7 @@ export default function AccountEdit() {
 
           {/* Last Name */}
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+            <label className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
               Last Name
             </label>
             <input
@@ -316,7 +316,7 @@ export default function AccountEdit() {
 
           {/* Email */}
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+            <label className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
               Email
             </label>
             <input
@@ -327,7 +327,7 @@ export default function AccountEdit() {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80] cursor-not-allowed"
             />
             {emailMessage && (
-              <p className="text-red-600 mt-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+              <p className="text-red-600 mt-1" style={{ fontFamily: 'Papyrus'  }}>
                 {emailMessage}
               </p>
             )}
@@ -337,7 +337,7 @@ export default function AccountEdit() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Save Changes
           </button>

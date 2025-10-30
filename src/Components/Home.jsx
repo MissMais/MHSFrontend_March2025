@@ -27,7 +27,6 @@ export default function Home() {
     }, []);
 
 
-
     const settings = {
         autoplay: true,
         infinite: true,
@@ -206,7 +205,7 @@ export default function Home() {
                                     <p className=" text-[12px] md:text-[21px] font-bold text-[#FB6D6C] underline mb-4 md:ml-20 ml-12" style={{ fontFamily: 'Papyrus' }}>Where Modesty Meets Elegance</p>
 
                                 </div>
-                                <p className="text-gray-700 pt-7 text-justify text-[16px] font-sans leading-relaxed md:text-lg" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                                <p className="text-gray-700 pt-7 text-justify text-[16px] font-sans leading-relaxed md:text-lg" style={{ fontFamily: 'Papyrus' }}>
                                     At Modest Gallery, we offer a diverse collection of modest hijabs, abayas, and accessories that blend elegance with comfort,
                                     allowing you to express your unique style with confidence. In addition to our fashion offerings, we proudly present Shaam e Roshan,
                                     our lifestyle, food, and craft exhibitions that celebrate creativity and tradition. Each event showcases exquisite crafts,
@@ -249,7 +248,7 @@ export default function Home() {
                     <div className="max-w-7xl mx-auto px-4 ">
 
                         <div>
-                            <h1 className="text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                            <h1 className="text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: ' Papyrus' , color: '#FB6D6C' }}>
                                 Featured  Brands
                             </h1>
 
@@ -266,7 +265,7 @@ export default function Home() {
                                      m-2 md:m-3  md:gap-8 shadow-md shadow-[#FB6D6C] md:w-50 md:h-50 w-20 h-20 hover:text-lg cursor-pointer
                                      transition duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                             <img src={item.Brand_image} alt="no image" className='w-full h-full object-cover' />
-                                            <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg drop-shadow-black items-center font-bold'>{item.Brand_name}</div>
+                                            <div style={{ fontFamily: ' Papyrus'  }} className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg drop-shadow-black items-center font-bold'>{item.Brand_name}</div>
                                         </div>
                                     ))
                                     }
@@ -298,11 +297,11 @@ export default function Home() {
 
                         {/* Text Content */}
                         <div className="mb-8">
-                            <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                            <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: ' Papyrus' , color: '#FB6D6C' }}>
                                 Abayas
                             </h1>
                             <br />
-                            <p className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                            <p className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed" style={{ fontFamily: ' Papyrus'  }}>
                                 When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
                             </p>
                         </div>
@@ -351,14 +350,14 @@ export default function Home() {
                         <div className="mb-8">
                             <h1
                                 className="text-2xl md:text-3xl font-bold"
-                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
+                                style={{ fontFamily: ' Papyrus' , color: '#FB6D6C' }}
                             >
                                 Stoles
                             </h1>
                             <br />
                             <p
                                 className="text-sm md:text-lg text-justify leading-relaxed text-[#666F80]"
-                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                style={{ fontFamily: ' Papyrus'  }}
                             >
                                 Our hijabs are crafted from premium fabrics, ensuring that they are comfortable,
                                 breathable, and easy to style. From classic neutrals to vibrant prints, our hijabs
@@ -414,14 +413,14 @@ export default function Home() {
                         <div className="mb-8">
                             <h1
                                 className="text-2xl md:text-3xl font-bold"
-                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
+                                style={{ fontFamily: ' Papyrus' , color: '#FB6D6C' }}
                             >
                                 Accessories
                             </h1>
                             <br />
                             <p
                                 className="text-sm md:text-lg text-justify leading-relaxed text-[#666F80]"
-                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                style={{ fontFamily: ' Papyrus'  }}
                             >
                                 No outfit is complete without the perfect accessories, and at
                                 <span className="text-[#FB6D6C] font-semibold"> Modest Hijab Store</span>, we offer a wide range of hijab accessories that add a touch of elegance and personality to your look. From pins and brooches to underscarves and headbands, our accessories are designed to enhance your hijab-wearing experience and make styling effortless. We understand the importance of quality and durability, which is why our accessories are made from the finest materials to ensure they last.
@@ -474,14 +473,14 @@ export default function Home() {
                         <div className="mb-8">
                             <h1
                                 className="text-2xl md:text-3xl font-bold"
-                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}
+                                style={{ fontFamily: ' Papyrus' , color: '#FB6D6C' }}
                             >
                                 Hijabs
                             </h1>
                             <br />
                             <p
                                 className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed"
-                                style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                style={{ fontFamily: ' Papyrus'  }}
                             >
                                 At <span className="text-[#FB6D6C] font-semibold">Modest Gallery</span>, our hijab collection is crafted to empower modern women with elegance, comfort, and versatility. Whether you're dressing for a casual day out, a professional setting, or a special event, we offer hijabs in a wide variety of fabrics, colors, and styles to suit every mood and moment. From breathable cotton and soft jersey to luxurious chiffon and silk, each piece is thoughtfully selected to ensure a perfect blend of modesty and fashion. </p>
                         </div>
@@ -529,7 +528,7 @@ export default function Home() {
                     <div className="bg-[#FB6D6C] max-w-7xl pt-7 mx-auto pb-4 ">
 
                         <div>
-                            <h1 className="text-white text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+                            <h1 className="text-white text-2xl md:text-3xl flex justify-center font-bold" style={{ fontFamily: ' Papyrus'  }}>
                                 Varieties
                             </h1>
 
@@ -546,7 +545,7 @@ export default function Home() {
                                         className="relative overflow-hidden cursor-pointer aspect-[3/4]
                                         transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
                                         <img src={item.Variety_image} alt="no image" className='w-full h-full object-cover' />
-                                        {/* <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                        {/* <div style={{ fontFamily: ' Papyrus'  }}
                                                 className='absolute inset-0 text-white text-[9px] md:text-xl flex justify-center drop-shadow-lg
                                              drop-shadow-black items-center font-bold'>{item.Brand_name}</div> */}
                                     </div>
@@ -576,6 +575,7 @@ export default function Home() {
 
     );
 }
+
 
 
 

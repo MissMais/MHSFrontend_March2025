@@ -376,7 +376,7 @@ export default function ProductDetail() {
           <h2
             className="text-center text-[11px] md:text-2xl font-bold mb-6 animate-pulse"
             style={{
-              fontFamily: 'Copperplate, Papyrus, fantasy',
+              fontFamily: 'Papyrus' ,
               color: '#666F80',
             }}
           >
@@ -421,7 +421,7 @@ export default function ProductDetail() {
 
 
           {/* Info Section */}
-          <div style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+          <div style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
             <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
               {selectedProduct?.sub_category_name || 'Product Name'}
             </h1>
@@ -440,21 +440,21 @@ export default function ProductDetail() {
               )}
             </p>
 
-            <p className="text-xl md:text-3xl pt-7  font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+            <p className="text-xl md:text-3xl pt-7  font-bold" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
               ₹ {selectedProduct?.price || 'N/A'}
             </p>
 
             {/* <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.product_variation.stock ?? 'N/A'}
             </p> */}
-            <div className=" text-xs md:font-medium" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#C3C8D3' }}>
+            <div className=" text-xs md:font-medium" style={{ fontFamily: 'Papyrus' , color: '#C3C8D3' }}>
               Free Shipping
             </div>
 
             {/* Color Selector */}
             {allVariations.some(v => v.variation_type === 'Color') && (
               <div className="mt-7">
-                <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Choose Color:</h2>
+                <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Choose Color:</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Color' && v.ColorCode)
@@ -474,7 +474,7 @@ export default function ProductDetail() {
             {/* {allVariations.some(v => v.variation_type === 'Size') && (
 
               <div className="mt-7">
-                <h2 className="font-semibold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{allVariations[0]?.category_name === 'Abayas' ? 'Choose Size:' : 'Size:'}</h2>
+                <h2 className="font-semibold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>{allVariations[0]?.category_name === 'Abayas' ? 'Choose Size:' : 'Size:'}</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Size')
@@ -548,7 +548,7 @@ export default function ProductDetail() {
 
           {/* RATING */}
           <div className="flex justify-center items-center relative"
-            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            style={{ fontFamily: 'Papyrus'  }}>
             <button
               onClick={() => setShowBox(true)}
               className="px-4 py-2 bg-[#FB6D6C] text-white rounded-lg"
@@ -606,7 +606,7 @@ export default function ProductDetail() {
       {/* Similar Products Section */}
       {/* {selectedProduct && (
         <div className="px-4 mt-12">
-          <h2 className="text-2xl font-semibold mb-6" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>Related Products</h2>
+          <h2 className="text-2xl font-semibold mb-6" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>Related Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {relatedproduct
               .filter(p =>
@@ -626,18 +626,18 @@ export default function ProductDetail() {
                     />
                   </div>
                   <div className="p-4 flex flex-col flex-grow">
-                    <h3 className="text-lg font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{product.product_description}</h3>
-                    <p className="text-sm text-gray-500 mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>{product.category_name}</p>
-                    <p className="text-sm text-gray-500 mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>{product.sub_category_name}</p>
-                    <p className="text-sm text-gray-500" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>{product.variation_name ?? "N/A"}</p>
-                    <p className="text-sm mt-2 text-green-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Stock: {product.stock}</p>
-                    <div className="mt-auto flex justify-between items-center pt-3 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                    <h3 className="text-lg font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>{product.product_description}</h3>
+                    <p className="text-sm text-gray-500 mb-1" style={{ fontFamily: 'Papyrus'  }}>{product.category_name}</p>
+                    <p className="text-sm text-gray-500 mb-1" style={{ fontFamily: 'Papyrus'  }}>{product.sub_category_name}</p>
+                    <p className="text-sm text-gray-500" style={{ fontFamily: 'Papyrus'  }}>{product.variation_name ?? "N/A"}</p>
+                    <p className="text-sm mt-2 text-green-700" style={{ fontFamily: 'Papyrus'  }}>Stock: {product.stock}</p>
+                    <div className="mt-auto flex justify-between items-center pt-3 font-bold" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
                       <span className="text-xl font-semibold">
                         <FaRupeeSign className="inline mr-1" />
                         {parseFloat(product.Reduced_price).toLocaleString()}
                       </span>
                       <button
-                        className="bg-[#FB6D6C] text-white px-4 py-2 rounded-lg hover:bg-[#e95a59] transition-all" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                        className="bg-[#FB6D6C] text-white px-4 py-2 rounded-lg hover:bg-[#e95a59] transition-all" style={{ fontFamily: 'Papyrus'  }}
                         onClick={() => handleProductClick(product.Product_id)}
                       >
                         View

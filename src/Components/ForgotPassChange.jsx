@@ -37,7 +37,7 @@ export default function ForgotPassChange() {
       <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
         <h2
           className="text-center text-2xl font-bold mb-6"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+          style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
         >
           Reset Password
         </h2>
@@ -46,7 +46,7 @@ export default function ForgotPassChange() {
             <label
               htmlFor="New Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               New Password
             </label>
@@ -66,7 +66,7 @@ export default function ForgotPassChange() {
             <label
               htmlFor="Confirm New Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               Confirm New Password
             </label>
@@ -87,7 +87,7 @@ export default function ForgotPassChange() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Change
           </button>

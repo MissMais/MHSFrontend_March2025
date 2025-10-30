@@ -20,7 +20,7 @@ export default function Events() {
                             <div className="mb-8 text-center">
                                 <h1
                                     className="text-2xl sm:text-3xl font-bold text-white drop-shadow"
-                                    style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                    style={{ fontFamily: 'Papyrus'  }}
                                 >
                                     Shaam-E-Roshan
                                 </h1>

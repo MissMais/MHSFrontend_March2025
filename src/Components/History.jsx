@@ -53,7 +53,7 @@ export default function OrderHistory() {
     <div className="max-w-5xl mx-auto px-4 py-10 mt-20">
       <h1
         className="text-4xl text-center underline font-bold mb-6"
-        style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+        style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
       >
         Order Tales
       </h1>
@@ -68,19 +68,19 @@ export default function OrderHistory() {
               <div>
                 <p
                   className="text-lg font-semibold"
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+                  style={{ fontFamily: 'Papyrus' , color: "#FB6D6C" }}
                 >
                   Order #{order.order_id}
                 </p>
                 <p
                   className="text-sm"
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+                  style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
                 >
                   Date: {order.Order_date.split(' ')[0]}
                 </p>
                 <p
                   className="text-sm"
-                  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+                  style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
                 >
                   Status: {order.Order_status}
                 </p>
@@ -93,23 +93,23 @@ export default function OrderHistory() {
             </div>
             <p
               className="font-semibold mb-2 text-start"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               Items:
             </p>
 
-            <div className=" flex text-xs justify-between" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}>
+            <div className=" flex text-xs justify-between" style={{ fontFamily: 'Papyrus' , color: "#FB6D6C" }}>
               {order.cart_item.product_variation.product_description} x {order.cart_item.Quantity}
               <p
                 className=" text-sm font-bold text-end"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#FB6D6C" }}
+                style={{ fontFamily: 'Papyrus' , color: "#FB6D6C" }}
               >
                 ₹{order.cart_item.Quantity * order.cart_item.product_variation.price}
               </p>
             </div>
             {/* <p
                 className="font-semibold mb-2"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+                style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
               >
                 Items:
               </p>
@@ -118,7 +118,7 @@ export default function OrderHistory() {
                   <li
                     key={idx}
                     className="flex justify-between text-sm"
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+                    style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
                   >
                     <span>
                       {item.name} x {item.qty}

@@ -73,7 +73,7 @@ export default function ForgotPassOtp() {
         <h2
           className="text-center text-2xl font-bold mb-6"
           style={{
-            fontFamily: "Copperplate, Papyrus, fantasy",
+            fontFamily: 'Papyrus' ,
             color: "#666F80",
           }}
         >
@@ -98,7 +98,7 @@ export default function ForgotPassOtp() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Verify
           </button>

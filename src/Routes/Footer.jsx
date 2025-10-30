@@ -11,14 +11,14 @@ export default function Footer() {
 
           {/* Store Name */}
           <div className='text-center md:mr-40'>
-            <h3 className="text-xl md:text-2xl font-extrabold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            <h3 className="text-xl md:text-2xl font-extrabold" style={{ fontFamily: 'Papyrus'  }}>
               Modest Gallery
             </h3>
           </div>
           
 
           {/* Contact Info */}
-          <div className='flex flex-col items-center text-center' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+          <div className='flex flex-col items-center text-center' style={{ fontFamily: 'Papyrus'  }}>
             
               <h4 className="text-[14px] text-center font-semibold mb-2" >Contact Us</h4>
 
@@ -53,7 +53,7 @@ export default function Footer() {
           </div>
 
           {/* Office Address */}
-          <div className='flex flex-col items-center text-center' style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+          <div className='flex flex-col items-center text-center' style={{ fontFamily: 'Papyrus'  }}>
             <h4 className="text-[14px] font-semibold mb-2">Registered Office Address</h4>
             <div className='text-[10px] md:text-[15px]'>
               <p >Modest Gallery, Koh e fiza, Bhopal,</p>
@@ -66,7 +66,7 @@ export default function Footer() {
 
         <hr className="my-6 border-gray-300" />
 
-        <div className="text-center text-[10px] md:text-[12px] font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+        <div className="text-center text-[10px] md:text-[12px] font-semibold" style={{ fontFamily: 'Papyrus'  }}>
           <p>© 2024 Modest Gallery. All Rights Reserved.</p>
 
         </div>

@@ -39,18 +39,18 @@ export default function Notification() {
             <div>
                 <h1
                     className="text-xl font-bold mb-6"
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+                    style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
                 >
                     What’s New
                 </h1>
                 {(Notification.length == 0) ? (
-                    <div className='flex justify-center text-xs' style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>No Notification !!</div>
+                    <div className='flex justify-center text-xs' style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>No Notification !!</div>
                 ) : (
                     Notification.map((item) => (
                         <div key={item.notification_id}>
                             <div
                                 className="bg-white font-semibold text-[7px] md:text-[12px] md:p-4 rounded-lg p-2 mb-6 border border-gray-200"
-                                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+                                style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
                             >
                                 <div className="flex justify-between items-center">
                                     <span>{item.notification_msg}</span>

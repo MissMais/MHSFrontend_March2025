@@ -60,7 +60,7 @@ export default function AddAddress() {
             <div className="w-full max-w-xl bg-white shadow-lg p-4 m-4 rounded-lg">
                 <h2
                     className="text-2xl font-bold mb-6 text-center"
-                    style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}
+                    style={{ fontFamily: ' Papyrus' , color: '#666F80' }}
                 >
                     Add Address
                 </h2>
@@ -68,7 +68,7 @@ export default function AddAddress() {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>Address Type</label>
                             <input
                                 {...register("Address_type", { required: true })}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -77,7 +77,7 @@ export default function AddAddress() {
                             />
                         </div>
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Name</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>Name</label>
                             <input
                                 {...register("Name", { required: true })}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -87,7 +87,7 @@ export default function AddAddress() {
                         </div>
 
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>House No</label>
                             <input
                                 {...register("House_No", { required: true })}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -96,7 +96,7 @@ export default function AddAddress() {
                         </div>
 
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>Area/Colony</label>
                             <input
                                 {...register("Area_Colony", { required: true })}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -105,7 +105,7 @@ export default function AddAddress() {
                         </div>
 
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>Landmark</label>
                             <input
                                 {...register("Landmark", { required: true })}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -114,7 +114,7 @@ export default function AddAddress() {
                         </div>
 
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Pincode</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>Pincode</label>
                             <input
                                 {...register("Pincode", { required: true })}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -123,7 +123,7 @@ export default function AddAddress() {
                         </div>
 
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>City</label>
                             <select
                                 {...register("City", { required: true })}
                                 value={city}
@@ -140,7 +140,7 @@ export default function AddAddress() {
                             </select>
                         </div>
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>State</label>
                             <select
                                 {...register("State", { required: true })}
                                 value={state}
@@ -161,7 +161,7 @@ export default function AddAddress() {
                         </div>
 
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>Country</label>
                             <select
                                 {...register("Country", { required: true })}
                                 value={country}
@@ -182,7 +182,7 @@ export default function AddAddress() {
                         </div>
 
                         <div>
-                            <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Contact</label>
+                            <label className="block font-bold text-gray-700" style={{ fontFamily: ' Papyrus' , color: '#666F80' }}>Contact</label>
                             <input
                                 {...register("Contact", { required: true })}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -197,7 +197,7 @@ export default function AddAddress() {
                     <button
                         type="submit"
                         className="w-full bg-[#FB6D6C] text-white py-2 mt-6 rounded-lg hover:bg-[#e95a59]"
-                        style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                        style={{ fontFamily: ' Papyrus'  }}
                     >
                         Add Address
                     </button>

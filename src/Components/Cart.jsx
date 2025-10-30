@@ -153,15 +153,18 @@ export default function Cart() {
     fetchCart();
 
 
-  }, [navigate, accesstoken]);
+  }, [navigate, accesstoken ]);
 
 
+useEffect(() => {
+  if (cartItems.length === 0) {
+    setloading(true);   // show empty cart screen
+  } else {
+    setloading(false);  // show normal cart
+  }
+}, [cartItems]);
 
-  // useEffect(() => {
-  //   if (cartItems.length === 0) {
-  //     navigate("/emptycart");
-  //   }
-  // }, [cartItems, navigate]);
+
 
 
 
@@ -282,7 +285,7 @@ export default function Cart() {
 
       <div >
         <img src={cartImg} alt="Empty cart" className="w-50 md:w-100" />
-        <h1 className="flex justify-center w-50 md:w-100 h-40 text-[#FB6D6C] font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Your Cart is Empty</h1>
+        <h1 className="flex justify-center w-50 md:w-100 h-40 text-[#FB6D6C] font-semibold" style={{ fontFamily: 'Papyrus'  }}>Your Cart is Empty</h1>
       </div>
 
 
@@ -303,18 +306,18 @@ export default function Cart() {
 
     <div className="min-h-screen bg-gray-50 p-1">
       {/* <h1 className="text-3xl font-bold text-center mb-8"
-      style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>My Basket</h1> */}
+      style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>My Basket</h1> */}
 
       <div className="max-w-6xl mx-auto bg-white rounded-2xl mt-20 shadow-lg p-6 md:flex gap-6">
         {/* Cart Items */}
         <div className="flex-1 border-gray-200 pr-6">
-          <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Products</h2>
+          <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Products</h2>
 
           {cartItems.length === 0 ? (
 
             <>
               {/* {navigate("/emptycart")} */}
-            { setloading(false)}
+            {/* { setloading(false)} */}
 
             </>
           ) : (
@@ -330,19 +333,19 @@ export default function Cart() {
 
                 <img src={item.images[0]} alt={item.name} className="md:w-20 md:h-20 w-13 h-13 object-cover rounded-lg aspect-[5/6]" />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-[10px] md:text-sm text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>{item.product_description}</h3>
-                  <p className="text-[7px] md:text-xs text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>{item.variation_name}</p>
+                  <h3 className="font-semibold text-[10px] md:text-sm text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>{item.product_description}</h3>
+                  <p className="text-[7px] md:text-xs text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>{item.variation_name}</p>
 
 
                   {item.quantity >= item.product_variation.stock && (
-                    <p className="text-[7px] text-red-500 mt-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }} >Max stock reached</p>
+                    <p className="text-[7px] text-red-500 mt-1" style={{ fontFamily: 'Papyrus'  }} >Max stock reached</p>
                   )}
                 </div>
 
 
                 <div className=" text-right overflow-hidden">
                   <div className="text-right">
-                    <p className=" font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{item.price}</p>
+                    <p className=" font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>₹{item.price}</p>
                     <div className="flex items-center mt-2 border rounded overflow-hidden">
                       <button
                         onClick={() => updateQuantity(item.cart_item_id, (item.quantity || 1) - 1)}
@@ -360,7 +363,7 @@ export default function Cart() {
                         +
                       </button>
                     </div>
-                    <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+                    <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
                       ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
                     </div>
                   </div>
@@ -374,26 +377,26 @@ export default function Cart() {
 
         {/* Cart Totals */}
         <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
-          <h2 className=" text-sm md:text-2xl  font-bold text-gray-600 mb-4 text-center" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Basket Total</h2>
+          <h2 className=" text-sm md:text-2xl  font-bold text-gray-600 mb-4 text-center" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Basket Total</h2>
           <div className="flex justify-between text-sm md:text-lg py-2 border-b">
-            <span className=" font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Subtotal</span>
-            <span className="font-semibold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
+            <span className=" font-bold" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Subtotal</span>
+            <span className="font-semibold" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm md:text-lg py-2 border-b">
-            <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Transfer</span>
-            <span className="text-green-600 font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>Free Shipping</span>
+            <span className="font-bold" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Transfer</span>
+            <span className="text-green-600 font-bold" style={{ fontFamily: 'Papyrus'  }}>Free Shipping</span>
           </div>
-          <div className="flex justify-between text-sm md:text-lg py-4  font-bold text-yellow-600" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+          <div className="flex justify-between text-sm md:text-lg py-4  font-bold text-yellow-600" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
             <span>Total</span>
             <span>₹{subtotal.toFixed(2)}</span>
           </div>
           <button
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-sm md:text-lg font-semibold"
-            onClick={toOrder} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            onClick={toOrder} style={{ fontFamily: 'Papyrus'  }}
           >
             Place Order
           </button>
-          <div className="flex justify-between mt-4 text-[10px] md:text-sm text-gray-400" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+          <div className="flex justify-between mt-4 text-[10px] md:text-sm text-gray-400" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
             <div>
               {/* <p className="p-2"> Secure Payment</p>
               <p className="p-2"> Easy Returns</p> */}
@@ -408,5 +411,6 @@ export default function Cart() {
     </div>
   );
 }
+
 
 

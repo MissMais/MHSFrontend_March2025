@@ -46,10 +46,10 @@ export default function Account() {
     <div className="flex flex-col md:flex-row min-h-screen mt-14 bg-gray-100">
       {/* Sidebar */}
       <div className="w-full md:w-1/6 bg-white p-6 shadow-">
-        <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+        <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
           Account Settings
         </h2>
-        <ul className="space-y-4 text-sm" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+        <ul className="space-y-4 text-sm" style={{ fontFamily: 'Papyrus'  }}>
           <li>
             <Link to="/acc" className="block text-[#FB6D6C] hover:text-[#e95a59] font-semibold transition-colors">
               <span className="flex items-center gap-2">
@@ -78,7 +78,7 @@ export default function Account() {
 
       {/* Main Content */}
       <div className="w-full md:flex-1 p-8 bg-white shadow-md rounded-md">
-        <h1 className="text-3xl text-center font-bold mb-6" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+        <h1 className="text-3xl text-center font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
           My Profile
         </h1>
 
@@ -104,22 +104,22 @@ export default function Account() {
         {/* Profile Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-semibold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>First Name</label>
+            <label className="block text-sm font-semibold mb-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>First Name</label>
             <input value={user.first_name || ""} disabled className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 cursor-not-allowed" />
           </div>
           <div>
-            <label className="block text-sm font-semibold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Last Name</label>
+            <label className="block text-sm font-semibold mb-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>Last Name</label>
             <input value={user.last_name || ""} disabled className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 cursor-not-allowed" />
           </div>
           <div>
-            <label className="block text-sm font-semibold mb-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Email</label>
+            <label className="block text-sm font-semibold mb-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>Email</label>
             <input value={user.email || ""} disabled className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 cursor-not-allowed" />
           </div>
         </div>
 
         <div className="mt-8">
           <button onClick={ToEdit} className="bg-[#FB6D6C] hover:bg-[#e95a59] text-white px-6 py-2 rounded-md font-semibold transition-colors"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+            style={{ fontFamily: 'Papyrus'  }}>
             Edit Profile
           </button>
         </div>

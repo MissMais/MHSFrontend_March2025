@@ -81,23 +81,13 @@ export default function Signup() {
         // alert(res.data.message);
         setErrorMessage("");
         setErrorMessage1("")
-        // navigate('/login');
+        navigate('/login');
         // reset();
       }
 
-      // else if ( res.data.error == "Invalid contact number") {
-      //   setErrorMessage1("")
-      //   setErrorMessage(res.data.error);
+      toast.success("Signup Successfull");
 
-      // }
-      // else if ( res.data.error == "UNIQUE constraint failed: MHSapp_customuser.email") {
-      //   setErrorMessage("")
-      //   setErrorMessage1(res.data.error)
-
-      // }
-      toast.success(response.data.message);
-
-
+      
     } catch (error) {
       // console.log(error.response)
 
@@ -139,14 +129,14 @@ export default function Signup() {
     
     <div className="flex justify-center  min-h-screen bg-white mt-16">
       <div className="w-full max-w-2xl bg-white shadow-lg p-6 rounded-lg m-6">
-        <h2 className="text-2xl font-bold mb-6 text-center" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Create an Account</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Create an Account</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Two-column row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-6">
               <label
                 className="block mb-2 text-sm font-semibold tracking-wide"
-                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}
+                style={{ fontFamily: 'Papyrus' , color: '#666F80' }}
               >
                 Select Profile Picture
               </label>
@@ -170,7 +160,7 @@ export default function Signup() {
 
 
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>First Name</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>First Name</label>
               <input
                 {...register("first_name", { required: true })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -179,7 +169,7 @@ export default function Signup() {
               />
             </div>
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Last Name</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Last Name</label>
               <input
                 {...register("last_name", { required: true })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -189,7 +179,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Email</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Email</label>
               <input font-bold
                 {...register("email", { required: true })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -204,7 +194,7 @@ export default function Signup() {
 
             {/* Password */}
             <div>
-              <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+              <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
                 Password
               </label>
               <div className=" flex mb-4">
@@ -241,12 +231,12 @@ export default function Signup() {
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold mb-5 text-center mt-10" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Add Address</h2>
+          <h2 className="text-2xl font-bold mb-5 text-center mt-10" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Add Address</h2>
 
           {/* Two-column row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Address Type</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Address Type</label>
               <input
                 {...register("address_type", { required: true })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -256,7 +246,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>House No</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>House No</label>
               <input
                 {...register("house_no", { required: true })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -265,7 +255,7 @@ export default function Signup() {
               />
             </div>
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Area/Colony</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Area/Colony</label>
               <input
                 {...register("area_colony", { required: true })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -274,7 +264,7 @@ export default function Signup() {
               />
             </div>
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Landmark</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Landmark</label>
               <input
                 {...register("landmark", { required: true })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
@@ -283,7 +273,7 @@ export default function Signup() {
               />
             </div>
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Country</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Country</label>
               <select
                 {...register("country", { required: true })}
                 value={country}
@@ -306,7 +296,7 @@ export default function Signup() {
 
 
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>State</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>State</label>
               <select
                 {...register("state", { required: true })}
                 value={state}
@@ -327,7 +317,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>City</label>
+              <label className="block font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>City</label>
               <select
                 {...register("city", { required: true })}
                 value={city}
@@ -347,7 +337,7 @@ export default function Signup() {
             <div>
               <label
                 className="block font-bold text-gray-700"
-                style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}
+                style={{ fontFamily: 'Papyrus' , color: '#666F80' }}
               >
                 Pincode
               </label>
@@ -378,14 +368,14 @@ export default function Signup() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] text-white py-2 mt-6 rounded-lg hover:bg-[#e95a59]"
-            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Signup
           </button>
 
 
           <p className="mt-3 text-center text-gray-600"
-            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+            style={{ fontFamily: 'Papyrus'  }}>
             Already have an account?{" "}
             <a href="/login" className="text-[#FB6D6C] hover:underline">
               Login

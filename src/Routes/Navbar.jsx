@@ -127,7 +127,7 @@ export default function Navbar() {
 
 
   const linkClasses =
-    "block py-1 px-2 text-[13px] sm:py-2 sm:px-4 sm:text-base text-[#FFFFFF] hover:text-[#FB6D6C] font-bold cursor-pointer";
+    "block py-1 px-2 text-[11px] sm:py-2 sm:px-4 sm:text-base text-[#FFFFFF] hover:text-[#FB6D6C] font-bold cursor-pointer";
 
 
   const linkClasses1 =
@@ -151,14 +151,14 @@ export default function Navbar() {
             <ul className="flex flex-row gap-1 sm:gap-6 items-center text-[#666F80] font-medium">
               <li>
                 <Link to="/home">
-                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                  <span className={linkClasses} style={{ fontFamily: 'Papyrus'  }}>
                     Home
                   </span>
                 </Link>
               </li>
               <li>
                 <Link to="/events">
-                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                  <span className={linkClasses} style={{ fontFamily: 'Papyrus'  }}>
                     Event
                   </span>
                 </Link>
@@ -166,21 +166,21 @@ export default function Navbar() {
 
               <li>
                 <Link to="/ProductPage">
-                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                  <span className={linkClasses} style={{ fontFamily: 'Papyrus'  }}>
                     Store
                   </span>
                 </Link>
               </li>
               <li>
                 <Link to="/about">
-                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                  <span className={linkClasses} style={{ fontFamily: 'Papyrus'  }}>
                     About
                   </span>
                 </Link>
               </li>
               <li>
                 <ScrollLink to="contact" smooth={true} duration={200}>
-                  <span className={linkClasses} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+                  <span className={linkClasses} style={{ fontFamily: 'Papyrus'  }}>
                     Contact
                   </span>
                 </ScrollLink>
@@ -250,7 +250,7 @@ export default function Navbar() {
           <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col overflow-y-scroll">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: '#666F80' }}>Account</h2>
+                style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Account</h2>
                 
               <button onClick={() => setSidebarOpen(false)}>
                 <IoClose className="text-2xl text-[#666F80] hover:text-[#FB6D6C]" />
@@ -281,7 +281,7 @@ export default function Navbar() {
 
                     <div
                       className="flex font-bold text-[#666F80]"
-                      style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                      style={{ fontFamily: 'Papyrus'  }}
                     >
                       {fullname || "Unknown"}
                     </div>
@@ -292,7 +292,7 @@ export default function Navbar() {
                     to="/acc"
                     onClick={() => setSidebarOpen(false)}
                     className={linkClasses1}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    style={{ fontFamily: 'Papyrus'  }}
                   >
                     <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> My Space</span>
                   </Link>
@@ -300,7 +300,7 @@ export default function Navbar() {
                     to="/history"
                     onClick={() => setSidebarOpen(false)}
                     className={linkClasses1}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    style={{ fontFamily: 'Papyrus'  }}
                   >
                     <span className="flex items-center gap-2 "><MdHistory className="text-xl text-[#FB6D6C]" /> Order History</span>
                   </Link>
@@ -308,7 +308,7 @@ export default function Navbar() {
                     to="/Cart"
                     onClick={() => setSidebarOpen(false)}
                     className={linkClasses1}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    style={{ fontFamily: 'Papyrus'  }}
                   >
                     <span className="flex items-center gap-2 "><IoCartSharp className="text-xl text-[#FB6D6C]" /> My Cart</span>
                   </Link>
@@ -316,7 +316,7 @@ export default function Navbar() {
                     to="/Wish"
                     onClick={() => setSidebarOpen(false)}
                     className={linkClasses1}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    style={{ fontFamily: 'Papyrus'  }}
                   >
                     <span className="flex items-center gap-2 "><IoHeartOutline className="text-xl text-[#FB6D6C]" /> Wish List</span>
                   </Link>
@@ -332,7 +332,7 @@ export default function Navbar() {
                   <button
                     onClick={handleLogout}
                     className={linkClasses1 + " text-left w-full"}
-                    style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    style={{ fontFamily: 'Papyrus'  }}
                   >
                     <span className="flex items-center gap-2 "><IoLogOutOutline className="text-xl text-[#FB6D6C]" />Logout</span>
                   </button>
@@ -342,14 +342,14 @@ export default function Navbar() {
                   <Link
                     to="/login"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses1} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    className={linkClasses1} style={{ fontFamily: 'Papyrus'  }}
                   >
                     <span className="flex items-center gap-2"><IoLogInOutline className="text-2xl text-[#FB6D6C]" />Login</span>
                   </Link>
                   <Link
                     to="/Signup"
                     onClick={() => setSidebarOpen(false)}
-                    className={linkClasses1} style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                    className={linkClasses1} style={{ fontFamily: 'Papyrus'  }}
                   >
                     <span className="flex items-center gap-2"><MdPersonAddAlt1 className="text-2xl text-[#FB6D6C]" />SignUp</span>
                   </Link>

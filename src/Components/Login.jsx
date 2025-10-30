@@ -64,10 +64,10 @@ export default function Login() {
     <div className="flex justify-center items-center min-h-screen px-4">
       
       <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
-        <h2 className="text-center text-2xl font-bold mb-6" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Login</h2>
+        <h2 className="text-center text-2xl font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label htmlFor="formName" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+            <label htmlFor="formName" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
               Email
             </label>
             <input
@@ -81,7 +81,7 @@ export default function Login() {
               <small className="text-red-600">{errors.email.message}</small>
             )}
           </div>
-          <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+          <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
             Password
           </label>
           <div className=" flex mb-4">
@@ -104,12 +104,12 @@ export default function Login() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Login
           </button>
         </form>
-        <div className="text-center mt-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+        <div className="text-center mt-4" style={{ fontFamily: 'Papyrus'  }}>
           <small >
             Don't have an account?{" "}
             <a href="/signup" className="text-[#FB6D6C] hover:underline" >
@@ -117,7 +117,7 @@ export default function Login() {
             </a>
           </small>
         </div>
-        <div className="text-center mt-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+        <div className="text-center mt-2" style={{ fontFamily: 'Papyrus'  }}>
           <small>
 
             <a href="/forgot" className="text-[#FB6D6C] hover:underline">

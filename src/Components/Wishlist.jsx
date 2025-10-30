@@ -231,7 +231,7 @@ export default function Wishlist() {
 
           <h1
             className="text-4xl font-bold text-center mb-6 underline"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
           >
             My Picks
           </h1>
@@ -260,7 +260,7 @@ export default function Wishlist() {
                       <p
                         className="text-xs md:text-lg font-semibold"
                         style={{
-                          fontFamily: "Copperplate, Papyrus, fantasy",
+                          fontFamily: 'Papyrus' ,
                           color: "#FB6D6C",
                         }}
                       >
@@ -269,7 +269,7 @@ export default function Wishlist() {
                       <p
                         className="text-sm font-bold"
                         style={{
-                          fontFamily: "Copperplate, Papyrus, fantasy",
+                          fontFamily: 'Papyrus' ,
                           color: "#666F80",
                         }}
                       >
@@ -287,7 +287,7 @@ export default function Wishlist() {
                       >
                         <IoCartSharp className="text-sm md:text-lg" />
                         <span
-                          style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                          style={{ fontFamily: 'Papyrus'  }}
                           className="whitespace-nowrap font-semibold"
                         >
                           Move to Cart
@@ -296,7 +296,7 @@ export default function Wishlist() {
 
                       <button
                         onClick={() => removeFromWishlist(item.wishlist_id)}
-                        style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                        style={{ fontFamily: 'Papyrus'  }}
                         className="p-2 text-[#666F80] hover:text-[#FB6D6C] transition"
                       >
                         <FaTrashAlt className="text-sm md:text-lg" />

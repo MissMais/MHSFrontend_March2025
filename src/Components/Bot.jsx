@@ -27,8 +27,8 @@ export default function Bot() {
 
   const submit = async () => {
 
-    if(input.trim() === "") return;
-    
+    if (input.trim() === "") return;
+
     const data = { "user": input }
 
     const msg = { type: "user", msg: input }
@@ -121,7 +121,7 @@ export default function Bot() {
                       ref={chatContainerRef}
                       className="flex-1 overflow-y-auto p-3 space-y-2"
                       style={{
-                        // scrollbarWidth: "thin",               // for Firefox
+                        // scrollbarWidth: "thin",             // for Firefox
                         scrollbarColor: "#FB6D6C #f1f1f1",    // thumb + track color (Firefox)
                       }}
                     >
@@ -178,24 +178,27 @@ export default function Bot() {
 
               </div>
 
+              {/* Faq Content */}
+              <div>
+                {faqs && (
+                  <div className="flex flex-col p-4 gap-2 h-[400px]">
+                    <div className="overflow-y-auto flex-1 mb-3">
+                    </div>
+                    <div className="flex gap-2">
+                      <input
+                        value={input2}
+                        onChange={(e) => setInput2(e.target.value)}
+                        className="flex-1 border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FB6D6C]"
+                        placeholder="Ask a question..."
+                      />
+                      <button className="bg-[#FB6D6C] text-white px-4 py-2 rounded-xl shadow-md text-sm font-semibold transition-all duration-200">
+                        Ask
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
 
-              {faqs && (
-                <div className="flex flex-col p-4 gap-2 h-[400px]">
-                  <div className="overflow-y-auto flex-1 mb-3">
-                  </div>
-                  <div className="flex gap-2">
-                    <input
-                      value={input2}
-                      onChange={(e) => setInput2(e.target.value)}
-                      className="flex-1 border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FB6D6C]"
-                      placeholder="Ask a question..."
-                    />
-                    <button className="bg-[#FB6D6C] text-white px-4 py-2 rounded-xl shadow-md text-sm font-semibold transition-all duration-200">
-                      Ask
-                    </button>
-                  </div>
-                </div>
-              )}
 
             </div>
           )}

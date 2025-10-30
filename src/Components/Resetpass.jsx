@@ -61,10 +61,10 @@ export default function ResetPassword() {
 
       {/* Sidebar */}
       <div className="w-full md:w-1/6 bg-white p-6 shadow-md">
-        <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+        <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
           Account Settings
         </h2>
-        <ul className="space-y-4 text-sm" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+        <ul className="space-y-4 text-sm" style={{ fontFamily: 'Papyrus'  }}>
           <li>
             <Link to="/acc" className="block text-[#666F80]  hover:text-[#e95a59]  transition-colors">
               <span className="flex items-center gap-2">
@@ -98,7 +98,7 @@ export default function ResetPassword() {
         <div className="flex justify-between mb-6">
           <h2
             className="text-center text-2xl font-bold"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
           >
             Reset Password
           </h2>
@@ -112,7 +112,7 @@ export default function ResetPassword() {
             <label
               htmlFor="Current Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               Current Password
             </label>
@@ -132,7 +132,7 @@ export default function ResetPassword() {
             <label
               htmlFor="New Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               New Password
             </label>
@@ -152,7 +152,7 @@ export default function ResetPassword() {
             <label
               htmlFor="Confirm New Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               Confirm New Password
             </label>
@@ -171,7 +171,7 @@ export default function ResetPassword() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Change
           </button>
