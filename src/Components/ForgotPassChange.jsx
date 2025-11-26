@@ -34,7 +34,7 @@ export default function ForgotPassChange() {
 
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
-      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
+      <div className="bg-white shadow-lg p-6 w-full max-w-sm">
         <h2
           className="text-center text-2xl font-bold mb-6"
           style={{ fontFamily: 'Papyrus' , color: "#666F80" }}

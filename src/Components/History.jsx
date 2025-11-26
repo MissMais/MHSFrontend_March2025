@@ -9,25 +9,14 @@ export default function OrderHistory() {
 
 
   const accesstoken = localStorage.getItem('AccessToken')
-  const id = localStorage.getItem("user_id")
+
 
   const Orders = async () => {
 
-     const res1 = await axios.get(`${url}customer/`, {
-      headers: {
-
-        'ngrok-skip-browser-warning': '69420',
-        'Content-Type': 'application/json'
-      },
-    })
-    
-    const data = res1.data
-    const filtereddata = data.filter(item => item.User_id == id)
-    
-    const customerid = filtereddata[0].id
+   const custId = localStorage.getItem("id")
 
 
-    const response = await axios.get(`${url}history/?id=${customerid}`,
+    const response = await axios.get(`${url}history/?id=${custId}`,
 
       {
         headers: {
@@ -62,7 +51,7 @@ export default function OrderHistory() {
         orders.map((order, idx) => (
           <div
             key={idx}
-            className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-200"
+            className="bg-white shadow-md p-6 mb-6 border border-gray-200"
           >
             <div className="flex flex-row justify-between md:items-center">
               <div>

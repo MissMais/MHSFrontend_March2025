@@ -1,5 +1,3 @@
-
-
 // Cart.jsx
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -79,13 +77,8 @@ export default function Cart() {
           }
         );
 
-        // For getting customer id 
-        const user_id = JSON.parse(localStorage.getItem("user_id"));
-        const customer = res.data
-        const filtercustomer = customer.filter(item => item.User_id == user_id)
-        // console.log(filtercustomer[0].id)
-        const customerid = filtercustomer[0].id
 
+        const customerid = localStorage.getItem("id")
 
         // For getting cart id 
         const cart = res2.data
@@ -147,22 +140,19 @@ export default function Cart() {
       }
     };
 
-
-
-
     fetchCart();
 
 
-  }, [navigate, accesstoken ]);
+  }, [navigate, accesstoken]);
 
 
-useEffect(() => {
-  if (cartItems.length === 0) {
-    setloading(true);   // show empty cart screen
-  } else {
-    setloading(false);  // show normal cart
-  }
-}, [cartItems]);
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      setloading(true);   // show empty cart screen
+    } else {
+      setloading(false);  // show normal cart
+    }
+  }, [cartItems]);
 
 
 
@@ -285,12 +275,8 @@ useEffect(() => {
 
       <div >
         <img src={cartImg} alt="Empty cart" className="w-50 md:w-100" />
-        <h1 className="flex justify-center w-50 md:w-100 h-40 text-[#FB6D6C] font-semibold" style={{ fontFamily: 'Papyrus'  }}>Your Cart is Empty</h1>
+        <h1 className="flex justify-center w-50 md:w-100 h-40 text-[#FB6D6C] font-semibold" style={{ fontFamily: 'Papyrus' }}>Your Cart is Empty</h1>
       </div>
-
-
-
-
     </div>
   }
 
@@ -308,16 +294,16 @@ useEffect(() => {
       {/* <h1 className="text-3xl font-bold text-center mb-8"
       style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>My Basket</h1> */}
 
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl mt-20 shadow-lg p-6 md:flex gap-6">
+      <div className="max-w-6xl mx-auto bg-white mt-20 shadow-lg p-6 md:flex gap-6">
         {/* Cart Items */}
         <div className="flex-1 border-gray-200 pr-6">
-          <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Products</h2>
+          <h2 className="text-3xl font-bold text-gray-600 mb-4" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Products</h2>
 
           {cartItems.length === 0 ? (
 
             <>
               {/* {navigate("/emptycart")} */}
-            {/* { setloading(false)} */}
+              {/* { setloading(false)} */}
 
             </>
           ) : (
@@ -333,19 +319,19 @@ useEffect(() => {
 
                 <img src={item.images[0]} alt={item.name} className="md:w-20 md:h-20 w-13 h-13 object-cover rounded-lg aspect-[5/6]" />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-[10px] md:text-sm text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>{item.product_description}</h3>
-                  <p className="text-[7px] md:text-xs text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>{item.variation_name}</p>
+                  <h3 className="font-semibold text-[10px] md:text-sm text-gray-700" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>{item.product_description}</h3>
+                  <p className="text-[7px] md:text-xs text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>{item.variation_name}</p>
 
 
                   {item.quantity >= item.product_variation.stock && (
-                    <p className="text-[7px] text-red-500 mt-1" style={{ fontFamily: 'Papyrus'  }} >Max stock reached</p>
+                    <p className="text-[7px] text-red-500 mt-1" style={{ fontFamily: 'Papyrus' }} >Max stock reached</p>
                   )}
                 </div>
 
 
                 <div className=" text-right overflow-hidden">
                   <div className="text-right">
-                    <p className=" font-bold text-gray-700" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>₹{item.price}</p>
+                    <p className=" font-bold text-gray-700" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>₹{item.price}</p>
                     <div className="flex items-center mt-2 border rounded overflow-hidden">
                       <button
                         onClick={() => updateQuantity(item.cart_item_id, (item.quantity || 1) - 1)}
@@ -363,7 +349,7 @@ useEffect(() => {
                         +
                       </button>
                     </div>
-                    <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
+                    <div className="w-24 text-right font-bold text-yellow-700" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>
                       ₹{((item.price) * (item.quantity || 1)).toFixed(2)}
                     </div>
                   </div>
@@ -377,32 +363,33 @@ useEffect(() => {
 
         {/* Cart Totals */}
         <div className="w-full md:w-1/3 mt-10 md:mt-0 bg-gray-50 p-6 rounded-xl shadow-inner">
-          <h2 className=" text-sm md:text-2xl  font-bold text-gray-600 mb-4 text-center" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Basket Total</h2>
+          <h2 className=" text-sm md:text-2xl  font-bold text-gray-600 mb-4 text-center" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Basket Total</h2>
           <div className="flex justify-between text-sm md:text-lg py-2 border-b">
-            <span className=" font-bold" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Subtotal</span>
-            <span className="font-semibold" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
+            <span className=" font-bold" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Subtotal</span>
+            <span className="font-semibold" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>₹{subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm md:text-lg py-2 border-b">
-            <span className="font-bold" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Transfer</span>
-            <span className="text-green-600 font-bold" style={{ fontFamily: 'Papyrus'  }}>Free Shipping</span>
+            <span className="font-bold" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Transfer</span>
+            <span className="text-green-600 font-bold" style={{ fontFamily: 'Papyrus' }}>Free Shipping</span>
           </div>
-          <div className="flex justify-between text-sm md:text-lg py-4  font-bold text-yellow-600" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
+          <div className="flex justify-between text-sm md:text-lg py-4  font-bold text-yellow-600" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>
             <span>Total</span>
             <span>₹{subtotal.toFixed(2)}</span>
           </div>
           <button
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-sm md:text-lg font-semibold"
-            onClick={toOrder} style={{ fontFamily: 'Papyrus'  }}
+            onClick={toOrder} style={{ fontFamily: 'Papyrus' }}
           >
             Place Order
           </button>
-          <div className="flex justify-between mt-4 text-[10px] md:text-sm text-gray-400" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
+          <div className="flex justify-between mt-4 text-[10px] md:text-sm text-gray-400" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>
             <div>
               {/* <p className="p-2"> Secure Payment</p>
               <p className="p-2"> Easy Returns</p> */}
               <ul>
-                <li className="list-disc space-y-2 p-2">Secure Payment</li>
-                <li className=" list-disc space-y-2 p-2">Easy Returns</li>
+                <li className="list-disc space-y-2 p-2">Secure & Safe Packaging</li>
+                <li className=" list-disc space-y-2 p-2">No Returns</li>
+                 <li className=" list-disc space-y-2 p-2">Exchange within 7 days of delivery</li>
               </ul>
             </div>
           </div>

@@ -128,7 +128,7 @@ export default function Signup() {
   return (
     
     <div className="flex justify-center  min-h-screen bg-white mt-16">
-      <div className="w-full max-w-2xl bg-white shadow-lg p-6 rounded-lg m-6">
+      <div className="w-full max-w-2xl bg-white shadow-lg p-6 m-6">
         <h2 className="text-2xl font-bold mb-6 text-center" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Create an Account</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Two-column row */}
@@ -217,10 +217,19 @@ export default function Signup() {
             {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"> */}
             <div className="block">
               <label className="block text-gray-700">Contact</label>
+              
               <input
-                {...register("contact", { required: true })}
+                {...register("contact", {
+                  required: true,
+                })}
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#666F80]"
                 type="text"
+                maxLength="10"
+                inputMode="numeric"
+                onInput={(e) => {
+                  // only allow numbers
+                  e.target.value = e.target.value.replace(/\D/g, "");
+                }}
                 required
               />
 

@@ -31,24 +31,13 @@ export default function Wishlist() {
 
 
 
-  // get customer id from customer endpoint
-  const user_id = localStorage.getItem('user_id')
+  // get customer id
+  const custId = localStorage.getItem("id")
 
   const getcustomerid = async () => {
-    const res = await axios.get(`${url}customer/`, {
-      headers: {
-
-        'ngrok-skip-browser-warning': '69420',
-        'Content-Type': 'application/json'
-      },
-    })
-    //  console.log(res.data)
-    const data = res.data
-    const filtereddata = data.filter(item => item.User_id == user_id)
-    setCustomerId(filtereddata[0].id)
-    // console.log(filtereddata)
-
-    // console.log(filtereddata[0].id)
+   
+    setCustomerId(custId)
+   
 
   }
 
@@ -243,14 +232,14 @@ export default function Wishlist() {
               return (
                 <div
                   key={idx}
-                  className="bg-white shadow-md rounded-lg p-6 border border-gray-200 flex flex-col h-full"
+                  className="bg-white shadow-md p-6 border border-gray-200 flex flex-col h-full"
                 >
                   {/* Image */}
                   <div className="flex justify-center">
                     <img
                       src={prod.images[0]}
                       alt="wishlist product"
-                      className="w-28 h-32 md:h-40 md:w-40 object-cover rounded aspect-[5/6]"
+                      className="w-28 h-32 md:h-40 md:w-40 object-cover aspect-[5/6]"
                     />
                   </div>
 
@@ -281,7 +270,7 @@ export default function Wishlist() {
                     <div className="flex items-center justify-center gap-2 mt-4">
                       <button
                         className="flex items-center gap-2 border border-[#FB6D6C] bg-white text-[#FB6D6C]
-                     px-2 md:px-5 py-2 rounded-full hover:bg-[#e95a59] hover:text-white transition text-[10px] 
+                     px-2 md:px-5 py-2 rounded-md hover:bg-[#e95a59] hover:text-white transition text-[10px] 
                      md:text-sm"
                         onClick={() => addToCart(prod)}
                       >

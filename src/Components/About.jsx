@@ -22,7 +22,7 @@ export default function About() {
           </h1>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
-            <div className='md:w-1/2 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg'>
+            <div className='md:w-1/2 bg-[#FB6D6C] p-8 shadow-lg'>
               <p className='text-[10px] md:text-[20px] text-white text-justify' style={{ fontFamily: ' Papyrus'  }}>
                 Modest Gallery was born out of a desire to provide high-quality, stylish, and modest fashion options for women who value both fashion and tradition.
                 Our founder recognized a gap in the market for modest clothing that was not only respectful of religious and cultural values but also fashionable and versatile.
@@ -34,7 +34,7 @@ export default function About() {
               <img
                 src="/img01.jpg"
                 alt="Our Story"
-                className='rounded-2xl shadow-lg w-[90%] md:w-[70%] object-cover md:ml-20'
+                className=' shadow-lg w-[90%] md:w-[70%] object-cover md:ml-20'
               />
             </div>
           </div>
@@ -53,10 +53,10 @@ export default function About() {
               <img
                 src="/img02.jpg"
                 alt="Our Story"
-                className='rounded-2xl shadow-lg w-[90%] object-cover md:ml-20'
+                className=' shadow-lg w-[90%] object-cover md:ml-20'
               />
             </div>
-            <div className='md:w-2/3 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg'>
+            <div className='md:w-2/3 bg-[#FB6D6C] p-8 shadow-lg'>
               <p className='text-[10px] md:text-[20px] leading-relaxed text-white text-justify' style={{ fontFamily: ' Papyrus'  }}>
                 At the heart of Modest Gallery is our Modest Hijab Store, where we offer an exquisite range of hijabs,
                 abayas, and accessories that cater to the needs of modern, modest women. Our hijab collection is thoughtfully
@@ -86,7 +86,7 @@ export default function About() {
           </h1>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
-            <div className='md:w-1/2 bg-[#FB6D6C] p-8 rounded-2xl shadow-lg'>
+            <div className='md:w-1/2 bg-[#FB6D6C] p-8 shadow-lg'>
               <p className='text-[10px] md:text-[20px] leading-relaxed text-white text-justify' style={{ fontFamily: ' Papyrus'  }}>
                 Modest Gallery is not just about fashion; it's about creating experiences that celebrate culture,
                 creativity, and community. This is where Shaam e Roshan comes in. Shaam e Roshan is our signature series of lifestyle,
@@ -108,7 +108,7 @@ export default function About() {
               <img
                 src="/img03.jpg"
                 alt="Our Story"
-                className='rounded-2xl shadow-lg w-[90%] object-cover md:ml-20'
+                className=' shadow-lg w-[90%] object-cover md:ml-20'
               />
             </div>
           </div>

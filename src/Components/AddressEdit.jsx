@@ -103,7 +103,7 @@ export default function AddressEdit() {
 
   return (
     <div className="flex justify-center  min-h-screen bg-white mt-20">
-      <div className="w-full max-w-2xl bg-white shadow-lg p-6 rounded-lg m-6">
+      <div className="w-full max-w-2xl bg-white shadow-lg p-6 m-6">
 
         <form onSubmit={handleSubmit(saveData)}>
 

@@ -27,19 +27,16 @@ import AccountEdit from './Components/AccountEdit';
 import Wishlist from './Components/Wishlist';
 import Notification from './Components/Notification';
 // import EmptyCart from './Components/Emptycart';
+import { Toaster } from "react-hot-toast";
 
 
 import ScrollToTop from './Components/ScrollToTop';
 
-// export const url ="https://5b3d74e7074b.ngrok-free.app/"
-export const url = "https://mohammadsaklen.pythonanywhere.com/"
+export const url ="https://321499cce631.ngrok-free.app/"
+// export const url = "https://mohammadsaklen.pythonanywhere.com/"
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
-
-
-
 
 
 // initialize Stripe with your publishable key
@@ -87,6 +84,7 @@ export default function App() {
 
           </Route>
         </Routes>
+         <Toaster position="bottom-center" reverseOrder={false} />
         </Elements>
       </BrowserRouter>
     </div>

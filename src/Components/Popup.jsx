@@ -5,7 +5,7 @@ export default function Popup({ show, title, message }) {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-80 p-6 text-center">
+      <div className="bg-white shadow-xl w-80 p-6 text-center">
         <h2
           className="text-xl font-bold mb-2"
           style={{ color: "#FB6D6C", fontFamily: 'Papyrus'  }}

@@ -92,9 +92,9 @@ export default function ResetPassword() {
       </div>
 
 
-   <div className='p-6 md:w-5xl mt-12'>
+   <div className="w-full md:flex-1 p-8 bg-white shadow-md">
     <div className="flex justify-center items-center px-4">
-      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
+      <div className="bg-white shadow-lg p-6 w-full max-w-sm">
         <div className="flex justify-between mb-6">
           <h2
             className="text-center text-2xl font-bold"

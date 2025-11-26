@@ -114,9 +114,9 @@ export default function Home() {
           },
         }
       )
-      console.log(response.data)
+      
       const filterData = response.data.filter(item => item.User_id == user_id)
-      console.log(filterData[0]?.Customer_id)
+    
       localStorage.setItem('id', filterData[0]?.Customer_id);
     } catch (error) {
       console.log(error)
@@ -231,7 +231,7 @@ export default function Home() {
                                 <img
                                     src="/Imghome.jpg"
                                     alt="Modest Gallery"
-                                    className="md:w-100 w-full md:h-full h-100 object-cover rounded-md shadow-lg"
+                                    className="md:w-100 w-full md:h-full h-100 object-cover shadow-lg"
 
                                 />
 

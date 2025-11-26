@@ -137,7 +137,7 @@ export default function Navbar() {
   return (
     <>
       {/* Navbar */}
-      <nav className="bg-gray-400 fixed top-0 left-0 right-0 shadow z-[9999]">
+      <nav className="bg-gray-400 fixed top-0 left-0 right-0 shadow z-[10000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -218,7 +218,7 @@ export default function Navbar() {
       </nav>
 
       {NotifsideBar && (
-        <div className="fixed inset-0 z-[9999]">
+        <div className="fixed inset-0 z-[10000]">
 
           <div
             className="absolute inset-0 bg-transparent"
@@ -239,7 +239,7 @@ export default function Navbar() {
 
       {/* Profile Sidebar */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-[9999]">
+        <div className="fixed inset-0 z-[10000]">
           {/* Overlay */}
           <div
             className="absolute inset-0 bg-transparent"

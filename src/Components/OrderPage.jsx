@@ -205,7 +205,7 @@ export default function OrderPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-start py-12 px-4 md:px-16">
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 rounded-3xl shadow-2xl">
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 shadow-2xl">
         {/* Left Column - Invoice Details */}
         <div>
           <div className="flex justify-between mb-3">

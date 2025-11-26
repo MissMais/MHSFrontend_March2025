@@ -16,15 +16,13 @@ export default function Notification() {
 
     const getNot = async () => {
 
-        const res1 = await axios.get(`${url}customer/`, { headers })
-        const filtereddata = res1.data.filter(item => item.User_id == id)
-        const customerid = filtereddata[0].id
+       const custId = localStorage.getItem("id")
 
 
 
         const res = await axios.get(`${url}notif/`, { headers })
 
-        const filter = res.data.filter(item => item.customer_id == customerid)
+        const filter = res.data.filter(item => item.customer_id == custId)
         const reverse = filter.reverse()
         setNotification(reverse)
     }
@@ -49,7 +47,7 @@ export default function Notification() {
                     Notification.map((item) => (
                         <div key={item.notification_id}>
                             <div
-                                className="bg-white font-semibold text-[7px] md:text-[12px] md:p-4 rounded-lg p-2 mb-6 border border-gray-200"
+                                className="bg-white font-semibold text-[7px] md:text-[12px] md:p-4 p-2 mb-6 border border-gray-200"
                                 style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
                             >
                                 <div className="flex justify-between items-center">

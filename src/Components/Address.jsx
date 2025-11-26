@@ -73,10 +73,10 @@ export default function Address() {
         },
       }
     )
-    console.log(response.data)
+    
     const fetcheddata = response.data
     const filtereddata = fetcheddata.filter(item => item.Customer_id === custId)
-    console.log(filtereddata)
+    
     setaddress(filtereddata)
     // console.log(filtereddata)
   }
@@ -108,7 +108,7 @@ export default function Address() {
         data: Payload
       })
     } catch (error) {
-      console.log(error)
+      // console.log(error
     }
   }
 
@@ -157,7 +157,7 @@ export default function Address() {
 
       {/* Main Content */}
       {/* <div><button className='cursor-pointer bg-red-500 text-white rounded-lg px-1 py-2 hover:bg-red-600 ' onClick={() => Buttonadd()}>add another address</button></div> */}
-      <div className='p-6 md:w-5xl'>
+      <div className="w-full md:flex-1 p-8 bg-white shadow-md">
         <div className="mb-6">
           <button
             onClick={() => Buttonadd()}
@@ -169,7 +169,7 @@ export default function Address() {
         </div>
 
         {address.map((add) => (
-          <div key={add.Address_id} className='shadow-md p-7  mt-4 rounded-lg bg-white border-gray-200'>
+          <div key={add.Address_id} className='shadow-md p-7  mt-4 bg-white border-gray-200'>
             <div className='relative flex flex-col md:flex-row md:justify-between md:items-center'>
 
 

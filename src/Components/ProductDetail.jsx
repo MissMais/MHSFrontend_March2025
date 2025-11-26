@@ -1,5 +1,4 @@
-
-// // ########## SH
+// ########## SH
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -71,8 +70,9 @@ export default function ProductDetail() {
 
 
     const product_variation_id = selectedProduct.product_variation.product_variation_id
+    const custId = localStorage.getItem("id")
     const payload = {
-      customer_id: customerId,
+      customer_id: custId,
       product_variation_id: product_variation_id,
       rating: rating,
     }
@@ -149,8 +149,11 @@ export default function ProductDetail() {
     const accesstoken = localStorage.getItem("AccessToken");
 
     if (!accesstoken) {
-      // alert('Please login to add items to your cart.');
-      navigate('/login');
+      toast.error('Please login to continue with your order.');
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
+
       return;
     }
 
@@ -210,18 +213,20 @@ export default function ProductDetail() {
   };
 
 
-  const goToOrderPage = () => {
-    const token = localStorage.getItem('AccessToken');
-    if (!token) {
-      toast.error('Please login to continue with your order.');
-      // alert('Please login to continue with your order.');
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
-      return;
-    }
-    navigate('/OrderPage', { state: { product: selectedProduct } });
-  };
+  // const goToOrderPage = () => {
+  //   const token = localStorage.getItem('AccessToken');
+  //   if (!token) {
+  //     console.log("Please Login")
+  //     toast.error('Please login to continue with your order.');
+  //     // alert('Please login to continue with your order.');
+
+  //     setTimeout(() => {
+  //       navigate('/login');
+  //     }, 3000);
+
+  //   }
+  //   navigate('/OrderPage', { state: { product: selectedProduct } });
+  // };
 
   const getProductImage = (product) => {
     return product.images?.[0]
@@ -249,25 +254,11 @@ export default function ProductDetail() {
 
 
 
-  const user_id = localStorage.getItem('user_id')
+
+  const custId = localStorage.getItem("id")
+
   const getcustomerid = async () => {
-    const res = await axios.get(`${url}customer`, {
-      headers: {
-        //   Authorization: `Bearer ${accessToken}`,
-        'ngrok-skip-browser-warning': '69420',
-        'Content-Type': 'application/json'
-      },
-    })
-    //  console.log(res.data)
-    const data = res.data
-
-
-    const filtereddata = data.filter(item => item.User_id == user_id)
-    // console.log(filtereddata[0].id)
-    setCustomerId(filtereddata[0].id)
-
-    // console.log(filtereddata[0].id)
-
+    setCustomerId(custId)
   }
 
   useEffect(() => {
@@ -308,6 +299,7 @@ export default function ProductDetail() {
       setTimeout(() => {
         navigate('/login')
       }, 3000);
+      return;
 
     }
 
@@ -335,7 +327,7 @@ export default function ProductDetail() {
       } else {
 
         await axios.post(`${url}wishlist/`, {
-          customer_id: customerId,
+          customer_id: custId,
           product_variation_id: variationId,
         }, {
           headers: {
@@ -371,12 +363,12 @@ export default function ProductDetail() {
   // console.log(selectedProduct)
   if (isloading) {
     return <div className="flex justify-center items-center min-h-screen px-4">
-      <div className=" p-6 rounded-lg w-full">
+      <div className=" p-6 w-full">
         {quotes && (
           <h2
             className="text-center text-[11px] md:text-2xl font-bold mb-6 animate-pulse"
             style={{
-              fontFamily: 'Papyrus' ,
+              fontFamily: 'Papyrus',
               color: '#666F80',
             }}
           >
@@ -390,14 +382,15 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-gray-100 px-0 mt-15">
-      <div className="max-w-7xl bg-white shadow-lg rounded-xl overflow-hidden pb-20">
+      <div className="max-w-7xl bg-white shadow-lg overflow-hidden pb-20">
         <div className="grid md:grid-cols-2 gap-8 p-8">
+
           {/* Image Section */}
           <div className="flex flex-col items-center ">
             <img
               src={selectedProduct?.images?.[0]}
               // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
-              className="rounded-lg shadow-md w-full h-auto md:w-full md:h-125 object-cover aspect-[5/6]"
+              className=" shadow-md w-full h-auto md:w-full md:h-125 object-cover aspect-[5/6]"
               onClick={() => swapWithMain(0)}
               alt="Product"
             />
@@ -407,7 +400,7 @@ export default function ProductDetail() {
                   key={index}
                   src={img}
                   // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
-                  className="w-20 h-14 object-cover rounded cursor-pointer"
+                  className="w-20 h-14 object-cover cursor-pointer"
                   onClick={() => swapWithMain(index)}
                   alt={`Thumbnail ${index}`}
                 />
@@ -418,10 +411,8 @@ export default function ProductDetail() {
 
 
 
-
-
           {/* Info Section */}
-          <div style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
+          <div style={{ fontFamily: 'Papyrus', color: '#666F80' }}>
             <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
               {selectedProduct?.sub_category_name || 'Product Name'}
             </h1>
@@ -440,21 +431,21 @@ export default function ProductDetail() {
               )}
             </p>
 
-            <p className="text-xl md:text-3xl pt-7  font-bold" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
+            <p className="text-xl md:text-3xl pt-7  font-bold" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>
               ₹ {selectedProduct?.price || 'N/A'}
             </p>
 
             {/* <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.product_variation.stock ?? 'N/A'}
             </p> */}
-            <div className=" text-xs md:font-medium" style={{ fontFamily: 'Papyrus' , color: '#C3C8D3' }}>
+            <div className=" text-xs md:font-medium" style={{ fontFamily: 'Papyrus', color: '#C3C8D3' }}>
               Free Shipping
             </div>
 
             {/* Color Selector */}
             {allVariations.some(v => v.variation_type === 'Color') && (
               <div className="mt-7">
-                <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Choose Color:</h2>
+                <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Choose Color:</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Color' && v.ColorCode)
@@ -462,7 +453,7 @@ export default function ProductDetail() {
                       <button
                         key={index}
                         onClick={() => setSelectedProduct(variation)}
-                        className={`w-6 h-6 rounded-full border-2 ${selectedProduct?.product_variation_id === variation.product_variation_id ? 'border-black' : 'border-gray-300'}`}
+                        className={`w-6 h-6 ${selectedProduct?.product_variation_id === variation.product_variation_id ? 'border-black' : 'border-gray-300'}`}
                         style={{ backgroundColor: variation.ColorCode }}
                       />
                     ))}
@@ -503,7 +494,7 @@ export default function ProductDetail() {
                 <button
                   onClick={() => addToCart(selectedProduct)}
                   className="w-full h-12 md:h-14 border border-[#FB6D6C] bg-[#FB6D6C] text-white 
-                 px-13  md:px-8 rounded-full transition flex items-center justify-center gap-2 shadow-md"
+                 px-13  md:px-8  transition flex items-center justify-center gap-2 shadow-md"
                 >
                   <IoCartSharp className="text-xl md:text-2xl" />
                   <div className="font-semibold text-[10px] md:text-xl tracking-wide whitespace-nowrap">Add to Cart</div>
@@ -515,7 +506,7 @@ export default function ProductDetail() {
                 <button
                   onClick={() => Wishlist(selectedProduct)}
                   className="w-25 h-12 md:h-14 bg-white text-[#FB6D6C] 
-                  rounded-full hover:bg-[#fff0f0] transition flex items-center justify-center"
+                 hover:bg-[#fff0f0] transition flex items-center justify-center"
                 >
                   {wish.some(item => item.product_variation_id == selectedProduct.product_variation.product_variation_id) ? (
                     <IoHeart className="text-3xl md:text-4xl text-[#FB6D6C]" />
@@ -528,72 +519,79 @@ export default function ProductDetail() {
             </div>
 
 
+            {/* <div className='flex justify-center md:justify-baseline'> */}
 
 
-            <div className='md:text-xs text-[10px] mt-7 text-gray-400 space-y-2'>
-              <p>100% Original Products</p>
-              <p>High Quality</p>
-              <p>No Returns & Exchange</p>
-              <p>Cash on Delivery Available</p>
-              <p>Secure & Safe Packaging</p>
-              <p>Affordable Prices</p>
-              <p>Wide Range of Collections</p>
-              <p>Fast & Reliable Delivery</p>
-              <p>Trusted by Hundreds of Customers</p>
-              <p>Exclusive & Unique Designs</p>
-              <p>Comfortable & Trendy Products</p>
+            <div className='bg-white shadow-2xl p-7 md:text-sm md:w-90  mt-7 text-gray-400 space-y-2'>
+              <h2 className='text-xl text-[#FB6D6C] font-bold'>Our Promise</h2>
+              <div className='text-sm'>
+                <ul className='list-disc space-y-2'>
+                  <li>100% Original Products</li>
+                  <li>Trusted by Hundreds of Customers</li>
+                  <li>Exclusive & Unique Designs</li>
+                  <li>Comfortable & Trendy Products</li>
+                  <li>High Quality</li>
+                  <li>Affordable Prices</li>
+                  <li>Wide Range of Collections</li>
+                </ul>
+              </div>
+              {/* </div> */}
             </div>
           </div>
 
 
           {/* RATING */}
-          <div className="flex justify-center items-center relative"
-            style={{ fontFamily: 'Papyrus'  }}>
+          <div className="flex justify-center"
+            style={{ fontFamily: 'Papyrus' }}>
             <button
               onClick={() => setShowBox(true)}
-              className="px-4 py-2 bg-[#FB6D6C] text-white rounded-lg"
+              className="px-4 py-2 bg-[#FB6D6C] text-white"
             >
               Rate Product
             </button>
 
             {/* Rating Box */}
             {showBox && (
-              <div className="absolute inset-0 flex items-center justify-center z-30">
-                <div className="bg-white p-6 rounded-xl w-80 text-center shadow-lg border border-gray-200">
-                  <h2 className="text-lg font-bold mb-4 text-[#FB6D6C]">Give Rating</h2>
+              <div>
 
-                  {/* Stars */}
-                  <div className="flex justify-center gap-2 mb-4">
-                    {[1, 2, 3, 4, 5].map((num) => (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                  <div className="bg-white shadow-xl w-80 p-6 text-center">
+                    <h2 className="text-lg font-bold mb-4 text-[#FB6D6C]">Give Rating</h2>
+                    <div className="flex justify-center gap-2 mb-4">
+
+                      {[1, 2, 3, 4, 5].map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => setRating(num)}
+                          className={`text-3xl ${num <= rating ? "text-yellow-400" : "text-gray-400"
+                            }`}
+                        >
+                          ★
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex justify-center gap-3">
                       <button
-                        key={num}
-                        onClick={() => setRating(num)}
-                        className={`text-3xl ${num <= rating ? "text-yellow-400" : "text-gray-400"
-                          }`}
+                        onClick={handleSubmit}
+                        disabled={rating === 0}
+                        className="px-4 py-2 bg-[#FB6D6C] text-white disabled:bg-gray-400"
                       >
-                        ★
+                        Submit
                       </button>
-                    ))}
-                  </div>
+                      <button
+                        onClick={() => setShowBox(false)}
+                        className="px-4 py-2 bg-gray-300"
+                      >
+                        Cancel
+                      </button>
+                    </div>
 
-                  {/* Buttons */}
-                  <div className="flex justify-center gap-3">
-                    <button
-                      onClick={handleSubmit}
-                      disabled={rating === 0}
-                      className="px-4 py-2 bg-[#FB6D6C] text-white rounded-lg disabled:bg-gray-400"
-                    >
-                      Submit
-                    </button>
-                    <button
-                      onClick={() => setShowBox(false)}
-                      className="px-4 py-2 bg-gray-300 rounded-lg"
-                    >
-                      Cancel
-                    </button>
+
                   </div>
                 </div>
+
               </div>
+
             )}
           </div>
 

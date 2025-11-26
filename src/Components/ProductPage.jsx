@@ -57,10 +57,10 @@ const ProductPage = () => {
     setopenbrand(false);
   };
 
-useEffect(() => {
+  useEffect(() => {
     const newMaxPrice = selectedCategory === "Stoles" ? 4000 : 10000;
     setMaxPrice(newMaxPrice);
-}, [selectedCategory]);
+  }, [selectedCategory]);
 
 
   const user_id = localStorage.getItem('user_id')
@@ -273,25 +273,10 @@ useEffect(() => {
 
 
   // get customer id from customer endpoint
+  const custId = localStorage.getItem("id")
 
   const getcustomerid = async () => {
-    const res = await axios.get(`${url}customer`, {
-      headers: {
-        //   Authorization: `Bearer ${accessToken}`,
-        'ngrok-skip-browser-warning': '69420',
-        'Content-Type': 'application/json'
-      },
-    })
-    //  console.log(res.data)
-    const data = res.data
-
-
-    const filtereddata = data.filter(item => item.User_id == user_id)
-    // console.log(filtereddata[0].id)
-    setCustomerId(filtereddata[0].id)
-
-    // console.log(filtereddata[0].id)
-
+    setCustomerId(custId)
   }
 
   useEffect(() => {
@@ -354,7 +339,7 @@ useEffect(() => {
       } else {
 
         await axios.post(`${url}wishlist/`, {
-          customer_id: customerId,
+          customer_id: custId,
           product_variation_id: variationId,
         }, {
           headers: {
@@ -424,13 +409,13 @@ useEffect(() => {
     <div >
 
 
-      <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row  shadow-xl rounded-2xl">
+      <div className="max-w-7xl mt-16 mx-auto p-0 flex flex-col md:flex-row shadow-xl">
         {isMobile && <div className="flex justify-end-safe mr-3 z-[9998]">
           <button
             onClick={func}
             className="flex items-center justify-center gap-2 px-4 py-2 mt-2 
              bg-[#FB6D6C]  active:scale-95 
-             text-white text-sm font-semibold rounded-full 
+             text-white text-sm font-semibold rounded-md 
              shadow-md transition-all duration-200 ease-in-out"
           >
             <FaFilter className="text-sm" />
@@ -588,7 +573,7 @@ useEffect(() => {
               <div className="mt-5">
                 <label
                   className="block font-semibold mb-2"
-                  style={{ fontFamily: 'Papyrus' , color: "#FB6D6C" }}
+                  style={{ fontFamily: 'Papyrus', color: "#FB6D6C" }}
                 >
                   Max Price: ₹{maxPrice.toLocaleString()}
                 </label>
@@ -746,7 +731,7 @@ useEffect(() => {
             <div className="mt-5">
               <label
                 className="block font-semibold mb-2"
-                style={{ fontFamily: 'Papyrus' , color: "#FB6D6C" }}
+                style={{ fontFamily: 'Papyrus', color: "#FB6D6C" }}
               >
                 Max Price: ₹{maxPrice.toLocaleString()}
               </label>
@@ -773,7 +758,7 @@ useEffect(() => {
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 shadow-sm 
+                className="w-full pl-10 pr-4 py-2 rounded border border-gray-300 shadow-sm 
           focus:outline-none focus:ring-2 focus:ring-[#FB6D6C] focus:border-[#FB6D6C]
           transition-all duration-300 placeholder:text-[12px]"
                 value={search}
@@ -799,7 +784,7 @@ useEffect(() => {
                 </div>
 
                 {/* Details */}
-                <div style={{ fontFamily: 'Papyrus'  }} className="p-4 flex flex-col flex-grow text-xs md:text-sm">
+                <div style={{ fontFamily: 'Papyrus' }} className="p-4 flex flex-col flex-grow text-xs md:text-sm">
                   <h3
                     className="md:text-lg font-bold mb-1 text-[#FB6D6C]"
 
@@ -831,7 +816,7 @@ useEffect(() => {
                       </p>
 
 
-                      {/* skaskajsjasja */}
+                      
                       <div
                         onClick={() => Wishlist(product)}
                         style={{ cursor: "pointer" }}
@@ -852,8 +837,8 @@ useEffect(() => {
 
 
                     <button
-                      className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 w-full rounded-full transition-all"
-                      style={{ fontFamily: 'Papyrus'  }}
+                      className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 w-full rounded transition-all"
+                      style={{ fontFamily: 'Papyrus' }}
                       onClick={() => handleProductClick(product.product_variation.product_variation_id, product.Product_id)}
                     >
                       View
@@ -878,7 +863,7 @@ useEffect(() => {
       />
 
       {/* Chatbot */}
-      <div className="relative bottom-0 right-4 top-60 w-[90%] max-w-[350px] z-50">
+      <div className="relative bottom-0 right-4 top-60 w-[90%] max-w-[350px] z-[9999]">
         <Bot />
       </div>
     </div>

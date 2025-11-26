@@ -77,7 +77,7 @@ export default function Account() {
       </div>
 
       {/* Main Content */}
-      <div className="w-full md:flex-1 p-8 bg-white shadow-md rounded-md">
+      <div className="w-full md:flex-1 p-8 bg-white shadow-md">
         <h1 className="text-3xl text-center font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
           My Profile
         </h1>
