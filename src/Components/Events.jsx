@@ -1,5 +1,7 @@
 import React from 'react'
 import Footer from '../Routes/Footer'
+import Bot from './Bot'
+
 
 export default function Events() {
     return (
@@ -18,7 +20,7 @@ export default function Events() {
                             <div className="mb-8 text-center">
                                 <h1
                                     className="text-2xl sm:text-3xl font-bold text-white drop-shadow"
-                                    style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+                                    style={{ fontFamily: 'Papyrus'  }}
                                 >
                                     Shaam-E-Roshan
                                 </h1>
@@ -64,6 +66,11 @@ export default function Events() {
                 <section id="contact">
                     <Footer />
                 </section>
+
+                {/* Chatbot */}
+                <div className="relative bottom-0 right-4 top-60 w-[90%] max-w-[350px] z-50">
+                    <Bot />
+                </div>
             </div>
         </div>
     )

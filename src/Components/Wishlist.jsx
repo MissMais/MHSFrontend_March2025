@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { url } from "../App"
 import { IoCartSharp } from 'react-icons/io5';
 import { FaTrashAlt } from "react-icons/fa";
+import Footer from "../Routes/Footer";
+import toast, { Toaster } from "react-hot-toast";
+import Popup from "./Popup";
 
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
   const [customerId, setCustomerId] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const accesstoken = localStorage.getItem("AccessToken");
   const navigate = useNavigate();
@@ -27,24 +31,13 @@ export default function Wishlist() {
 
 
 
-  // get customer id from customer endpoint
-  const user_id = localStorage.getItem('user_id')
+  // get customer id
+  const custId = localStorage.getItem("id")
 
   const getcustomerid = async () => {
-    const res = await axios.get(`${url}customer/`, {
-      headers: {
-
-        'ngrok-skip-browser-warning': '69420',
-        'Content-Type': 'application/json'
-      },
-    })
-    //  console.log(res.data)
-    const data = res.data
-    const filtereddata = data.filter(item => item.User_id == user_id)
-    setCustomerId(filtereddata[0].id)
-    // console.log(filtereddata)
-
-    // console.log(filtereddata[0].id)
+   
+    setCustomerId(custId)
+   
 
   }
 
@@ -106,7 +99,7 @@ export default function Wishlist() {
   };
 
   const removeFromWishlist = async (wishlistId) => {
-    
+
     const Payload = {
       wishlist_id: wishlistId
     }
@@ -123,6 +116,7 @@ export default function Wishlist() {
         }
       );
       setWishlist(wishlist.filter((item) => item.wishlist_id !== wishlistId));
+      toast.success("Item Removed");
     } catch (error) {
       console.error("Error removing from wishlist:", error);
     }
@@ -137,8 +131,11 @@ export default function Wishlist() {
     const accesstoken = localStorage.getItem("AccessToken");
 
     if (!accesstoken) {
-      alert('Please login to add items to your cart.');
-      navigate('/login');
+      toast.success('Please login to continue with your order');
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
+
       return;
     }
 
@@ -185,20 +182,31 @@ export default function Wishlist() {
         console.error(error);
       }
 
-      navigate("/Cart");
+
+      setShowPopup(true);
+      setTimeout(() => {
+        navigate("/Cart");
+      }, 3000);
+
+
+
     } else {
-      alert("Out Of Stock");
+      toast.error("Out Of Stock");
+
     }
   };
 
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10 mt-20">
+    <div>
 
 
-      {wishlist.length === 0 ? (
-        // <p className="text-center text-[#666F80]">Your wishlist is empty.</p>
-        
+      <div className="max-w-5xl mx-auto px-4 py-10 mt-20">
+
+
+        {wishlist.length === 0 ? (
+          // <p className="text-center text-[#666F80]">Your wishlist is empty.</p>
+
           // {/* Inline styles for animations */}
 
           <div className="flex justify-center">
@@ -207,90 +215,103 @@ export default function Wishlist() {
           </div>
 
 
-      
-      ) : (<div>
 
-        <h1
+        ) : (<div>
+
+          <h1
             className="text-4xl font-bold text-center mb-6 underline"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+            style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
           >
             My Picks
           </h1>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          
-          {wishlist.map((item, idx) => {
-            const prod = item.product;
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
-            return (
-              <div
-                key={idx}
-                className="bg-white shadow-md rounded-lg p-6 border border-gray-200 flex flex-col h-full"
-              >
-                {/* Image */}
-                <div className="flex justify-center">
-                  <img
-                    src={prod.images[0]}
-                    alt="wishlist product"
-                    className="w-28 h-32 md:h-40 md:w-40 object-cover rounded aspect-[5/6]"
-                  />
-                </div>
+            {wishlist.map((item, idx) => {
+              const prod = item.product;
 
-                {/* Content */}
-                <div className="flex flex-col flex-grow justify-between text-center mt-3">
-                  <div>
-                    <p
-                      className="text-xs md:text-lg font-semibold"
-                      style={{
-                        fontFamily: "Copperplate, Papyrus, fantasy",
-                        color: "#FB6D6C",
-                      }}
-                    >
-                      {prod.product_description}
-                    </p>
-                    <p
-                      className="text-sm font-bold"
-                      style={{
-                        fontFamily: "Copperplate, Papyrus, fantasy",
-                        color: "#666F80",
-                      }}
-                    >
-                      ₹{prod.price}
-                    </p>
+              return (
+                <div
+                  key={idx}
+                  className="bg-white shadow-md p-6 border border-gray-200 flex flex-col h-full"
+                >
+                  {/* Image */}
+                  <div className="flex justify-center">
+                    <img
+                      src={prod.images[0]}
+                      alt="wishlist product"
+                      className="w-28 h-32 md:h-40 md:w-40 object-cover aspect-[5/6]"
+                    />
                   </div>
 
-                  {/* Buttons at bottom */}
-                  <div className="flex items-center justify-center gap-2 mt-4">
-                    <button
-                      className="flex items-center gap-2 border border-[#FB6D6C] bg-white text-[#FB6D6C]
-                     px-2 md:px-5 py-2 rounded-full hover:bg-[#e95a59] hover:text-white transition text-[10px] 
-                     md:text-sm"
-                      onClick={() => addToCart(prod)}
-                    >
-                      <IoCartSharp className="text-sm md:text-lg" />
-                      <span
-                        style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                        className="whitespace-nowrap font-semibold"
+                  {/* Content */}
+                  <div className="flex flex-col flex-grow justify-between text-center mt-3">
+                    <div>
+                      <p
+                        className="text-xs md:text-lg font-semibold"
+                        style={{
+                          fontFamily: 'Papyrus' ,
+                          color: "#FB6D6C",
+                        }}
                       >
-                        Move to Cart
-                      </span>
-                    </button>
+                        {prod.product_description}
+                      </p>
+                      <p
+                        className="text-sm font-bold"
+                        style={{
+                          fontFamily: 'Papyrus' ,
+                          color: "#666F80",
+                        }}
+                      >
+                        ₹{prod.price}
+                      </p>
+                    </div>
 
-                    <button
-                      onClick={() => removeFromWishlist(item.wishlist_id)}
-                      style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
-                      className="p-2 text-[#666F80] hover:text-[#FB6D6C] transition"
-                    >
-                      <FaTrashAlt className="text-sm md:text-lg" />
-                    </button>
+                    {/* Buttons at bottom */}
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      <button
+                        className="flex items-center gap-2 border border-[#FB6D6C] bg-white text-[#FB6D6C]
+                     px-2 md:px-5 py-2 rounded-md hover:bg-[#e95a59] hover:text-white transition text-[10px] 
+                     md:text-sm"
+                        onClick={() => addToCart(prod)}
+                      >
+                        <IoCartSharp className="text-sm md:text-lg" />
+                        <span
+                          style={{ fontFamily: 'Papyrus'  }}
+                          className="whitespace-nowrap font-semibold"
+                        >
+                          Move to Cart
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => removeFromWishlist(item.wishlist_id)}
+                        style={{ fontFamily: 'Papyrus'  }}
+                        className="p-2 text-[#666F80] hover:text-[#FB6D6C] transition"
+                      >
+                        <FaTrashAlt className="text-sm md:text-lg" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-        </div>
-      )}
-      
+        )}
+
+      </div>
+      <section id='contact'  >
+        <Footer />
+      </section>
+
+      {/* Popup Component */}
+      <Popup
+        show={showPopup}
+        title="Item Added!"
+        message="item Added to Cart"
+      />
+
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 

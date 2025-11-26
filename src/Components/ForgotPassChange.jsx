@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {url} from "../App"
+import toast, { Toaster } from "react-hot-toast";
 
 // const url = "https://5d0abf24c6ce.ngrok-free.app/";
 
@@ -18,20 +19,25 @@ export default function ForgotPassChange() {
     
       const response = await axios.post(`${url}forget/`, data,);
       
-      alert('Password Changed Successfully');
-      navigate("/login");
+      
+      toast.success('Password Change Successfully')
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+      
     } catch (error) {
       console.error(error);
-      alert("Failed to Reset");
+      toast.error("Failed to Reset")
+      
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
-      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
+      <div className="bg-white shadow-lg p-6 w-full max-w-sm">
         <h2
           className="text-center text-2xl font-bold mb-6"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+          style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
         >
           Reset Password
         </h2>
@@ -40,7 +46,7 @@ export default function ForgotPassChange() {
             <label
               htmlFor="New Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
               New Password
             </label>
@@ -60,9 +66,9 @@ export default function ForgotPassChange() {
             <label
               htmlFor="Confirm New Password"
               className="block text-sm font-bold mb-1"
-              style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
+              style={{ fontFamily: 'Papyrus' , color: "#666F80" }}
             >
-              New Password
+              Confirm New Password
             </label>
             <input
               {...register("confirm_password", { required: "New Password is required" })}
@@ -81,13 +87,14 @@ export default function ForgotPassChange() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Change
           </button>
         </form>
 
       </div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 }

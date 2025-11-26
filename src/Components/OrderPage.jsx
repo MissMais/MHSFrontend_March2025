@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { url } from "../App"
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import Popup from "./Popup";
+
 
 export default function OrderPage() {
   const location = useLocation();
@@ -13,6 +15,7 @@ export default function OrderPage() {
   const [Address, setAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [payment, setPayment] = useState([])
+  const [showPopup, setShowPopup] = useState(false);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -31,7 +34,7 @@ export default function OrderPage() {
     const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
     if (!email) {
-      alert("Please login first.");
+      // alert("Please login first.");
       navigate("/login");
       return;
     }
@@ -40,7 +43,7 @@ export default function OrderPage() {
     setCartItems(storedItems);
 
     if (storedItems == 0) {
-      alert("Add products")
+      // alert("Add products")
       navigate("/ProductPage")
       return;
 
@@ -48,13 +51,13 @@ export default function OrderPage() {
     // console.log(storedItems)
   }, [navigate]);
 
-  
+
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
     if (!email) {
-      alert("Please login first.");
+      // alert("Please login first.");
       navigate("/login");
       return;
     }
@@ -75,11 +78,11 @@ export default function OrderPage() {
       telephone: storedAdd.Contact || "",
     });
 
-    
+
   }, [navigate, reset]);
 
 
-  
+
 
   const onSubmit = async (data) => {
 
@@ -124,9 +127,10 @@ export default function OrderPage() {
           });
 
           // console.log("Order placed:", orderRes.data);
+          setShowPopup(true);
           localStorage.removeItem(cartKey);
           setCartItems([]);
-          alert(orderRes.message)
+          // alert(orderRes.message)
           // navigate("/ProductPage");
         }
       } else {
@@ -150,10 +154,13 @@ export default function OrderPage() {
 
         localStorage.removeItem(cartKey);
         // console.log(orderRes.data.message)
+        setShowPopup(true);
         setCartItems([]);
-        alert(orderRes.data.message)
+        // alert(orderRes.data.message)
+        setTimeout(() => {
+          navigate("/ProductPage");
+        }, 3000);
 
-        navigate("/ProductPage");
       }
     } catch (error) {
       console.error(error);
@@ -166,14 +173,6 @@ export default function OrderPage() {
     subtotal += item.price * (item.quantity || 1);
   });
 
-
-  // if (!product) {
-  //   return (
-  //     <div className="h-screen flex items-center justify-center text-xl text-gray-600">
-  //       No product selected. Please go back and select a product.
-  //     </div>
-  //   );
-  // }
 
 
   const fetchpayment = async () => {
@@ -206,12 +205,12 @@ export default function OrderPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-start py-12 px-4 md:px-16">
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 rounded-3xl shadow-2xl">
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 shadow-2xl">
         {/* Left Column - Invoice Details */}
         <div>
           <div className="flex justify-between mb-3">
-            <h2 className="text-xl md:text-2xl font-bold text-[#666F80]" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Payment Details</h2>
-            <button onClick={()=>navigate('/address')} style={{ fontFamily: "Copperplate, Papyrus, fantasy"}} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
+            <h2 className="text-xl md:text-2xl font-bold text-[#666F80]" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>Payment Details</h2>
+            <button onClick={() => navigate('/address')} style={{ fontFamily: 'Papyrus'  }} className="rounded-xl bg-[#FB6D6C] font-bold text-white py-3 px-2 text-[8px]  md:text-[10px]">Select Address</button>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 text-sm text-[#666F80]">
@@ -310,7 +309,7 @@ export default function OrderPage() {
 
         {/* Right Column - Order Summary */}
         <div>
-          <h2 className="text-2xl font-bold mb-6 text-[#666F80]" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>Your Order</h2>
+          <h2 className="text-2xl font-bold mb-6 text-[#666F80]" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>Your Order</h2>
           <div className="bg-gray-50 p-6 rounded-2xl shadow-inner space-y-5">
             {cartItems.map((product, idx) => (
               <div key={idx} className="flex justify-between items-start border-b pb-4">
@@ -322,23 +321,23 @@ export default function OrderPage() {
                     alt="Product"
                     className="w-16 h-16 object-cover rounded-md"
                   />
-                  <div style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+                  <div style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
                     <p className="font-medium">{product?.product_description || "N/A"}</p>
                     {/* </div> */}
-                    {/* <div  style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}> */}
-                    <p className="font-medium" >Quantity: <span className="font-bold" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }} >{product?.quantity || "N/A"}</span></p>
+                    {/* <div  style={{ fontFamily: 'Papyrus' , color: "#666F80" }}> */}
+                    <p className="font-medium" >Quantity: <span className="font-bold" style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }} >{product?.quantity || "N/A"}</span></p>
                   </div>
                 </div>
-                <p className="font-semibold text-right " style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>₹{product?.price * product.quantity}</p>
+                <p className="font-semibold text-right " style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>₹{product?.price * product.quantity}</p>
               </div>
             )
             )}
-            <div className="text-sm font-bold space-y-1" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+            <div className="text-sm font-bold space-y-1" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <p className="font-semibold">₹{subtotal.toFixed(2)}</p>
               </div>
-              <div className="flex justify-between " style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#FB6D6C' }}>
+              <div className="flex justify-between " style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
                 <span>Shipping</span>
                 <span>Free</span>
               </div>
@@ -348,7 +347,7 @@ export default function OrderPage() {
               </div>
             </div>
             {payment.map((item, idx) => (
-              <div key={item.Payment_id} className="mt-4 space-y-4 font-bold" style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}>
+              <div key={item.Payment_id} className="mt-4 space-y-4 font-bold" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
                 <label className="flex items-center gap-2 text-sm">
                   <input
                     type="radio"
@@ -380,17 +379,23 @@ export default function OrderPage() {
               <button
                 onClick={handleSubmit(onSubmit)}
                 className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl  hover:bg-[#e95a59] font-semibold transition"
-                style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}
+                style={{ fontFamily: 'Papyrus'  }}
               >
                 Complete Payment
               </button>
-              <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
+              <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: 'Papyrus'  }}>
                 3D Secure Payment | Fast and Easy Returns
               </div>
             </div>
           </div>
         </div>
       </div>
+      {/* Popup Component */}
+      <Popup
+        show={showPopup}
+        title="Order Placed"
+        message="Order has been placed succesfully "
+      />
     </div>
   );
 }

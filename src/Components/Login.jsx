@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
-import {url} from "../App"
+import { url } from "../App"
+import toast, { Toaster } from "react-hot-toast";
 
-// const url = 'https://5d0abf24c6ce.ngrok-free.app/'
-// "https://3j7gm770-8000.inc1.devtunnels.ms/"
-// "https://wkvkk9t8-8000.inc1.devtunnels.ms/"
-//  'https://modestgallery.pythonanywhere.com/';
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
+{/* <FaRegEye /> */ }
+{/* <FaRegEyeSlash /> */ }
 export default function Login() {
 
 
   const navigate = useNavigate();
   const location = useLocation();
+  const [type, setType] = useState('password')
+  const [icon, setIcon] = useState(FaRegEyeSlash);
 
   const from = location.state?.from;
 
@@ -23,60 +26,76 @@ export default function Login() {
     try {
       const response = await axios.post(`${url}login/`, data);
 
-      
+
       localStorage.setItem('AccessToken', response.data.access);
       localStorage.setItem('RefreshToken', response.data.refresh);
       localStorage.setItem('user_id', response.data.user_id);
       localStorage.setItem('user', JSON.stringify({ email: response.data.email }));
-    
-      alert(response.data.message);
 
+      // alert(response.data.message);
+      
+      toast.success(response.data.message);
 
-      if (from && from !== '/signup') {
-        navigate(from, { replace: true }); //  Go back to where you came from
-      } else {
-        navigate('/', { replace: true });   //  Go to Home
-      }
+      setTimeout(() => {
+        if (from && from !== "/signup") navigate(from, { replace: true });
+        else navigate("/", { replace: true });
+      }, 3000);
     } catch (error) {
 
-      console.error(error);
-      alert('Login failed! ');
+      toast.error("Something went wrong");
       
+
     }
   };
 
+  const handleToggle = () => {
+    if (type === 'password') {
+      setIcon(FaRegEye);
+      setType('text')
+    } else {
+      setIcon(FaRegEyeSlash)
+      setType('password')
+    }
+  }
+
+ 
+
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
-      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-sm">
-        <h2 className="text-center text-2xl font-bold mb-6" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>Login</h2>
+      
+      <div className="bg-white shadow-lg p-6 w-full max-w-sm">
+        <h2 className="text-center text-2xl font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label htmlFor="formName" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
+            <label htmlFor="formName" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
               Email
             </label>
             <input
               {...register("email", { required: "email is required" })}
               type="text"
               id="formName"
-            
+
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
               <small className="text-red-600">{errors.email.message}</small>
             )}
           </div>
+          <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Papyrus' , color: '#666F80' }}>
+            Password
+          </label>
+          <div className=" flex mb-4">
 
-          <div className="mb-4">
-            <label htmlFor="formpass" className="block text-sm font-bold mb-1" style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: '#666F80' }}>
-              Password
-            </label>
             <input
               {...register("password", { required: "Password is required" })}
-              type="password"
+              type={type}
               id="formpass"
-              
+
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <span class="flex justify-around items-center" onClick={handleToggle}>
+              <div className="absolute mr-10 text-lg">{icon}</div>
+            </span>
             {errors.password && (
               <small className="text-red-600">{errors.password.message}</small>
             )}
@@ -85,12 +104,12 @@ export default function Login() {
           <button
             type="submit"
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-2 px-4 rounded-md transition-colors mt-2"
-            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+            style={{ fontFamily: 'Papyrus'  }}
           >
             Login
           </button>
         </form>
-        <div className="text-center mt-4" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+        <div className="text-center mt-4" style={{ fontFamily: 'Papyrus'  }}>
           <small >
             Don't have an account?{" "}
             <a href="/signup" className="text-[#FB6D6C] hover:underline" >
@@ -98,7 +117,7 @@ export default function Login() {
             </a>
           </small>
         </div>
-        <div className="text-center mt-2" style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}>
+        <div className="text-center mt-2" style={{ fontFamily: 'Papyrus'  }}>
           <small>
 
             <a href="/forgot" className="text-[#FB6D6C] hover:underline">
@@ -108,7 +127,9 @@ export default function Login() {
         </div>
       </div>
       {/* <ToastContainer /> */}
+      <Toaster  position="bottom-center" reverseOrder={false} />
     </div>
+    
   );
 }
 

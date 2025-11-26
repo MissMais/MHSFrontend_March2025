@@ -9,13 +9,7 @@ import { url } from "../App"
 import { MdAccountCircle } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { TbAddressBook } from "react-icons/tb";
-// const url =
-// "https://3j7gm770-8000.inc1.devtunnels.ms/address/"
-// 'https://5d0abf24c6ce.ngrok-free.app/address/'
-// https://modestgallery.pythonanywhere.com/address/
-// const url2 =
-// "https://3j7gm770-8000.inc1.devtunnels.ms/address"
-// 'https://5d0abf24c6ce.ngrok-free.app/address/'
+
 
 
 
@@ -52,7 +46,7 @@ export default function Address() {
     const email = user?.email;
 
     if (!email) {
-      alert("Please login first.");
+      // alert("Please login first.");
       Navigate("/login");
       return;
     }
@@ -66,6 +60,7 @@ export default function Address() {
 
 
   const accessToken = localStorage.getItem("AccessToken")
+  const custId = localStorage.getItem("id")
 
   const fetchAddress = async () => {
     const response = await axios.get(`${url}address/`,
@@ -78,11 +73,15 @@ export default function Address() {
         },
       }
     )
+    
     const fetcheddata = response.data
-    const filtereddata = fetcheddata.filter(item => item.User_id == User_id)
+    const filtereddata = fetcheddata.filter(item => item.Customer_id === custId)
+    
     setaddress(filtereddata)
     // console.log(filtereddata)
   }
+
+  
 
   useEffect(() => {
     fetchAddress();
@@ -109,7 +108,7 @@ export default function Address() {
         data: Payload
       })
     } catch (error) {
-      console.log(error)
+      // console.log(error
     }
   }
 
@@ -122,62 +121,60 @@ export default function Address() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen mt-14 bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-full md:w-1/6 bg-white p-6 shadow-md">
-        <h2
-          className="text-xl font-bold mb-6"
-          style={{ fontFamily: "Copperplate, Papyrus, fantasy", color: "#666F80" }}
-        >
-          Account Settings
-        </h2>
-        <ul className="space-y-4 text-sm" style={{ fontFamily: "Copperplate, Papyrus, fantasy" }}>
-          <li>
-            <Link
-              to="/acc"
-              className="block text-[#666F80] hover:text-[#FB6D6C] font-semibold transition-colors"
-            >
-              <span className="flex items-center gap-2 "><MdAccountCircle className="text-xl text-[#FB6D6C]" /> Profile settings</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/reset"
-              className="block text-[#666F80] hover:text-[#FB6D6C] transition-colors"
-            >
-              <span className="flex items-center gap-2 "><TbLockPassword className="text-xl text-[#FB6D6C]" />Password</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/Address"
-              className="block text-[#FB6D6C] hover:text-[#FB6D6C] transition-colors"
-            >
-              <span className="flex items-center gap-2 "><TbAddressBook className="text-xl text-[#FB6D6C]" />Address</span>
-            </Link>
-          </li>
-        </ul>
-      </div>
+
+       {/* Sidebar */}
+            <div className="w-full md:w-1/6 bg-white p-6 shadow-md">
+              <h2 className="text-xl md:text-base text-center font-bold mb-6" style={{ fontFamily: 'Papyrus' , color: "#666F80" }}>
+                Account Settings
+              </h2>
+              <ul className="space-y-4 text-sm" style={{ fontFamily: 'Papyrus'  }}>
+                <li>
+                  <Link to="/acc" className="block text-[#666F80]  hover:text-[#e95a59]  transition-colors">
+                    <span className="flex items-center gap-2">
+                      <MdAccountCircle className="text-xl text-[#FB6D6C]" /> Profile settings
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/reset" className="block text-[#666F80]  hover:text-[#FB6D6C]  transition-colors">
+                    <span className="flex items-center gap-2">
+                      <TbLockPassword className="text-xl text-[#FB6D6C]" /> Password
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/Address" className="block  text-[#FB6D6C] hover:text-[#FB6D6C] font-semibold transition-colors">
+                    <span className="flex items-center gap-2">
+                      <TbAddressBook className="text-xl text-[#FB6D6C]" /> Address
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+              <br />
+              <hr />
+            </div>
+      
 
       {/* Main Content */}
       {/* <div><button className='cursor-pointer bg-red-500 text-white rounded-lg px-1 py-2 hover:bg-red-600 ' onClick={() => Buttonadd()}>add another address</button></div> */}
-      <div className='p-6 md:w-5xl'>
+      <div className="w-full md:flex-1 p-8 bg-white shadow-md">
         <div className="mb-6">
           <button
             onClick={() => Buttonadd()}
             className="w-full border border-[#FB6D6C] text-[#FB6D6C] bg-white font-semibold py-3 rounded-lg hover:bg-[#FB6D6C] hover:text-white transition"
-            style={{ fontFamily: 'Copperplate, Papyrus, fantasy' }}
+            style={{ fontFamily: ' Papyrus'  }}
           >
             + Add Address
           </button>
         </div>
 
         {address.map((add) => (
-          <div key={add.Address_id} className='shadow-md p-7  mt-4 rounded-lg bg-white border-gray-200'>
+          <div key={add.Address_id} className='shadow-md p-7  mt-4 bg-white border-gray-200'>
             <div className='relative flex flex-col md:flex-row md:justify-between md:items-center'>
 
 
 
-              <div className='font-semibold' style={{ fontFamily: 'Copperplate, Papyrus, fantasy', color: "#666F80" }} >
+              <div className='font-semibold' style={{ fontFamily: ' Papyrus' , color: "#666F80" }} >
                 <p className='text-2xl'>{add.Name}</p>
                 <p>Address : <span className='text-gray-400'>{add.House_No}, {add.Area_Colony} </span></p>
                 <p>City : <span className='text-gray-400'>{add.City} ({add.State}), {add.Country}</span></p>
