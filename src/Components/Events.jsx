@@ -12,12 +12,10 @@ export default function Events() {
                 className="py-10 bg-[#FB6D6C] mt-16"
                 data-aos="fade-right"
             >
-                <h1
-                                    className="text-2xl sm:text-3xl font-bold text-white drop-shadow"
-                                    style={{ fontFamily: 'Papyrus'  }}
-                                >
-                                    Shaam-E-Roshan
-                                </h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white drop-shadow" style={{ fontFamily: 'Papyrus', text-align: center}}>
+                    <a style={{color:white, text-decoration:none}}>Visit Site</a>
+                </h1>
+                
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="border-[5px] border-white rounded-[30px] p-2 shadow-[0_0_40px_rgba(255,255,255,0.3)]">
 
