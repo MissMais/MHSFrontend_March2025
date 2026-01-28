@@ -13,7 +13,8 @@ export default function Events() {
                 data-aos="fade-right"
             >
                 <a className="text-2xl sm:text-3xl font-bold text-white drop-shadow" style={{ fontFamily:'Papyrus', text-align:center, text-decoration:none}}
-                    href="https://www.shaameroshan.modest.co.in/">Visit Site
+                    href="https://www.shaameroshan.modest.co.in/" target="_blank">
+                Visit Site
                 </a>
                 
                 
