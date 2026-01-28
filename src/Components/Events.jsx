@@ -12,10 +12,10 @@ export default function Events() {
                 className="py-10 bg-[#FB6D6C] mt-16"
                 data-aos="fade-right"
             >
-                <a className="text-2xl sm:text-3xl font-bold text-white drop-shadow" style={{ fontFamily:'Papyrus', text-align:center, text-decoration:none}}
+                {/* <a className="text-2xl sm:text-3xl font-bold text-white drop-shadow" style={{ fontFamily:'Papyrus', text-align:center, text-decoration:none}}
                     href="https://www.shaameroshan.modest.co.in/" target="_blank">
                 Visit Site
-                </a>
+                </a> */}
                 
                 
                 <div className="max-w-7xl mx-auto px-4">
