@@ -15,23 +15,15 @@ import Popup from "./Popup";
 
 
 
-// const url = 'https://5d0abf24c6ce.ngrok-free.app/custom/'
-// "https://3j7gm770-8000.inc1.devtunnels.ms/custom/";
-// "https://wkvkk9t8-8000.inc1.devtunnels.ms/custom/";
-
 const ProductPage = () => {
   const [searchParams] = useSearchParams();
-  const defaultCategory = searchParams.get("category") || "All";
-  const defaultBrand = searchParams.get("brand") || "All";
-  const [selectedColour, setSelectedColour] = useState("All");
-
-  // const defaultCategory = searchParams.get("category") || "Category" || "All";
-  // const defaultBrand = searchParams.get("brand") || "Brands" || "All";
+  const defaultCategory = searchParams.get("category") || "Category" || "All";
+  const defaultBrand = searchParams.get("brand") || "Brands" || "All";
   const [selectedbrand, setSelectedBrand] = useState(defaultBrand)
   const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
   const [maxPrice, setMaxPrice] = useState(10000);
   const [products, setProducts] = useState([]);
-  // const [selectedColour, setSelectedColour] = useState("Color" || "All");
+  const [selectedColour, setSelectedColour] = useState("Color" || "All");
   const [sideOpen, setSideOpen] = useState(false)
   const [wishlist, setWishlist] = useState([]);
   const [search, setSearch] = useState("");
@@ -81,18 +73,23 @@ const ProductPage = () => {
 
 
   useEffect(() => {
-  setSelectedCategory(searchParams.get("category") || "All");
-  setSelectedBrand(searchParams.get("brand") || "All");
+    const categoryFromUrl = searchParams.get("category") || "Category" || "All";
+    setSelectedCategory(categoryFromUrl);
+    const brandFromUrl = searchParams.get("brand") || "Brands" || "All";
+    setSelectedBrand(brandFromUrl);
+    // console.log(brandFromUrl)
 
-  const brandid = parseInt(searchParams.get("brandid"));
-  const varopid = searchParams.get("varopid");
+    const brandid = searchParams.get("brandid") || "All"
+    const Brandid = parseInt(brandid)
+    // console.log(brandid)
+    // console.log(typeof(brandid))
+    const varopid = searchParams.get("varopid") || "All"
+    // console.log(varopid)
 
-  setSelectedvar({
-    Brandid: isNaN(brandid) ? null : brandid,
-    varopid: varopid || null
-  });
-}, [searchParams]);
-
+    const brandvar = { Brandid, varopid }
+    // console.log(brandvar)
+    setSelectedvar(brandvar)
+  }, [searchParams, products]);
 
 
 
@@ -181,44 +178,41 @@ const ProductPage = () => {
 
 
   const getUniqueColours = () => {
-  return [
-    ...new Set(
+    const unique = new Set(
       products
-        .filter(p =>
-          (selectedCategory === "All" || p.category_name === selectedCategory) &&
-          p.variation_type?.toLowerCase().trim() === "color"
-        )
-        .map(p => p.variation_name?.trim())
-        .filter(Boolean)
-    )
-  ];
-};
+        .filter(p => p.category_name === selectedCategory && p.variation_type === "Color")
+        .map(p => p.variation_name)
+    );
+    return Array.from(unique);
+  };
 
 
 
 
+  const filteredProducts = products.filter((product) => {
+    // console.log("**********",product.images[0])
+    //    return product
+    // console.log(product)
+    // console.log(product.brand.Brand_id)
+    // console.log(variety.varopid)
+    // console.log(product.product_variation.variation_option_id)
+    // if (!variety || variety.Brandid === "NaN" || variety.varopid === "All") {
+    //   return true;
+    // }
 
- const filteredProducts = products.filter(product => {
-  return (
-    (selectedCategory === "All" || product.category_name === selectedCategory) &&
-
-    (selectedbrand === "All" || product.brand?.Brand_name === selectedbrand) &&
-
-    (selectedColour === "All" ||
-      (product.variation_type?.toLowerCase() === "color" &&
-       product.variation_name?.toLowerCase() === selectedColour.toLowerCase())
-    ) &&
-
-    (!variety?.Brandid || product.brand?.Brand_id === variety.Brandid) &&
-
-    (!variety?.varopid || product.product_variation?.variation_option_id == variety.varopid) &&
-
-    (search === "" || product.sub_category_name.toLowerCase().includes(search.toLowerCase())) &&
-
-    parseFloat(product.price) <= maxPrice
-  );
-});
-
+    return (
+      (selectedCategory === "All" || selectedCategory === "Category" || product.category_name === selectedCategory) &&
+      (selectedColour === "All" || selectedColour === "Color" || product.variation_name?.toLowerCase() === selectedColour.toLowerCase()) &&
+      (selectedbrand === "All" || selectedbrand === "Brands" || product.brand.Brand_name === selectedbrand) &&
+      (!variety || variety.Brandid === "NaN" || variety.varopid === "All"
+        ? true
+        : product.brand?.Brand_id === variety.Brandid &&
+        product.product_variation?.variation_option_id === variety.varopid) &&
+      // (selectedColour === "All" || product.variation_name?.toLowerCase()) &&
+      (search === "" || product.sub_category_name.toLowerCase().includes(search.toLowerCase())) &&
+      parseFloat(product.price) <= maxPrice)
+  }
+  )
   // console.log("&&&&&&&&&&&&&&&&&&&&&&&",filteredProducts)
 
 
@@ -454,8 +448,8 @@ const ProductPage = () => {
                   }}
                     className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                   >
-                    <div>
-                     {selectedCategory === "All" ? "Category" : selectedCategory}
+                    <div onClick={() => handleOptionClick1("All")}>
+                      {selectedCategory || "Category"}
                     </div>
                     <div>
                       <IoMdArrowDropdown className="inline" />
@@ -497,8 +491,8 @@ const ProductPage = () => {
                   }}
                     className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                   >
-                    <div>
-                     {selectedColour === "All" ? "Color" : selectedColour}
+                    <div onClick={() => handleOptionClick("All")}>
+                      {selectedColour || "Color"}
                     </div>
                     <div>
                       <IoMdArrowDropdown className="inline" />
@@ -540,8 +534,8 @@ const ProductPage = () => {
                   }}
                     className="border w-full border-gray-300 p-2 rounded cursor-pointer flex justify-between "
                   >
-                    <div>
-                      {selectedbrand === "All" ? "Brands" : selectedbrand}
+                    <div onClick={() => handleOptionClick2("All")}>
+                      {selectedbrand || "Brands"}
                     </div>
                     <div>
                       <IoMdArrowDropdown className="inline" />
@@ -818,7 +812,7 @@ const ProductPage = () => {
                       </p>
 
 
-
+                      
                       <div
                         onClick={() => Wishlist(product)}
                         style={{ cursor: "pointer" }}
