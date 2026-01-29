@@ -382,7 +382,7 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-gray-100 px-0 mt-15">
-      <div className="max-w-7xl bg-white shadow-lg overflow-hidden pb-20">
+      <div className="max-w-7xl mx-auto bg-white shadow-lg overflow-hidden pb-20">
         <div className="grid md:grid-cols-2 gap-8 p-8">
 
           {/* Image Section */}
@@ -413,10 +413,10 @@ export default function ProductDetail() {
 
           {/* Info Section */}
           <div style={{ fontFamily: 'Papyrus', color: '#666F80' }}>
-            <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
+            {/* <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
               {selectedProduct?.sub_category_name || 'Product Name'}
-            </h1>
-            <h1 className="text-sm md:text-xl font-bold mb-2">
+            </h1> */}
+            <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
             <p className="text-gray-500 text-sm md:text-lg font-bold w-12 flex items-center border-[#666F80]">
@@ -522,7 +522,7 @@ export default function ProductDetail() {
             {/* <div className='flex justify-center md:justify-baseline'> */}
 
 
-            <div className='bg-white shadow-2xl p-7 md:text-sm md:w-90  mt-7 text-gray-400 space-y-2'>
+            <div className='bg-white p-7 md:text-sm md:w-90  mt-7 text-gray-400 space-y-2'>
               <h2 className='text-xl text-[#FB6D6C] font-bold'>Our Promise</h2>
               <div className='text-sm'>
                 <ul className='list-disc space-y-2'>
