@@ -176,7 +176,7 @@ export default function Wishlist() {
             },
           }
         );
-        removeFromWishlist(product.wishlist_id);
+        
 
         // console.log("Added to server-side cart");
       } catch (error) {
