@@ -422,7 +422,7 @@ export default function ProductDetail() {
             {/* <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
               {selectedProduct?.sub_category_name || 'Product Name'}
             </h1> */}
-            <h1 className="text-xl md:text-3xl font-bold mb-2 text-black">
+            <h1 className="text-xl md:text-3xl font-bold mb-2 text-grey-400">
               {selectedProduct?.product_description || 'Product Name'}
             </h1>
             <p className="text-gray-500 text-sm md:text-lg font-bold w-12 flex items-center border-[#666F80]">
@@ -444,14 +444,14 @@ export default function ProductDetail() {
             {/* <p style={{ color: '#666F80' }}>
               <span className="font-medium">Stock:</span> {selectedProduct?.product_variation.stock ?? 'N/A'}
             </p> */}
-            <div className=" text-xs md:font-medium" style={{ fontFamily: 'Papyrus', color: '#C3C8D3' }}>
+            {/* <div className=" text-xs md:font-medium" style={{ fontFamily: 'Papyrus', color: '#C3C8D3' }}>
               Free Shipping
-            </div>
+            </div> */}
 
             {/* Color Selector */}
             {allVariations.some(v => v.variation_type === 'Color') && (
               <div className="mt-7">
-                <h2 className="text-xs font-semibold mb-1" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Choose Color:</h2>
+                <h2 className="text-sm font-semibold mb-1" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Choose Color</h2>
                 <div className="flex gap-2 flex-wrap">
                   {allVariations
                     .filter(v => v.variation_type === 'Color' && v.ColorCode)
