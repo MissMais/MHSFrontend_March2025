@@ -184,7 +184,7 @@ const ProductPage = () => {
   const getUniqueColours = () => {
     const unique = new Set(
       products
-        .filter(p => p.category_name === selectedCategory || p.variation_type === "Color")
+        .filter(p => p.category_name === selectedCategory && p.variation_type === "Color")
         .map(p => p.variation_name)
     );
     return Array.from(unique);
