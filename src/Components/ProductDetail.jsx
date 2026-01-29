@@ -147,6 +147,7 @@ export default function ProductDetail() {
 
   const addToCart = async (product) => {
     const accesstoken = localStorage.getItem("AccessToken");
+    const stock = product.product_variation.stock;
 
     if (!accesstoken) {
       toast.error('Please login to continue with your order.');
@@ -167,6 +168,11 @@ export default function ProductDetail() {
       const existingItem = cart.find(
         item => item.product_variation.product_variation_id === product.product_variation.product_variation_id
       );
+
+       if (existingItem && existingItem.quantity >= stock) {
+        toast.error(`Only ${stock} item(s) available`);
+        return;
+      }
 
       let quantity;
       if (existingItem) {
