@@ -320,11 +320,11 @@ export default function Cart() {
                 <img src={item.images[0]} alt={item.name} className="md:w-20 md:h-20 w-13 h-13 object-cover rounded-lg aspect-[5/6]" />
                 <div className="flex-1">
                   <h3 className="font-semibold text-[10px] md:text-sm text-gray-700" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>{item.product_description}</h3>
-                  <p className="text-[7px] md:text-xs text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>{item.variation_name}</p>
+                  <p className="text-[10px] md:text-xs text-gray-500 mt-1 font-bold" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>{item.variation_name}</p>
 
 
                   {item.quantity >= item.product_variation.stock && (
-                    <p className="text-[7px] text-red-500 mt-1" style={{ fontFamily: 'Papyrus' }} >Max stock reached</p>
+                    <p className="text-[10px] text-red-500 mt-1 font-bold" style={{ fontFamily: 'Papyrus' }} >Max stock reached</p>
                   )}
                 </div>
 
