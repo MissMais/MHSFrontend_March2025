@@ -32,7 +32,7 @@ import { Toaster } from "react-hot-toast";
 
 import ScrollToTop from './Components/ScrollToTop';
 
-export const url ="https://72.61.173.6/"
+export const url ="https://api.modest.co.in/"
 // export const url = "https://mohammadsaklen.pythonanywhere.com/"
 
 import { Elements } from "@stripe/react-stripe-js";
