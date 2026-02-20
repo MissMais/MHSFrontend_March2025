@@ -18,8 +18,7 @@ export default function ForgotPassChange() {
     try {
     
       const response = await axios.post(`${url}forget/`, data,);
-      
-      
+      console.log(response.data)      
       toast.success('Password Change Successfully')
       setTimeout(() => {
         navigate("/login");
