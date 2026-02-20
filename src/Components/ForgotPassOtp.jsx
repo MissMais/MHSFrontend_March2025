@@ -8,6 +8,7 @@ export default function ForgotPassOtp() {
   const navigate = useNavigate();
   const [Otp, setOtp] = useState(["", "", "", ""]);
   const { handleSubmit } = useForm();
+  const Old_otp = location.state?.old_otp;
 
 
   const handleChange = (e, index) => {
@@ -48,32 +49,24 @@ export default function ForgotPassOtp() {
     const otp = Otp.join("");
 
     if (otp.length !== 4) {
-      // alert("Please enter all 4 digits");
       return;
     }
 
-    // try {
-    //   const response = await axios.post(`${url}verify/`, { otp });
-    //   console.log(response.data)
-      
-    //   if (response.data === 'Invalid OTP') {
-    //     // alert("Invalid OTP");
-    //   } else {
-    //     navigate("/changepass");
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   // alert("Verification failed");
-    // }
-
     try {
-        const response = await axios.post(`${url}verify/`, { otp });
+      
+        const payload = {
+          otp,
+          "old_otp": Old_otp
+        }
+        console.log("Payload",payload)
+      
+        const response = await axios.post(`${url}verify/`, payload);
         console.log(response.data);
-    
+      
         if (response.data.status) {
-          // OTP verified successfully → pass OTP to reset password page
           navigate("/changepass", { state: { otp } });
-        } else {
+        } 
+        else {
           alert("Invalid OTP");
         }
       } catch (error) {
