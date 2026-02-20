@@ -11,18 +11,14 @@ export default function ForgotPassword() {
   const { handleSubmit, register, formState: { errors } } = useForm();
 
   // const url = 'https://5d0abf24c6ce.ngrok-free.app/'
-
+  
   const onSubmit = async (data) => {
-
     try {
-    
       const response = await axios.post(`${url}mail/`, data,);
       console.log(response.data);
       navigate('/otp')
-
     } catch (error) {
       console.error(error);
-    
     }
   };
 
