@@ -48,11 +48,30 @@ export default function AddAddress() {
     //     }
     // };
 
-    const onSubmit = async (data) => {
-    try {
-        const user_id = JSON.parse(localStorage.getItem("user_id"))
-        console.log("User ID:", user_id);
+      const user_id = JSON.parse(localStorage.getItem("user_id"))
+      console.log("User ID:", user_id);
 
+      const getCustomerId = async () => {
+      try {
+        const res = await axios.get(`${url}customer/`);
+        const customerRecord = res.data.find(
+              (item) => item.User_id === user_id
+        );
+        if (!customerRecord) {
+            console.error("No customer found for this user");
+            return null;
+        }
+        return customerRecord.Customer_id;
+
+      } catch (error) {
+        console.error("Error fetching customer data:", error);
+        return null;
+      }
+      };
+    
+    const onSubmit = async (data) => {
+    try {  
+        const customer_id = await getCustomerId()
         await axios.post(`${url}address/`, {
             Customer_id: customer_id,
             Address_type: data.Address_type,
