@@ -8,7 +8,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function ForgotPassChange() {
   const location = useLocation();
   const navigate = useNavigate();
-  const otp = location.state?.otp;
+  // const otp = location.state?.otp;
+  const { otp, email } = location.state || {};
+  console.log("OTP:", otp);
+  console.log("Email:", email);
+  
   const { handleSubmit, register, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
@@ -21,9 +25,13 @@ export default function ForgotPassChange() {
         otp, // include OTP
         new_password: data.new_password,
         confirm_password: data.confirm_password,
+        email: email
       };
+      console.log('Payload Final', payload)
+      
       const response = await axios.post(`${url}forget/`, payload);
       console.log(response.data);
+      
       toast.success("Password Changed Successfully");
       setTimeout(() => {
         navigate("/login");
