@@ -290,57 +290,6 @@ export default function Home() {
 
             {/* Store */}
 
-            {/* Abayas  */}
-            <section id="store" className=" bg-white mt-2">
-                <div className="max-w-7xl mx-auto  px-4">
-                    <div className="p-6">
-
-                        {/* Text Content */}
-                        <div className="mb-8">
-                            <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: ' Papyrus' , color: '#FB6D6C' }}>
-                                Abayas
-                            </h1>
-                            <br />
-                            <p className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed" style={{ fontFamily: ' Papyrus'  }}>
-                                When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
-                            </p>
-                        </div>
-
-                        {/* Image Grid */}
-
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
-                            {img
-                                // .sort(() => Math.random() - 0.5)
-                                .filter((i) => i.category_name == "Abaya")
-                                .slice(0, 6)
-                                .flatMap((cat) =>
-                                    cat.homepage_images.map((image, index) => (
-                                        <div
-                                            key={index}
-                                            className=" md:h-77 md:w-66 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
-                                            onClick={() => navigate('/ProductPage?category=Abaya')}
-                                        >
-
-                                            <div className="w-full aspect-[3/4]">
-                                                <img
-                                                    src={image}
-                                                    alt="Image"
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </div>
-
-
-                                        </div>
-                                    ))
-                                )}
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-
-
             {/* Stoles  */}
             <section id="stoles" className=" bg-white">
                 <div className="max-w-7xl mx-auto px-4">
@@ -401,7 +350,54 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Abayas  */}
+            <section id="store" className=" bg-white mt-2">
+                <div className="max-w-7xl mx-auto  px-4">
+                    <div className="p-6">
 
+                        {/* Text Content */}
+                        <div className="mb-8">
+                            <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: ' Papyrus' , color: '#FB6D6C' }}>
+                                Abayas
+                            </h1>
+                            <br />
+                            <p className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed" style={{ fontFamily: ' Papyrus'  }}>
+                                When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
+                            </p>
+                        </div>
+
+                        {/* Image Grid */}
+
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-18">
+                            {img
+                                // .sort(() => Math.random() - 0.5)
+                                .filter((i) => i.category_name == "Abaya")
+                                .slice(0, 6)
+                                .flatMap((cat) =>
+                                    cat.homepage_images.map((image, index) => (
+                                        <div
+                                            key={index}
+                                            className=" md:h-77 md:w-66 shadow-md overflow-hidden transition duration-300 ease-in-out hover:-translate-y-3 hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                                            onClick={() => navigate('/ProductPage?category=Abaya')}
+                                        >
+
+                                            <div className="w-full aspect-[3/4]">
+                                                <img
+                                                    src={image}
+                                                    alt="Image"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+
+
+                                        </div>
+                                    ))
+                                )}
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
 
             {/* Accessories */}
