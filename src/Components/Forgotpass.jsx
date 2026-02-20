@@ -16,7 +16,9 @@ export default function ForgotPassword() {
     try {
       const response = await axios.post(`${url}mail/`, data,);
       console.log("******^^^^^^^^^^^^^^^^^^******",response.data);
-      navigate('/otp')
+      const old_otp = response.data['old_otp']
+      console.log("OLD OTP", old_otp)
+      navigate('/otp', { state: { old_otp } })
     } catch (error) {
       console.error(error);
     }
