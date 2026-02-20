@@ -52,20 +52,36 @@ export default function ForgotPassOtp() {
       return;
     }
 
-    try {
-      const response = await axios.post(`${url}verify/`, { otp });
-      console.log(response.data)
+    // try {
+    //   const response = await axios.post(`${url}verify/`, { otp });
+    //   console.log(response.data)
       
-      if (response.data === 'Invalid OTP') {
-        // alert("Invalid OTP");
-      } else {
-        navigate("/changepass");
+    //   if (response.data === 'Invalid OTP') {
+    //     // alert("Invalid OTP");
+    //   } else {
+    //     navigate("/changepass");
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   // alert("Verification failed");
+    // }
+
+    try {
+        const response = await axios.post(`${url}verify/`, { otp });
+        console.log(response.data);
+    
+        if (response.data.status) {
+          // OTP verified successfully → pass OTP to reset password page
+          navigate("/changepass", { state: { otp } });
+        } else {
+          alert("Invalid OTP");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Verification failed");
       }
-    } catch (error) {
-      console.error(error);
-      // alert("Verification failed");
-    }
   };
+
 
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
