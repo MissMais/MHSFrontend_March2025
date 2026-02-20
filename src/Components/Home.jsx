@@ -201,27 +201,16 @@ export default function Home() {
                             <div className="md:w-1/2 p-10">
                                 <div className=''>
 
-                                    <h1 className="md:text-4xl text-[20px] font-bold font-serif text-[#FB6D6C] mb-2 ml-3" style={{ fontFamily: ' Papyrus' }}><span className='text-[#FB6D6C]'>Welcome to Modest Gallery</span></h1>
+                                    <h1 className="md:text-4xl text-[20px] font-bold font-serif text-[#FB6D6C] mb-2 ml-3" style={{ fontFamily: ' Papyrus' }}><span className='text-[#FB6D6C]'>Welcome to Modest Hijab Store</span></h1>
                                     <p className=" text-[12px] md:text-[21px] font-bold text-[#FB6D6C] underline mb-4 md:ml-20 ml-12" style={{ fontFamily: 'Papyrus' }}>Where Modesty Meets Elegance</p>
 
                                 </div>
                                 <p className="text-gray-700 pt-7 text-justify text-[16px] font-sans leading-relaxed md:text-lg" style={{ fontFamily: 'Papyrus' }}>
-                                    At Modest Gallery, we offer a diverse collection of modest hijabs, abayas, and accessories that blend elegance with comfort,
+                                    At Modest Hijab Store, we offer a diverse collection of hijabs, abayas, and accessories that blend elegance with comfort,
                                     allowing you to express your unique style with confidence. In addition to our fashion offerings, we proudly present Shaam e Roshan,
                                     our lifestyle, food, and craft exhibitions that celebrate creativity and tradition. Each event showcases exquisite crafts,
-                                    delightful foods, and unique lifestyle products, creating a vibrant community space. Join us at Modest Gallery and Shaam e Roshan,
+                                    delightful foods, and unique lifestyle products, creating a vibrant community space. Join us at Modest Gallery,
                                     where style and culture come together beautifully.
-                                    <br /><br />
-                                    {/* Our Modest Hijab Store can be your ultimate destination for modest fashion that empowers and celebrates your unique style.
-                                    We are passionate about providing a curated selection of high-quality hijabs, abayas, and hijab accessories that are not only beautiful
-                                    but also thoughtfully designed to meet the needs of modern, modest women. We believe that modesty and fashion go hand in hand.
-                                    Our collection is a reflection of this philosophy, offering a diverse range of styles that cater to every taste, occasion, and personality.
-                                    Whether you're looking for the perfect everyday hijab, a luxurious abaya for a special event, or stylish accessories to complete your look,
-                                    we've got you covered.
-                                    <br /><br />
-                                    Our Event, Shaam e Roshan, is a vibrant celebration of culture, creativity, and community. These lifestyle, food, and craft exhibitions are
-                                    designed to bring people together, offering a unique experience that blends tradition with modernity. At Shaam e Roshan, we showcase an array
-                                    of exquisite crafts, delectable foods, and lifestyle products that reflect the richness of our heritage and the creativity of artisans from across the region. */}
                                 </p>
                             </div>
 
