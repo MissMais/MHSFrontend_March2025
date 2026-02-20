@@ -4,30 +4,34 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {url} from "../App"
 import toast, { Toaster } from "react-hot-toast";
-
-// const url = "https://5d0abf24c6ce.ngrok-free.app/";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ForgotPassChange() {
+  const location = useLocation();
   const navigate = useNavigate();
-
+  const otp = location.state?.otp;
   const { handleSubmit, register, formState: { errors } } = useForm();
 
-
   const onSubmit = async (data) => {
-
+    if (!otp) {
+      alert("OTP not found. Please verify OTP first.");
+      return;
+    }
     try {
-    
-      const response = await axios.post(`${url}forget/`, data,);
-      console.log("**************************",response.data)      
-      toast.success('Password Change Successfully')
+      const payload = {
+        otp, // include OTP
+        new_password: data.new_password,
+        confirm_password: data.confirm_password,
+      };
+      const response = await axios.post(`${url}forget/`, payload);
+      console.log(response.data);
+      toast.success("Password Changed Successfully");
       setTimeout(() => {
         navigate("/login");
       }, 3000);
-      
     } catch (error) {
-      console.error("&&&&&&&&&&&&&&&&&&&&&&&",error);
-      toast.error("Failed to Reset")
-      
+      console.error(error);
+      toast.error("Failed to Reset");
     }
   };
 
