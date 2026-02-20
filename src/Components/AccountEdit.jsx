@@ -48,7 +48,7 @@ export default function AccountEdit() {
       const customerRecord = imageRes.data.find(item => item.User_id === userData.id);
       if (customerRecord) {
         setPreview(customerRecord.Profile_picture);
-        setCustomerId(customerRecord.id); // <-- store actual Customer ID
+        setCustomerId(customerRecord.Customer_id);
       }
       
       // const filterimg = imageRes.data.find(item => item.User_id == id);
