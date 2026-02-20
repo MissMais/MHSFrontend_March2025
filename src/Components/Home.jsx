@@ -308,7 +308,8 @@ export default function Home() {
                                 className="text-sm md:text-lg text-justify leading-relaxed text-[#666F80]"
                                 style={{ fontFamily: ' Papyrus'  }}
                             >
-                                Our hijabs are crafted from premium fabrics, ensuring that they are comfortable,
+                                At <span className="text-[#FB6D6C] font-semibold">Our Store</span>, the hijabs are crafted from premium fabrics, 
+                                ensuring that they are comfortable,
                                 breathable, and easy to style. From classic neutrals to vibrant prints, our hijabs
                                 are designed to complement your wardrobe and make you feel confident and elegant.
                                 We understand that every woman has her own unique style, which is why our collection
@@ -362,7 +363,10 @@ export default function Home() {
                             </h1>
                             <br />
                             <p className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed" style={{ fontFamily: ' Papyrus'  }}>
-                                When it comes to abayas, <span className="text-[#FB6D6C] font-semibold">Modest Hijab Store</span> feel proud on offering pieces that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
+                                When it comes to abayas, we feel proud on offering pieces 
+                                that are not only modest but also fashion-forward. Our abayas are designed with intricate details, luxurious fabrics, 
+                                and flattering silhouettes that make you feel sophisticated and chic. Whether you prefer traditional designs or modern cuts, 
+                                our collection is versatile enough to be worn for any occasion, from casual outings to formal gatherings.
                             </p>
                         </div>
 
@@ -418,8 +422,10 @@ export default function Home() {
                                 className="text-sm md:text-lg text-justify leading-relaxed text-[#666F80]"
                                 style={{ fontFamily: ' Papyrus'  }}
                             >
-                                No outfit is complete without the perfect accessories, and at
-                                <span className="text-[#FB6D6C] font-semibold"> Modest Hijab Store</span>, we offer a wide range of hijab accessories that add a touch of elegance and personality to your look. From pins and brooches to underscarves and headbands, our accessories are designed to enhance your hijab-wearing experience and make styling effortless. We understand the importance of quality and durability, which is why our accessories are made from the finest materials to ensure they last.
+                                No outfit is complete without the perfect accessories, so we also offer a wide range of hijab accessories that add a touch of elegance and personality to your look. 
+                                From pins and brooches to underscarves and headbands, our accessories are designed to enhance your hijab-wearing experience 
+                                and make styling effortless. We understand the importance of quality and durability, which is why our accessories 
+                                are made from the finest materials to ensure they last.
                             </p>
                         </div>
 
@@ -478,7 +484,11 @@ export default function Home() {
                                 className="text-sm md:text-lg text-justify text-[#666F80] leading-relaxed"
                                 style={{ fontFamily: ' Papyrus'  }}
                             >
-                                At <span className="text-[#FB6D6C] font-semibold">Modest Gallery</span>, our hijab collection is crafted to empower modern women with elegance, comfort, and versatility. Whether you're dressing for a casual day out, a professional setting, or a special event, we offer hijabs in a wide variety of fabrics, colors, and styles to suit every mood and moment. From breathable cotton and soft jersey to luxurious chiffon and silk, each piece is thoughtfully selected to ensure a perfect blend of modesty and fashion. </p>
+                                We also provide a range of prayer dresses, khimaars, and jilbabs designed with comfort, quality, and modesty in mind.
+                                It is not just a piece of cloth, it is a symbol of modesty, dignity, and devotion. It wraps a woman in comfort and 
+                                confidence while allowing her to focus on her connection with the Almighty. Soft fabrics, graceful coverage, 
+                                and thoughtful designs make it easier to pray, move, and live with ease, while staying true to your values.
+                                </p>
                         </div>
 
                         {/* Image Grid */}
