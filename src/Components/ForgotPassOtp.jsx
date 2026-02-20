@@ -9,8 +9,13 @@ export default function ForgotPassOtp() {
   const location = useLocation();
   const [Otp, setOtp] = useState(["", "", "", ""]);
   const { handleSubmit } = useForm();
-  const Old_otp = location.state?.old_otp;
-  console.log('OLD OTP through state', Old_otp)
+
+  const { old_otp, email } = location.state || {};
+  console.log("Old OTP:", old_otp);
+  console.log("Email:", email);
+  
+  // const Old_otp = location.state?.old_otp;
+  // console.log('OLD OTP through state', Old_otp)
 
 
   const handleChange = (e, index) => {
@@ -58,7 +63,7 @@ export default function ForgotPassOtp() {
       
         const payload = {
           otp,
-          "old_otp": Old_otp
+          "old_otp": old_otp
         }
         console.log("Payload",payload)
       
@@ -66,7 +71,7 @@ export default function ForgotPassOtp() {
         console.log(response.data);
       
         if (response.data.status) {
-          navigate("/changepass", { state: { otp } });
+          navigate("/changepass", { state: { otp, email } });
         } 
         else {
           alert("Invalid OTP");
