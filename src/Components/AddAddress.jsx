@@ -22,38 +22,60 @@ export default function AddAddress() {
 
     const states = country ? State.getStatesOfCountry(country) : [];
     const selectedState = State.getStateByCodeAndCountry(state, country);
-    // console.log(selectedState?.name)
-
     const cities = state ? City.getCitiesOfState(country, state) : [];
     const selectedCity = cities.find((c) => c.name === city);
+    
     // console.log(selectedCity?.name)
-
-
-    const user_id = JSON.parse(localStorage.getItem("user_id"))
+    // const user_id = JSON.parse(localStorage.getItem("user_id"))
+    // const onSubmit = async (data) => {
+    //     try {
+    //         // console.log(data)
+    //         await axios.post(`${url}address/`, {
+    //             User_id: user_id,
+    //             City: selectedCity?.name,
+    //             State: selectedState?.name,
+    //             Country: selectedCountry?.name,
+    //             ...data
+    //         });
+    //         toast.success("New Address Added")
+    //         setTimeout(() => {
+    //             Navigate("/Address")
+    //         }, 2000);
+    //         //   reset();
+    //     } catch (error) {
+    //         console.error(error);
+    //         setMessage("Failed to add address.");
+    //     }
+    // };
 
     const onSubmit = async (data) => {
-        try {
-            // console.log(data)
+    try {
+        const customer_id = JSON.parse(localStorage.getItem("customer_id"));
 
-            await axios.post(`${url}address/`, {
-                User_id: user_id,
-                City: selectedCity?.name,
-                State: selectedState?.name,
-                Country: selectedCountry?.name,
-                ...data
-            });
+        await axios.post(`${url}address/`, {
+            Customer_id: customer_id,
+            Address_type: data.Address_type,
+            Name: data.Name,
+            House_No: data.House_No,
+            Area_Colony: data.Area_Colony,
+            Landmark: data.Landmark,
+            Pincode: data.Pincode,
+            City: selectedCity?.name,
+            State: selectedState?.name,
+            Country: selectedCountry?.name,
+            Contact: data.Contact
+        });
 
-            toast.success("New Address Added")
+            toast.success("New Address Added");
             setTimeout(() => {
-                Navigate("/Address")
+                Navigate("/Address");
             }, 2000);
 
-            //   reset();
-        } catch (error) {
-            console.error(error);
-            setMessage("Failed to add address.");
-        }
-    };
+            } catch (error) {
+                console.error(error);
+                setMessage("Failed to add address.");
+            }
+        };
 
     return (
         <div className="flex justify-center bg-white mt-16 min-h-[400px] ">
