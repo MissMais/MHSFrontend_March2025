@@ -19,6 +19,7 @@ export default function AccountEdit() {
   const [card, setcard] = useState(false)   // for Mobile View
   const [card1, setcard1] = useState(false)  // for Desktop View
   const [isMobile, setIsMobile] = useState(false)
+  const [customerId, setCustomerId] = useState(null);
 
   useEffect(() => {
     getUser();
@@ -44,10 +45,16 @@ export default function AccountEdit() {
         },
       });
 
-      const filterimg = imageRes.data.find(item => item.User_id == id);
-      if (filterimg) {
-        setPreview(filterimg.Profile_picture);
+      const customerRecord = imageRes.data.find(item => item.User_id === userData.id);
+      if (customerRecord) {
+        setPreview(customerRecord.Profile_picture);
+        setCustomerId(customerRecord.id); // <-- store actual Customer ID
       }
+      
+      // const filterimg = imageRes.data.find(item => item.User_id == id);
+      // if (filterimg) {
+      //   setPreview(filterimg.Profile_picture);
+      // }
 
       reset({
         first_name: userData.first_name,
@@ -83,7 +90,8 @@ export default function AccountEdit() {
 
       if (Image) {
         const formDataImg = new FormData();
-        formDataImg.append("id", id);
+        // formDataImg.append("id", id);
+        formDataImg.append("id", customerId);
         formDataImg.append("Profile_picture", Image);
 
         await axios.put(`${url}customer/`, formDataImg, {
