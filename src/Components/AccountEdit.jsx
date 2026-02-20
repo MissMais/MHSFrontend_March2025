@@ -88,16 +88,26 @@ export default function AccountEdit() {
       });
 
 
-      if (Image) {
+      if (Image && customerId) {
         const formDataImg = new FormData();
-        // formDataImg.append("id", id);
-        formDataImg.append("id", customerId);
+        formDataImg.append("id", customerId); 
         formDataImg.append("Profile_picture", Image);
-
+      
         await axios.put(`${url}customer/`, formDataImg, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       }
+
+      // if (Image) {
+      //   const formDataImg = new FormData();
+      //   // formDataImg.append("id", id);
+      //   formDataImg.append("id", customerId);
+      //   formDataImg.append("Profile_picture", Image);
+
+      //   await axios.put(`${url}customer/`, formDataImg, {
+      //     headers: { "Content-Type": "multipart/form-data" },
+      //   });
+      // }
 
       // alert("Profile updated successfully!");
       toast.success("Profile updated successfully!")
@@ -107,7 +117,7 @@ export default function AccountEdit() {
 
     } catch (error) {
       console.error(error);
-      // alert("Failed to update profile");
+      alert("Failed to update profile");
     }
   };
 
