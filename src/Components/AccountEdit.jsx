@@ -90,7 +90,7 @@ export default function AccountEdit() {
 
       if (Image && customerId) {
         const formDataImg = new FormData();
-        formDataImg.append("id", customerId); 
+        formDataImg.append("Customer_id", customerId);
         formDataImg.append("Profile_picture", Image);
       
         await axios.put(`${url}customer/`, formDataImg, {
