@@ -17,7 +17,7 @@ export default function ForgotPassword() {
     try {
     
       const response = await axios.post(`${url}mail/`, data,);
-      // console.log(response.data);
+      console.log(response.data);
       navigate('/otp')
 
     } catch (error) {
