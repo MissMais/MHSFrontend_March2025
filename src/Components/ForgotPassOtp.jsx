@@ -9,6 +9,7 @@ export default function ForgotPassOtp() {
   const [Otp, setOtp] = useState(["", "", "", ""]);
   const { handleSubmit } = useForm();
   const Old_otp = location.state?.old_otp;
+  console.log('OLD OTP through state', Old_otp)
 
 
   const handleChange = (e, index) => {
