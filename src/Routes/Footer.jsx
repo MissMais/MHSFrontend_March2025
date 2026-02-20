@@ -22,7 +22,7 @@ export default function Footer() {
           {/* Store Name */}
           <div className='text-center md:mr-40 cursor-pointer'>
             <h3 className="text-xl md:text-2xl font-extrabold" style={{ fontFamily: 'Papyrus' }}>
-              Modest Gallery
+              Modest Hijab Store
             </h3>
             <span>Crafted with care</span>
             <br />
