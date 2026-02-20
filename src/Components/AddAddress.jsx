@@ -50,8 +50,8 @@ export default function AddAddress() {
 
     const onSubmit = async (data) => {
     try {
-        const customer_id = JSON.parse(localStorage.getItem("customer_id"));
-        console.log("Customer ID:", customer_id);
+        const user_id = JSON.parse(localStorage.getItem("user_id"))
+        console.log("User ID:", user_id);
 
         await axios.post(`${url}address/`, {
             Customer_id: customer_id,
