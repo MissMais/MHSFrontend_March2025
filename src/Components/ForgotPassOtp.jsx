@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { url } from "../App";
 
 export default function ForgotPassOtp() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [Otp, setOtp] = useState(["", "", "", ""]);
   const { handleSubmit } = useForm();
   const Old_otp = location.state?.old_otp;
