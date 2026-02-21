@@ -162,9 +162,21 @@ export default function OrderPage() {
         }, 3000);
 
       }
-    } catch (error) {
-      console.error(error);
-    }
+    } 
+    // catch (error) {
+    //   console.error(error);
+    // }
+    catch (error) {
+        console.error("Full error object:", error);
+      
+        // Show the backend response if available
+        if (error.response) {
+          console.log("Backend response data:", error.response.data);
+          alert("Order failed! Check console for details.");
+        } else {
+          console.log("No response from server:", error);
+        }
+      }
   };
 
 
