@@ -166,7 +166,7 @@ export default function OrderPage() {
     catch (error) {
       console.error(error);
     }
-
+  };
 
   let subtotal = 0;
   cartItems.forEach(item => {
