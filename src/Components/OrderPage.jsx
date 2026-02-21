@@ -376,14 +376,21 @@ export default function OrderPage() {
                 <input type="checkbox" required className="accent-[#FB6D6C] mt-1" />
                 <span >I have read, understood, and accept the agreements.</span>
               </label>
-              <button
+              {/* <button
                 onClick={handleSubmit(onSubmit)}
                 className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl  hover:bg-[#e95a59] font-semibold transition"
                 style={{ fontFamily: 'Papyrus'  }}
               >
                 Complete Payment
+              </button> */}
+              <button
+                onClick={handleSubmit(onSubmit)}
+                className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl hover:bg-[#e95a59] font-semibold transition active:scale-95 active:opacity-90"
+                style={{ fontFamily: 'Papyrus' }}
+              >
+                Complete Payment
               </button>
-              <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: 'Papyrus'  }}>
+                <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: 'Papyrus'  }}>
                 3D Secure Payment | Fast and Easy Returns
               </div>
             </div>
