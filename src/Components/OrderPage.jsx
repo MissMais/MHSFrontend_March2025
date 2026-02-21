@@ -163,21 +163,9 @@ export default function OrderPage() {
 
       }
     } 
-    // catch (error) {
-    //   console.error(error);
-    // }
     catch (error) {
-        console.error("Full error object:", error);
-      
-        // Show the backend response if available
-        if (error.response) {
-          console.log("Backend response data:", error.response.data);
-          alert("Order failed! Check console for details.");
-        } else {
-          console.log("No response from server:", error);
-        }
-      }
-  };
+      console.error(error);
+    }
 
 
   let subtotal = 0;
