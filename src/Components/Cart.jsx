@@ -287,6 +287,9 @@ export default function Cart() {
 
   // Calculate subtotal
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
+  const shippingCharge = 30;
+  const totalAmount = subtotal + shippingCharge;
+  
 
   return (
 
@@ -370,11 +373,15 @@ export default function Cart() {
           </div>
           <div className="flex justify-between text-sm md:text-lg py-2 border-b">
             <span className="font-bold" style={{ fontFamily: 'Papyrus', color: '#666F80' }}>Transfer</span>
-            <span className="text-green-600 font-bold" style={{ fontFamily: 'Papyrus' }}>Free Shipping</span>
+            {/* <span className="text-green-600 font-bold" style={{ fontFamily: 'Papyrus' }}>Free Shipping</span> */}
+            <span className="font-bold" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>
+            ₹{shippingCharge}
+            </span>      
           </div>
           <div className="flex justify-between text-sm md:text-lg py-4  font-bold text-yellow-600" style={{ fontFamily: 'Papyrus', color: '#FB6D6C' }}>
             <span>Total</span>
-            <span>₹{subtotal.toFixed(2)}</span>
+            {/* <span>₹{subtotal.toFixed(2)}</span> */}
+            <span>₹{totalAmount.toFixed(2)}</span>
           </div>
           <button
             className="w-full bg-[#FB6D6C] hover:bg-[#e95a59] text-white py-3 rounded-lg text-sm md:text-lg font-semibold"
