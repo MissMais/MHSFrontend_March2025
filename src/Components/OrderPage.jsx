@@ -16,6 +16,7 @@ export default function OrderPage() {
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [payment, setPayment] = useState([])
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -85,6 +86,7 @@ export default function OrderPage() {
 
 
   const onSubmit = async (data) => {
+    setLoading(true);
 
     const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
@@ -164,7 +166,10 @@ export default function OrderPage() {
       }
     } 
     catch (error) {
-      console.error(error);
+    console.error(error);
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -381,23 +386,25 @@ export default function OrderPage() {
                 <input type="checkbox" required className="accent-[#FB6D6C] mt-1" />
                 <span >I have read, understood, and accept the agreements.</span>
               </label>
-              {/* <button
-                onClick={handleSubmit(onSubmit)}
-                className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl  hover:bg-[#e95a59] font-semibold transition"
-                style={{ fontFamily: 'Papyrus'  }}
-              >
-                Complete Payment
-              </button> */}
-              <button
-                onClick={handleSubmit(onSubmit)}
-                className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl hover:bg-[#e95a59] font-semibold transition active:scale-95 active:opacity-90"
-                style={{ fontFamily: 'Papyrus' }}
-              >
-                Complete Payment
-              </button>
-                {/* <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: 'Papyrus'  }}>
-                3D Secure Payment | Fast and Easy Returns
-              </div> */}
+                <button
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={loading}
+                  className={`w-full py-3 rounded-xl font-semibold transition 
+                  active:scale-95 active:opacity-90
+                  ${loading 
+                    ? "bg-gray-400 cursor-not-allowed text-white" 
+                    : "bg-[#FB6D6C] hover:bg-[#e95a59] text-white"}`}
+                  style={{ fontFamily: 'Papyrus' }}
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Processing...
+                    </span>
+                  ) : (
+                    "Complete Payment"
+                  )}
+                </button>
             </div>
           </div>
         </div>
