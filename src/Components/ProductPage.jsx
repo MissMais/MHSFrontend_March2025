@@ -832,10 +832,22 @@ const ProductPage = () => {
                   <div className="mt-auto flex justify-between font-bold items-center pt-3">
 
 
-                    <button
+                    {/* <button
                       className="border border-[#FB6D6C] text-[#FB6D6C] px-4 py-2 w-full rounded transition-all"
                       style={{ fontFamily: 'Papyrus' }}
                       onClick={() => handleProductClick(product.product_variation.product_variation_id, product.Product_id)}
+                    >
+                      View
+                    </button> */}
+                    <button
+                      onClick={() =>
+                        handleProductClick(
+                          product.product_variation.product_variation_id,
+                          product.Product_id
+                        )
+                      }
+                      className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl hover:bg-[#e95a59] font-semibold transition active:scale-95 active:opacity-90"
+                      style={{ fontFamily: 'Papyrus' }}
                     >
                       View
                     </button>
