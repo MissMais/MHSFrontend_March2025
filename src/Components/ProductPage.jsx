@@ -846,7 +846,7 @@ const ProductPage = () => {
                           product.Product_id
                         )
                       }
-                      className="w-full bg-[#FB6D6C] text-white py-3 rounded-xl hover:bg-[#e95a59] font-semibold transition active:scale-95 active:opacity-90"
+                      className="w-full bg-[#FB6D6C] text-white py-3 hover:bg-[#e95a59] font-semibold transition active:scale-95 active:opacity-90"
                       style={{ fontFamily: 'Papyrus' }}
                     >
                       View
