@@ -395,9 +395,9 @@ export default function OrderPage() {
               >
                 Complete Payment
               </button>
-                <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: 'Papyrus'  }}>
+                {/* <div className="text-xs text-center text-[#C3C8D3] mt-2" style={{ fontFamily: 'Papyrus'  }}>
                 3D Secure Payment | Fast and Easy Returns
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
