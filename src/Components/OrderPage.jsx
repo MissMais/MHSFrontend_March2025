@@ -173,6 +173,9 @@ export default function OrderPage() {
     subtotal += item.price * (item.quantity || 1);
   });
 
+  const shippingCharge = 40;
+  const totalAmount = subtotal + shippingCharge;
+
 
 
   const fetchpayment = async () => {
@@ -339,11 +342,13 @@ export default function OrderPage() {
               </div>
               <div className="flex justify-between " style={{ fontFamily: 'Papyrus' , color: '#FB6D6C' }}>
                 <span>Shipping</span>
-                <span>Free</span>
+                {/* <span>Free</span> */}
+                <span>₹{shippingCharge}</span>
               </div>
               <div className="flex justify-between font-bold text-lg border-t pt-2">
                 <span>Total</span>
-                <p className="font-semibold">₹{subtotal.toFixed(2)}</p>
+                {/* <p className="font-semibold">₹{subtotal.toFixed(2)}</p> */}
+                <p className="font-semibold">₹{totalAmount.toFixed(2)}</p>
               </div>
             </div>
             {payment.map((item, idx) => (
