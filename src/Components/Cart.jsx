@@ -389,7 +389,7 @@ export default function Cart() {
               <ul>
                 <li className="list-disc space-y-2 p-2">Secure & Safe Packaging</li>
                 <li className=" list-disc space-y-2 p-2">No Returns</li>
-                 <li className=" list-disc space-y-2 p-2">Exchange within 7 days of delivery</li>
+                 {/* <li className=" list-disc space-y-2 p-2">Exchange within 7 days of delivery</li> */}
               </ul>
             </div>
           </div>
