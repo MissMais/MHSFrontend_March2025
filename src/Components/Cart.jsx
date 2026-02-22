@@ -287,7 +287,7 @@ export default function Cart() {
 
   // Calculate subtotal
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
-  const shippingCharge = 30;
+  const shippingCharge = 40;
   const totalAmount = subtotal + shippingCharge;
   
 
