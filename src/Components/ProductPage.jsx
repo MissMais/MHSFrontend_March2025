@@ -94,7 +94,6 @@ const ProductPage = () => {
 
 
 
-const stock_products;
 
   const fetchProducts = async () => {
     try {
@@ -108,7 +107,7 @@ const stock_products;
         }
       );
       // console.log("**************",res.data)
-      stock_products = res.data.filter((e)=>{
+      const stock_products = res.data.filter((e)=>{
           if (e.product_variation.stock > 0){
             return e
         }
@@ -298,7 +297,7 @@ const stock_products;
             'Content-Type': 'application/json',
           },
         });
-        const customerWishlist = stock_products.filter(item => item.customer_id == customerId);
+        const customerWishlist = res.data.filter(item => item.customer_id == customerId);
         setwish(customerWishlist);
       } catch (err) {
         console.error(err);
