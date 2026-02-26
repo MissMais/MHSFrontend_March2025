@@ -55,6 +55,7 @@ export default function Address() {
     localStorage.setItem(addressKey, JSON.stringify(add));
     setSelected(add);
     // console.log("Selected Address Saved Locally:", add);
+    navigate('/OrderPage');
   };
 
 
