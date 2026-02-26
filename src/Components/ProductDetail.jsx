@@ -110,10 +110,8 @@ export default function ProductDetail() {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(url + 'custom/', { headers });
-      // const response2 = await axios.get(url + 'custom/', { headers });
-      // console.log(response.data)
-      const filtered = response.data.filter(item => item.Product_id === product_id);
-      // console.log(response.data.category_name)
+      const stock_products = response.data.filter(e => e.product_variation.stock > 0);
+      const filtered = stock_products.filter(item => item.Product_id === product_id);
       setAllVariations(filtered);
 
 
