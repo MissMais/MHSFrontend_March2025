@@ -107,14 +107,14 @@ const ProductPage = () => {
           },
         }
       );
-      console.log("**************",res.data)
+      // console.log("**************",res.data)
       const stock_products = res.data.filter((e)=>{
           if (e.product_variation.stock > 0){
             return e
         }
       })
-      console.log("*********&&&&&*********",stock_products)
-      setProducts(res.data);
+      // console.log("*********&&&&&*********",stock_products)
+      setProducts(stock_products);
 
     } catch (err) {
       console.error("Error fetching products", err);
@@ -298,7 +298,7 @@ const ProductPage = () => {
             'Content-Type': 'application/json',
           },
         });
-        const customerWishlist = res.data.filter(item => item.customer_id == customerId);
+        const customerWishlist = stock_products.filter(item => item.customer_id == customerId);
         setwish(customerWishlist);
       } catch (err) {
         console.error(err);
