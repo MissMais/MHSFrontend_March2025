@@ -108,6 +108,10 @@ const ProductPage = () => {
         }
       );
       console.log("**************",res.data)
+      stock_products = res.data.filter((e)=>{
+        console.log("*********&&&&&*********",e.product_variation.stock > 0)
+        return e.product_variation.stock > 0
+      })
       setProducts(res.data);
 
     } catch (err) {
