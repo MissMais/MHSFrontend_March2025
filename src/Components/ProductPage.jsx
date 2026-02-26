@@ -108,10 +108,10 @@ const ProductPage = () => {
         }
       );
       console.log("**************",res.data)
-      stock_products = res.data.filter((e)=>{
-        console.log("*********&&&&&*********",e.product_variation.stock > 0)
+      const stock_products = res.data.filter((e)=>{
         return e.product_variation.stock > 0
       })
+      console.log("*********&&&&&*********",stock_products)
       setProducts(res.data);
 
     } catch (err) {
