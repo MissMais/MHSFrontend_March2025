@@ -108,12 +108,8 @@ const ProductPage = () => {
         }
       );
       console.log("**************",res.data)
-      const stock_products = res.data.map((e)=>{
-        if (e.variation_type == 'Fabric'){
-          return e
-        }
-        else if (e.variation_type == 'Color' && e.product_variation.stock > 0){
-          return e
+      const stock_products = res.data.filter((e)=>{
+          return e.product_variation.stock > 0
         }
       })
       console.log("*********&&&&&*********",stock_products)
