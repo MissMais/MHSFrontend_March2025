@@ -94,7 +94,7 @@ const ProductPage = () => {
 
 
 
-
+const stock_products;
 
   const fetchProducts = async () => {
     try {
@@ -108,7 +108,7 @@ const ProductPage = () => {
         }
       );
       // console.log("**************",res.data)
-      const stock_products = res.data.filter((e)=>{
+      stock_products = res.data.filter((e)=>{
           if (e.product_variation.stock > 0){
             return e
         }
