@@ -156,9 +156,9 @@ const ProductPage = () => {
   // console.log(variety.Brandid)
 
 
-  useEffect(() => {
-    fetchBrandName()
-  }, [products])
+  // useEffect(() => {
+  //   fetchBrandName()
+  // }, [products])
 
 
   const getUniqueCategories = () => {
