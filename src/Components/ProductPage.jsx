@@ -777,11 +777,19 @@ const ProductPage = () => {
                 className="flex flex-col bg-white shadow-md hover:shadow-xl transition-all overflow-hidden"
               >
                 {/* Image */}
-                <div className="h-[200px] md:h-[300px] w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)] overflow-hidden">
+                {/* <div className="h-[200px] md:h-[300px] w-full shadow-[0_6px_16px_rgba(0,0,0,0.45)] overflow-hidden">
                   <img
                     src={product.images[0]}
                     alt="Product"
                     className="object-contain w-full h-full"
+                  />
+                </div> */}
+
+                <div className="aspect-[3/4] w-full overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.45)]">
+                  <img
+                  src={product.images[0]}
+                  alt="Product"
+                  className="w-full h-full object-cover"
                   />
                 </div>
 
