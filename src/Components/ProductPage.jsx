@@ -781,7 +781,7 @@ const ProductPage = () => {
                   <img
                     src={product.images[0]}
                     alt="Product"
-                    className="object-cover w-full h-full"
+                    className="object-contain w-full h-full"
                   />
                 </div>
 
