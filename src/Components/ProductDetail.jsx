@@ -394,7 +394,7 @@ export default function ProductDetail() {
             <img
               src={selectedProduct?.images?.[0]}
               // .replace("http://localhost:8000/", "http://192.168.29.87:8000/")}
-              className=" shadow-md w-full h-auto md:w-full md:h-125 object-cover aspect-[5/6]"
+              className="shadow-md w-full h-auto object-contain"
               onClick={() => swapWithMain(0)}
               alt="Product"
             />
